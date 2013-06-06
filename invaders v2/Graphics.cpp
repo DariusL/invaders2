@@ -24,6 +24,11 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* 
 	// Set the initial position of the camera.
 	camera->SetPosition(0.0f, 0.0f, -30.0f);
 
+	mainObject = new PlayerGraphics();
+
+	if(!mainObject->Init(d3D->GetDevice(), world, handle))
+		return false;
+
 	return true;
 }
 
@@ -41,7 +46,7 @@ void Graphics::Render()
 	d3D->GetProjectionMatrix(projectionMatrix);
 	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 
-	//render goes here
+	mainObject->Render(d3D->GetDeviceContext(), transMatrix);
 
 	d3D->EndScene();
 }

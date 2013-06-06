@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "World.h"
 
+class Graphics;
 class App
 {
 
@@ -19,6 +20,7 @@ public:
 	void Run();
 
 	void getScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
+	HWND getWindowHandle(){return wHandle;}
 private:
 	void InitWindows();
 	void ShutdownWindows();

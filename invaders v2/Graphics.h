@@ -5,7 +5,11 @@
 #include "Camera.h"
 #include "World.h"
 #include "GraphicsObject.h"
+#include "Globals.h"
+#include "App.h"
+#include "PlayerGraphics.h"
 
+class App;
 class Graphics
 {
 	Direct3D *d3D;
@@ -21,7 +25,7 @@ public:
 	Graphics(void);
 	~Graphics(void){}
 
-	bool Init(int width, int height, HWND whandle, bool fullscreen, World* world);
+	bool Init(int width, int height, HWND handle, bool fullscreen, World* world);
 	void Shutdown();
 	void Render();
 
