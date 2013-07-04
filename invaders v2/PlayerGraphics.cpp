@@ -2,33 +2,17 @@
 
 PlayerGraphics::PlayerGraphics()
 {
-	model.vertices = new VertexType[4];
-	model.vertexCount = 4;
-	model.indices = new int[6];
-	model.indexCount = 6;
 
-	model.vertices[0].position = D3DXVECTOR3(-5.0f, -5.0f, 0.0f);  // Bottom left.
-	model.vertices[0].color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
+}
 
-	model.vertices[1].position = D3DXVECTOR3(-5.0f, 5.0f, 0.0f);  // Top left
-	model.vertices[1].color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+void PlayerGraphics::SetModel(Model model)
+{
+	this->model = model;
+}
 
-	model.vertices[2].position = D3DXVECTOR3(5.0f, -5.0f, 0.0f);  // Bottom right.
-	model.vertices[2].color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
-
-	model.vertices[3].position = D3DXVECTOR3(5.0f, 5.0f, 0.0f);  // Top right.
-	model.vertices[3].color = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
-
-	model.indices[0] = 1;
-	model.indices[1] = 2;
-	model.indices[2] = 0;
-
-	model.indices[3] = 1;
-	model.indices[4] = 3;
-	model.indices[5] = 2;
-
-	pos = D3DXVECTOR3(0, -5, 0);
-
+void PlayerGraphics::SetPos(D3DXVECTOR3 pos)
+{
+	this->pos = pos;
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
 }
@@ -50,10 +34,9 @@ bool PlayerGraphics::InitBuffers(ID3D11Device *device)
 	D3D11_SUBRESOURCE_DATA vertexData, indexData, constantData;
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model.vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 	vertexData.pSysMem = model.vertices;
 	vertexData.SysMemPitch = 0;
@@ -62,12 +45,10 @@ bool PlayerGraphics::InitBuffers(ID3D11Device *device)
 	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer)))
 		return false;
 
+	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	indexBufferDesc.ByteWidth = sizeof(int) * model.indexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-	indexBufferDesc.StructureByteStride = 0;
 
 	indexData.pSysMem = model.indices;
 	indexData.SysMemPitch = 0;
@@ -97,7 +78,7 @@ void PlayerGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix
 {
 	SetBuffers(context);
 	shader->SetShaderParameters(context, transMatrix);
-	shader->RenderShader(context, model.vertexCount);
+	shader->RenderShader(context, model.indexCount);
 }
 
 void PlayerGraphics::SetBuffers(ID3D11DeviceContext *context)

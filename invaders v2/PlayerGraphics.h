@@ -9,6 +9,8 @@ public:
 	bool Init(ID3D11Device*, World*, HWND);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
+	void SetModel(Model model);
+	void SetPos(D3DXVECTOR3 pos);
 	PlayerGraphics();
 
 protected:
