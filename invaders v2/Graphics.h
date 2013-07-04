@@ -4,10 +4,10 @@
 #include "Direct3D.h"
 #include "Camera.h"
 #include "World.h"
-#include "GraphicsObject.h"
 #include "Globals.h"
 #include "App.h"
-#include "PlayerGraphics.h"
+#include "GraphicsObject.h"
+#include "TheEntireActualGraphics.h"
 
 class App;
 class Graphics

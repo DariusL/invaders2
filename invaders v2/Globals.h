@@ -19,6 +19,7 @@ struct ControlCodes
 {
 	static const int LEFT  = 1 << 0;
 	static const int RIGHT = 1 << 1;
+	static const int LEFT_AND_RIGHT = LEFT | RIGHT;
 	static const int FIRE  = 1 << 2;
 	static const int PAUSE = 1 << 3;
 };

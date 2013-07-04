@@ -85,6 +85,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGraphics.cpp" />
+    <ClCompile Include="TestGraphics.cpp" />
+    <ClCompile Include="TheEntireActualGraphics.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +101,8 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGraphics.h" />
+    <ClInclude Include="TestGraphics.h" />
+    <ClInclude Include="TheEntireActualGraphics.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

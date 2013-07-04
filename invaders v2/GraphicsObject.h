@@ -11,8 +11,6 @@ public:
 	virtual bool Init(ID3D11Device*, World*, HWND) = 0;
 	virtual void Shutdown() = 0;
 	virtual void Render(ID3D11DeviceContext*, D3DXMATRIX) = 0;
-	virtual void SetModel(Model model) = 0;
-	virtual void SetPos(D3DXVECTOR3 pos) = 0;
 
 protected:
 	virtual bool InitBuffers(ID3D11Device*) = 0;

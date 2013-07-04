@@ -136,8 +136,7 @@ void PlayerGraphics::ShutdownBuffers()
 
 void PlayerGraphics::Update(ID3D11DeviceContext *context)
 {
-	D3DXVECTOR3 newPos = world->GetPlayerPos();
-	pos = newPos;
+	pos = world->GetPlayerPos();
 
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);

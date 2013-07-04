@@ -19,7 +19,7 @@ protected:
 	void SetBuffers(ID3D11DeviceContext*);
 	void Update(ID3D11DeviceContext*);
 
-private:
+protected:
 	Model model;
 	D3DXVECTOR3 pos;
 	D3DXMATRIX moveMatrix;
