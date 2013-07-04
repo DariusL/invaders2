@@ -63,5 +63,5 @@ void Camera::Render()
 
 void Camera::GetViewMatrix(D3DXMATRIX& viewMatrix)
 {
-	viewMatrix = viewMatrix;
+	viewMatrix = this->viewMatrix;
 }
