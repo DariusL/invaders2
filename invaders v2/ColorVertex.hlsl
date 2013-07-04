@@ -1,9 +1,9 @@
-cbuffer TransMatrix
+cbuffer TransMatrix : register(cb0)
 {
     matrix transform;
 };
 
-cbuffer MoveMatrix
+cbuffer MoveMatrix : register(cb1)
 {
 	matrix move;
 }
@@ -26,8 +26,8 @@ PixelInputType ColorVertexShader(VertexInputType input)
     
     input.position.w = 1.0f;
 
-    output.position = mul(input.position, transform);
-	//output.position = mul(output.position, move);
+	output.position = mul(input.position, move);
+	output.position = mul(output.position, transform);
     
     output.color = input.color;
     

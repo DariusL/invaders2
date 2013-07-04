@@ -81,7 +81,8 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	{
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = denominator;
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = numerator;
-	} else
+	} 
+	else
 	{
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;

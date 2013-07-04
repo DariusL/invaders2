@@ -6,6 +6,7 @@
 #include <d3dx10math.h>
 #include <d3dx11async.h>
 #include <fstream>
+#include <fstream>
 #include "Globals.h"
 
 using namespace std;
@@ -22,7 +23,7 @@ public:
 	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
-	bool InitializeShader(ID3D11Device*, HWND, WCHAR*, WCHAR*);
+	bool InitializeShader(ID3D11Device*, HWND, char*, char*);
 	void ShutdownShader();
 	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 

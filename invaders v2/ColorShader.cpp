@@ -11,7 +11,7 @@ ColorShader::ColorShader()
 
 bool ColorShader::Init(ID3D11Device* device, HWND hwnd)
 {
-	if(!InitializeShader(device, hwnd, L"../invaders v2/colorvertex.hlsl", L"../invaders v2/colorpixel.hlsl"))
+	if(!InitializeShader(device, hwnd, "..\\Debug\\ColorVertex.cso", "..\\Debug\\ColorPixel.cso"))
 		return false;
 	return true;
 }
@@ -21,21 +21,17 @@ void ColorShader::Shutdown()
 	ShutdownShader();
 }
 
-bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename)
+bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
 {
 	ID3D10Blob* errorMessage;
-	ID3D10Blob* vertexShaderBuffer;
-	ID3D10Blob* pixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
 	errorMessage = NULL;
-	vertexShaderBuffer = NULL;
-	pixelShaderBuffer = NULL;
-
+	
 	// Compile the vertex shader code.
-	if(FAILED(D3DX11CompileFromFile(vsFilename, NULL, NULL, "ColorVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, 
+	/*if(FAILED(D3DX11CompileFromFile(vsFilename, NULL, NULL, "ColorVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, 
 				       &vertexShaderBuffer, &errorMessage, NULL)))
 	{
 		// If the shader failed to compile it should have writen something to the error message.
@@ -60,14 +56,31 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFil
 			MessageBox(hwnd, psFilename, L"Missing Shader File", MB_OK);
 
 		return false;
-	}
+	}*/
+
+	ifstream stream;
+	stream.open(vsFilename, std::ifstream::binary | std::ifstream::in);
+	stream.seekg(0, stream.end);
+	int vSize = stream.tellg();
+	stream.seekg(0, stream.beg);
+	char *vBuffer = new char[vSize];
+	stream.read(vBuffer, vSize);
+	stream.close();
 
 	// Create the vertex shader from the buffer.
-	if(FAILED(device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &vertexShader)))
+	if(FAILED(device->CreateVertexShader(vBuffer, vSize, NULL, &vertexShader)))
 		return false;
 
+	stream.open(psFilename, ios::binary);
+	stream.seekg(0, stream.end);
+	int pSize = stream.tellg();
+	stream.seekg(0, stream.beg);
+	char *pBuffer = new char[pSize];
+	stream.read(pBuffer, pSize);
+	stream.close();
+
 	// Create the pixel shader from the buffer.
-	if(FAILED(device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &pixelShader)))
+	if(FAILED(device->CreatePixelShader(pBuffer, pSize, NULL, &pixelShader)))
 		return false;
 
 	// Now setup the layout of the data that goes into the shader.
@@ -92,15 +105,12 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFil
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	// Create the vertex input layout.
-	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), &layout)))
+	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer, vSize, &layout)))
 		return false;
 
 	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
-	vertexShaderBuffer->Release();
-	vertexShaderBuffer = 0;
-
-	pixelShaderBuffer->Release();
-	pixelShaderBuffer = 0;
+	delete [] vBuffer;
+	delete [] pBuffer;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;

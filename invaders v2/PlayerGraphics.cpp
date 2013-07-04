@@ -108,7 +108,7 @@ void PlayerGraphics::SetBuffers(ID3D11DeviceContext *context)
 	stride = sizeof(VertexType); 
 	offset = 0;
 
-	//Update(context);
+	Update(context);
     
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
@@ -156,19 +156,17 @@ void PlayerGraphics::ShutdownBuffers()
 void PlayerGraphics::Update(ID3D11DeviceContext *context)
 {
 	D3DXVECTOR3 newPos = world->GetPlayerPos();
-	if(newPos != pos)
-	{
-		//pos = newPos;
-		pos = D3DXVECTOR3(0, -5, 0);
-		D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
-		D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
+	pos = newPos;
 
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
+	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
+	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
 
-		context->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
-		memcpy(mappedResource.pData, &moveMatrix, sizeof(moveMatrix));
+	context->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-		context->Unmap(matrixBuffer, 0);
-	}
+	memcpy(mappedResource.pData, &moveMatrix, sizeof(moveMatrix));
+
+	context->Unmap(matrixBuffer, 0);
+	
 }
