@@ -76,24 +76,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractGroupGraphics.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
+    <ClCompile Include="EnemyGraphics.cpp" />
+    <ClCompile Include="EnemyGrid.cpp" />
+    <ClCompile Include="EnemyGridGraphics.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGraphics.cpp" />
-    <ClCompile Include="TestGraphics.cpp" />
     <ClCompile Include="TheEntireActualGraphics.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractGroupGraphics.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="Direct3D.h" />
+    <ClInclude Include="EnemyGraphics.h" />
+    <ClInclude Include="EnemyGrid.h" />
+    <ClInclude Include="EnemyGridGraphics.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GraphicsObject.h" />
@@ -101,7 +108,6 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGraphics.h" />
-    <ClInclude Include="TestGraphics.h" />
     <ClInclude Include="TheEntireActualGraphics.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

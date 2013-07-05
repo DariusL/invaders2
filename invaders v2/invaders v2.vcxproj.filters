@@ -51,7 +51,16 @@
     <ClCompile Include="TheEntireActualGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestGraphics.cpp">
+    <ClCompile Include="EnemyGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGridGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractGroupGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,7 +104,16 @@
     <ClInclude Include="TheEntireActualGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestGraphics.h">
+    <ClInclude Include="EnemyGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGridGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractGroupGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

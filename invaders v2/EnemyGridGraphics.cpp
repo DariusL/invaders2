@@ -1,22 +1,21 @@
-#include "TheEntireActualGraphics.h"
+#include "EnemyGridGraphics.h"
 
 
-TheEntireActualGraphics::TheEntireActualGraphics(void)
-{
-	playerGraphics = NULL;
-	enemyGraphics = NULL;
-}
-
-
-TheEntireActualGraphics::~TheEntireActualGraphics(void)
+EnemyGridGraphics::EnemyGridGraphics(void)
 {
 }
 
-bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
+
+EnemyGridGraphics::~EnemyGridGraphics(void)
 {
-	playerGraphics = new PlayerGraphics();
-	enemyGraphics = new EnemyGridGraphics();
-	test = new EnemyGraphics();
+}
+
+bool EnemyGridGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
+{
+	int width = world->GetEnemies()->GetWidth();
+	int height = world->GetEnemies()->GetWidth();
+
+	this->world = world;
 
 	playerModel.vertexCount = 4;
 	playerModel.vertices = new VertexType[playerModel.vertexCount];
@@ -43,40 +42,39 @@ bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd
 	playerModel.indices[4] = 3;
 	playerModel.indices[5] = 2;
 
-	playerGraphics->SetModel(playerModel);
-	test->SetModel(playerModel);
-	test->setIndex(5);
-
-	if(!playerGraphics->Init(device, world, hwnd))
-		return false;
-
-	if(!enemyGraphics->Init(device, world, hwnd))
-		return false;
-
-	if(!test->Init(device, world, hwnd))
-		return false;
+	for(int i = 0; i < width*height; i++)
+	{
+		enemyGraphics.push_back(make_shared<EnemyGraphics>());
+		enemyGraphics[i]->SetModel(playerModel);
+		enemyGraphics[i]->setIndex(i);
+		if(!enemyGraphics[i]->Init(device, world, hwnd))
+			return false;
+	}
 
 	return true;
 }
 
-void TheEntireActualGraphics::Shutdown()
+void EnemyGridGraphics::Shutdown()
 {
-	playerGraphics->Shutdown();
-	playerGraphics = NULL;
+	int width = world->GetEnemies()->GetWidth();
+	int height = world->GetEnemies()->GetWidth();
 
-	enemyGraphics->Shutdown();
-	enemyGraphics = NULL;
-
-	test->Shutdown();
-	test = NULL;
+	for(int i = 0; i < width*height; i++)
+	{
+		enemyGraphics[i]->Shutdown();
+	}
 
 	delete [] playerModel.indices;
 	delete [] playerModel.vertices;
 }
 
-void TheEntireActualGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
+void EnemyGridGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
 {
-	playerGraphics->Render(context, transMatrix);
-	enemyGraphics->Render(context, transMatrix);
-	test->Render(context, transMatrix);
+	int width = world->GetEnemies()->GetWidth();
+	int height = world->GetEnemies()->GetHeight();
+
+	for(int i = 0; i < width*height; i++)
+	{
+		enemyGraphics[i]->Render(context, transMatrix);
+	}
 }

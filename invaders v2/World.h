@@ -1,19 +1,22 @@
 #pragma once
 #include "Player.h"
 #include "Globals.h"
+#include "EnemyGrid.h"
 #include <D3D11.h>
 
 class World
 {
+	Player player;
+	EnemyGrid enemies;
+	bool enemiesMovingRight;
+	int frameRate;
 public:
 	World();
-	World(unsigned int fRate);
+
+	bool Init(unsigned int fRate);
 
 	void OnLoop(int input);
 	D3DXVECTOR3 GetPlayerPos(){return player.getPos();}
-	D3DXVECTOR3 GetTestPos(){return test.getPos();}
-private:
-	Player player;
-	Player test;
-	int frameRate;
+
+	EnemyGrid *GetEnemies(){return &enemies;}
 };

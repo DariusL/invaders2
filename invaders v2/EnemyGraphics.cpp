@@ -1,18 +1,18 @@
-#include "TestGraphics.h"
+#include "EnemyGraphics.h"
 
 
-TestGraphics::TestGraphics(void)
+EnemyGraphics::EnemyGraphics(void)
 {
 }
 
 
-TestGraphics::~TestGraphics(void)
+EnemyGraphics::~EnemyGraphics(void)
 {
 }
 
-void TestGraphics::Update(ID3D11DeviceContext *context)
+void EnemyGraphics::Update(ID3D11DeviceContext* context)
 {
-	pos = world->GetTestPos();
+	pos = world->GetEnemies()->GetEnemy(ind)->getPos();
 
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);

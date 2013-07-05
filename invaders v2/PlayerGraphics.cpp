@@ -10,13 +10,6 @@ void PlayerGraphics::SetModel(Model model)
 	this->model = model;
 }
 
-void PlayerGraphics::SetPos(D3DXVECTOR3 pos)
-{
-	this->pos = pos;
-	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
-	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
-}
-
 bool PlayerGraphics::Init(ID3D11Device* device, World *world, HWND handle)
 {
 	this->world = world;
@@ -148,5 +141,4 @@ void PlayerGraphics::Update(ID3D11DeviceContext *context)
 	memcpy(mappedResource.pData, &moveMatrix, sizeof(moveMatrix));
 
 	context->Unmap(matrixBuffer, 0);
-	
 }

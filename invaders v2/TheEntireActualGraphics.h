@@ -1,27 +1,22 @@
 #pragma once
-#include "graphicsobject.h"
+#include "AbstractGroupGraphics.h"
 #include "PlayerGraphics.h"
-#include "TestGraphics.h"
+#include "EnemyGridGraphics.h"
 #include "Model.h"
 
-class TheEntireActualGraphics : public GraphicsObject
+class TheEntireActualGraphics : public AbstractGroupGraphics
 {
 public:
 	bool Init(ID3D11Device*, World*, HWND);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
-
-protected:
-	bool InitBuffers(ID3D11Device*);
-	void ShutdownBuffers();
-	void SetBuffers(ID3D11DeviceContext*);
-	void Update(ID3D11DeviceContext*);
 public:
 	TheEntireActualGraphics(void);
 	~TheEntireActualGraphics(void);
 
-private:
+protected:
 	PlayerGraphics *playerGraphics;
-	TestGraphics *test;
+	EnemyGridGraphics *enemyGraphics;
+	EnemyGraphics *test;
 	Model playerModel;
 };

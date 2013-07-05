@@ -17,7 +17,9 @@ bool App::Init()
 {
 	InitWindows();
 
-	world = new World(frameRate);
+	world = new World();
+
+	world->Init(frameRate);
 
 	input = new Input();
 	if(!input)
