@@ -4,11 +4,11 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "World.h"
+#include "Logger.h"
 
 class Graphics;
 class App
 {
-
 public:
 	App(void);
 	~App(void){}

@@ -7,7 +7,8 @@
 	#define NULL 0
 #endif
 
-static void *AppHandle = 0;
+extern void *AppHandle;
+extern void *logger;
 
 struct VertexType
 {

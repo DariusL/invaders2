@@ -22,7 +22,7 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* 
 	camera = new Camera;
 
 	// Set the initial position of the camera.
-	camera->SetPosition(0.0f, 0.0f, -30.0f);
+	camera->SetPosition(0.0f, 0.0f, -50.0f);
 
 	mainObject = new TheEntireActualGraphics();
 

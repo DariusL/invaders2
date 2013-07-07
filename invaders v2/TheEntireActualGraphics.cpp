@@ -16,7 +16,6 @@ bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd
 {
 	playerGraphics = new PlayerGraphics();
 	enemyGraphics = new EnemyGridGraphics();
-	test = new EnemyGraphics();
 
 	playerModel.vertexCount = 4;
 	playerModel.vertices = new VertexType[playerModel.vertexCount];
@@ -44,8 +43,6 @@ bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd
 	playerModel.indices[5] = 2;
 
 	playerGraphics->SetModel(playerModel);
-	test->SetModel(playerModel);
-	test->setIndex(5);
 
 	if(!playerGraphics->Init(device, world, hwnd))
 		return false;
@@ -53,22 +50,23 @@ bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd
 	if(!enemyGraphics->Init(device, world, hwnd))
 		return false;
 
-	if(!test->Init(device, world, hwnd))
-		return false;
-
 	return true;
 }
 
 void TheEntireActualGraphics::Shutdown()
 {
-	playerGraphics->Shutdown();
-	playerGraphics = NULL;
+	if(playerGraphics != NULL)
+	{
+		playerGraphics->Shutdown();
+		playerGraphics = NULL;
+	}
 
-	enemyGraphics->Shutdown();
-	enemyGraphics = NULL;
-
-	test->Shutdown();
-	test = NULL;
+	if(enemyGraphics != NULL)
+	{
+	
+		enemyGraphics->Shutdown();
+		enemyGraphics = NULL;
+	}
 
 	delete [] playerModel.indices;
 	delete [] playerModel.vertices;
@@ -78,5 +76,4 @@ void TheEntireActualGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX tr
 {
 	playerGraphics->Render(context, transMatrix);
 	enemyGraphics->Render(context, transMatrix);
-	test->Render(context, transMatrix);
 }
