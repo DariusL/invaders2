@@ -5,7 +5,7 @@ PlayerGraphics::PlayerGraphics()
 
 }
 
-void PlayerGraphics::SetModel(Model model)
+void PlayerGraphics::SetModel(Model *model)
 {
 	this->model = model;
 }
@@ -28,10 +28,10 @@ bool PlayerGraphics::InitBuffers(ID3D11Device *device)
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model.vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	vertexData.pSysMem = model.vertices;
+	vertexData.pSysMem = model->vertices;
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
@@ -40,10 +40,10 @@ bool PlayerGraphics::InitBuffers(ID3D11Device *device)
 
 	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(int) * model.indexCount;
+	indexBufferDesc.ByteWidth = sizeof(int) * model->indexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
-	indexData.pSysMem = model.indices;
+	indexData.pSysMem = model->indices;
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
@@ -71,7 +71,7 @@ void PlayerGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix
 {
 	SetBuffers(context);
 	shader->SetShaderParameters(context, transMatrix);
-	shader->RenderShader(context, model.indexCount);
+	shader->RenderShader(context, model->indexCount);
 }
 
 void PlayerGraphics::SetBuffers(ID3D11DeviceContext *context)
@@ -106,9 +106,6 @@ void PlayerGraphics::Shutdown()
 		delete shader;
 		shader = NULL;
 	}
-	
-	delete [] model.vertices;
-	delete [] model.indices;
 }
 
 void PlayerGraphics::ShutdownBuffers()

@@ -1,4 +1,6 @@
 #include "World.h"
+#include "App.h"
+#include "Logger.h"
 
 World::World()
 {
@@ -20,19 +22,13 @@ void World::OnLoop(int input)
 	else if(enemies.GetRightBorder() > float(FIELD_WIDTH) / 2)
 		enemiesMovingRight = false;
 	if(enemiesMovingRight)
-		enemies.MoveBy(D3DXVECTOR3(0.1, 0, 0));
+		enemies.MoveBy(D3DXVECTOR3(0.2f, 0.0f, 0.0f));
 	else
-		enemies.MoveBy(D3DXVECTOR3(-0.1, 0, 0));
-	stringstream stream;
-	stream << "right border = " << enemies.GetRightBorder();
-	((Logger*)logger)->Log(stream.str());
-	stream.str("");
-	stream << "right enemy = " << enemies.GetEnemy(enemies.GetWidth() - 1)->getPos().x;
-	((Logger*)logger)->Log(stream.str());
+		enemies.MoveBy(D3DXVECTOR3(-0.2f, 0.0f, 0.0f));
 	if(input != 0){
 		if(input & ControlCodes::LEFT && player.getPos().x > FIELD_WIDTH / -2)
-			player.MoveBy(D3DXVECTOR3(-0.2, 0, 0));
+			player.MoveBy(D3DXVECTOR3(-0.4f, 0.0f, 0.0f));
 		else if(input & ControlCodes::RIGHT && player.getPos().x < FIELD_WIDTH / 2)
-			player.MoveBy(D3DXVECTOR3(0.2, 0, 0));
+			player.MoveBy(D3DXVECTOR3(0.4f, 0.0f, 0.0f));
 	}
 }

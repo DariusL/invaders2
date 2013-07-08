@@ -17,5 +17,4 @@ public:
 protected:
 	PlayerGraphics *playerGraphics;
 	EnemyGridGraphics *enemyGraphics;
-	Model playerModel;
 };

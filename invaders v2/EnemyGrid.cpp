@@ -16,7 +16,7 @@ bool EnemyGrid::Init(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap,
 	this->gap = gap;
 	this->enemySize = enemySize;
 	this->betweenCenters = D3DXVECTOR2((width - 1) * (gap.x + enemySize.x), (height - 1) * (gap.y + enemySize.y));
-	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0, center.y + betweenCenters.y / 2.0, 0);
+	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 	gridHeight = height;
 	gridWidth = width;
 	for(int i = 0; i < height; i++)

@@ -6,7 +6,8 @@
 #include <d3dx10math.h>
 #include <d3dx11async.h>
 #include <fstream>
-#include <fstream>
+#include <memory>
+#include "Utils.h"
 #include "Globals.h"
 
 using namespace std;

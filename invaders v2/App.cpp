@@ -1,5 +1,6 @@
 #include "App.h"
 
+App *App::Handle;
 
 App::App()
 {
@@ -16,9 +17,13 @@ App::App()
 bool App::Init()
 {
 	InitWindows();
-
+	Handle = this;
 	world = new World();
 	world->Init(frameRate);
+
+	manager = new ResourceManager();
+	if(!manager->Init())
+		return false;
 
 	input = new Input();
 	if(!input)
@@ -26,6 +31,11 @@ bool App::Init()
 	graphics = new Graphics();
 	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen, world))
 		return false;
+
+	logger = new Logger();
+	if(!logger->Init())
+		return false;
+
 	return true;
 }
 
@@ -34,8 +44,6 @@ void App::InitWindows()
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
 	int posX, posY;
-
-	AppHandle = this;
 
 	hInstance = GetModuleHandle(NULL);
 
@@ -138,6 +146,12 @@ void App::Shutdown()
 		delete world;
 		world = NULL;
 	}
+	if(logger)
+	{
+		logger->Shutdown();
+		delete logger;
+		logger = NULL;
+	}
 	ShutdownWindows();
 }
 
@@ -150,7 +164,6 @@ void App::ShutdownWindows()
 	wHandle = NULL;
 	UnregisterClass(appName, hInstance);
 	hInstance = NULL;
-	AppHandle = NULL;
 }
 
 LRESULT CALLBACK App::MessageHandler(HWND whandle, UINT message , WPARAM wparam, LPARAM lparam)

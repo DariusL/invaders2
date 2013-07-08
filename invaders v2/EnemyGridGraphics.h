@@ -5,7 +5,6 @@
 class EnemyGridGraphics : public AbstractGroupGraphics
 {
 	vector<shared_ptr<EnemyGraphics>> enemyGraphics;
-	Model playerModel;
 public:
 	bool Init(ID3D11Device*, World*, HWND);
 	void Shutdown();

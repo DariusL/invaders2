@@ -64,6 +64,6 @@ void Graphics::Shutdown()
 	if(camera)
 	{
 		delete camera;
-		camera = 0;
+		camera = NULL;
 	}
 }

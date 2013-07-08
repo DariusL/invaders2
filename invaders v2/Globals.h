@@ -7,9 +7,6 @@
 	#define NULL 0
 #endif
 
-extern void *AppHandle;
-extern void *logger;
-
 struct VertexType
 {
 	D3DXVECTOR3 position;

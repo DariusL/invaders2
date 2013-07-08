@@ -29,58 +29,21 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
 	errorMessage = NULL;
-	
-	// Compile the vertex shader code.
-	/*if(FAILED(D3DX11CompileFromFile(vsFilename, NULL, NULL, "ColorVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, 
-				       &vertexShaderBuffer, &errorMessage, NULL)))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-			OutputShaderErrorMessage(errorMessage, hwnd, vsFilename);
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-			MessageBox(hwnd, vsFilename, L"Missing Shader File", MB_OK);
 
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	if(FAILED(D3DX11CompileFromFile(psFilename, NULL, NULL, "ColorPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, 
-				       &pixelShaderBuffer, &errorMessage, NULL)))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-			OutputShaderErrorMessage(errorMessage, hwnd, psFilename);
-		// If there was  nothing in the error message then it simply could not find the file itself.
-		else
-			MessageBox(hwnd, psFilename, L"Missing Shader File", MB_OK);
-
-		return false;
-	}*/
-
-	ifstream stream;
-	stream.open(vsFilename, std::ifstream::binary | std::ifstream::in);
-	stream.seekg(0, stream.end);
-	int vSize = stream.tellg();
-	stream.seekg(0, stream.beg);
-	char *vBuffer = new char[vSize];
-	stream.read(vBuffer, vSize);
-	stream.close();
+	unique_ptr<char> vBuffer;
+	int vSize;
+	ReadFileToArray(vsFilename, vBuffer, vSize);
 
 	// Create the vertex shader from the buffer.
-	if(FAILED(device->CreateVertexShader(vBuffer, vSize, NULL, &vertexShader)))
+	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader)))
 		return false;
 
-	stream.open(psFilename, ios::binary);
-	stream.seekg(0, stream.end);
-	int pSize = stream.tellg();
-	stream.seekg(0, stream.beg);
-	char *pBuffer = new char[pSize];
-	stream.read(pBuffer, pSize);
-	stream.close();
+	unique_ptr<char> pBuffer;
+	int pSize;
+	ReadFileToArray(psFilename, pBuffer, pSize);
 
 	// Create the pixel shader from the buffer.
-	if(FAILED(device->CreatePixelShader(pBuffer, pSize, NULL, &pixelShader)))
+	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader)))
 		return false;
 
 	// Now setup the layout of the data that goes into the shader.
@@ -105,12 +68,8 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	// Create the vertex input layout.
-	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer, vSize, &layout)))
+	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
 		return false;
-
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
-	delete [] vBuffer;
-	delete [] pBuffer;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
