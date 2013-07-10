@@ -6,17 +6,17 @@
 class PlayerGraphics : public GraphicsObject
 {
 public:
-	bool Init(ID3D11Device*, World*, HWND);
-	void Shutdown();
-	void Render(ID3D11DeviceContext*, D3DXMATRIX);
-	void SetModel(Model *model);
+	virtual bool Init(ID3D11Device*, World*, HWND);
+	virtual void Render(ID3D11DeviceContext*, D3DXMATRIX);
+	virtual void SetModel(Model *model);
 	PlayerGraphics();
+	~PlayerGraphics();
 
 protected:
-	bool InitBuffers(ID3D11Device*);
-	void ShutdownBuffers();
-	void SetBuffers(ID3D11DeviceContext*);
-	void Update(ID3D11DeviceContext*);
+	virtual bool InitBuffers(ID3D11Device*);
+	virtual void ShutdownBuffers();
+	virtual void SetBuffers(ID3D11DeviceContext*);
+	virtual void Update(ID3D11DeviceContext*);
 
 protected:
 	Model *model;

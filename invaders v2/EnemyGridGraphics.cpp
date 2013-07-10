@@ -10,6 +10,7 @@ EnemyGridGraphics::EnemyGridGraphics(void)
 
 EnemyGridGraphics::~EnemyGridGraphics(void)
 {
+	
 }
 
 bool EnemyGridGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
@@ -31,17 +32,6 @@ bool EnemyGridGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
 	}
 
 	return true;
-}
-
-void EnemyGridGraphics::Shutdown()
-{
-	int width = world->GetEnemies()->GetWidth();
-	int height = world->GetEnemies()->GetHeight();
-
-	for(int i = 0; i < width*height; i++)
-	{
-		enemyGraphics[i]->Shutdown();
-	}
 }
 
 void EnemyGridGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)

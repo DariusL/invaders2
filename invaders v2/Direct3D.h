@@ -16,10 +16,9 @@ class Direct3D
 {
 public:
 	Direct3D(void);
-	~Direct3D(void){}
+	~Direct3D(void);
 
 	bool Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear);
-	void Shutdown();
 
 	void BeginScene();
 	void EndScene();

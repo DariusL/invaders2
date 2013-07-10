@@ -14,6 +14,36 @@ App::App()
 	world = NULL;
 }
 
+App::~App()
+{
+	ShutdownWindows();
+	if(graphics)
+	{
+		delete graphics;
+		graphics = NULL;
+	}
+	if(input)
+	{
+		delete input;
+		input = NULL;
+	}
+	if(world)
+	{
+		delete world;
+		world = NULL;
+	}
+	if(logger)
+	{
+		delete logger;
+		logger = NULL;
+	}
+	if(manager)
+	{
+		delete manager;
+		manager = NULL;
+	}
+}
+
 bool App::Init()
 {
 	InitWindows();
@@ -28,6 +58,7 @@ bool App::Init()
 	input = new Input();
 	if(!input)
 		return false;
+
 	graphics = new Graphics();
 	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen, world))
 		return false;
@@ -126,33 +157,6 @@ bool App::OnLoop()
 		return false;
 	world->OnLoop(worldEvents);
 	return true;
-}
-
-void App::Shutdown()
-{
-	if(graphics)
-	{
-		graphics->Shutdown();
-		delete graphics;
-		graphics = NULL;
-	}
-	if(input)
-	{
-		delete input;
-		input = NULL;
-	}
-	if(world)
-	{
-		delete world;
-		world = NULL;
-	}
-	if(logger)
-	{
-		logger->Shutdown();
-		delete logger;
-		logger = NULL;
-	}
-	ShutdownWindows();
 }
 
 void App::ShutdownWindows()

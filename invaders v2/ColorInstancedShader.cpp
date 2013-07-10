@@ -1,34 +1,27 @@
-#include "ColorShader.h"
+#include "ColorInstancedShader.h"
 
 
-ColorShader::ColorShader()
+ColorInstancedShader::ColorInstancedShader(void)
 {
-	vertexShader = 0;
-	pixelShader = 0;
-	layout = 0;
-	matrixBuffer = 0;
 }
 
-ColorShader::~ColorShader()
+
+ColorInstancedShader::~ColorInstancedShader(void)
 {
-	ShutdownShader();
 }
 
-bool ColorShader::Init(ID3D11Device* device, HWND hwnd)
+bool ColorInstancedShader::Init(ID3D11Device* device, HWND hwnd)
 {
-	if(!InitializeShader(device, hwnd, "ColorVertex.cso", "ColorPixel.cso"))
+	if(!InitializeShader(device, hwnd, "ColorInstancedVertex.cso", "ColorPixel.cso"))
 		return false;
 	return true;
 }
 
-bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
+bool ColorInstancedShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
 {
-	ID3D10Blob* errorMessage;
-	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
-	unsigned int numElements;
+	unsigned int numElements = 3;
+	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
 	D3D11_BUFFER_DESC matrixBufferDesc;
-
-	errorMessage = NULL;
 
 	unique_ptr<char> vBuffer;
 	int vSize;
@@ -64,14 +57,20 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	polygonLayout[1].InstanceDataStepRate = 0;
 
-	// Get a count of the elements in the layout.
-	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
+	polygonLayout[2].SemanticName = "POSITION";
+	polygonLayout[2].SemanticIndex = 1;
+	polygonLayout[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	polygonLayout[2].InputSlot = 1;
+	polygonLayout[2].AlignedByteOffset = 0;
+	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+	polygonLayout[2].InstanceDataStepRate = 1;
 
 	// Create the vertex input layout.
 	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
 		return false;
 
-	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
+	delete [] polygonLayout;
+
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);
 	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -86,7 +85,7 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	return true;
 }
 
-void ColorShader::ShutdownShader()
+void ColorInstancedShader::ShutdownShader()
 {
 	// Release the matrix constant buffer.
 	if(matrixBuffer)
@@ -119,7 +118,7 @@ void ColorShader::ShutdownShader()
 	return;
 }
 
-void ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, D3DXMATRIX transMatrix)
+void ColorInstancedShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, D3DXMATRIX transMatrix)
 {
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
@@ -141,8 +140,8 @@ void ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, D3DXMA
 	deviceContext->PSSetShader(pixelShader, NULL, 0);
 }
 
-void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void ColorInstancedShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount, int instanceCount)
 {
 	//unleash the grafiks
-	deviceContext->DrawIndexed(indexCount, 0, 0);
+	deviceContext->DrawIndexedInstanced(indexCount, instanceCount, 0, 0, 0);
 }

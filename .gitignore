@@ -3,7 +3,7 @@
 /debug/*
 /invaders v2/debug/*
 /release/*
-/invaders vs2/release
+/invaders v2/release/*
 
 #something 
 *.sdf

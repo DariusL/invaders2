@@ -6,9 +6,9 @@ Logger::Logger(void)
 {
 }
 
-
 Logger::~Logger(void)
 {
+	output.close();
 }
 
 bool Logger::Init()
@@ -20,9 +20,4 @@ bool Logger::Init()
 void Logger::Log(string line)
 {
 	output << line << endl;
-}
-
-void Logger::Shutdown()
-{
-	output.close();
 }

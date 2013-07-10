@@ -12,6 +12,5 @@ public:
 
 	bool Init();
 	void Log(string line);
-	void Shutdown();
 };
 

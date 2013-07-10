@@ -12,7 +12,7 @@ EnemyGraphics::~EnemyGraphics(void)
 
 void EnemyGraphics::Update(ID3D11DeviceContext* context)
 {
-	pos = world->GetEnemies()->GetEnemy(ind)->getPos();
+	pos = world->GetEnemies()->GetEnemy(ind)->GetPos();
 
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);

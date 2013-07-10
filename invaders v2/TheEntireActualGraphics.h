@@ -2,19 +2,20 @@
 #include "AbstractGroupGraphics.h"
 #include "PlayerGraphics.h"
 #include "EnemyGridGraphics.h"
+#include "BulletGraphics.h"
 #include "Model.h"
 
 class TheEntireActualGraphics : public AbstractGroupGraphics
 {
 public:
 	bool Init(ID3D11Device*, World*, HWND);
-	void Shutdown();
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
 public:
 	TheEntireActualGraphics(void);
 	~TheEntireActualGraphics(void);
 
 protected:
-	PlayerGraphics *playerGraphics;
-	EnemyGridGraphics *enemyGraphics;
+	unique_ptr<PlayerGraphics> playerGraphics;
+	unique_ptr<EnemyGridGraphics> enemyGraphics;
+	unique_ptr<BulletGraphics> bulletGraphics;
 };

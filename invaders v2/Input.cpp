@@ -6,6 +6,10 @@ Input::Input(void)
 		keys[i] = false;
 }
 
+Input::~Input()
+{
+}
+
 bool Input::IsKeyDown(int key)
 {
 	return keys[key];

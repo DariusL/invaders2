@@ -2,7 +2,16 @@
 
 PlayerGraphics::PlayerGraphics()
 {
+}
 
+PlayerGraphics::~PlayerGraphics()
+{
+	ShutdownBuffers();
+	if(shader)
+	{
+		delete shader;
+		shader = NULL;
+	}
 }
 
 void PlayerGraphics::SetModel(Model *model)
@@ -95,17 +104,6 @@ void PlayerGraphics::SetBuffers(ID3D11DeviceContext *context)
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-void PlayerGraphics::Shutdown()
-{
-	ShutdownBuffers();
-	if(shader)
-	{
-		shader->Shutdown();
-		delete shader;
-		shader = NULL;
-	}
 }
 
 void PlayerGraphics::ShutdownBuffers()

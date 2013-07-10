@@ -12,12 +12,12 @@ public:
 	~ResourceManager(void);
 
 	bool Init();
-	void Shutdown();
 	Model *GetModel(int i){return models[i];}
 
 	enum ModelCodes{
 		PLAYER = 0,
-		ENEMY
+		ENEMY,
+		BULLET
 	};
 };
 

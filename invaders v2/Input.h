@@ -3,7 +3,7 @@ class Input
 {
 public:
 	Input();
-	~Input(){}
+	~Input();
 
 	void KeyDown(int key);
 	void KeyUp(int key);

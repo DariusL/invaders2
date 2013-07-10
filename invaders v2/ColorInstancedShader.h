@@ -10,17 +10,15 @@
 #include "Utils.h"
 #include "Globals.h"
 
-using namespace std;
-
-class ColorShader
+class ColorInstancedShader
 {
 public:
-	ColorShader(void);
-	~ColorShader(void);
+	ColorInstancedShader(void);
+	~ColorInstancedShader(void);
 
 	bool Init(ID3D11Device*, HWND);
 	void SetShaderParameters(ID3D11DeviceContext*, D3DXMATRIX);
-	void RenderShader(ID3D11DeviceContext*, int);
+	void RenderShader(ID3D11DeviceContext*, int indexCount, int instanceCount);
 
 private:
 	bool InitializeShader(ID3D11Device*, HWND, char*, char*);
@@ -30,5 +28,5 @@ private:
 	ID3D11VertexShader* vertexShader;
 	ID3D11InputLayout* layout;
 	ID3D11PixelShader* pixelShader;
-	ID3D11Buffer* matrixBuffer;
+	ID3D11Buffer *matrixBuffer;
 };

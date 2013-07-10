@@ -23,10 +23,9 @@ class Graphics
 	float screenNear;
 public:
 	Graphics(void);
-	~Graphics(void){}
+	~Graphics(void);
 
 	bool Init(int width, int height, HWND handle, bool fullscreen, World* world);
-	void Shutdown();
 	void Render();
 
 	bool IsFullscreen(){return fullScreen;}

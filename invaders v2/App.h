@@ -27,15 +27,15 @@ class App
 	bool fullscreen;
 public:
 	App(void);
-	~App(void){}
+	~App(void);
 
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 
 	bool Init();
-	void Shutdown();
 	void Run();
 
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
+
 	HWND GetWindowHandle(){return wHandle;}
 	Logger *GetLogger(){return logger;}
 	ResourceManager *GetResourceManager(){return manager;}

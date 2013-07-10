@@ -13,6 +13,54 @@ Direct3D::Direct3D(void)
 	rasterState = NULL;
 }
 
+Direct3D::~Direct3D()
+{
+	if(swapChain)
+	{
+		swapChain->SetFullscreenState(false, NULL);
+	}
+	if(rasterState)
+	{
+		rasterState->Release();
+		rasterState = 0;
+	}
+	if(depthStencilView)
+	{
+		depthStencilView->Release();
+		depthStencilView = 0;
+	}
+	if(depthStencilState)
+	{
+		depthStencilState->Release();
+		depthStencilState = 0;
+	}
+	if(depthStencilBuffer)
+	{
+		depthStencilBuffer->Release();
+		depthStencilBuffer = 0;
+	}
+	if(renderTargetView)
+	{
+		renderTargetView->Release();
+		renderTargetView = 0;
+	}
+	if(deviceContext)
+	{
+		deviceContext->Release();
+		deviceContext = 0;
+	}
+	if(device)
+	{
+		device->Release();
+		device = 0;
+	}
+	if(swapChain)
+	{
+		swapChain->Release();
+		swapChain = 0;
+	}
+}
+
 bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
 	IDXGIFactory* factory;
@@ -185,55 +233,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, fieldOfView, screenAspect, screennear, screendepth);
 	D3DXMatrixOrthoLH(&orthoMatrix, (FLOAT) width, (FLOAT) height, screennear, screendepth);
 	return true;
-}
-
-void Direct3D::Shutdown()
-{
-	if(swapChain)
-	{
-		swapChain->SetFullscreenState(false, NULL);
-	}
-	if(rasterState)
-	{
-		rasterState->Release();
-		rasterState = 0;
-	}
-	if(depthStencilView)
-	{
-		depthStencilView->Release();
-		depthStencilView = 0;
-	}
-	if(depthStencilState)
-	{
-		depthStencilState->Release();
-		depthStencilState = 0;
-	}
-	if(depthStencilBuffer)
-	{
-		depthStencilBuffer->Release();
-		depthStencilBuffer = 0;
-	}
-	if(renderTargetView)
-	{
-		renderTargetView->Release();
-		renderTargetView = 0;
-	}
-	if(deviceContext)
-	{
-		deviceContext->Release();
-		deviceContext = 0;
-	}
-	if(device)
-	{
-		device->Release();
-		device = 0;
-	}
-	if(swapChain)
-	{
-		swapChain->Release();
-		swapChain = 0;
-	}
-	return;
 }
 
 void Direct3D::BeginScene()

@@ -9,6 +9,21 @@ Graphics::Graphics(void)
 	camera = NULL;
 }
 
+Graphics::~Graphics()
+{
+	if(d3D)
+	{
+		delete d3D;
+		d3D = NULL;
+	}
+
+	if(camera)
+	{
+		delete camera;
+		camera = NULL;
+	}
+}
+
 bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* world)
 {
 	d3D = new Direct3D();
@@ -49,21 +64,4 @@ void Graphics::Render()
 	mainObject->Render(d3D->GetDeviceContext(), transMatrix);
 
 	d3D->EndScene();
-}
-
-void Graphics::Shutdown()
-{
-	if(d3D)
-	{
-		d3D->Shutdown();
-		delete d3D;
-		d3D = NULL;
-	}
-
-	// Release the camera object.
-	if(camera)
-	{
-		delete camera;
-		camera = NULL;
-	}
 }

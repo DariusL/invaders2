@@ -16,10 +16,12 @@ TheEntireActualGraphics::~TheEntireActualGraphics(void)
 
 bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
 {
-	playerGraphics = new PlayerGraphics();
-	enemyGraphics = new EnemyGridGraphics();
+	playerGraphics = unique_ptr<PlayerGraphics>(new PlayerGraphics());
+	enemyGraphics = unique_ptr<EnemyGridGraphics>(new EnemyGridGraphics());
+	bulletGraphics = unique_ptr<BulletGraphics>(new BulletGraphics());
 
-	playerGraphics->SetModel(((App*)App::Get())->GetResourceManager()->GetModel(ResourceManager::ModelCodes::PLAYER));
+	playerGraphics->SetModel(App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::PLAYER));
+	bulletGraphics->SetModel(App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::BULLET));
 
 	if(!playerGraphics->Init(device, world, hwnd))
 		return false;
@@ -27,27 +29,15 @@ bool TheEntireActualGraphics::Init(ID3D11Device* device, World* world, HWND hwnd
 	if(!enemyGraphics->Init(device, world, hwnd))
 		return false;
 
+	if(!bulletGraphics->Init(device, world, hwnd))
+		return false;
+
 	return true;
-}
-
-void TheEntireActualGraphics::Shutdown()
-{
-	if(playerGraphics != NULL)
-	{
-		playerGraphics->Shutdown();
-		playerGraphics = NULL;
-	}
-
-	if(enemyGraphics != NULL)
-	{
-	
-		enemyGraphics->Shutdown();
-		enemyGraphics = NULL;
-	}
 }
 
 void TheEntireActualGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
 {
 	playerGraphics->Render(context, transMatrix);
 	enemyGraphics->Render(context, transMatrix);
+	bulletGraphics->Render(context, transMatrix);
 }
