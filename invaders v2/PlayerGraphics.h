@@ -16,7 +16,7 @@ protected:
 	virtual bool InitBuffers(ID3D11Device*);
 	virtual void ShutdownBuffers();
 	virtual void SetBuffers(ID3D11DeviceContext*);
-	virtual void Update(ID3D11DeviceContext*);
+	virtual bool Update(ID3D11DeviceContext*);
 
 protected:
 	Model *model;

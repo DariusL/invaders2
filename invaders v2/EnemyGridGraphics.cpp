@@ -18,7 +18,7 @@ bool EnemyGridGraphics::Init(ID3D11Device* device, World* world, HWND hwnd)
 	int width = world->GetEnemies()->GetWidth();
 	int height = world->GetEnemies()->GetHeight();
 
-	Model *model = ((App*)App::Get())->GetResourceManager()->GetModel(ResourceManager::ModelCodes::ENEMY);
+	Model *model = ((App*)App::Get())->GetResourceManager()->GetModel(ResourceManager::ModelCodes::MODEL_ENEMY);
 
 	this->world = world;
 

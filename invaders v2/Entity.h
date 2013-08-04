@@ -9,26 +9,33 @@ protected:
 	D3DXVECTOR3 pos;
 	D3DXVECTOR2 size;
 
-	//per second
-	double fireRate;
-	double lastFired;
+	float speed;
+	float deathTime;
+	bool dead;
 public:
 	Entity();
 	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size);
+	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed);
 	~Entity(void);
 
 	D3DXVECTOR3 GetPos(){return pos;}
 	void MoveBy(D3DXVECTOR3 step);
+	void MoveTo(D3DXVECTOR3 pos);
 
 	float GetLeftBorder() const {return pos.x - size.x / 2;}
 	float GetRightBorder() const {return pos.x + size.x / 2;}
 	float GetTopBorder() const {return pos.y + size.y / 2;}
 	float GetBottomBorder() const {return pos.y - size.y / 2;}
 
-	void SetFireRate(double fireRate){this->fireRate = fireRate;}
-	double GetFireRate(){return fireRate;}
+	void SetSpeed(float speed){this->speed = speed;}
+	float GetSpeed() const {return speed;}
 
-	void Fire(){lastFired = std::clock() / double(CLOCKS_PER_SEC);}
-	double GetLastFired(){return lastFired;}
+	float GetDeathTime() const {return deathTime;}
+
+	bool IsDead() const {return dead;}
+	void Kill();
+	void Revive(){dead = false;}
+	
+	bool CollidesWith(const Entity &other) const;
 };
 

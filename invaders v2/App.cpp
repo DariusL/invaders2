@@ -9,7 +9,7 @@ App::App()
 
 	screenHeight = 720;
 	screenWidth = 1280;
-	frameRate = 60;
+	frameRateLimit = 1000;
 	fullscreen = false;
 	world = NULL;
 }
@@ -48,11 +48,13 @@ bool App::Init()
 {
 	InitWindows();
 	Handle = this;
-	world = new World();
-	world->Init(frameRate);
 
 	manager = new ResourceManager();
 	if(!manager->Init())
+		return false;
+
+	world = new World();
+	if(!world->Init())
 		return false;
 
 	input = new Input();
@@ -117,8 +119,8 @@ void App::InitWindows()
 	}
 
 	wHandle = CreateWindowEx(WS_EX_APPWINDOW, appName, appName, 
-				WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
-				posX, posY, screenWidth, screenHeight, NULL, NULL, hInstance, NULL);
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
+		posX, posY, screenWidth, screenHeight, NULL, NULL, hInstance, NULL);
 	ShowWindow(wHandle, SW_SHOW);
 	SetForegroundWindow(wHandle);
 	SetFocus(wHandle);
@@ -128,11 +130,16 @@ void App::InitWindows()
 void App::Run()
 {
 	MSG msg;
-	bool running = true;
+	running = true;
 	ZeroMemory(&msg, sizeof(msg));
+
+	stringstream ss;
+	long c;
+	lastFrame = clock();
 
 	while(running)
 	{
+		c = clock();
 		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -141,6 +148,10 @@ void App::Run()
 		if(!OnLoop())
 			running = false;
 		graphics->Render();
+
+		ss << clock() - c;
+		logger->Log(ss.str());
+		ss.str("");
 	}
 }
 
@@ -154,9 +165,15 @@ bool App::OnLoop()
 	if(input->IsKeyDown(VK_SPACE))
 		worldEvents |= ControlCodes::FIRE;
 	if(input->IsKeyDown(VK_ESCAPE))
-		return false;
-	world->OnLoop(worldEvents);
+		Quit();
+	world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
+	lastFrame = clock();
 	return true;
+}
+
+void App::Quit()
+{
+	running = false;
 }
 
 void App::ShutdownWindows()
@@ -176,8 +193,10 @@ LRESULT CALLBACK App::MessageHandler(HWND whandle, UINT message , WPARAM wparam,
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		Quit();
 		break;
 	case WM_QUIT:
+		Quit();
 		break;
 	case WM_KEYDOWN:
 		input->KeyDown(wparam);

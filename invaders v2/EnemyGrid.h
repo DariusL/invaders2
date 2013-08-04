@@ -1,19 +1,26 @@
 #pragma once
-#include "Entity.h"
+#include "Shooter.h"
 #include "Utils.h"
 #include <vector>
 #include <memory>
+#include <list>
+#include <random>
 using namespace std;
 class EnemyGrid
 {
-	vector<shared_ptr<Entity>> grid;
+	vector<shared_ptr<Shooter>> grid;
+	list<Entity> bullets;
 	int gridHeight;
 	int gridWidth;
 	D3DXVECTOR3 center;
 	D3DXVECTOR2 gap;
 	D3DXVECTOR2 enemySize;
 	D3DXVECTOR2 betweenCenters;
+	bool movingRight;
+	float speed;
 
+	random_device rd;
+    mt19937 gen;
 public:
 	EnemyGrid(void);
 	~EnemyGrid(void);
@@ -23,9 +30,11 @@ public:
 	int GetHeight(){return gridHeight;}
 	int GetWidth(){return gridWidth;}
 
-	shared_ptr<Entity> GetEnemy(int i){return grid[i];}
+	shared_ptr<Shooter> GetEnemy(int i){return grid[i];}
 
 	void MoveBy(D3DXVECTOR3 vec);
+	void OnLoop(float frameLength);
+	void Fire(float frameLength);
 	D3DXVECTOR3 GetPos(){return center;}
 
 	float GetRightBorder(){return center.x + betweenCenters.x / 2 + enemySize.x / 2;}
@@ -34,6 +43,8 @@ public:
 	float GetBottomBorder(){return center.y - betweenCenters.y / 2 - enemySize.y / 2;}
 
 	//returns true if there's an enemy at pos and the enemy by &enemy
-	bool GetEnemyAt(D3DXVECTOR3 pos, shared_ptr<Entity> &enemy);
+	bool GetEnemyAt(D3DXVECTOR3 pos, shared_ptr<Shooter> &enemy);
 	bool IsInBounds(D3DXVECTOR3 pos);
+
+	list<Entity> &getBullets(){return bullets;}
 };

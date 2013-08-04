@@ -11,6 +11,6 @@ protected:
 	bool InitBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void SetBuffers(ID3D11DeviceContext*);
-	void Update(ID3D11DeviceContext*);
+	bool Update(ID3D11DeviceContext*);
 };
 

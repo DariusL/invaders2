@@ -18,7 +18,6 @@ ResourceManager::~ResourceManager(void)
 
 bool ResourceManager::Init()
 {
-	modelCount = 2;
 	Model *temp;
 	temp = new Model;
 	
@@ -106,6 +105,11 @@ bool ResourceManager::Init()
 	temp->indices[5] = 2;
 
 	models.push_back(temp);
+
+	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
+	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
+	hitboxes.push_back(D3DXVECTOR2(0.2f, 1.5f));
+	hitboxes.push_back(D3DXVECTOR2(1.0f, 1.0f));
 
 	return true;
 }

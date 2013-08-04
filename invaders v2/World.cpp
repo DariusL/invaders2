@@ -10,41 +10,70 @@ World::~World()
 {
 }
 
-bool World::Init(unsigned int fRate)
+bool World::Init()
 {
-	player = Entity(D3DXVECTOR3(0.0f, -15.0f, 0.0f), D3DXVECTOR2(2, 2));
-	player.SetFireRate(0.5);
-	enemies.Init(11, 5, D3DXVECTOR3(0.0f, 10, 0.0f), D3DXVECTOR2(1, 1), D3DXVECTOR2(2, 2));
-	frameRate = fRate;
+	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
+	ResourceManager *rm = App::Get()->GetResourceManager();
+	player = Shooter(playerStart, rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f);
+	enemies.Init(11, 5, D3DXVECTOR3(0.0f, 10.0f, 0.0f), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY_GAP), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY));
 	enemiesMovingRight = true;
+	lives = 3;
 	return true;
 }
 
-void World::OnLoop(int input)
+void World::OnLoop(int input, float frameLength)
 {
-	if(enemies.GetLeftBorder() < float(FIELD_WIDTH) / -2)
-		enemiesMovingRight = true;
-	else if(enemies.GetRightBorder() > float(FIELD_WIDTH) / 2)
-		enemiesMovingRight = false;
-	if(enemiesMovingRight)
-		enemies.MoveBy(D3DXVECTOR3(0.2f, 0.0f, 0.0f));
-	else
-		enemies.MoveBy(D3DXVECTOR3(-0.2f, 0.0f, 0.0f));
+	CollideBullets();
+	enemies.OnLoop(frameLength);
+	ResourceManager *rm = App::Get()->GetResourceManager();
 	if(input != 0)
 	{
 		if((input & ControlCodes::LEFT_AND_RIGHT) != ControlCodes::LEFT_AND_RIGHT)
 			if(input & ControlCodes::LEFT && player.GetLeftBorder() > float(FIELD_WIDTH) / -2)
-				player.MoveBy(D3DXVECTOR3(-0.3f, 0.0f, 0.0f));
+				player.MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (player.GetSpeed() * frameLength));
 			else if(input & ControlCodes::RIGHT && player.GetRightBorder() < float(FIELD_WIDTH) / 2)
-				player.MoveBy(D3DXVECTOR3(0.3f, 0.0f, 0.0f));
-		if(input & ControlCodes::FIRE && player.GetLastFired() + player.GetFireRate() <= clock() / double(CLOCKS_PER_SEC))
+				player.MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (player.GetSpeed() * frameLength));
+		if((input & ControlCodes::FIRE) 
+			&& player.GetLastFired() + player.GetFireRate() <= clock() / double(CLOCKS_PER_SEC)
+			&& !player.IsDead())
 		{
 			player.Fire();
-			playerBullets.push_back(Entity(player.GetPos(), D3DXVECTOR2(0.2f, 1.5f)));
+			playerBullets.push_back(Entity(player.GetPos(), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_BULLET), 18.0f));
 		}
 
 	}
+	if(player.IsDead())
+	{
+		if(lives > 0 && player.GetDeathTime() + 2 < clock() / (float)CLOCKS_PER_SEC)
+		{
+			lives--;
+			player.Revive();
+			player.MoveTo(playerStart);
+		}
+	}
+	shared_ptr<Shooter> temp;
 	for(auto &b : playerBullets)
-		b.MoveBy(D3DXVECTOR3(0.0f, 0.3f, 0.0f));
-	playerBullets.remove_if([](const Entity &ent){return ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
+	{
+		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
+		if(enemies.GetEnemyAt(b.GetPos(), temp))
+		{
+			temp->Kill();
+			b.Kill();
+		}
+	}
+	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
+}
+
+void World::CollideBullets()
+{
+	list<Entity> enemyBullets = enemies.getBullets();
+	for(auto &p : playerBullets)
+		for(auto &e : enemyBullets)
+		{
+			if(p.CollidesWith(e))
+			{
+				p.Kill();
+				e.Kill();
+			}
+		}
 }

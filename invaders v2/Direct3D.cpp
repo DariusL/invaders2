@@ -57,7 +57,7 @@ Direct3D::~Direct3D()
 	if(swapChain)
 	{
 		swapChain->Release();
-		swapChain = 0;
+		swapChain = NULL;
 	}
 }
 
@@ -78,7 +78,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	D3D11_RASTERIZER_DESC rasterDesc;
 	D3D11_VIEWPORT viewport;
 	float fieldOfView, screenAspect;
-	vsync = vsync;
+	this->vsync = vsync;
 
 	clearColor[0] = 0.0f;
 	clearColor[1] = 0.0f;

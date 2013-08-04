@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "Shooter.h"
 #include "Globals.h"
 #include "EnemyGrid.h"
 #include "Logger.h"
@@ -12,18 +12,24 @@ using namespace std;
 class World
 {
 	list<Entity> playerBullets;
-	Entity player;
+	Shooter player;
 	EnemyGrid enemies;
 	bool enemiesMovingRight;
-	int frameRate;
+
+	float enemyGridSpeed;
+	float bulletSpeed;
+
+	int lives;
+	D3DXVECTOR3 playerStart;
 public:
 	World();
 	~World();
 
-	bool Init(unsigned int fRate);
+	bool Init();
 
-	void OnLoop(int input);
-	D3DXVECTOR3 GetPlayerPos(){return player.GetPos();}
+	void OnLoop(int input, float frameLength);
+	void CollideBullets();
+	Shooter &GetPlayer(){return player;}
 
 	EnemyGrid *GetEnemies(){return &enemies;}
 

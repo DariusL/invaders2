@@ -21,3 +21,9 @@ struct ControlCodes
 	static const int FIRE  = 1 << 2;
 	static const int PAUSE = 1 << 3;
 };
+
+struct COMDeleter {
+    template<typename T> void operator()(T* p) {
+        p->Release();
+    }
+};

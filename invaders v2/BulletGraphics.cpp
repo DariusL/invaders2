@@ -3,6 +3,7 @@
 
 BulletGraphics::BulletGraphics(void)
 {
+	bulletCount = 0;
 }
 
 
@@ -32,7 +33,12 @@ bool BulletGraphics::InitBuffers(ID3D11Device *device)
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
+	bulletData = unique_ptr<D3DXVECTOR3[]>(new D3DXVECTOR3[MAX_BULLET_COUNT]);
+
 	vertexBuffers = new ID3D11Buffer*[2];
+
+	strides = unique_ptr<unsigned int[]>(new unsigned int[2]);
+	offsets = unique_ptr<unsigned int[]>(new unsigned int[2]);
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -80,9 +86,6 @@ void BulletGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix
 
 void BulletGraphics::SetBuffers(ID3D11DeviceContext *context)
 {
-	unsigned int strides[2];
-	unsigned int offsets[2];
-
 	strides[0] = sizeof(VertexType); 
 	offsets[0] = 0;
 
@@ -90,7 +93,7 @@ void BulletGraphics::SetBuffers(ID3D11DeviceContext *context)
 	offsets[1] = 0;
     
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	context->IASetVertexBuffers(0, 2, vertexBuffers, strides, offsets);
+	context->IASetVertexBuffers(0, 2, vertexBuffers, strides.get(), offsets.get());
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
 	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
@@ -115,13 +118,15 @@ void BulletGraphics::ShutdownBuffers()
 	}
 }
 
-void BulletGraphics::Update(ID3D11DeviceContext *context)
+bool BulletGraphics::Update(ID3D11DeviceContext *context)
 {
 	list<Entity> bullets = world->GetBullets();
 
 	bulletCount = bullets.size();
 
-	D3DXVECTOR3 *bulletData = new D3DXVECTOR3[bulletCount];
+	if(bulletCount == 0)
+		return false;
+
 	int i = 0;
 
 	for(auto &x : bullets)
@@ -136,7 +141,9 @@ void BulletGraphics::Update(ID3D11DeviceContext *context)
 
 	context->Map(vertexBuffers[1], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-	memcpy(mappedResource.pData, bulletData, sizeof(D3DXVECTOR3) * bulletCount);
+	memcpy(mappedResource.pData, bulletData.get(), sizeof(D3DXVECTOR3) * bulletCount);
 
 	context->Unmap(vertexBuffers[1], 0);
+
+	return true;
 }

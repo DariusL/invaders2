@@ -10,13 +10,17 @@ class BulletGraphics : public GraphicsObject
 {
 protected:
 	static const int MAX_BULLET_COUNT = 100;
+
 	int bulletCount;
 	Model *model;
 	unique_ptr<ColorInstancedShader> shader;
+	unique_ptr<D3DXVECTOR3[]> bulletData;
+
+	unique_ptr<unsigned int[]> offsets;
+	unique_ptr<unsigned int[]> strides;
 
 	ID3D11Buffer **vertexBuffers;
 	ID3D11Buffer *indexBuffer;
-
 public:
 	BulletGraphics(void);
 	~BulletGraphics(void);
@@ -30,7 +34,7 @@ protected:
 	bool InitBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void SetBuffers(ID3D11DeviceContext*);
-	void Update(ID3D11DeviceContext*);
+	virtual bool Update(ID3D11DeviceContext*);
 
 };
 

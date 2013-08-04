@@ -10,9 +10,12 @@ EnemyGraphics::~EnemyGraphics(void)
 {
 }
 
-void EnemyGraphics::Update(ID3D11DeviceContext* context)
+bool EnemyGraphics::Update(ID3D11DeviceContext* context)
 {
-	pos = world->GetEnemies()->GetEnemy(ind)->GetPos();
+	shared_ptr<Entity> enemy = world->GetEnemies()->GetEnemy(ind);
+	if(enemy->IsDead())
+		return false;
+	pos = enemy->GetPos();
 
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
@@ -24,4 +27,5 @@ void EnemyGraphics::Update(ID3D11DeviceContext* context)
 	memcpy(mappedResource.pData, &moveMatrix, sizeof(moveMatrix));
 
 	context->Unmap(matrixBuffer, 0);
+	return true;
 }

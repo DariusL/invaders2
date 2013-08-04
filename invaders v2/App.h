@@ -1,5 +1,7 @@
 #pragma once
 #include <Windows.h>
+#include <sstream>
+
 #include "Globals.h"
 #include "Graphics.h"
 #include "Input.h"
@@ -22,9 +24,12 @@ class App
 
 	int screenHeight;
 	int screenWidth;
-	int frameRate;
+	int frameRateLimit;
+
+	long lastFrame;
 
 	bool fullscreen;
+	bool running;
 public:
 	App(void);
 	~App(void);
@@ -33,12 +38,14 @@ public:
 
 	bool Init();
 	void Run();
+	void Quit();
 
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
 
 	HWND GetWindowHandle(){return wHandle;}
 	Logger *GetLogger(){return logger;}
 	ResourceManager *GetResourceManager(){return manager;}
+	World *GetWorld(){return world;}
 
 	static App *Get(){return Handle;}
 private:

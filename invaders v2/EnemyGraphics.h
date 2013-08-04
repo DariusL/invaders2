@@ -8,6 +8,6 @@ public:
 	~EnemyGraphics(void);
 
 	void setIndex(int i){ind = i;}
-	void Update(ID3D11DeviceContext*);
+	bool Update(ID3D11DeviceContext*);
 };
 

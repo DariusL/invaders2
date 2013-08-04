@@ -3,6 +3,7 @@
 #include "PlayerGraphics.h"
 #include "EnemyGridGraphics.h"
 #include "BulletGraphics.h"
+#include "EnemyBulletGraphics.h"
 #include "Model.h"
 
 class TheEntireActualGraphics : public AbstractGroupGraphics
@@ -18,4 +19,5 @@ protected:
 	unique_ptr<PlayerGraphics> playerGraphics;
 	unique_ptr<EnemyGridGraphics> enemyGraphics;
 	unique_ptr<BulletGraphics> bulletGraphics;
+	unique_ptr<EnemyBulletGraphics> enemyBullets;
 };
