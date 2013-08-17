@@ -83,6 +83,7 @@
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
+    <ClCompile Include="EnemyBulletGraphics.cpp" />
     <ClCompile Include="EnemyGraphics.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="EnemyGridGraphics.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="PlayerGraphics.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="TheEntireActualGraphics.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
@@ -105,12 +107,14 @@
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="Direct3D.h" />
+    <ClInclude Include="EnemyBulletGraphics.h" />
     <ClInclude Include="EnemyGraphics.h" />
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="EnemyGridGraphics.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GraphicsObject.h" />
+    <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />
