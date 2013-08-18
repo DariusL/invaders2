@@ -6,7 +6,7 @@
 #include <list>
 #include <random>
 using namespace std;
-class EnemyGrid
+class EnemyGrid : public IDrawable
 {
 	vector<shared_ptr<Shooter>> grid;
 	list<Entity> bullets;
@@ -47,4 +47,7 @@ public:
 	bool IsInBounds(D3DXVECTOR3 pos);
 
 	list<Entity> &getBullets(){return bullets;}
+
+	bool Init(ID3D11Device*, HWND);
+	void Render(ID3D11DeviceContext*, D3DXMATRIX);
 };

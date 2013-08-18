@@ -39,9 +39,9 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* 
 	// Set the initial position of the camera.
 	camera->SetPosition(0.0f, 0.0f, -50.0f);
 
-	mainObject = new TheEntireActualGraphics();
+	this->world = world;
 
-	if(!mainObject->Init(d3D->GetDevice(), world, handle))
+	if(!world->Init(d3D->GetDevice(), handle))
 		return false;
 
 	return true;
@@ -61,7 +61,7 @@ void Graphics::Render()
 	d3D->GetProjectionMatrix(projectionMatrix);
 	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 
-	mainObject->Render(d3D->GetDeviceContext(), transMatrix);
+	world->Render(d3D->GetDeviceContext(), transMatrix);
 
 	d3D->EndScene();
 }

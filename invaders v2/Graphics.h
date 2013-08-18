@@ -15,7 +15,7 @@ class Graphics
 	Direct3D *d3D;
 	Camera *camera;
 
-	GraphicsObject *mainObject;
+	World *world;
 
 	bool fullScreen;
 	bool vsync;

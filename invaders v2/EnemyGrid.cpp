@@ -1,6 +1,7 @@
 #include "EnemyGrid.h"
 #include "World.h"
 #include "App.h"
+#include "ResourceManager.h"
 
 EnemyGrid::EnemyGrid(void)
 {
@@ -21,12 +22,21 @@ bool EnemyGrid::Init(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap,
 	gen = mt19937(rd());
 	
 	this->betweenCenters = D3DXVECTOR2((width - 1) * (gap.x + enemySize.x), (height - 1) * (gap.y + enemySize.y));
+	Model *enemyModel = App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::MODEL_ENEMY);
 	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 	gridHeight = height;
 	gridWidth = width;
 	for(int i = 0; i < height; i++)
 		for(int j = 0; j < width; j++)
-			grid.push_back(make_shared<Shooter>(topLeft + D3DXVECTOR3(j * (gap.x + enemySize.x), i * -(gap.y + enemySize.y), 0), enemySize, 0.0f, 0.5f));
+			grid.push_back(make_shared<Shooter>(topLeft + D3DXVECTOR3(j * (gap.x + enemySize.x), i * -(gap.y + enemySize.y), 0), enemySize, 0.0f, 0.5f, enemyModel));
+	return true;
+}
+
+bool EnemyGrid::Init(ID3D11Device* device, HWND hwnd)
+{
+	for(auto &a : grid)
+		if(!a->Init(device, hwnd))
+			return false;
 	return true;
 }
 
@@ -73,16 +83,16 @@ void EnemyGrid::OnLoop(float frameLength)
 	else
 		MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (speed * frameLength));
 	Fire(frameLength);
-	Entity player = App::Get()->GetWorld()->GetPlayer();
-	D3DXVECTOR3 playerPos = player.GetPos();
+	shared_ptr<Shooter> player = App::Get()->GetWorld()->GetPlayer();
+	D3DXVECTOR3 playerPos = player->GetPos();
 	for(auto &b : bullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, -1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 		D3DXVECTOR3 bPos = b.GetPos();
-		if(bPos.y >= player.GetBottomBorder() && bPos.y <= player.GetTopBorder()
-			&& bPos.x >= player.GetLeftBorder() && bPos.x <= player.GetRightBorder())
+		if(bPos.y >= player->GetBottomBorder() && bPos.y <= player->GetTopBorder()
+			&& bPos.x >= player->GetLeftBorder() && bPos.x <= player->GetRightBorder())
 
-			App::Get()->GetWorld()->GetPlayer().Kill();
+			App::Get()->GetWorld()->GetPlayer()->Kill();
 	}
 	bullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() < World::FIELD_HEIGHT / -2.0f;});
 }
@@ -105,4 +115,10 @@ void EnemyGrid::Fire(float frameLength)
 			bullets.emplace_back(enemy->GetPos(), D3DXVECTOR2(0.2f, 1.5f), 5.0f);
 		}
 	}
+}
+
+void EnemyGrid::Render(ID3D11DeviceContext* context, D3DXMATRIX transmatrix)
+{
+	for(auto &a : grid)
+		a->Render(context, transmatrix);
 }
