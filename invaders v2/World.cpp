@@ -16,7 +16,7 @@ bool World::Init()
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	player = make_shared<Shooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
 	player->MoveTo(playerStart);
-	enemies.Init(11, 5, D3DXVECTOR3(0.0f, 10.0f, 0.0f), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY_GAP), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY));
+	enemies.Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), rm->GetLevel(ResourceManager::Levels::L1));
 	enemiesMovingRight = true;
 	lives = 3;
 	return true;
@@ -75,7 +75,7 @@ void World::OnLoop(int input, float frameLength)
 	for(auto &b : playerBullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
-		if(enemies.GetEnemyAt(b.GetPos(), temp))
+		if(enemies.GetEnemyAt(b, temp))
 		{
 			temp->Kill();
 			b.Kill();

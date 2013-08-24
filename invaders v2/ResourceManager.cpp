@@ -123,10 +123,14 @@ bool ResourceManager::Init()
 	level->gridWidth = 11;
 	level->gridHeight = 5;
 	level->enemies = unique_ptr<int[]>(new int[level->gridHeight * level->gridWidth]);
+	level->gap = D3DXVECTOR2(3.0f, 3.0f);
+
 	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
 		level->enemies[i] = Enemies::BASIC;
 	}
+
+	levels.push_back(level);
 
 	return true;
 }
