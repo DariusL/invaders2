@@ -37,6 +37,9 @@ bool EnemyGrid::Init(ID3D11Device* device, HWND hwnd)
 	for(auto &a : grid)
 		if(!a->Init(device, hwnd))
 			return false;
+	enemyBulletGraphics = unique_ptr<Bullets>(new Bullets());
+	if(!enemyBulletGraphics->Init(device, hwnd))
+		return false;
 	return true;
 }
 
@@ -121,4 +124,6 @@ void EnemyGrid::Render(ID3D11DeviceContext* context, D3DXMATRIX transmatrix)
 {
 	for(auto &a : grid)
 		a->Render(context, transmatrix);
+	enemyBulletGraphics->setBullets(bullets);
+	enemyBulletGraphics->Render(context, transmatrix);
 }

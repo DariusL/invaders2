@@ -1,25 +1,25 @@
-#include "BulletGraphics.h"
+#include "Bullets.h"
+#include "App.h"
+#include "ResourceManager.h"
 
 
-BulletGraphics::BulletGraphics(void)
-{
-	bulletCount = 0;
-}
-
-
-BulletGraphics::~BulletGraphics(void)
-{
-	ShutdownBuffers();
-}
-
-void BulletGraphics::SetModel(Model *model)
+Bullets::Bullets(Model *model)
 {
 	this->model = model;
 }
 
-bool BulletGraphics::Init(ID3D11Device* device, World *world, HWND handle)
+Bullets::Bullets()
 {
-	this->world = world;
+	this->model = App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::MODEL_BULLET);
+}
+
+
+Bullets::~Bullets(void)
+{
+}
+
+bool Bullets::Init(ID3D11Device* device, HWND handle)
+{
 	shader = unique_ptr<ColorInstancedShader>(new ColorInstancedShader());
 	if(!shader->Init(device, handle))
 		return false;
@@ -28,7 +28,7 @@ bool BulletGraphics::Init(ID3D11Device* device, World *world, HWND handle)
 	return true;
 }
 
-bool BulletGraphics::InitBuffers(ID3D11Device *device)
+bool Bullets::InitBuffers(ID3D11Device *device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -76,7 +76,7 @@ bool BulletGraphics::InitBuffers(ID3D11Device *device)
 	return true;
 }
 
-void BulletGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
+void Bullets::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
 {
 	Update(context);
 	SetBuffers(context);
@@ -84,7 +84,7 @@ void BulletGraphics::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix
 	shader->RenderShader(context, model->indexCount, bulletCount);
 }
 
-void BulletGraphics::SetBuffers(ID3D11DeviceContext *context)
+void Bullets::SetBuffers(ID3D11DeviceContext *context)
 {
 	strides[0] = sizeof(VertexType); 
 	offsets[0] = 0;
@@ -102,7 +102,7 @@ void BulletGraphics::SetBuffers(ID3D11DeviceContext *context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void BulletGraphics::ShutdownBuffers()
+void Bullets::ShutdownBuffers()
 {
 	// Release the index buffer.
 	if(indexBuffer)
@@ -118,14 +118,9 @@ void BulletGraphics::ShutdownBuffers()
 	}
 }
 
-bool BulletGraphics::Update(ID3D11DeviceContext *context)
+void Bullets::setBullets(const list<Entity> &bullets)
 {
-	list<Entity> bullets = world->GetBullets();
-
 	bulletCount = bullets.size();
-
-	if(bulletCount == 0)
-		return false;
 
 	int i = 0;
 
@@ -136,6 +131,12 @@ bool BulletGraphics::Update(ID3D11DeviceContext *context)
 		bulletData[i] = x.GetPos();
 		i++;
 	}
+}
+
+bool Bullets::Update(ID3D11DeviceContext *context)
+{
+	if(bulletCount == 0)
+		return false;
 	
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 

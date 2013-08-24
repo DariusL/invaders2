@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "EnemyGrid.h"
 #include "Logger.h"
+#include "Bullets.h"
 #include <cmath>
 #include <D3D11.h>
 #include <list>
@@ -12,6 +13,7 @@ using namespace std;
 class World : public IDrawable
 {
 	list<Entity> playerBullets;
+	unique_ptr<Bullets> playerBulletGraphics;
 	shared_ptr<Shooter> player;
 	EnemyGrid enemies;
 	bool enemiesMovingRight;

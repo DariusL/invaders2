@@ -1,6 +1,7 @@
 #pragma once
 #include "Shooter.h"
 #include "Utils.h"
+#include "Bullets.h"
 #include <vector>
 #include <memory>
 #include <list>
@@ -10,6 +11,7 @@ class EnemyGrid : public IDrawable
 {
 	vector<shared_ptr<Shooter>> grid;
 	list<Entity> bullets;
+	unique_ptr<Bullets> enemyBulletGraphics;
 	int gridHeight;
 	int gridWidth;
 	D3DXVECTOR3 center;

@@ -1,14 +1,22 @@
 #pragma once
-#include "graphicsobject.h"
+#pragma warning(disable : 4005)
+#include "idrawable.h"
+#include "Model.h"
 #include "ColorInstancedShader.h"
+#include "Entity.h"
 #include <memory>
 #include <list>
 
 using namespace std;
-
-class BulletGraphics : public GraphicsObject
+class Bullets : public IDrawable
 {
-protected:
+public:
+	Bullets(Model *model);
+	Bullets();
+	~Bullets(void);
+
+private:
+
 	static const int MAX_BULLET_COUNT = 100;
 
 	int bulletCount;
@@ -21,20 +29,18 @@ protected:
 
 	ID3D11Buffer **vertexBuffers;
 	ID3D11Buffer *indexBuffer;
-public:
-	BulletGraphics(void);
-	~BulletGraphics(void);
 
-	public:
-	bool Init(ID3D11Device*, World*, HWND);
+public:
+	void setBullets(const list<Entity> &bullets);
+
+
+	bool Init(ID3D11Device*, HWND);
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
 	void SetModel(Model *model);
 
-protected:
+private:
 	bool InitBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void SetBuffers(ID3D11DeviceContext*);
-	virtual bool Update(ID3D11DeviceContext*);
-
+	bool Update(ID3D11DeviceContext*);
 };
-

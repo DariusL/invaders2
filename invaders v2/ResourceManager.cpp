@@ -8,7 +8,7 @@ ResourceManager::ResourceManager(void)
 
 ResourceManager::~ResourceManager(void)
 {
-	for(int i = 0; i < models.size(); i++)
+	for(unsigned int i = 0; i < models.size(); i++)
 	{
 		delete [] models[i]->indices;
 		delete [] models[i]->vertices;

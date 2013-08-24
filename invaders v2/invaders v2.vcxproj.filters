@@ -42,22 +42,7 @@
     <ClCompile Include="ColorShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TheEntireActualGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyGrid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyGridGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractGroupGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
@@ -72,16 +57,13 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BulletGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ColorInstancedShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBulletGraphics.cpp">
+    <ClCompile Include="Shooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shooter.cpp">
+    <ClCompile Include="Bullets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -93,9 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
@@ -116,22 +95,7 @@
     <ClInclude Include="ColorShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TheEntireActualGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyGrid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyGridGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractGroupGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
@@ -146,16 +110,22 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BulletGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ColorInstancedShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBulletGraphics.h">
+    <ClInclude Include="Shooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shooter.h">
+    <ClInclude Include="IDrawable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawableGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawableObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

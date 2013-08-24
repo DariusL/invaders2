@@ -6,8 +6,6 @@
 #include "World.h"
 #include "Globals.h"
 #include "App.h"
-#include "GraphicsObject.h"
-#include "TheEntireActualGraphics.h"
 
 class App;
 class Graphics

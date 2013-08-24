@@ -76,14 +76,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractGroupGraphics.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="BulletGraphics.cpp" />
+    <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
-    <ClCompile Include="EnemyBulletGraphics.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -96,18 +94,15 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractGroupGraphics.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="BulletGraphics.h" />
+    <ClInclude Include="Bullets.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="Direct3D.h" />
-    <ClInclude Include="EnemyBulletGraphics.h" />
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics.h" />
-    <ClInclude Include="GraphicsObject.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableGroup.h" />
     <ClInclude Include="IDrawableObject.h" />

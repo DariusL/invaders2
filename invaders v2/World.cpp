@@ -27,6 +27,9 @@ bool World::Init(ID3D11Device *device, HWND hwnd)
 		return false;
 	if(!enemies.Init(device, hwnd))
 		return false;
+	playerBulletGraphics = unique_ptr<Bullets>(new Bullets());
+	if(!playerBulletGraphics->Init(device, hwnd))
+		return false;
 	return true;
 }
 
@@ -91,4 +94,6 @@ void World::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
 {
 	player->Render(context, transMatrix);
 	enemies.Render(context, transMatrix);
+	playerBulletGraphics->setBullets(playerBullets);
+	playerBulletGraphics->Render(context, transMatrix);
 }
