@@ -11,7 +11,7 @@ using namespace std;
 class Bullets : public IDrawable
 {
 public:
-	Bullets(Model *model);
+	Bullets(shared_ptr<Model> model);
 	Bullets();
 	~Bullets(void);
 
@@ -20,7 +20,7 @@ private:
 	static const int MAX_BULLET_COUNT = 100;
 
 	int bulletCount;
-	Model *model;
+	shared_ptr<Model> model;
 	unique_ptr<ColorInstancedShader> shader;
 	unique_ptr<D3DXVECTOR3[]> bulletData;
 
@@ -36,7 +36,7 @@ public:
 
 	bool Init(ID3D11Device*, HWND);
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
-	void SetModel(Model *model);
+	void SetModel(shared_ptr<Model> model);
 
 private:
 	bool InitBuffers(ID3D11Device*);

@@ -1,9 +1,11 @@
 #pragma once
 #include "Globals.h"
+#include <memory>
+using namespace std;
 struct Model
 {
-	VertexType *vertices;
+	unique_ptr<VertexType[]> vertices;
 	int vertexCount;
-	int *indices;
+	unique_ptr<int[]> indices;
 	int indexCount;
 };

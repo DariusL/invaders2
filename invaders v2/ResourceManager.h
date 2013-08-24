@@ -6,14 +6,14 @@
 using namespace std;
 class ResourceManager
 {
-	vector<Model*> models;
+	vector<shared_ptr<Model>> models;
 	vector<D3DXVECTOR2> hitboxes;
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
 
 	bool Init();
-	Model *GetModel(int i){return models[i];}
+	shared_ptr<Model> GetModel(int i){return models[i];}
 	const D3DXVECTOR2 &GetHitbox(int i){return hitboxes[i];}
 	shared_ptr<Shooter> GetEnemy(int type);
 

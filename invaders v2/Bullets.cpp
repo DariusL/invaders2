@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 
 
-Bullets::Bullets(Model *model)
+Bullets::Bullets(shared_ptr<Model> model)
 {
 	this->model = model;
 }
@@ -45,7 +45,7 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	vertexData.pSysMem = model->vertices;
+	vertexData.pSysMem = model->vertices.get();
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
@@ -57,7 +57,7 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 	indexBufferDesc.ByteWidth = sizeof(int) * model->indexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
-	indexData.pSysMem = model->indices;
+	indexData.pSysMem = model->indices.get();
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 

@@ -8,12 +8,6 @@ ResourceManager::ResourceManager(void)
 
 ResourceManager::~ResourceManager(void)
 {
-	for(unsigned int i = 0; i < models.size(); i++)
-	{
-		delete [] models[i]->indices;
-		delete [] models[i]->vertices;
-		delete models[i];
-	}
 }
 
 shared_ptr<Shooter> ResourceManager::GetEnemy(int type)
@@ -35,9 +29,9 @@ bool ResourceManager::Init()
 	temp = new Model;
 	
 	temp->vertexCount = 4;
-	temp->vertices = new VertexType[temp->vertexCount];
+	temp->vertices = unique_ptr<VertexType[]>(new VertexType[temp->vertexCount]);
 	temp->indexCount = 6;
-	temp->indices = new int[temp->indexCount];	
+	temp->indices = unique_ptr<int[]>(new int[temp->indexCount]);	
 	
 	temp->vertices[0].position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	temp->vertices[0].color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
@@ -59,14 +53,14 @@ bool ResourceManager::Init()
 	temp->indices[4] = 3;
 	temp->indices[5] = 2;
 
-	models.push_back(temp);
+	models.push_back(unique_ptr<Model>(temp));
 
 	temp = new Model;
 
 	temp->vertexCount = 4;
-	temp->vertices = new VertexType[temp->vertexCount];
+	temp->vertices = unique_ptr<VertexType[]>(new VertexType[temp->vertexCount]);
 	temp->indexCount = 6;
-	temp->indices = new int[temp->indexCount];	
+	temp->indices = unique_ptr<int[]>(new int[temp->indexCount]);	
 	
 	temp->vertices[0].position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	temp->vertices[0].color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -88,14 +82,14 @@ bool ResourceManager::Init()
 	temp->indices[4] = 3;
 	temp->indices[5] = 2;
 
-	models.push_back(temp);
+	models.push_back(unique_ptr<Model>(temp));
 
 	temp = new Model;
 
 	temp->vertexCount = 4;
-	temp->vertices = new VertexType[temp->vertexCount];
+	temp->vertices = unique_ptr<VertexType[]>(new VertexType[temp->vertexCount]);
 	temp->indexCount = 6;
-	temp->indices = new int[temp->indexCount];	
+	temp->indices = unique_ptr<int[]>(new int[temp->indexCount]);	
 	
 	temp->vertices[0].position = D3DXVECTOR3(-0.1f, -0.75f, 0.0f);  // Bottom left.
 	temp->vertices[0].color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -117,7 +111,7 @@ bool ResourceManager::Init()
 	temp->indices[4] = 3;
 	temp->indices[5] = 2;
 
-	models.push_back(temp);
+	models.push_back(unique_ptr<Model>(temp));
 
 	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
 	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
