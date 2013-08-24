@@ -94,11 +94,11 @@ void EnemyGrid::OnLoop(float frameLength)
 	for(auto &b : bullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, -1.0f, 0.0f) * (b.GetSpeed() * frameLength));
-		D3DXVECTOR3 bPos = b.GetPos();
-		if(bPos.y >= player->GetBottomBorder() && bPos.y <= player->GetTopBorder()
-			&& bPos.x >= player->GetLeftBorder() && bPos.x <= player->GetRightBorder())
-
-			App::Get()->GetWorld()->GetPlayer()->Kill();
+		if(player->CollidesWith(b))
+		{
+			b.Kill();
+			player->Kill();
+		}
 	}
 	bullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() < World::FIELD_HEIGHT / -2.0f;});
 }
