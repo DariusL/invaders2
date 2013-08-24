@@ -14,7 +14,8 @@ bool World::Init()
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	player = make_shared<Shooter>(playerStart, rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::ModelCodes::MODEL_PLAYER));
+	player = make_shared<Shooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
+	player->MoveTo(playerStart);
 	enemies.Init(11, 5, D3DXVECTOR3(0.0f, 10.0f, 0.0f), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY_GAP), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_ENEMY));
 	enemiesMovingRight = true;
 	lives = 3;
@@ -41,10 +42,17 @@ void World::OnLoop(int input, float frameLength)
 	if(input != 0)
 	{
 		if((input & ControlCodes::LEFT_AND_RIGHT) != ControlCodes::LEFT_AND_RIGHT)
+		{
 			if(input & ControlCodes::LEFT && player->GetLeftBorder() > float(FIELD_WIDTH) / -2)
+			{
 				player->MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
-			else if(input & ControlCodes::RIGHT && player->GetRightBorder() < float(FIELD_WIDTH) / 2)
-				player->MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
+			}
+			else 
+				if(input & ControlCodes::RIGHT && player->GetRightBorder() < float(FIELD_WIDTH) / 2)
+				{
+					player->MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
+				}
+		}
 		if((input & ControlCodes::FIRE) 
 			&& player->GetLastFired() + player->GetFireRate() <= clock() / double(CLOCKS_PER_SEC)
 			&& !player->IsDead())
@@ -80,6 +88,7 @@ void World::CollideBullets()
 {
 	list<Entity> &enemyBullets = enemies.getBullets();
 	for(auto &p : playerBullets)
+	{
 		for(auto &e : enemyBullets)
 		{
 			if(p.CollidesWith(e))
@@ -88,6 +97,7 @@ void World::CollideBullets()
 				e.Kill();
 			}
 		}
+	}
 }
 
 void World::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)

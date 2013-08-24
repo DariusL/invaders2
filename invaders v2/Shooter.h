@@ -25,7 +25,7 @@ class Shooter : public Entity, public IDrawableObject
 	unique_ptr<ID3D11Buffer, COMDeleter> matrixBuffer;
 public:
 	Shooter(void);
-	Shooter(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed, float fireRate, Model *model);
+	Shooter(D3DXVECTOR2 size, float speed, float fireRate, Model *model);
 	~Shooter(void);
 
 	void SetFireRate(float fireRate){this->fireRate = fireRate;}

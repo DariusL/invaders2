@@ -16,6 +16,19 @@ ResourceManager::~ResourceManager(void)
 	}
 }
 
+shared_ptr<Shooter> ResourceManager::GetEnemy(int type)
+{
+	switch (type)
+	{
+	case Enemies::BASIC:
+		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 0.0f, 0.5f, models[Models::MODEL_ENEMY]);
+		break;
+	default:
+		return NULL;
+		break;
+	}
+}
+
 bool ResourceManager::Init()
 {
 	Model *temp;

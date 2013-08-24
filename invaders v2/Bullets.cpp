@@ -10,7 +10,7 @@ Bullets::Bullets(Model *model)
 
 Bullets::Bullets()
 {
-	this->model = App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::MODEL_BULLET);
+	this->model = App::Get()->GetResourceManager()->GetModel(ResourceManager::Models::MODEL_BULLET);
 }
 
 

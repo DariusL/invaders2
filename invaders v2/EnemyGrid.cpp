@@ -22,13 +22,16 @@ bool EnemyGrid::Init(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap,
 	gen = mt19937(rd());
 	
 	this->betweenCenters = D3DXVECTOR2((width - 1) * (gap.x + enemySize.x), (height - 1) * (gap.y + enemySize.y));
-	Model *enemyModel = App::Get()->GetResourceManager()->GetModel(ResourceManager::ModelCodes::MODEL_ENEMY);
+	ResourceManager *rm = App::Get()->GetResourceManager();
 	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 	gridHeight = height;
 	gridWidth = width;
 	for(int i = 0; i < height; i++)
-		for(int j = 0; j < width; j++)
-			grid.push_back(make_shared<Shooter>(topLeft + D3DXVECTOR3(j * (gap.x + enemySize.x), i * -(gap.y + enemySize.y), 0), enemySize, 0.0f, 0.5f, enemyModel));
+		for(int j = 0; j < width; j++){
+			shared_ptr<Shooter> enemy = rm->GetEnemy(ResourceManager::Enemies::BASIC);
+			enemy->MoveTo(topLeft + D3DXVECTOR3(j * (gap.x + enemySize.x), i * -(gap.y + enemySize.y), 0));
+			grid.push_back(enemy);
+		}
 	return true;
 }
 

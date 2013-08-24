@@ -11,9 +11,8 @@ Shooter::~Shooter(void)
 {
 }
 
-Shooter::Shooter(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed, float fireRate, Model *model)
+Shooter::Shooter(D3DXVECTOR2 size, float speed, float fireRate, Model *model)
 {
-	this->pos = start;
 	this->size = size;
 	this->speed = speed;
 	this->fireRate = fireRate;
