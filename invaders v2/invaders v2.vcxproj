@@ -106,6 +106,7 @@
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableGroup.h" />
     <ClInclude Include="IDrawableObject.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />

@@ -15,7 +15,7 @@ shared_ptr<Shooter> ResourceManager::GetEnemy(int type)
 	switch (type)
 	{
 	case Enemies::BASIC:
-		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 0.0f, 0.5f, models[Models::MODEL_ENEMY]);
+		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY]);
 		break;
 	default:
 		return NULL;
@@ -117,6 +117,16 @@ bool ResourceManager::Init()
 	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
 	hitboxes.push_back(D3DXVECTOR2(0.2f, 1.5f));
 	hitboxes.push_back(D3DXVECTOR2(1.0f, 1.0f));
+
+	shared_ptr<Level> level = make_shared<Level>();
+
+	level->gridWidth = 11;
+	level->gridHeight = 5;
+	level->enemies = unique_ptr<int[]>(new int[level->gridHeight * level->gridWidth]);
+	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
+	{
+		level->enemies[i] = Enemies::BASIC;
+	}
 
 	return true;
 }
