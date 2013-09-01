@@ -43,7 +43,7 @@ bool World::Init(ID3D11Device *device, HWND hwnd)
 	return true;
 }
 
-void World::OnLoop(int input, float frameLength)
+int World::OnLoop(int input, float frameLength)
 {
 	CollideBullets();
 	enemies->OnLoop(frameLength);
@@ -84,13 +84,14 @@ void World::OnLoop(int input, float frameLength)
 	for(auto &b : playerBullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
-		if(enemies->GetEnemyAt(b, temp))
-		{
-			temp->Kill();
-			b.Kill();
-		}
 	}
+	enemies->CollideWith(playerBullets);
 	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
+	if(lives <= 0)
+		return Result::GAME_OVER;
+	if(enemies->getAliveCount() <= 0)
+		return Result::NEXT_LEVEL;
+	return Result::CONTINUE;
 }
 
 void World::CollideBullets()

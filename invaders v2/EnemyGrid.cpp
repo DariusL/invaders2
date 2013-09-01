@@ -19,6 +19,7 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 	movingRight = true;
 	speed = 15.0f;
 	gen = mt19937(rd());
+	alive = 0;
 
 	this->betweenCenters = D3DXVECTOR2(
 		(level->gridWidth - 1) * level->gap.x,
@@ -31,6 +32,7 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 			shared_ptr<Shooter> enemy = rm->GetEnemy(level->enemies[i * level->gridHeight + j]);
 			enemy->MoveTo(topLeft + D3DXVECTOR3(j * level->gap.x, i * -level->gap.y, 0));
 			grid.push_back(enemy);
+			alive++;
 		}
 	return true;
 }
@@ -75,6 +77,20 @@ bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<Shooter> &enemy)
 			}
 		}
 	return false;
+}
+
+void EnemyGrid::CollideWith(list<Entity> &bullets)
+{
+	shared_ptr<Shooter> enemy;
+	for(auto &a : bullets)
+	{
+		if(GetEnemyAt(a, enemy))
+		{
+			a.Kill();
+			enemy->Kill();
+			alive--;
+		}
+	}
 }
 
 bool EnemyGrid::IsInBounds(D3DXVECTOR3 pos)

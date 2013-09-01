@@ -170,8 +170,17 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::FIRE;
 	if(input->IsKeyDown(VK_ESCAPE))
 		Quit();
-	world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
+
+	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();
+	switch (worldResult)
+	{
+	case World::Result::GAME_OVER:
+		return false;
+	case World::Result::NEXT_LEVEL:
+		world->Stop();
+		break;
+	}
 	return true;
 }
 

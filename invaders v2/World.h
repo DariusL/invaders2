@@ -31,7 +31,7 @@ public:
 	bool Start(shared_ptr<Level> level);
 	void Stop();
 
-	void OnLoop(int input, float frameLength);
+	int OnLoop(int input, float frameLength);
 	void CollideBullets();
 	shared_ptr<Shooter> GetPlayer(){return player;}
 
@@ -46,4 +46,11 @@ public:
 
 	static const int FIELD_WIDTH = 50;
 	static const int FIELD_HEIGHT = 30;
+
+	enum Result
+	{
+		CONTINUE,
+		GAME_OVER,
+		NEXT_LEVEL
+	};
 };

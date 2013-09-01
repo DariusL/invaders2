@@ -19,6 +19,8 @@ class EnemyGrid : public IDrawable
 	bool movingRight;
 	float speed;
 
+	int alive;
+
 	random_device rd;
     mt19937 gen;
 public:
@@ -32,6 +34,7 @@ public:
 	void MoveBy(D3DXVECTOR3 vec);
 	void OnLoop(float frameLength);
 	void Fire(float frameLength);
+	void CollideWith(list<Entity> &bullets);
 	D3DXVECTOR3 GetPos(){return center;}
 
 	float GetRightBorder(){return center.x + betweenCenters.x / 2;}
@@ -47,4 +50,6 @@ public:
 
 	bool Init(ID3D11Device*, HWND);
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);
+
+	int getAliveCount(){return alive;}
 };
