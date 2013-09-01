@@ -19,11 +19,13 @@ class Graphics
 	bool vsync;
 	float screenDepth;
 	float screenNear;
+	HWND handle;
 public:
 	Graphics(void);
 	~Graphics(void);
 
-	bool Init(int width, int height, HWND handle, bool fullscreen, World* world);
+	bool Init(int width, int height, HWND handle, bool fullscreen);
+	bool Init(World *world);
 	void Render();
 
 	bool IsFullscreen(){return fullScreen;}

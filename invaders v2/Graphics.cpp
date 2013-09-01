@@ -24,9 +24,10 @@ Graphics::~Graphics()
 	}
 }
 
-bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* world)
+bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen)
 {
 	d3D = new Direct3D();
+	this->handle = handle;
 	fullScreen = fullscreen;
 	if(!d3D->Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear))
 	{
@@ -39,11 +40,14 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, World* 
 	// Set the initial position of the camera.
 	camera->SetPosition(0.0f, 0.0f, -50.0f);
 
-	this->world = world;
+	return true;
+}
 
+bool Graphics::Init(World *world)
+{
+	this->world = world;
 	if(!world->Init(d3D->GetDevice(), handle))
 		return false;
-
 	return true;
 }
 

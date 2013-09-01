@@ -4,29 +4,38 @@
 
 World::World()
 {
+	started = false;
 }
 
 World::~World()
 {
 }
 
-bool World::Init()
+bool World::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	player = make_shared<Shooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
 	player->MoveTo(playerStart);
-	enemies.Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), rm->GetLevel(ResourceManager::Levels::L1));
+	enemies = make_shared<EnemyGrid>();
+	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
 	enemiesMovingRight = true;
 	lives = 3;
+	started = true;
 	return true;
+}
+
+void World::Stop()
+{
+	playerBullets.clear();
+	started = false;
 }
 
 bool World::Init(ID3D11Device *device, HWND hwnd)
 {
 	if(!player->Init(device, hwnd))
 		return false;
-	if(!enemies.Init(device, hwnd))
+	if(!enemies->Init(device, hwnd))
 		return false;
 	playerBulletGraphics = unique_ptr<Bullets>(new Bullets());
 	if(!playerBulletGraphics->Init(device, hwnd))
@@ -37,7 +46,7 @@ bool World::Init(ID3D11Device *device, HWND hwnd)
 void World::OnLoop(int input, float frameLength)
 {
 	CollideBullets();
-	enemies.OnLoop(frameLength);
+	enemies->OnLoop(frameLength);
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	if(input != 0)
 	{
@@ -75,7 +84,7 @@ void World::OnLoop(int input, float frameLength)
 	for(auto &b : playerBullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
-		if(enemies.GetEnemyAt(b, temp))
+		if(enemies->GetEnemyAt(b, temp))
 		{
 			temp->Kill();
 			b.Kill();
@@ -86,7 +95,7 @@ void World::OnLoop(int input, float frameLength)
 
 void World::CollideBullets()
 {
-	list<Entity> &enemyBullets = enemies.getBullets();
+	list<Entity> &enemyBullets = enemies->getBullets();
 	for(auto &p : playerBullets)
 	{
 		for(auto &e : enemyBullets)
@@ -103,7 +112,7 @@ void World::CollideBullets()
 void World::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
 {
 	player->Render(context, transMatrix);
-	enemies.Render(context, transMatrix);
+	enemies->Render(context, transMatrix);
 	playerBulletGraphics->setBullets(playerBullets);
 	playerBulletGraphics->Render(context, transMatrix);
 }

@@ -15,7 +15,7 @@ class World : public IDrawable
 	list<Entity> playerBullets;
 	unique_ptr<Bullets> playerBulletGraphics;
 	shared_ptr<Shooter> player;
-	EnemyGrid enemies;
+	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
 
 	float enemyGridSpeed;
@@ -23,19 +23,23 @@ class World : public IDrawable
 
 	int lives;
 	D3DXVECTOR3 playerStart;
+	bool started;
 public:
 	World();
 	~World();
 
-	bool Init();
+	bool Start(shared_ptr<Level> level);
+	void Stop();
 
 	void OnLoop(int input, float frameLength);
 	void CollideBullets();
 	shared_ptr<Shooter> GetPlayer(){return player;}
 
-	EnemyGrid *GetEnemies(){return &enemies;}
+	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
 
 	const list<Entity> &GetBullets(){return playerBullets;}
+
+	bool IsStarted(){return started;}
 
 	bool Init(ID3D11Device*, HWND);
 	void Render(ID3D11DeviceContext*, D3DXMATRIX);

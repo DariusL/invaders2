@@ -54,15 +54,13 @@ bool App::Init()
 		return false;
 
 	world = new World();
-	if(!world->Init())
-		return false;
 
 	input = new Input();
 	if(!input)
 		return false;
 
 	graphics = new Graphics();
-	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen, world))
+	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen))
 		return false;
 
 	logger = new Logger();
@@ -157,6 +155,12 @@ void App::Run()
 
 bool App::OnLoop()
 {
+	if(!world->IsStarted())
+	{
+		world->Start(manager->GetLevel(ResourceManager::Levels::L1));
+		if(!graphics->Init(world))
+			return false;
+	}
 	int worldEvents = 0;
 	if(input->IsKeyDown(VK_LEFT))
 		worldEvents |= ControlCodes::LEFT;
