@@ -1,9 +1,9 @@
-cbuffer TransMatrix : register(cb1)
+cbuffer TransMatrix : register(cb0)
 {
     matrix transform;
 };
 
-cbuffer MoveMatrix : register(cb0)
+cbuffer MoveMatrix : register(cb1)
 {
 	matrix move;
 }

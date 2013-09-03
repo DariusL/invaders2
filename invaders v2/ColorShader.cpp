@@ -6,6 +6,7 @@ ColorShader::ColorShader()
 	vertexShader = 0;
 	pixelShader = 0;
 	layout = 0;
+	matrixBuffer = 0;
 }
 
 ColorShader::~ColorShader()
@@ -26,8 +27,6 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
-	D3D11_BUFFER_DESC lightingBufferDesc;
-	constantBuffers = new ID3D11Buffer*[2];
 
 	errorMessage = NULL;
 
@@ -81,17 +80,7 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	matrixBufferDesc.StructureByteStride = 0;
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
-	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, constantBuffers)))
-		return false;
-
-	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightingBufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
-	lightingBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightingBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightingBufferDesc.MiscFlags = 0;
-	lightingBufferDesc.StructureByteStride = 0;
-
-	if(FAILED(device->CreateBuffer(&lightingBufferDesc, NULL, constantBuffers + 1)))
+	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer)))
 		return false;
 
 	return true;
@@ -99,6 +88,13 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 
 void ColorShader::ShutdownShader()
 {
+	// Release the matrix constant buffer.
+	if(matrixBuffer)
+	{
+		matrixBuffer->Release();
+		matrixBuffer = 0;
+	}
+
 	// Release the layout.
 	if(layout)
 	{
@@ -120,46 +116,29 @@ void ColorShader::ShutdownShader()
 		vertexShader = 0;
 	}
 
-	if(constantBuffers)
-	{
-		for(int i = 0; i < 2; i++)
-		{
-			if(constantBuffers[i])
-			{
-				constantBuffers[i]->Release();
-				constantBuffers[i] = NULL;
-			}
-		}
-	}
-
 	return;
 }
 
-void ColorShader::SetShaderParameters(RenderParams params)
+void ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, D3DXMATRIX transMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
-	D3DXVECTOR4 brightnessVector = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
-	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
+	D3DXMatrixTranspose(&transMatrix, &transMatrix);
 
-	params.context->Map(constantBuffers[IND_MATRIX], 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
+	deviceContext->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
+	memcpy(mappedResource.pData, &transMatrix, sizeof(D3DXMATRIX));
 
-	params.context->Unmap(constantBuffers[IND_MATRIX], 0);
+	deviceContext->Unmap(matrixBuffer, 0);
 
-	params.context->Map(constantBuffers[IND_LIGHTING], 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
+	// Finanly set the constant buffer in the vertex shader with the updated values.
+	deviceContext->VSSetConstantBuffers(0, 1, &matrixBuffer);
 
-	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
+	deviceContext->IASetInputLayout(layout);
 
-	params.context->Unmap(constantBuffers[IND_LIGHTING], 0);
-
-	params.context->VSSetConstantBuffers(1, 2, constantBuffers);
-
-	params.context->IASetInputLayout(layout);
-
-	params.context->VSSetShader(vertexShader, NULL, 0);
-	params.context->PSSetShader(pixelShader, NULL, 0);
+	//set the shaders used for rendering
+	deviceContext->VSSetShader(vertexShader, NULL, 0);
+	deviceContext->PSSetShader(pixelShader, NULL, 0);
 }
 
 void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)

@@ -24,12 +24,11 @@ Graphics::~Graphics()
 	}
 }
 
-bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
+bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen)
 {
 	d3D = new Direct3D();
 	this->handle = handle;
-	this->fullScreen = fullscreen;
-	this->brightness = brightness;
+	fullScreen = fullscreen;
 	if(!d3D->Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear))
 	{
 		MessageBox(handle, L"Could not intialize DirectX", L"Error", MB_OK);
@@ -42,15 +41,6 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	camera->SetPosition(0.0f, 0.0f, -50.0f);
 
 	return true;
-}
-
-void Graphics::ChangeBrightness(float offset)
-{
-	brightness += offset;
-	if(brightness > 1.0f)
-		brightness = 1.0f;
-	else if(brightness < 0.0f)
-		brightness = 0.0f;
 }
 
 bool Graphics::Init(World *world)
@@ -75,12 +65,7 @@ void Graphics::Render()
 	d3D->GetProjectionMatrix(projectionMatrix);
 	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 
-	RenderParams params;
-	params.brightness = brightness;
-	params.context = d3D->GetDeviceContext();
-	params.transMatrix = transMatrix;
-
-	world->Render(params);
+	world->Render(d3D->GetDeviceContext(), transMatrix);
 
 	d3D->EndScene();
 }

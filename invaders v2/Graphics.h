@@ -7,6 +7,7 @@
 #include "Globals.h"
 #include "App.h"
 
+class App;
 class Graphics
 {
 	Direct3D *d3D;
@@ -18,18 +19,14 @@ class Graphics
 	bool vsync;
 	float screenDepth;
 	float screenNear;
-	float brightness;
 	HWND handle;
 public:
 	Graphics(void);
 	~Graphics(void);
 
-	bool Init(int width, int height, HWND handle, bool fullscreen, float brightness);
+	bool Init(int width, int height, HWND handle, bool fullscreen);
 	bool Init(World *world);
 	void Render();
-
-	void SetBrightness(float brightness){this->brightness = brightness;}
-	void ChangeBrightness(float offset);
 
 	bool IsFullscreen(){return fullScreen;}
 };

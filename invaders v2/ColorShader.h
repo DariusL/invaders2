@@ -19,7 +19,7 @@ public:
 	~ColorShader(void);
 
 	bool Init(ID3D11Device*, HWND);
-	void SetShaderParameters(RenderParams);
+	void SetShaderParameters(ID3D11DeviceContext*, D3DXMATRIX);
 	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
@@ -30,8 +30,5 @@ private:
 	ID3D11VertexShader* vertexShader;
 	ID3D11InputLayout* layout;
 	ID3D11PixelShader* pixelShader;
-	ID3D11Buffer **constantBuffers;
-
-	static const int IND_MATRIX = 0;
-	static const int IND_LIGHTING = 1;
+	ID3D11Buffer* matrixBuffer;
 };

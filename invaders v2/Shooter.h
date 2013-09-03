@@ -35,7 +35,7 @@ public:
 	float GetLastFired() const {return lastFired;}
 
 	bool Init(ID3D11Device*, HWND);
-	void Render(RenderParams);
+	void Render(ID3D11DeviceContext*, D3DXMATRIX);
 private:
 	bool InitBuffers(ID3D11Device*);
 	void ShutdownBuffers();

@@ -143,10 +143,10 @@ void EnemyGrid::Fire(float frameLength)
 	}
 }
 
-void EnemyGrid::Render(RenderParams params)
+void EnemyGrid::Render(ID3D11DeviceContext* context, D3DXMATRIX transmatrix)
 {
 	for(auto &a : grid)
-		a->Render(params);
+		a->Render(context, transmatrix);
 	enemyBulletGraphics->setBullets(bullets);
-	enemyBulletGraphics->Render(params);
+	enemyBulletGraphics->Render(context, transmatrix);
 }

@@ -1,4 +1,4 @@
-cbuffer TransMatrix : register(cb1)
+cbuffer TransMatrix : register(cb0)
 {
     matrix transform;
 };
