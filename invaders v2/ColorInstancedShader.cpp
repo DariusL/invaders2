@@ -131,7 +131,7 @@ void ColorInstancedShader::SetShaderParameters(RenderParams params)
 	params.context->Unmap(matrixBuffer, 0);
 
 	// Finanly set the constant buffer in the vertex shader with the updated values.
-	params.context->VSSetConstantBuffers(1, 1, &matrixBuffer);
+	params.context->VSSetConstantBuffers(0, 1, &matrixBuffer);
 
 	params.context->IASetInputLayout(layout);
 

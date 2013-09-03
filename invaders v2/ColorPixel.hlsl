@@ -1,4 +1,4 @@
-cbuffer AmbientLighting : register (cb2)
+cbuffer AmbientLighting : register(b0)
 {
 	float4 brightness;
 }
@@ -11,5 +11,5 @@ struct PixelInputType
 
 float4 ColorPixelShader(PixelInputType input) : SV_TARGET
 {
-    return input.color;
+    return input.color * brightness;
 }

@@ -6,6 +6,7 @@ ColorShader::ColorShader()
 	vertexShader = 0;
 	pixelShader = 0;
 	layout = 0;
+	constantBuffers = NULL;
 }
 
 ColorShader::~ColorShader()
@@ -154,7 +155,8 @@ void ColorShader::SetShaderParameters(RenderParams params)
 
 	params.context->Unmap(constantBuffers[IND_LIGHTING], 0);
 
-	params.context->VSSetConstantBuffers(1, 2, constantBuffers);
+	params.context->VSSetConstantBuffers(1, 1, constantBuffers);
+	params.context->PSSetConstantBuffers(0, 1, constantBuffers + 1);
 
 	params.context->IASetInputLayout(layout);
 

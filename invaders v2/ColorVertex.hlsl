@@ -1,12 +1,12 @@
-cbuffer TransMatrix : register(cb1)
+cbuffer MoveMatrix : register(b0)
+{
+	matrix move;
+};
+
+cbuffer TransMatrix : register(b1)
 {
     matrix transform;
 };
-
-cbuffer MoveMatrix : register(cb0)
-{
-	matrix move;
-}
 
 struct VertexInputType
 {
