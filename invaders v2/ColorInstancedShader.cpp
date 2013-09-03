@@ -118,26 +118,26 @@ void ColorInstancedShader::ShutdownShader()
 	return;
 }
 
-void ColorInstancedShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, D3DXMATRIX transMatrix)
+void ColorInstancedShader::SetShaderParameters(RenderParams params)
 {
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 
-	D3DXMatrixTranspose(&transMatrix, &transMatrix);
+	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 
-	deviceContext->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	params.context->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
 
-	memcpy(mappedResource.pData, &transMatrix, sizeof(D3DXMATRIX));
+	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
 
-	deviceContext->Unmap(matrixBuffer, 0);
+	params.context->Unmap(matrixBuffer, 0);
 
 	// Finanly set the constant buffer in the vertex shader with the updated values.
-	deviceContext->VSSetConstantBuffers(0, 1, &matrixBuffer);
+	params.context->VSSetConstantBuffers(1, 1, &matrixBuffer);
 
-	deviceContext->IASetInputLayout(layout);
+	params.context->IASetInputLayout(layout);
 
 	//set the shaders used for rendering
-	deviceContext->VSSetShader(vertexShader, NULL, 0);
-	deviceContext->PSSetShader(pixelShader, NULL, 0);
+	params.context->VSSetShader(vertexShader, NULL, 0);
+	params.context->PSSetShader(pixelShader, NULL, 0);
 }
 
 void ColorInstancedShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount, int instanceCount)

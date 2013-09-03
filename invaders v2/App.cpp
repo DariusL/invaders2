@@ -60,7 +60,7 @@ bool App::Init()
 		return false;
 
 	graphics = new Graphics();
-	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen))
+	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
 		return false;
 
 	logger = new Logger();
@@ -144,7 +144,10 @@ void App::Run()
 			DispatchMessage(&msg);
 		}
 		if(!OnLoop())
+		{
 			running = false;
+			break;
+		}
 		graphics->Render();
 
 		ss << clock() - c;

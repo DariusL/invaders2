@@ -76,18 +76,19 @@ bool Shooter::InitBuffers(ID3D11Device *device)
 
 	if(FAILED(device->CreateBuffer(&matrixBufferDesc, &constantData, &tMatrix)))
 		return false;
+
 	matrixBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(tMatrix);
 
 	return true;
 }
 
-void Shooter::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
+void Shooter::Render(RenderParams params)
 {
-	if(!Update(context))
+	if(!Update(params.context))
 		return;
-	SetBuffers(context);
-	shader->SetShaderParameters(context, transMatrix);
-	shader->RenderShader(context, model->indexCount);
+	SetBuffers(params.context);
+	shader->SetShaderParameters(params);
+	shader->RenderShader(params.context, model->indexCount);
 }
 
 void Shooter::SetBuffers(ID3D11DeviceContext *context)
@@ -108,7 +109,7 @@ void Shooter::SetBuffers(ID3D11DeviceContext *context)
 	context->IASetIndexBuffer(indexBuffer.get(), DXGI_FORMAT_R32_UINT, 0);
 
 	//Set object position buffer
-	context->VSSetConstantBuffers(1, 1, &tMatrix);
+	context->VSSetConstantBuffers(0, 1, &tMatrix);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
