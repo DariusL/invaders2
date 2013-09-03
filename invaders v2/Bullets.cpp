@@ -76,12 +76,12 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 	return true;
 }
 
-void Bullets::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
+void Bullets::Render(RenderParams params)
 {
-	Update(context);
-	SetBuffers(context);
-	shader->SetShaderParameters(context, transMatrix);
-	shader->RenderShader(context, model->indexCount, bulletCount);
+	Update(params.context);
+	SetBuffers(params.context);
+	shader->SetShaderParameters(params);
+	shader->RenderShader(params.context, model->indexCount, bulletCount);
 }
 
 void Bullets::SetBuffers(ID3D11DeviceContext *context)

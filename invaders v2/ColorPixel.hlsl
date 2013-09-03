@@ -1,3 +1,8 @@
+cbuffer AmbientLighting : register (cb2)
+{
+	float4 brightness;
+}
+
 struct PixelInputType
 {
     float4 position : SV_POSITION;

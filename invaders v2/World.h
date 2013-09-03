@@ -42,7 +42,7 @@ public:
 	bool IsStarted(){return started;}
 
 	bool Init(ID3D11Device*, HWND);
-	void Render(ID3D11DeviceContext*, D3DXMATRIX);
+	void Render(RenderParams);
 
 	static const int FIELD_WIDTH = 50;
 	static const int FIELD_HEIGHT = 30;

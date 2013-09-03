@@ -110,10 +110,10 @@ void World::CollideBullets()
 	}
 }
 
-void World::Render(ID3D11DeviceContext* context, D3DXMATRIX transMatrix)
+void World::Render(RenderParams params)
 {
-	player->Render(context, transMatrix);
-	enemies->Render(context, transMatrix);
+	player->Render(params);
+	enemies->Render(params);
 	playerBulletGraphics->setBullets(playerBullets);
-	playerBulletGraphics->Render(context, transMatrix);
+	playerBulletGraphics->Render(params);
 }

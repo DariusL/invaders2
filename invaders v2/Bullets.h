@@ -35,7 +35,7 @@ public:
 
 
 	bool Init(ID3D11Device*, HWND);
-	void Render(ID3D11DeviceContext*, D3DXMATRIX);
+	void Render(RenderParams);
 	void SetModel(shared_ptr<Model> model);
 
 private:
