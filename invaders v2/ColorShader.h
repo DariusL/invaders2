@@ -11,6 +11,7 @@
 #include "Globals.h"
 
 using namespace Microsoft::WRL;
+using namespace std;
 
 class ColorShader
 {

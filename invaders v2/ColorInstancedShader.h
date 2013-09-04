@@ -10,6 +10,8 @@
 #include "Utils.h"
 #include "Globals.h"
 
+using namespace std;
+
 class ColorInstancedShader
 {
 public:
