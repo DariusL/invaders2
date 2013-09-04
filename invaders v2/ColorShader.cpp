@@ -3,9 +3,6 @@
 
 ColorShader::ColorShader()
 {
-	vertexShader = 0;
-	pixelShader = 0;
-	layout = 0;
 }
 
 ColorShader::~ColorShader()
