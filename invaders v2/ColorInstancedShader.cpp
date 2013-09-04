@@ -22,22 +22,31 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, HWND hwnd, cha
 	unsigned int numElements = 3;
 	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
 	D3D11_BUFFER_DESC matrixBufferDesc;
+	D3D11_BUFFER_DESC lightingBufferDesc;
+	ID3D11Buffer *bMatrix, *bLighting;
+	ID3D11VertexShader *sVertex;
+	ID3D11PixelShader *sPixel;
+	ID3D11InputLayout *inputLayout;
 
 	unique_ptr<char> vBuffer;
 	int vSize;
 	Utils::ReadFileToArray(vsFilename, vBuffer, vSize);
 
 	// Create the vertex shader from the buffer.
-	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader)))
+	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &sVertex)))
 		return false;
+
+	vertexShader = unique_ptr<ID3D11VertexShader, COMDeleter>(sVertex);
 
 	unique_ptr<char> pBuffer;
 	int pSize;
 	Utils::ReadFileToArray(psFilename, pBuffer, pSize);
 
 	// Create the pixel shader from the buffer.
-	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader)))
+	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &sPixel)))
 		return false;
+
+	pixelShader = unique_ptr<ID3D11PixelShader, COMDeleter>(sPixel);
 
 	// Now setup the layout of the data that goes into the shader.
 	// This setup needs to match the VertexType stucture in the ModelClass and in the shader.
@@ -66,8 +75,10 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, HWND hwnd, cha
 	polygonLayout[2].InstanceDataStepRate = 1;
 
 	// Create the vertex input layout.
-	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
+	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &inputLayout)))
 		return false;
+
+	layout = unique_ptr<ID3D11InputLayout, COMDeleter>(inputLayout);
 
 	delete [] polygonLayout;
 
@@ -79,65 +90,52 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, HWND hwnd, cha
 	matrixBufferDesc.StructureByteStride = 0;
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
-	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer)))
+	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &bMatrix)))
 		return false;
 
+	matrixBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(bMatrix);
+
+	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	lightingBufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
+	lightingBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	lightingBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	lightingBufferDesc.MiscFlags = 0;
+	lightingBufferDesc.StructureByteStride = 0;
+
+	if(FAILED(device->CreateBuffer(&lightingBufferDesc, NULL, &bLighting)))
+		return false;
+
+	lightingBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(bLighting);
+
 	return true;
-}
-
-void ColorInstancedShader::ShutdownShader()
-{
-	// Release the matrix constant buffer.
-	if(matrixBuffer)
-	{
-		matrixBuffer->Release();
-		matrixBuffer = 0;
-	}
-
-	// Release the layout.
-	if(layout)
-	{
-		layout->Release();
-		layout = 0;
-	}
-
-	// Release the pixel shader.
-	if(pixelShader)
-	{
-		pixelShader->Release();
-		pixelShader = 0;
-	}
-
-	// Release the vertex shader.
-	if(vertexShader)
-	{
-		vertexShader->Release();
-		vertexShader = 0;
-	}
-
-	return;
 }
 
 void ColorInstancedShader::SetShaderParameters(RenderParams params)
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
+	D3DXVECTOR4 brightnessVector = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
+	ID3D11Buffer *bMatrix = matrixBuffer.get();
+	ID3D11Buffer *bLighting = lightingBuffer.get();
 
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 
-	params.context->Map(matrixBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
-
+	params.context->Map(bMatrix, 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
 	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
+	params.context->Unmap(bMatrix, 0);
 
-	params.context->Unmap(matrixBuffer, 0);
+	params.context->Map(bLighting, 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
+	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
+	params.context->Unmap(bLighting, 0);
 
 	// Finanly set the constant buffer in the vertex shader with the updated values.
-	params.context->VSSetConstantBuffers(0, 1, &matrixBuffer);
+	params.context->VSSetConstantBuffers(0, 1, &bMatrix);
+	params.context->PSSetConstantBuffers(0, 1, &bLighting);
 
-	params.context->IASetInputLayout(layout);
+	params.context->IASetInputLayout(layout.get());
 
 	//set the shaders used for rendering
-	params.context->VSSetShader(vertexShader, NULL, 0);
-	params.context->PSSetShader(pixelShader, NULL, 0);
+	params.context->VSSetShader(vertexShader.get(), NULL, 0);
+	params.context->PSSetShader(pixelShader.get(), NULL, 0);
 }
 
 void ColorInstancedShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount, int instanceCount)

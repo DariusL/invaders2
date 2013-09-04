@@ -22,11 +22,11 @@ public:
 
 private:
 	bool InitializeShader(ID3D11Device*, HWND, char*, char*);
-	void ShutdownShader();
 
 private:
-	ID3D11VertexShader* vertexShader;
-	ID3D11InputLayout* layout;
-	ID3D11PixelShader* pixelShader;
-	ID3D11Buffer *matrixBuffer;
+	unique_ptr<ID3D11VertexShader, COMDeleter> vertexShader;
+	unique_ptr<ID3D11InputLayout, COMDeleter> layout;
+	unique_ptr<ID3D11PixelShader, COMDeleter> pixelShader;
+	unique_ptr<ID3D11Buffer, COMDeleter> matrixBuffer;
+	unique_ptr<ID3D11Buffer, COMDeleter> lightingBuffer;
 };
