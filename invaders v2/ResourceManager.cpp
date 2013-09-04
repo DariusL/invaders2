@@ -134,3 +134,14 @@ bool ResourceManager::Init()
 
 	return true;
 }
+
+bool ResourceManager::InitShaders(ID3D11Device *device)
+{
+	colorShader = make_shared<ColorShader>();
+	colorInstancedShader = make_shared<ColorInstancedShader>();
+	if(!colorShader->Init(device))
+		return false;
+	if(!colorInstancedShader->Init(device))
+		return false;
+	return true;
+}

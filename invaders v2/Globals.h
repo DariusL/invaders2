@@ -2,6 +2,7 @@
 #pragma warning(disable : 4005)
 #include <D3D11.h>
 #include <D3DX10math.h>
+#include <wrl\client.h>
 
 #ifndef NULL
 	#define NULL 0
@@ -26,7 +27,6 @@ struct COMDeleter
 {
     template<typename T> void operator()(T* p) {
         p->Release();
-		App::Get()->GetLogger()->Log("COMDeleter called");
     }
 };
 

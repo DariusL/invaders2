@@ -10,7 +10,7 @@
 #include "Utils.h"
 #include "Globals.h"
 
-using namespace std;
+using namespace Microsoft::WRL;
 
 class ColorShader
 {
@@ -26,11 +26,11 @@ private:
 	bool InitializeShader(ID3D11Device*, char*, char*);
 
 private:
-	unique_ptr<ID3D11VertexShader, COMDeleter> vertexShader;
-	unique_ptr<ID3D11InputLayout, COMDeleter> layout;
-	unique_ptr<ID3D11PixelShader, COMDeleter> pixelShader;
-	unique_ptr<ID3D11Buffer, COMDeleter> matrixBuffer;
-	unique_ptr<ID3D11Buffer, COMDeleter> lightingBuffer;
+	ComPtr<ID3D11VertexShader> vertexShader;
+	ComPtr<ID3D11InputLayout> layout;
+	ComPtr<ID3D11PixelShader> pixelShader;
+	ComPtr<ID3D11Buffer> matrixBuffer;
+	ComPtr<ID3D11Buffer> lightingBuffer;
 
 	static const int IND_MATRIX = 0;
 	static const int IND_LIGHTING = 1;
