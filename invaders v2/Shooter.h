@@ -22,7 +22,6 @@ class Shooter : public Entity, public IDrawableObject
 
 	unique_ptr<ID3D11Buffer, COMDeleter> vertexBuffer;
 	unique_ptr<ID3D11Buffer, COMDeleter> indexBuffer;
-	unique_ptr<ID3D11Buffer, COMDeleter> matrixBuffer;
 public:
 	Shooter(void);
 	Shooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model> model);

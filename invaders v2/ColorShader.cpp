@@ -106,12 +106,14 @@ bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFile
 	return true;
 }
 
-void ColorShader::SetShaderParameters(RenderParams params)
+void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix)
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 	D3DXVECTOR4 brightnessVector = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
 	ID3D11Buffer *bMatrix = matrixBuffer.get();
 	ID3D11Buffer *bLighting = lightingBuffer.get();
+
+	params.transMatrix = moveMatrix * params.transMatrix;
 
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 
@@ -127,7 +129,7 @@ void ColorShader::SetShaderParameters(RenderParams params)
 
 	params.context->Unmap(lightingBuffer.get(), 0);
 
-	params.context->VSSetConstantBuffers(1, 1, &bMatrix);
+	params.context->VSSetConstantBuffers(0, 1, &bMatrix);
 	params.context->PSSetConstantBuffers(0, 1, &bLighting);
 
 	params.context->IASetInputLayout(layout.get());
@@ -140,4 +142,4 @@ void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCoun
 {
 	//unleash the grafiks
 	deviceContext->DrawIndexed(indexCount, 0, 0);
-}
+ }

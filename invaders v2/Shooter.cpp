@@ -33,9 +33,9 @@ bool Shooter::Init(ID3D11Device* device, HWND handle)
 
 bool Shooter::InitBuffers(ID3D11Device *device)
 {
-	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, matrixBufferDesc;
-	D3D11_SUBRESOURCE_DATA vertexData, indexData, constantData;
-	ID3D11Buffer *tVertex, *tIndex, *tMatrix;
+	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
+	D3D11_SUBRESOURCE_DATA vertexData, indexData;
+	ID3D11Buffer *tVertex, *tIndex;
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -63,22 +63,6 @@ bool Shooter::InitBuffers(ID3D11Device *device)
 		return false;
 	indexBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(tIndex);
 
-	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);
-	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	matrixBufferDesc.MiscFlags = 0;
-	matrixBufferDesc.StructureByteStride = 0;
-
-	constantData.pSysMem = &moveMatrix;
-	constantData.SysMemPitch = 0;
-	constantData.SysMemSlicePitch = 0;
-
-	if(FAILED(device->CreateBuffer(&matrixBufferDesc, &constantData, &tMatrix)))
-		return false;
-
-	matrixBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(tMatrix);
-
 	return true;
 }
 
@@ -87,7 +71,7 @@ void Shooter::Render(RenderParams params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params);
+	shader->SetShaderParameters(params, moveMatrix);
 	shader->RenderShader(params.context, model->indexCount);
 }
 
@@ -99,17 +83,13 @@ void Shooter::SetBuffers(ID3D11DeviceContext *context)
 	stride = sizeof(VertexType); 
 	offset = 0;
     
-	ID3D11Buffer *tVertex, *tMatrix;
+	ID3D11Buffer *tVertex;
 	tVertex = vertexBuffer.get();
-	tMatrix = matrixBuffer.get();
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, &tVertex, &stride, &offset);
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
 	context->IASetIndexBuffer(indexBuffer.get(), DXGI_FORMAT_R32_UINT, 0);
-
-	//Set object position buffer
-	context->VSSetConstantBuffers(0, 1, &tMatrix);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -121,15 +101,6 @@ bool Shooter::Update(ID3D11DeviceContext *context)
 		return false;
 
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
-	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-
-	context->Map(matrixBuffer.get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	memcpy(mappedResource.pData, &moveMatrix, sizeof(moveMatrix));
-
-	context->Unmap(matrixBuffer.get(), 0);
 
 	return true;
 }

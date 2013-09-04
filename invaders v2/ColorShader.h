@@ -19,7 +19,7 @@ public:
 	~ColorShader(void);
 
 	bool Init(ID3D11Device*, HWND);
-	void SetShaderParameters(RenderParams);
+	void SetShaderParameters(RenderParams, D3DXMATRIX);
 	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
