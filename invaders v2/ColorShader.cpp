@@ -18,8 +18,8 @@ bool ColorShader::Init(ID3D11Device* device)
 
 bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char* psFilename)
 {
+	unsigned int numElements = 2;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
-	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
 
@@ -56,9 +56,6 @@ bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char*
 	polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	polygonLayout[1].InstanceDataStepRate = 0;
-
-	// Get a count of the elements in the layout.
-	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	// Create the vertex input layout.
 	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
@@ -105,8 +102,8 @@ void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix
 	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
 	params.context->Unmap(lightingBuffer.Get(), 0);
 
-	params.context->VSSetConstantBuffers(0, 1, &matrixBuffer);
-	params.context->PSSetConstantBuffers(0, 1, &lightingBuffer);
+	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
+	params.context->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
 	params.context->IASetInputLayout(layout.Get());
 
