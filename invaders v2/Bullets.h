@@ -21,7 +21,8 @@ private:
 
 	int bulletCount;
 	shared_ptr<Model> model;
-	unique_ptr<ColorInstancedShader> shader;
+
+	shared_ptr<ColorInstancedShader> shader;
 	unique_ptr<D3DXVECTOR3[]> bulletData;
 
 	unique_ptr<unsigned int[]> offsets;

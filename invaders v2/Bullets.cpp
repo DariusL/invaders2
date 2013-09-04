@@ -20,9 +20,7 @@ Bullets::~Bullets(void)
 
 bool Bullets::Init(ID3D11Device* device)
 {
-	shader = unique_ptr<ColorInstancedShader>(new ColorInstancedShader());
-	if(!shader->Init(device))
-		return false;
+	shader = App::Get()->GetResourceManager()->GetColorInstancedShader();
 	if(!InitBuffers(device))
 		return false;
 	return true;

@@ -28,6 +28,8 @@ public:
 	shared_ptr<ColorShader> GetColorShader(){return colorShader;}
 	shared_ptr<ColorInstancedShader> GetColorInstancedShader(){return colorInstancedShader;}
 
+	bool InitShaders(ID3D11Device *);
+
 	enum Models
 	{
 		MODEL_PLAYER = 0,

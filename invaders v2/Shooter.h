@@ -18,7 +18,7 @@ class Shooter : public Entity, public IDrawableObject
 	//grafiks
 	shared_ptr<Model> model;
 	D3DXMATRIX moveMatrix;
-	unique_ptr<ColorShader> shader;
+	shared_ptr<ColorShader> shader;
 
 	unique_ptr<ID3D11Buffer, COMDeleter> vertexBuffer;
 	unique_ptr<ID3D11Buffer, COMDeleter> indexBuffer;
