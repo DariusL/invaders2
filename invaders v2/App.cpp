@@ -173,6 +173,10 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::FIRE;
 	if(input->IsKeyDown(VK_ESCAPE))
 		Quit();
+	if(input->IsKeyDown(VK_DOWN))
+		graphics->ChangeBrightness(-0.001f);
+	if(input->IsKeyDown(VK_UP))
+		graphics->ChangeBrightness(0.001f);
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();
