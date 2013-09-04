@@ -23,14 +23,11 @@ bool ColorShader::Init(ID3D11Device* device, HWND hwnd)
 
 bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
 {
-	ID3D10Blob* errorMessage;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
 	constantBuffers = new ID3D11Buffer*[2];
-
-	errorMessage = NULL;
 
 	unique_ptr<char> vBuffer;
 	int vSize;
