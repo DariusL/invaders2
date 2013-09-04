@@ -18,10 +18,10 @@ Bullets::~Bullets(void)
 {
 }
 
-bool Bullets::Init(ID3D11Device* device, HWND handle)
+bool Bullets::Init(ID3D11Device* device)
 {
 	shader = unique_ptr<ColorInstancedShader>(new ColorInstancedShader());
-	if(!shader->Init(device, handle))
+	if(!shader->Init(device))
 		return false;
 	if(!InitBuffers(device))
 		return false;

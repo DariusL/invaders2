@@ -12,14 +12,14 @@ ColorShader::~ColorShader()
 {
 }
 
-bool ColorShader::Init(ID3D11Device* device, HWND hwnd)
+bool ColorShader::Init(ID3D11Device* device)
 {
-	if(!InitializeShader(device, hwnd, "ColorVertex.cso", "ColorPixel.cso"))
+	if(!InitializeShader(device, "ColorVertex.cso", "ColorPixel.cso"))
 		return false;
 	return true;
 }
 
-bool ColorShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
+bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char* psFilename)
 {
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;

@@ -5,6 +5,6 @@
 class IDrawable
 {
 public:
-	virtual bool Init(ID3D11Device*, HWND) = 0;
+	virtual bool Init(ID3D11Device*) = 0;
 	virtual void Render(RenderParams) = 0;
 };

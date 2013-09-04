@@ -37,13 +37,13 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 	return true;
 }
 
-bool EnemyGrid::Init(ID3D11Device* device, HWND hwnd)
+bool EnemyGrid::Init(ID3D11Device* device)
 {
 	for(auto &a : grid)
-		if(!a->Init(device, hwnd))
+		if(!a->Init(device))
 			return false;
 	enemyBulletGraphics = unique_ptr<Bullets>(new Bullets());
-	if(!enemyBulletGraphics->Init(device, hwnd))
+	if(!enemyBulletGraphics->Init(device))
 		return false;
 	return true;
 }

@@ -41,7 +41,7 @@ public:
 
 	bool IsStarted(){return started;}
 
-	bool Init(ID3D11Device*, HWND);
+	bool Init(ID3D11Device*);
 	void Render(RenderParams);
 
 	static const int FIELD_WIDTH = 50;

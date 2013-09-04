@@ -21,10 +21,10 @@ Shooter::Shooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model
 	this->model = model;
 }
 
-bool Shooter::Init(ID3D11Device* device, HWND handle)
+bool Shooter::Init(ID3D11Device* device)
 {
 	shader = unique_ptr<ColorShader>(new ColorShader());
-	if(!shader->Init(device, handle))
+	if(!shader->Init(device))
 		return false;
 	if(!InitBuffers(device))
 		return false;

@@ -10,14 +10,14 @@ ColorInstancedShader::~ColorInstancedShader(void)
 {
 }
 
-bool ColorInstancedShader::Init(ID3D11Device* device, HWND hwnd)
+bool ColorInstancedShader::Init(ID3D11Device* device)
 {
-	if(!InitializeShader(device, hwnd, "ColorInstancedVertex.cso", "ColorPixel.cso"))
+	if(!InitializeShader(device, "ColorInstancedVertex.cso", "ColorPixel.cso"))
 		return false;
 	return true;
 }
 
-bool ColorInstancedShader::InitializeShader(ID3D11Device* device, HWND hwnd, char* vsFilename, char* psFilename)
+bool ColorInstancedShader::InitializeShader(ID3D11Device* device, char* vsFilename, char* psFilename)
 {
 	unsigned int numElements = 3;
 	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];

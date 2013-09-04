@@ -31,14 +31,14 @@ void World::Stop()
 	started = false;
 }
 
-bool World::Init(ID3D11Device *device, HWND hwnd)
+bool World::Init(ID3D11Device *device)
 {
-	if(!player->Init(device, hwnd))
+	if(!player->Init(device))
 		return false;
-	if(!enemies->Init(device, hwnd))
+	if(!enemies->Init(device))
 		return false;
 	playerBulletGraphics = unique_ptr<Bullets>(new Bullets());
-	if(!playerBulletGraphics->Init(device, hwnd))
+	if(!playerBulletGraphics->Init(device))
 		return false;
 	return true;
 }

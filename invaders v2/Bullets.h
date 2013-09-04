@@ -34,7 +34,7 @@ public:
 	void setBullets(const list<Entity> &bullets);
 
 
-	bool Init(ID3D11Device*, HWND);
+	bool Init(ID3D11Device*);
 	void Render(RenderParams);
 	void SetModel(shared_ptr<Model> model);
 

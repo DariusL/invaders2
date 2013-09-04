@@ -33,7 +33,7 @@ public:
 	void Fire(){lastFired = std::clock() / float(CLOCKS_PER_SEC);}
 	float GetLastFired() const {return lastFired;}
 
-	bool Init(ID3D11Device*, HWND);
+	bool Init(ID3D11Device*);
 	void Render(RenderParams);
 private:
 	bool InitBuffers(ID3D11Device*);

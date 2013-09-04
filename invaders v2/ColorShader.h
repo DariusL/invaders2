@@ -18,12 +18,12 @@ public:
 	ColorShader(void);
 	~ColorShader(void);
 
-	bool Init(ID3D11Device*, HWND);
+	bool Init(ID3D11Device*);
 	void SetShaderParameters(RenderParams, D3DXMATRIX);
 	void RenderShader(ID3D11DeviceContext*, int);
 
 private:
-	bool InitializeShader(ID3D11Device*, HWND, char*, char*);
+	bool InitializeShader(ID3D11Device*, char*, char*);
 
 private:
 	unique_ptr<ID3D11VertexShader, COMDeleter> vertexShader;

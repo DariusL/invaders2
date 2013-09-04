@@ -48,7 +48,7 @@ public:
 
 	list<Entity> &getBullets(){return bullets;}
 
-	bool Init(ID3D11Device*, HWND);
+	bool Init(ID3D11Device*);
 	void Render(RenderParams);
 
 	int getAliveCount(){return alive;}
