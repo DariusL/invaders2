@@ -26,6 +26,7 @@ struct COMDeleter
 {
     template<typename T> void operator()(T* p) {
         p->Release();
+		App::Get()->GetLogger()->Log("COMDeleter called");
     }
 };
 

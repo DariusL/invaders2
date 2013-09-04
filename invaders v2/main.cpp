@@ -4,12 +4,11 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow)
 {
-	App *app = new App();
-	if(!app->Init())
+	App app;
+	if(!app.Init())
 		return 1;
 
-	app->Run();
-	delete app;
+	app.Run();
 
 	return 0;
 }

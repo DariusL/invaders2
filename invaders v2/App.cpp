@@ -130,14 +130,10 @@ void App::Run()
 	MSG msg;
 	running = true;
 	ZeroMemory(&msg, sizeof(msg));
-
-	stringstream ss;
-	long c;
 	lastFrame = clock();
 
 	while(running)
 	{
-		c = clock();
 		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -149,10 +145,6 @@ void App::Run()
 			break;
 		}
 		graphics->Render();
-
-		ss << clock() - c;
-		logger->Log(ss.str());
-		ss.str("");
 	}
 }
 
