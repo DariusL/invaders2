@@ -32,7 +32,4 @@ private:
 	ComPtr<ID3D11PixelShader> pixelShader;
 	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11Buffer> lightingBuffer;
-
-	static const int IND_MATRIX = 0;
-	static const int IND_LIGHTING = 1;
 };

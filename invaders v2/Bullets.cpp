@@ -31,12 +31,7 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
-	bulletData = unique_ptr<D3DXVECTOR3[]>(new D3DXVECTOR3[MAX_BULLET_COUNT]);
-
-	vertexBuffers = new ID3D11Buffer*[2];
-
-	strides = unique_ptr<unsigned int[]>(new unsigned int[2]);
-	offsets = unique_ptr<unsigned int[]>(new unsigned int[2]);
+	bulletData = unique_ptr<InstanceType[]>(new InstanceType[MAX_BULLET_COUNT]);
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -47,8 +42,11 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
-	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, vertexBuffers)))
+	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer)))
 		return false;
+
+	vertexInfo.offset = 0;
+	vertexInfo.stride = sizeof(VertexType);
 
 	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -64,19 +62,23 @@ bool Bullets::InitBuffers(ID3D11Device *device)
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(D3DXVECTOR3) * MAX_BULLET_COUNT;
+	instanceBufferDesc.ByteWidth = sizeof(InstanceType) * MAX_BULLET_COUNT;
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
-	if(FAILED(device->CreateBuffer(&instanceBufferDesc, NULL, vertexBuffers + 1)))
+	if(FAILED(device->CreateBuffer(&instanceBufferDesc, NULL, &instanceBuffer)))
 		return false;
+
+	instanceInfo.offset = 0;
+	instanceInfo.stride = sizeof(InstanceType);
 	
 	return true;
 }
 
 void Bullets::Render(RenderParams params)
 {
-	Update(params.context);
+	if(!Update(params.context))
+		return;
 	SetBuffers(params.context);
 	shader->SetShaderParameters(params);
 	shader->RenderShader(params.context, model->indexCount, bulletCount);
@@ -84,36 +86,15 @@ void Bullets::Render(RenderParams params)
 
 void Bullets::SetBuffers(ID3D11DeviceContext *context)
 {
-	strides[0] = sizeof(VertexType); 
-	offsets[0] = 0;
-
-	strides[1] = sizeof(D3DXVECTOR3);
-	offsets[1] = 0;
-    
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	context->IASetVertexBuffers(0, 2, vertexBuffers, strides.get(), offsets.get());
+	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
+	context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), &instanceInfo.stride, &instanceInfo.offset);
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
-	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-void Bullets::ShutdownBuffers()
-{
-	// Release the index buffer.
-	if(indexBuffer)
-	{
-		indexBuffer->Release();
-		indexBuffer = NULL;
-	}
-
-	for(int i = 0; i < 2; i++)
-	{
-		vertexBuffers[i]->Release();
-		vertexBuffers[i] = NULL;
-	}
 }
 
 void Bullets::setBullets(const list<Entity> &bullets)
@@ -126,7 +107,7 @@ void Bullets::setBullets(const list<Entity> &bullets)
 	{
 		if(i >= MAX_BULLET_COUNT)
 			break;
-		bulletData[i] = x.GetPos();
+		bulletData[i].position = x.GetPos();
 		i++;
 	}
 }
@@ -138,11 +119,11 @@ bool Bullets::Update(ID3D11DeviceContext *context)
 	
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 
-	context->Map(vertexBuffers[1], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-	memcpy(mappedResource.pData, bulletData.get(), sizeof(D3DXVECTOR3) * bulletCount);
+	memcpy(mappedResource.pData, bulletData.get(), sizeof(InstanceType) * bulletCount);
 
-	context->Unmap(vertexBuffers[1], 0);
+	context->Unmap(instanceBuffer.Get(), 0);
 
 	return true;
 }

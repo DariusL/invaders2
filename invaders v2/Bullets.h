@@ -23,13 +23,14 @@ private:
 	shared_ptr<Model> model;
 
 	shared_ptr<ColorInstancedShader> shader;
-	unique_ptr<D3DXVECTOR3[]> bulletData;
+	unique_ptr<InstanceType[]> bulletData;
 
-	unique_ptr<unsigned int[]> offsets;
-	unique_ptr<unsigned int[]> strides;
+	ComPtr<ID3D11Buffer> vertexBuffer;
+	BufferInfo vertexInfo;
+	ComPtr<ID3D11Buffer> instanceBuffer;
+	BufferInfo instanceInfo;
 
-	ID3D11Buffer **vertexBuffers;
-	ID3D11Buffer *indexBuffer;
+	ComPtr<ID3D11Buffer> indexBuffer;
 
 public:
 	void setBullets(const list<Entity> &bullets);
@@ -41,7 +42,6 @@ public:
 
 private:
 	bool InitBuffers(ID3D11Device*);
-	void ShutdownBuffers();
 	void SetBuffers(ID3D11DeviceContext*);
 	bool Update(ID3D11DeviceContext*);
 };

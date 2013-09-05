@@ -14,6 +14,11 @@ struct VertexType
 	D3DXVECTOR4 color;
 };
 
+struct InstanceType
+{
+	D3DXVECTOR3 position;
+};
+
 struct ControlCodes
 {
 	static const int LEFT  = 1 << 0;
@@ -35,4 +40,10 @@ struct RenderParams
 	float brightness;
 	D3DXMATRIX transMatrix;
 	ID3D11DeviceContext *context;
+};
+
+struct BufferInfo
+{
+	unsigned int offset;
+	unsigned int stride;
 };
