@@ -18,7 +18,7 @@ Bullets::~Bullets(void)
 {
 }
 
-bool Bullets::Init(ID3D11Device* device)
+bool Bullets::Init(ComPtr<ID3D11Device> device)
 {
 	shader = App::Get()->GetResourceManager()->GetColorInstancedShader();
 	if(!InitBuffers(device))
@@ -26,7 +26,7 @@ bool Bullets::Init(ID3D11Device* device)
 	return true;
 }
 
-bool Bullets::InitBuffers(ID3D11Device *device)
+bool Bullets::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -84,7 +84,7 @@ void Bullets::Render(RenderParams params)
 	shader->RenderShader(params.context, model->indexCount, bulletCount);
 }
 
-void Bullets::SetBuffers(ID3D11DeviceContext *context)
+void Bullets::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
@@ -112,7 +112,7 @@ void Bullets::setBullets(const list<Entity> &bullets)
 	}
 }
 
-bool Bullets::Update(ID3D11DeviceContext *context)
+bool Bullets::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(bulletCount == 0)
 		return false;

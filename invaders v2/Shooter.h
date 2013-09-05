@@ -34,13 +34,13 @@ public:
 	void Fire(){lastFired = std::clock() / float(CLOCKS_PER_SEC);}
 	float GetLastFired() const {return lastFired;}
 
-	bool Init(ID3D11Device*);
+	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);
 private:
-	bool InitBuffers(ID3D11Device*);
+	bool InitBuffers(ComPtr<ID3D11Device>);
 	void ShutdownBuffers();
-	void SetBuffers(ID3D11DeviceContext*);
-	bool Update(ID3D11DeviceContext*);
+	void SetBuffers(ComPtr<ID3D11DeviceContext>);
+	bool Update(ComPtr<ID3D11DeviceContext>);
 
 	Shooter& operator=(const Shooter&);
 };

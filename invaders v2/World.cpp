@@ -31,7 +31,7 @@ void World::Stop()
 	started = false;
 }
 
-bool World::Init(ID3D11Device *device)
+bool World::Init(ComPtr<ID3D11Device> device)
 {
 	if(!player->Init(device))
 		return false;

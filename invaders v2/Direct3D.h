@@ -10,7 +10,9 @@
 #include <d3dcommon.h>
 #include <d3dx10math.h>
 #include <iostream>
+#include <wrl\client.h>
 using namespace std;
+using namespace Microsoft::WRL;
 
 class Direct3D
 {
@@ -23,8 +25,8 @@ public:
 	void BeginScene();
 	void EndScene();
 
-	ID3D11Device *GetDevice(){return device;}
-	ID3D11DeviceContext *GetDeviceContext(){return deviceContext;}
+	ComPtr<ID3D11Device> GetDevice(){return device;}
+	ComPtr<ID3D11DeviceContext> GetDeviceContext(){return deviceContext;}
 
 	void GetProjectionMatrix(D3DXMATRIX &matrix){matrix = projectionMatrix;}
 	void GetOrthoMatrix(D3DXMATRIX &matrix){matrix = orthoMatrix;}
@@ -35,14 +37,14 @@ private:
 	int videoMem;
 	char videoDesc[128];
 	float clearColor[4];
-	IDXGISwapChain* swapChain;
-	ID3D11Device* device;
-	ID3D11DeviceContext* deviceContext;
-	ID3D11RenderTargetView* renderTargetView;
-	ID3D11Texture2D* depthStencilBuffer;
-	ID3D11DepthStencilState* depthStencilState;
-	ID3D11DepthStencilView* depthStencilView;
-	ID3D11RasterizerState* rasterState;
+	ComPtr<IDXGISwapChain> swapChain;
+	ComPtr<ID3D11Device> device;
+	ComPtr<ID3D11DeviceContext> deviceContext;
+	ComPtr<ID3D11RenderTargetView> renderTargetView;
+	ComPtr<ID3D11Texture2D> depthStencilBuffer;
+	ComPtr<ID3D11DepthStencilState> depthStencilState;
+	ComPtr<ID3D11DepthStencilView> depthStencilView;
+	ComPtr<ID3D11RasterizerState> rasterState;
 	D3DXMATRIX projectionMatrix;
 	D3DXMATRIX orthoMatrix;
 };

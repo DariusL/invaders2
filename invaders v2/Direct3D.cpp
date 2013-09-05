@@ -3,14 +3,6 @@
 
 Direct3D::Direct3D(void)
 {
-	swapChain = NULL;
-	device = NULL;
-	deviceContext = NULL;
-	renderTargetView = NULL;
-	depthStencilBuffer = NULL;
-	depthStencilState = NULL;
-	depthStencilView = NULL;
-	rasterState = NULL;
 }
 
 Direct3D::~Direct3D()
@@ -18,46 +10,6 @@ Direct3D::~Direct3D()
 	if(swapChain)
 	{
 		swapChain->SetFullscreenState(false, NULL);
-	}
-	if(rasterState)
-	{
-		rasterState->Release();
-		rasterState = 0;
-	}
-	if(depthStencilView)
-	{
-		depthStencilView->Release();
-		depthStencilView = 0;
-	}
-	if(depthStencilState)
-	{
-		depthStencilState->Release();
-		depthStencilState = 0;
-	}
-	if(depthStencilBuffer)
-	{
-		depthStencilBuffer->Release();
-		depthStencilBuffer = 0;
-	}
-	if(renderTargetView)
-	{
-		renderTargetView->Release();
-		renderTargetView = 0;
-	}
-	if(deviceContext)
-	{
-		deviceContext->Release();
-		deviceContext = 0;
-	}
-	if(device)
-	{
-		device->Release();
-		device = 0;
-	}
-	if(swapChain)
-	{
-		swapChain->Release();
-		swapChain = NULL;
 	}
 }
 
@@ -109,7 +61,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
 
 	delete [] displayModeList;
-	displayModeList = 0;
 
 	adapterOutput->Release();
 	adapterOutput = 0;
@@ -193,15 +144,16 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 
 	if(FAILED(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState)))
 		return false;
-	deviceContext->OMSetDepthStencilState(depthStencilState, 1);
+	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
 
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
 	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
-	if(FAILED(device->CreateDepthStencilView(depthStencilBuffer, &depthStencilViewDesc, &depthStencilView)))
+
+	if(FAILED(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView)))
 		return false;
-	deviceContext->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
+	deviceContext->OMSetRenderTargets(1, &renderTargetView, depthStencilView.Get());
 
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	rasterDesc.AntialiasedLineEnable = false;
@@ -217,7 +169,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 
 	if(FAILED(device->CreateRasterizerState(&rasterDesc, &rasterState)))
 		return false;
-	deviceContext->RSSetState(rasterState);
+	deviceContext->RSSetState(rasterState.Get());
 
 	ZeroMemory(&viewport, sizeof(viewport));
 	viewport.Width = (FLOAT) width;
@@ -237,8 +189,8 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 
 void Direct3D::BeginScene()
 {
-	deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
-	deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	deviceContext->ClearRenderTargetView(renderTargetView.Get(), clearColor);
+	deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void Direct3D::EndScene()

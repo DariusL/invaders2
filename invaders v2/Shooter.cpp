@@ -21,7 +21,7 @@ Shooter::Shooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model
 	this->model = model;
 }
 
-bool Shooter::Init(ID3D11Device* device)
+bool Shooter::Init(ComPtr<ID3D11Device> device)
 {
 	shader = App::Get()->GetResourceManager()->GetColorShader();
 	if(!InitBuffers(device))
@@ -29,7 +29,7 @@ bool Shooter::Init(ID3D11Device* device)
 	return true;
 }
 
-bool Shooter::InitBuffers(ID3D11Device *device)
+bool Shooter::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -73,7 +73,7 @@ void Shooter::Render(RenderParams params)
 	shader->RenderShader(params.context, model->indexCount);
 }
 
-void Shooter::SetBuffers(ID3D11DeviceContext *context)
+void Shooter::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
@@ -85,7 +85,7 @@ void Shooter::SetBuffers(ID3D11DeviceContext *context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool Shooter::Update(ID3D11DeviceContext *context)
+bool Shooter::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(dead)
 		return false;

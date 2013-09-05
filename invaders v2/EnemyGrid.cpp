@@ -37,7 +37,7 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 	return true;
 }
 
-bool EnemyGrid::Init(ID3D11Device* device)
+bool EnemyGrid::Init(ComPtr<ID3D11Device> device)
 {
 	for(auto &a : grid)
 		if(!a->Init(device))

@@ -36,12 +36,12 @@ public:
 	void setBullets(const list<Entity> &bullets);
 
 
-	bool Init(ID3D11Device*);
+	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);
 	void SetModel(shared_ptr<Model> model);
 
 private:
-	bool InitBuffers(ID3D11Device*);
-	void SetBuffers(ID3D11DeviceContext*);
-	bool Update(ID3D11DeviceContext*);
+	bool InitBuffers(ComPtr<ID3D11Device>);
+	void SetBuffers(ComPtr<ID3D11DeviceContext>);
+	bool Update(ComPtr<ID3D11DeviceContext>);
 };

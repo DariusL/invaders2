@@ -20,12 +20,12 @@ public:
 	ColorInstancedShader(void);
 	~ColorInstancedShader(void);
 
-	bool Init(ID3D11Device*);
+	bool Init(ComPtr<ID3D11Device> );
 	void SetShaderParameters(RenderParams);
-	void RenderShader(ID3D11DeviceContext*, int indexCount, int instanceCount);
+	void RenderShader(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 
 private:
-	bool InitializeShader(ID3D11Device*, char*, char*);
+	bool InitializeShader(ComPtr<ID3D11Device> , char*, char*);
 
 private:
 	ComPtr<ID3D11VertexShader> vertexShader;

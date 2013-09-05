@@ -10,7 +10,7 @@
 class Graphics
 {
 	Direct3D *d3D;
-	Camera *camera;
+	Camera camera;
 
 	World *world;
 

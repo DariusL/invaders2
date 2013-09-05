@@ -9,14 +9,14 @@ ColorShader::~ColorShader()
 {
 }
 
-bool ColorShader::Init(ID3D11Device* device)
+bool ColorShader::Init(ComPtr<ID3D11Device> device)
 {
 	if(!InitializeShader(device, "ColorVertex.cso", "ColorPixel.cso"))
 		return false;
 	return true;
 }
 
-bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char* psFilename)
+bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename)
 {
 	unsigned int numElements = 2;
 	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
@@ -113,7 +113,7 @@ void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 }
 
-void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount)
+void ColorShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
 {
 	//unleash the grafiks
 	deviceContext->DrawIndexed(indexCount, 0, 0);

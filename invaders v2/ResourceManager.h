@@ -6,7 +6,9 @@
 #include "ColorInstancedShader.h"
 #include <vector>
 #include <memory>
+#include <wrl\client.h>
 using namespace std;
+
 class ResourceManager
 {
 	vector<shared_ptr<Model>> models;
@@ -28,7 +30,7 @@ public:
 	shared_ptr<ColorShader> GetColorShader(){return colorShader;}
 	shared_ptr<ColorInstancedShader> GetColorInstancedShader(){return colorInstancedShader;}
 
-	bool InitShaders(ID3D11Device *);
+	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 
 	enum Models
 	{

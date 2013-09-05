@@ -6,7 +6,6 @@ Graphics::Graphics(void)
 	screenDepth = 1000.0f;
 	screenNear = 0.1f;
 	vsync = false;
-	camera = NULL;
 }
 
 Graphics::~Graphics()
@@ -15,12 +14,6 @@ Graphics::~Graphics()
 	{
 		delete d3D;
 		d3D = NULL;
-	}
-
-	if(camera)
-	{
-		delete camera;
-		camera = NULL;
 	}
 }
 
@@ -35,11 +28,9 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 		MessageBox(handle, L"Could not intialize DirectX", L"Error", MB_OK);
 		return false;
 	}
-	// Create the camera object.
-	camera = new Camera;
 
 	// Set the initial position of the camera.
-	camera->SetPosition(0.0f, 0.0f, -50.0f);
+	camera.SetPosition(0.0f, 0.0f, -50.0f);
 
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D->GetDevice()))
 		return false;
@@ -72,9 +63,9 @@ void Graphics::Render()
 	d3D->BeginScene();
 
 	// Generate the view matrix based on the camera's position.
-	camera->Render();
+	camera.Render();
 
-	camera->GetViewMatrix(viewMatrix);
+	camera.GetViewMatrix(viewMatrix);
 	d3D->GetProjectionMatrix(projectionMatrix);
 	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 

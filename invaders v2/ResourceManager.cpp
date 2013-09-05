@@ -1,5 +1,5 @@
 #include "ResourceManager.h"
-
+using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
 {
@@ -134,7 +134,7 @@ bool ResourceManager::Init()
 	return true;
 }
 
-bool ResourceManager::InitShaders(ID3D11Device *device)
+bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
 	colorShader = make_shared<ColorShader>();
 	colorInstancedShader = make_shared<ColorInstancedShader>();
