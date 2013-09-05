@@ -153,7 +153,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 
 	if(FAILED(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView)))
 		return false;
-	deviceContext->OMSetRenderTargets(1, &renderTargetView, depthStencilView.Get());
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
 
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	rasterDesc.AntialiasedLineEnable = false;
