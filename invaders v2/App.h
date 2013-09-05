@@ -12,7 +12,7 @@
 class Graphics;
 class App
 {
-	Graphics *graphics;
+	Graphics graphics;
 	Input *input;
 	World *world;
 	Logger *logger;

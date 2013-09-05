@@ -17,11 +17,6 @@ App::App()
 App::~App()
 {
 	ShutdownWindows();
-	if(graphics)
-	{
-		delete graphics;
-		graphics = NULL;
-	}
 	if(input)
 	{
 		delete input;
@@ -59,8 +54,7 @@ bool App::Init()
 	if(!input)
 		return false;
 
-	graphics = new Graphics();
-	if(!graphics->Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
+	if(!graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
 		return false;
 
 	logger = new Logger();
@@ -144,7 +138,7 @@ void App::Run()
 			running = false;
 			break;
 		}
-		graphics->Render();
+		graphics.Render();
 	}
 }
 
@@ -153,7 +147,7 @@ bool App::OnLoop()
 	if(!world->IsStarted())
 	{
 		world->Start(manager->GetLevel(ResourceManager::Levels::L1));
-		if(!graphics->Init(world))
+		if(!graphics.Init(world))
 			return false;
 	}
 	int worldEvents = 0;
@@ -166,9 +160,9 @@ bool App::OnLoop()
 	if(input->IsKeyDown(VK_ESCAPE))
 		Quit();
 	if(input->IsKeyDown(VK_DOWN))
-		graphics->ChangeBrightness(-0.001f);
+		graphics.ChangeBrightness(-0.001f);
 	if(input->IsKeyDown(VK_UP))
-		graphics->ChangeBrightness(0.001f);
+		graphics.ChangeBrightness(0.001f);
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();

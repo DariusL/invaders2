@@ -5,11 +5,10 @@
 #include "Camera.h"
 #include "World.h"
 #include "Globals.h"
-#include "App.h"
 
 class Graphics
 {
-	Direct3D *d3D;
+	Direct3D d3D;
 	Camera camera;
 
 	World *world;
