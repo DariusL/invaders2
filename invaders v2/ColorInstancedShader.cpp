@@ -23,30 +23,22 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, char* vsFilena
 	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
-	ID3D11Buffer *bMatrix, *bLighting;
-	ID3D11VertexShader *sVertex;
-	ID3D11PixelShader *sPixel;
-	ID3D11InputLayout *inputLayout;
 
 	unique_ptr<char> vBuffer;
 	int vSize;
 	Utils::ReadFileToArray(vsFilename, vBuffer, vSize);
 
 	// Create the vertex shader from the buffer.
-	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &sVertex)))
+	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader)))
 		return false;
-
-	vertexShader = unique_ptr<ID3D11VertexShader, COMDeleter>(sVertex);
 
 	unique_ptr<char> pBuffer;
 	int pSize;
 	Utils::ReadFileToArray(psFilename, pBuffer, pSize);
 
 	// Create the pixel shader from the buffer.
-	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &sPixel)))
+	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader)))
 		return false;
-
-	pixelShader = unique_ptr<ID3D11PixelShader, COMDeleter>(sPixel);
 
 	// Now setup the layout of the data that goes into the shader.
 	// This setup needs to match the VertexType stucture in the ModelClass and in the shader.
@@ -75,10 +67,8 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, char* vsFilena
 	polygonLayout[2].InstanceDataStepRate = 1;
 
 	// Create the vertex input layout.
-	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &inputLayout)))
+	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
 		return false;
-
-	layout = unique_ptr<ID3D11InputLayout, COMDeleter>(inputLayout);
 
 	delete [] polygonLayout;
 
@@ -90,10 +80,8 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, char* vsFilena
 	matrixBufferDesc.StructureByteStride = 0;
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
-	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &bMatrix)))
+	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer)))
 		return false;
-
-	matrixBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(bMatrix);
 
 	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	lightingBufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
@@ -102,10 +90,8 @@ bool ColorInstancedShader::InitializeShader(ID3D11Device* device, char* vsFilena
 	lightingBufferDesc.MiscFlags = 0;
 	lightingBufferDesc.StructureByteStride = 0;
 
-	if(FAILED(device->CreateBuffer(&lightingBufferDesc, NULL, &bLighting)))
+	if(FAILED(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer)))
 		return false;
-
-	lightingBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(bLighting);
 
 	return true;
 }
@@ -114,28 +100,26 @@ void ColorInstancedShader::SetShaderParameters(RenderParams params)
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 	D3DXVECTOR4 brightnessVector = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
-	ID3D11Buffer *bMatrix = matrixBuffer.get();
-	ID3D11Buffer *bLighting = lightingBuffer.get();
 
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 
-	params.context->Map(bMatrix, 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
+	params.context->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
 	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
-	params.context->Unmap(bMatrix, 0);
+	params.context->Unmap(matrixBuffer.Get(), 0);
 
-	params.context->Map(bLighting, 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
+	params.context->Map(lightingBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
 	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
-	params.context->Unmap(bLighting, 0);
+	params.context->Unmap(lightingBuffer.Get(), 0);
 
 	// Finanly set the constant buffer in the vertex shader with the updated values.
-	params.context->VSSetConstantBuffers(0, 1, &bMatrix);
-	params.context->PSSetConstantBuffers(0, 1, &bLighting);
+	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
+	params.context->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
-	params.context->IASetInputLayout(layout.get());
+	params.context->IASetInputLayout(layout.Get());
 
 	//set the shaders used for rendering
-	params.context->VSSetShader(vertexShader.get(), NULL, 0);
-	params.context->PSSetShader(pixelShader.get(), NULL, 0);
+	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
+	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 }
 
 void ColorInstancedShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount, int instanceCount)

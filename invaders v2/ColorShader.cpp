@@ -19,7 +19,7 @@ bool ColorShader::Init(ID3D11Device* device)
 bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char* psFilename)
 {
 	unsigned int numElements = 2;
-	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
+	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
 
@@ -60,6 +60,8 @@ bool ColorShader::InitializeShader(ID3D11Device* device, char* vsFilename, char*
 	// Create the vertex input layout.
 	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
 		return false;
+
+	delete [] polygonLayout;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
