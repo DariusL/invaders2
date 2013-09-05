@@ -10,3 +10,5 @@
 *.txt
 *.opensdf
 *.suo
+*.psess
+*.vsp
