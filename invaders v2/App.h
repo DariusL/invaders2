@@ -13,10 +13,12 @@ class Graphics;
 class App
 {
 	Graphics graphics;
-	Input *input;
+	Input input;
+
 	World *world;
-	Logger *logger;
-	ResourceManager *manager;
+
+	Logger logger;
+	ResourceManager manager;
 
 	HWND wHandle;
 	HINSTANCE hInstance;
@@ -43,8 +45,8 @@ public:
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
 
 	HWND GetWindowHandle(){return wHandle;}
-	Logger *GetLogger(){return logger;}
-	ResourceManager *GetResourceManager(){return manager;}
+	Logger *GetLogger(){return &logger;}
+	ResourceManager *GetResourceManager(){return &manager;}
 	World *GetWorld(){return world;}
 
 	static App *Get(){return Handle;}

@@ -17,25 +17,10 @@ App::App()
 App::~App()
 {
 	ShutdownWindows();
-	if(input)
-	{
-		delete input;
-		input = NULL;
-	}
 	if(world)
 	{
 		delete world;
 		world = NULL;
-	}
-	if(logger)
-	{
-		delete logger;
-		logger = NULL;
-	}
-	if(manager)
-	{
-		delete manager;
-		manager = NULL;
 	}
 }
 
@@ -44,21 +29,15 @@ bool App::Init()
 	InitWindows();
 	Handle = this;
 
-	manager = new ResourceManager();
-	if(!manager->Init())
+	if(!manager.Init())
 		return false;
 
 	world = new World();
 
-	input = new Input();
-	if(!input)
-		return false;
-
 	if(!graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
 		return false;
 
-	logger = new Logger();
-	if(!logger->Init())
+	if(!logger.Init())
 		return false;
 
 	return true;
@@ -146,22 +125,22 @@ bool App::OnLoop()
 {
 	if(!world->IsStarted())
 	{
-		world->Start(manager->GetLevel(ResourceManager::Levels::L1));
+		world->Start(manager.GetLevel(ResourceManager::Levels::L1));
 		if(!graphics.Init(world))
 			return false;
 	}
 	int worldEvents = 0;
-	if(input->IsKeyDown(VK_LEFT))
+	if(input.IsKeyDown(VK_LEFT))
 		worldEvents |= ControlCodes::LEFT;
-	if(input->IsKeyDown(VK_RIGHT))
+	if(input.IsKeyDown(VK_RIGHT))
 		worldEvents |= ControlCodes::RIGHT;
-	if(input->IsKeyDown(VK_SPACE))
+	if(input.IsKeyDown(VK_SPACE))
 		worldEvents |= ControlCodes::FIRE;
-	if(input->IsKeyDown(VK_ESCAPE))
+	if(input.IsKeyDown(VK_ESCAPE))
 		Quit();
-	if(input->IsKeyDown(VK_DOWN))
+	if(input.IsKeyDown(VK_DOWN))
 		graphics.ChangeBrightness(-0.001f);
-	if(input->IsKeyDown(VK_UP))
+	if(input.IsKeyDown(VK_UP))
 		graphics.ChangeBrightness(0.001f);
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
@@ -205,10 +184,10 @@ LRESULT CALLBACK App::MessageHandler(HWND whandle, UINT message , WPARAM wparam,
 		Quit();
 		break;
 	case WM_KEYDOWN:
-		input->KeyDown(wparam);
+		input.KeyDown(wparam);
 		break;
 	case WM_KEYUP:
-		input->KeyUp(wparam);
+		input.KeyUp(wparam);
 		break;
 	default:
 		return DefWindowProc(whandle, message, wparam, lparam);
