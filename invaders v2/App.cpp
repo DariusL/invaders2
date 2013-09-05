@@ -17,11 +17,6 @@ App::App()
 App::~App()
 {
 	ShutdownWindows();
-	if(world)
-	{
-		delete world;
-		world = NULL;
-	}
 }
 
 bool App::Init()
@@ -32,7 +27,7 @@ bool App::Init()
 	if(!manager.Init())
 		return false;
 
-	world = new World();
+	world = unique_ptr<World>(new World());
 
 	if(!graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
 		return false;
@@ -126,7 +121,7 @@ bool App::OnLoop()
 	if(!world->IsStarted())
 	{
 		world->Start(manager.GetLevel(ResourceManager::Levels::L1));
-		if(!graphics.Init(world))
+		if(!graphics.Init(world.get()))
 			return false;
 	}
 	int worldEvents = 0;
