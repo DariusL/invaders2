@@ -33,7 +33,6 @@ bool Shooter::InitBuffers(ID3D11Device *device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
-	ID3D11Buffer *tVertex, *tIndex;
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -44,9 +43,11 @@ bool Shooter::InitBuffers(ID3D11Device *device)
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
-	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &tVertex)))
+	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer)))
 		return false;
-	vertexBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(tVertex);
+
+	vertexInfo.offset = 0;
+	vertexInfo.stride = sizeof(VertexType);
 
 	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -57,9 +58,8 @@ bool Shooter::InitBuffers(ID3D11Device *device)
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
-	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &tIndex)))
+	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer)))
 		return false;
-	indexBuffer = unique_ptr<ID3D11Buffer, COMDeleter>(tIndex);
 
 	return true;
 }
@@ -75,19 +75,11 @@ void Shooter::Render(RenderParams params)
 
 void Shooter::SetBuffers(ID3D11DeviceContext *context)
 {
-	unsigned int stride;
-	unsigned int offset;
-
-	stride = sizeof(VertexType); 
-	offset = 0;
-    
-	ID3D11Buffer *tVertex;
-	tVertex = vertexBuffer.get();
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	context->IASetVertexBuffers(0, 1, &tVertex, &stride, &offset);
+	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
-	context->IASetIndexBuffer(indexBuffer.get(), DXGI_FORMAT_R32_UINT, 0);
+	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

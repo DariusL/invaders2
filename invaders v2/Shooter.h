@@ -20,8 +20,9 @@ class Shooter : public Entity, public IDrawableObject
 	D3DXMATRIX moveMatrix;
 	shared_ptr<ColorShader> shader;
 
-	unique_ptr<ID3D11Buffer, COMDeleter> vertexBuffer;
-	unique_ptr<ID3D11Buffer, COMDeleter> indexBuffer;
+	ComPtr<ID3D11Buffer> vertexBuffer;
+	BufferInfo vertexInfo;
+	ComPtr<ID3D11Buffer> indexBuffer;
 public:
 	Shooter(void);
 	Shooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model> model);

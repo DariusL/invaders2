@@ -118,19 +118,18 @@ bool ResourceManager::Init()
 	hitboxes.push_back(D3DXVECTOR2(0.2f, 1.5f));
 	hitboxes.push_back(D3DXVECTOR2(1.0f, 1.0f));
 
-	shared_ptr<Level> level = make_shared<Level>();
+	Level *level = new Level();
 
 	level->gridWidth = 11;
 	level->gridHeight = 5;
-	level->enemies = unique_ptr<int[]>(new int[level->gridHeight * level->gridWidth]);
 	level->gap = D3DXVECTOR2(3.0f, 3.0f);
 
 	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
-		level->enemies[i] = Enemies::BASIC;
+		level->enemies.push_back(Enemies::BASIC);
 	}
 
-	levels.push_back(level);
+	levels.push_back(shared_ptr<Level>(level));
 
 	return true;
 }

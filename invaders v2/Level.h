@@ -1,5 +1,5 @@
 #pragma once
-#include <memory>
+#include <vector>
 #include "Globals.h"
 using namespace std;
 
@@ -7,6 +7,6 @@ struct Level
 {
 	int gridWidth;
 	int gridHeight;
-	unique_ptr<int[]> enemies;
+	vector<int> enemies;
 	D3DXVECTOR2 gap;
 };
