@@ -5,6 +5,7 @@
 World::World()
 {
 	started = false;
+	lives = 3;
 }
 
 World::~World()
@@ -20,7 +21,6 @@ bool World::Start(shared_ptr<Level> level)
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
 	enemiesMovingRight = true;
-	lives = 3;
 	started = true;
 	return true;
 }
