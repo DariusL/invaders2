@@ -39,7 +39,7 @@ bool Shooter::InitBuffers(ComPtr<ID3D11Device> device)
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	vertexData.pSysMem = model->vertices.get();
+	vertexData.pSysMem = &model->vertices[0];
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
@@ -54,7 +54,7 @@ bool Shooter::InitBuffers(ComPtr<ID3D11Device> device)
 	indexBufferDesc.ByteWidth = sizeof(int) * model->indexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
-	indexData.pSysMem = model->indices.get();
+	indexData.pSysMem = &model->indices[0];
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
