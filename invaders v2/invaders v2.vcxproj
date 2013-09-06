@@ -85,6 +85,8 @@
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InstanceEntity.cpp" />
+    <ClCompile Include="BaseInstancer.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -106,6 +108,9 @@
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableGroup.h" />
     <ClInclude Include="IDrawableObject.h" />
+    <ClInclude Include="IInstance.h" />
+    <ClInclude Include="InstanceEntity.h" />
+    <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />

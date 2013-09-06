@@ -3,7 +3,9 @@
 #include <D3DX10math.h>
 #include <wrl\client.h>
 #include "Globals.h"
+
 using namespace Microsoft::WRL;
+
 class IDrawable
 {
 public:

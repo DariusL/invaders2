@@ -16,7 +16,7 @@ public:
 	Entity();
 	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size);
 	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed);
-	~Entity(void);
+	virtual ~Entity(void);
 
 	D3DXVECTOR3 GetPos() const {return pos;}
 	void MoveBy(D3DXVECTOR3 step);
