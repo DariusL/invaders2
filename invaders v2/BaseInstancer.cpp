@@ -27,7 +27,7 @@ bool BaseInstancer<Data>::InitBuffers(ComPtr<ID3D11Device> device)
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
-	bulletData = unique_ptr<Data[]>(new Data[maxInstanceCount]);
+	instanceData = unique_ptr<Data[]>(new Data[maxInstanceCount]);
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -58,7 +58,7 @@ bool BaseInstancer<Data>::InitBuffers(ComPtr<ID3D11Device> device)
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(Data) * MAX_BULLET_COUNT;
+	instanceBufferDesc.ByteWidth = sizeof(Data) * maxInstanceCount;
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
@@ -78,7 +78,7 @@ void BaseInstancer<Data>::Render(RenderParams params)
 		return;
 	SetBuffers(params.context);
 	shader->SetShaderParameters(params);
-	shader->RenderShader(params.context, model->indexCount, bulletCount);
+	shader->RenderShader(params.context, model->indexCount, instanceCount);
 }
 
 template<class Data>
@@ -105,7 +105,7 @@ bool BaseInstancer<Data>::Update(ComPtr<ID3D11DeviceContext> context)
 
 	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-	memcpy(mappedResource.pData, bulletData.get(), sizeof(Data) * bulletCount);
+	memcpy(mappedResource.pData, instanceData.get(), sizeof(Data) * instanceCount);
 
 	context->Unmap(instanceBuffer.Get(), 0);
 

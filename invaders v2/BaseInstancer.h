@@ -15,7 +15,7 @@ class BaseInstancer : public IDrawableObject
 {
 public:
 	BaseInstancer(shared_ptr<Model>, int maxObjectCount);
-	~BaseInstancer(void);
+	virtual ~BaseInstancer(void);
 
 protected:
 	int maxInstanceCount;
@@ -24,7 +24,7 @@ protected:
 	shared_ptr<Model> model;
 
 	shared_ptr<ColorInstancedShader> shader;
-	unique_ptr<Data[]> bulletData;
+	unique_ptr<Data[]> instanceData;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;

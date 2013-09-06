@@ -72,6 +72,9 @@
     <ClCompile Include="BaseInstancer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ListInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -144,6 +147,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListInstancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
