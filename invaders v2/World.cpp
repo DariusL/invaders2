@@ -34,11 +34,14 @@ void World::Stop()
 
 bool World::Init(ComPtr<ID3D11Device> device)
 {
+	ResourceManager *rm = App::Get()->GetResourceManager();
 	if(!player->Init(device))
 		return false;
 	if(!enemies->Init(device))
 		return false;
-	ResourceManager *rm = App::Get()->GetResourceManager();
+	tempWall = make_shared<Wall>(D3DXVECTOR3(0.0f, -8.0f, 1.0f), 8, 6, rm->GetModel(ResourceManager::Models::MODEL_WALL), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_WALL_BLOCK));
+	if(!tempWall->Init(device))
+		return false;
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
 	if(!playerBulletGraphics->Init(device))
 		return false;
@@ -118,4 +121,5 @@ void World::Render(RenderParams params)
 	enemies->Render(params);
 	playerBulletGraphics->SetData(playerBullets);
 	playerBulletGraphics->Render(params);
+	tempWall->Render(params);
 }

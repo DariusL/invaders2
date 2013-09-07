@@ -12,7 +12,7 @@ Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<Model> model, D
 		blocks.push_back(true);
 	}
 	blocks[0] = false;
-	blocks[width] = false;
+	blocks[width - 1] = false;
 	changed = true;
 
 	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(

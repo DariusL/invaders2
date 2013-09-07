@@ -9,6 +9,7 @@
 #include "EnemyGrid.h"
 #include "Level.h"
 #include "DrawableShooter.h"
+#include "Wall.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ class World : public IDrawable
 	shared_ptr<DrawableShooter> player;
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
+	shared_ptr<Wall> tempWall;
 
 	float enemyGridSpeed;
 	float bulletSpeed;
