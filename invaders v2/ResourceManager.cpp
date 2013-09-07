@@ -163,6 +163,8 @@ bool ResourceManager::Init()
 	level->gridWidth = 11;
 	level->gridHeight = 5;
 	level->gap = D3DXVECTOR2(3.0f, 3.0f);
+	level->enemyTypes = vector<int>();
+	level->enemyTypes.push_back(Enemies::BASIC);
 
 	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
