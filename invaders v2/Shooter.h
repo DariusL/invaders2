@@ -1,7 +1,6 @@
 #pragma once
 #include "entity.h"
-class Shooter :
-	public Entity
+class Shooter : public Entity
 {
 	//fiziks
 	//per second
