@@ -4,7 +4,6 @@
 #include "Direct3D.h"
 #include "Camera.h"
 #include "World.h"
-#include "Globals.h"
 
 class Graphics
 {

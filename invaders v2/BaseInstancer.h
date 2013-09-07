@@ -1,30 +1,31 @@
 #pragma once
 #pragma warning(disable : 4005)
-#include "idrawableobject.h"
-#include "Model.h"
-#include "ColorInstancedShader.h"
-#include "Entity.h"
 
 #include <memory>
 #include <list>
+
+#include "IDrawableObject.h"
+#include "Model.h"
+#include "ColorInstancedShader.h"
+
 using namespace std;
 using namespace Microsoft::WRL;
 
-template<class Data>
 class BaseInstancer : public IDrawableObject
 {
 public:
-	BaseInstancer(shared_ptr<Model>, int maxObjectCount);
+	BaseInstancer(shared_ptr<Model>, int maxObjectCount, int instanceSize);
 	virtual ~BaseInstancer(void);
 
 protected:
 	int maxInstanceCount;
 	int instanceCount;
+	int instanceSize;
 
 	shared_ptr<Model> model;
 
 	shared_ptr<ColorInstancedShader> shader;
-	unique_ptr<Data[]> instanceData;
+	unique_ptr<byte[]> instanceData;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;

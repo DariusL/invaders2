@@ -1,12 +1,15 @@
 #pragma once
-#include "Model.h"
-#include "Shooter.h"
-#include "Level.h"
-#include "ColorShader.h"
-#include "ColorInstancedShader.h"
+
 #include <vector>
 #include <memory>
 #include <wrl\client.h>
+
+#include "Model.h"
+#include "ColorInstancedShader.h"
+#include "ColorShader.h"
+#include "Shooter.h"
+#include "Level.h"
+
 using namespace std;
 
 class ResourceManager

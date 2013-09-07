@@ -72,7 +72,7 @@
     <ClCompile Include="BaseInstancer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ListInstancer.cpp">
+    <ClCompile Include="EntityListInstancer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +149,7 @@
     <ClInclude Include="BaseInstancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ListInstancer.h">
+    <ClInclude Include="EntityListInstancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <D3D11.h>
 #include <D3DX10math.h>
 #include <ctime>
+
 class Entity
 {
 protected:

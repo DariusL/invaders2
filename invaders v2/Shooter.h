@@ -1,8 +1,9 @@
 #pragma once
+#pragma warning(disable : 4005)
 
 #include <memory>
 
-#include "entity.h"
+#include "Entity.h"
 #include "IDrawableObject.h"
 #include "Model.h"
 #include "ColorShader.h"
@@ -41,6 +42,4 @@ private:
 	void ShutdownBuffers();
 	void SetBuffers(ComPtr<ID3D11DeviceContext>);
 	bool Update(ComPtr<ID3D11DeviceContext>);
-
-	Shooter& operator=(const Shooter&);
 };

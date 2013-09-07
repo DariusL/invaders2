@@ -10,6 +10,7 @@ World::World()
 
 World::~World()
 {
+
 }
 
 bool World::Start(shared_ptr<Level> level)
@@ -37,7 +38,8 @@ bool World::Init(ComPtr<ID3D11Device> device)
 		return false;
 	if(!enemies->Init(device))
 		return false;
-	playerBulletGraphics = unique_ptr<Bullets>(new Bullets());
+	ResourceManager *rm = App::Get()->GetResourceManager();
+	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
 	if(!playerBulletGraphics->Init(device))
 		return false;
 	return true;
@@ -67,7 +69,7 @@ int World::OnLoop(int input, float frameLength)
 			&& !player->IsDead())
 		{
 			player->Fire();
-			playerBullets.push_back(Entity(player->GetPos(), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_BULLET), 18.0f));
+			playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_BULLET), 18.0f));
 		}
 
 	}
@@ -114,6 +116,6 @@ void World::Render(RenderParams params)
 {
 	player->Render(params);
 	enemies->Render(params);
-	playerBulletGraphics->setBullets(playerBullets);
+	playerBulletGraphics->SetData(playerBullets);
 	playerBulletGraphics->Render(params);
 }

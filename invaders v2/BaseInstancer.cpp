@@ -1,19 +1,21 @@
 #include "BaseInstancer.h"
+#include "App.h"
 
-template<class Data>
-BaseInstancer<Data>::BaseInstancer(shared_ptr<Model> model, int maxObjectCount)
+
+BaseInstancer::BaseInstancer(shared_ptr<Model> model, int maxObjectCount, int instanceSize)
 {
 	this->maxInstanceCount = maxObjectCount;
 	this->model = model;
+	this->instanceSize = instanceSize;
 }
 
-template<class Data>
-BaseInstancer<Data>::~BaseInstancer(void)
+
+BaseInstancer::~BaseInstancer(void)
 {
 }
 
-template<class Data>
-bool BaseInstancer<Data>::Init(ComPtr<ID3D11Device> device)
+
+bool BaseInstancer::Init(ComPtr<ID3D11Device> device)
 {
 	shader = App::Get()->GetResourceManager()->GetColorInstancedShader();
 	if(!InitBuffers(device))
@@ -21,13 +23,13 @@ bool BaseInstancer<Data>::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-template<class Data>
-bool BaseInstancer<Data>::InitBuffers(ComPtr<ID3D11Device> device)
+
+bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc, instanceBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
-	instanceData = unique_ptr<Data[]>(new Data[maxInstanceCount]);
+	instanceData = unique_ptr<byte[]>(new byte[maxInstanceCount * instanceSize]);
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -58,7 +60,7 @@ bool BaseInstancer<Data>::InitBuffers(ComPtr<ID3D11Device> device)
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(Data) * maxInstanceCount;
+	instanceBufferDesc.ByteWidth = instanceSize * maxInstanceCount;
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
@@ -66,13 +68,13 @@ bool BaseInstancer<Data>::InitBuffers(ComPtr<ID3D11Device> device)
 		return false;
 
 	instanceInfo.offset = 0;
-	instanceInfo.stride = sizeof(Data);
+	instanceInfo.stride = instanceSize;
 	
 	return true;
 }
 
-template<class Data>
-void BaseInstancer<Data>::Render(RenderParams params)
+
+void BaseInstancer::Render(RenderParams params)
 {
 	if(!Update(params.context))
 		return;
@@ -81,8 +83,8 @@ void BaseInstancer<Data>::Render(RenderParams params)
 	shader->RenderShader(params.context, model->indexCount, instanceCount);
 }
 
-template<class Data>
-void BaseInstancer<Data>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
+
+void BaseInstancer::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
@@ -95,8 +97,7 @@ void BaseInstancer<Data>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-template<class Data>
-bool BaseInstancer<Data>::Update(ComPtr<ID3D11DeviceContext> context)
+bool BaseInstancer::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(instanceCount == 0)
 		return false;
@@ -105,7 +106,7 @@ bool BaseInstancer<Data>::Update(ComPtr<ID3D11DeviceContext> context)
 
 	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 
-	memcpy(mappedResource.pData, instanceData.get(), sizeof(Data) * instanceCount);
+	memcpy(mappedResource.pData, instanceData.get(), instanceSize * instanceCount);
 
 	context->Unmap(instanceBuffer.Get(), 0);
 

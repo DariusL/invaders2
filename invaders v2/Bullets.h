@@ -1,11 +1,12 @@
 #pragma once
 #pragma warning(disable : 4005)
-#include "idrawable.h"
+#include <memory>
+#include <list>
+
+#include "IDrawable.h"
 #include "Model.h"
 #include "ColorInstancedShader.h"
 #include "Entity.h"
-#include <memory>
-#include <list>
 
 using namespace std;
 class Bullets : public IDrawable

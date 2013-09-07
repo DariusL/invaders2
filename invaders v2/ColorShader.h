@@ -7,8 +7,9 @@
 #include <d3dx11async.h>
 #include <fstream>
 #include <memory>
-#include "Utils.h"
+
 #include "Globals.h"
+#include "Utils.h"
 
 using namespace Microsoft::WRL;
 using namespace std;

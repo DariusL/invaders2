@@ -1,19 +1,21 @@
 #pragma once
-#include "Shooter.h"
-#include "Globals.h"
-#include "EnemyGrid.h"
-#include "Logger.h"
-#include "Bullets.h"
+#pragma warning(disable : 4005)
+
 #include <cmath>
 #include <D3D11.h>
 #include <list>
+
+#include "EntityListInstancer.h"
+#include "EnemyGrid.h"
+#include "Level.h"
+#include "Shooter.h"
 
 using namespace std;
 
 class World : public IDrawable
 {
-	list<Entity> playerBullets;
-	unique_ptr<Bullets> playerBulletGraphics;
+	list<InstanceEntity> playerBullets;
+	unique_ptr<EntityListInstancer> playerBulletGraphics;
 	shared_ptr<Shooter> player;
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
@@ -37,7 +39,7 @@ public:
 
 	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
 
-	const list<Entity> &GetBullets(){return playerBullets;}
+	const list<InstanceEntity> &GetBullets(){return playerBullets;}
 
 	bool IsStarted(){return started;}
 

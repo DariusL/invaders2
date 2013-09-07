@@ -1,6 +1,5 @@
 #include "ColorShader.h"
 
-
 ColorShader::ColorShader()
 {
 }

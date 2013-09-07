@@ -11,6 +11,7 @@
 #include <d3dx10math.h>
 #include <iostream>
 #include <wrl\client.h>
+
 using namespace std;
 using namespace Microsoft::WRL;
 

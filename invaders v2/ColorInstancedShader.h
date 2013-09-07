@@ -8,8 +8,9 @@
 #include <fstream>
 #include <memory>
 #include <wrl\client.h>
-#include "Utils.h"
+
 #include "Globals.h"
+#include "Utils.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
@@ -20,7 +21,7 @@ public:
 	ColorInstancedShader(void);
 	~ColorInstancedShader(void);
 
-	bool Init(ComPtr<ID3D11Device> );
+	bool Init(ComPtr<ID3D11Device>);
 	void SetShaderParameters(RenderParams);
 	void RenderShader(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 

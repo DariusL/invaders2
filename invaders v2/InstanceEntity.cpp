@@ -1,7 +1,7 @@
 #include "InstanceEntity.h"
 
 
-InstanceEntity::InstanceEntity(void)
+InstanceEntity::InstanceEntity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed): Entity(start, size, speed)
 {
 }
 

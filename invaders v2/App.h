@@ -2,12 +2,11 @@
 #include <Windows.h>
 #include <sstream>
 
-#include "Globals.h"
 #include "Graphics.h"
-#include "Input.h"
 #include "World.h"
 #include "Logger.h"
 #include "ResourceManager.h"
+#include "Input.h"
 
 class Graphics;
 class App

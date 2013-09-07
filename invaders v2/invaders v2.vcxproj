@@ -87,7 +87,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InstanceEntity.cpp" />
     <ClCompile Include="BaseInstancer.cpp" />
-    <ClCompile Include="ListInstancer.cpp" />
+    <ClCompile Include="EntityListInstancer.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -113,7 +113,7 @@
     <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="ListInstancer.h" />
+    <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />

@@ -1,6 +1,9 @@
 #pragma once
-#include "Globals.h"
+
 #include <vector>
+
+#include "Globals.h"
+
 using namespace std;
 struct Model
 {

@@ -2,6 +2,7 @@
 #include "World.h"
 #include "App.h"
 #include "ResourceManager.h"
+#include "Utils.h"
 
 EnemyGrid::EnemyGrid(void)
 {
@@ -79,7 +80,7 @@ bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<Shooter> &enemy)
 	return false;
 }
 
-void EnemyGrid::CollideWith(list<Entity> &bullets)
+void EnemyGrid::CollideWith(list<InstanceEntity> &bullets)
 {
 	shared_ptr<Shooter> enemy;
 	for(auto &a : bullets)

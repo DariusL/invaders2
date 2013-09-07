@@ -1,12 +1,18 @@
 #pragma once
-#include "Shooter.h"
-#include "Utils.h"
-#include "Bullets.h"
-#include "Level.h"
+#pragma warning(disable : 4005)
+
 #include <vector>
 #include <memory>
 #include <list>
 #include <random>
+
+#include "IDrawable.h"
+#include "Bullets.h"
+#include "Level.h"
+#include "Globals.h"
+#include "Shooter.h"
+#include "InstanceEntity.h"
+
 using namespace std;
 class EnemyGrid : public IDrawable
 {
@@ -34,7 +40,7 @@ public:
 	void MoveBy(D3DXVECTOR3 vec);
 	void OnLoop(float frameLength);
 	void Fire(float frameLength);
-	void CollideWith(list<Entity> &bullets);
+	void CollideWith(list<InstanceEntity> &bullets);
 	D3DXVECTOR3 GetPos(){return center;}
 
 	float GetRightBorder(){return center.x + betweenCenters.x / 2;}
