@@ -95,6 +95,7 @@
     <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

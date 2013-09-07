@@ -17,11 +17,15 @@ using namespace std;
 class EnemyGrid : public IDrawable
 {
 	vector<shared_ptr<DrawableShooter>> grid;
+
 	list<InstanceEntity> bullets;
 	unique_ptr<EntityListInstancer> enemyBulletGraphics;
+
 	shared_ptr<Level> level;
+
 	D3DXVECTOR3 center;
 	D3DXVECTOR2 betweenCenters;
+
 	bool movingRight;
 	float speed;
 

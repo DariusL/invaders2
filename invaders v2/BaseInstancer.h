@@ -38,8 +38,8 @@ public:
 	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);
 
-private:
+protected:
 	bool InitBuffers(ComPtr<ID3D11Device>);
 	void SetBuffers(ComPtr<ID3D11DeviceContext>);
-	bool Update(ComPtr<ID3D11DeviceContext>);
+	virtual bool Update(ComPtr<ID3D11DeviceContext>);
 };

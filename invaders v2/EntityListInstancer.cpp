@@ -13,16 +13,15 @@ EntityListInstancer::~EntityListInstancer(void)
 
 void EntityListInstancer::SetData(list<InstanceEntity> &instances)
 {
-	instanceCount = instances.size();
 	InstanceType instance;
-	int i = 0;
+	instanceCount = 0;
 
 	for(auto &x : instances)
 	{
-		if(i >= maxInstanceCount)
+		if(instanceCount >= maxInstanceCount)
 			break;
 		instance = x.GetInstanceData();
-		memcpy(instanceData.get() + i * instanceSize, &instance, instanceSize);
-		i++;
+		memcpy(instanceData.get() + instanceCount * instanceSize, &instance, instanceSize);
+		instanceCount++;
 	}
 }
