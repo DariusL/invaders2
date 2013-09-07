@@ -10,15 +10,15 @@ ResourceManager::~ResourceManager(void)
 {
 }
 
-shared_ptr<Shooter> ResourceManager::GetEnemy(int type)
+shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 {
 	switch (type)
 	{
 	case Enemies::BASIC:
-		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
+		return make_shared<DrawableShooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
 		break;
 	case Enemies::LAPTOP:
-		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
+		return make_shared<DrawableShooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
 	default:
 		return NULL;
 		break;

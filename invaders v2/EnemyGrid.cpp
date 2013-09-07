@@ -30,7 +30,7 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 
 	for(int i = 0; i < level->gridHeight; i++)
 		for(int j = 0; j < level->gridWidth; j++){
-			shared_ptr<Shooter> enemy = rm->GetEnemy(level->enemies[i * level->gridHeight + j]);
+			shared_ptr<DrawableShooter> enemy = rm->GetEnemy(level->enemies[i * level->gridHeight + j]);
 			enemy->MoveTo(topLeft + D3DXVECTOR3(j * level->gap.x, i * -level->gap.y, 0));
 			grid.push_back(enemy);
 			alive++;
@@ -57,7 +57,7 @@ void EnemyGrid::MoveBy(D3DXVECTOR3 vec)
 		grid[i]->MoveBy(vec);
 }
 
-bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<Shooter> &enemy)
+bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<DrawableShooter> &enemy)
 {
 	D3DXVECTOR3 pos = bullet.GetPos();
 	if(!IsInBounds(pos))
@@ -83,7 +83,7 @@ bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<Shooter> &enemy)
 
 void EnemyGrid::CollideWith(list<InstanceEntity> &bullets)
 {
-	shared_ptr<Shooter> enemy;
+	shared_ptr<DrawableShooter> enemy;
 	for(auto &a : bullets)
 	{
 		if(GetEnemyAt(a, enemy))
@@ -111,7 +111,7 @@ void EnemyGrid::OnLoop(float frameLength)
 	else
 		MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (speed * frameLength));
 	Fire(frameLength);
-	shared_ptr<Shooter> player = App::Get()->GetWorld()->GetPlayer();
+	shared_ptr<DrawableShooter> player = App::Get()->GetWorld()->GetPlayer();
 	D3DXVECTOR3 playerPos = player->GetPos();
 	for(auto &b : bullets)
 	{
@@ -134,7 +134,7 @@ void EnemyGrid::Fire(float frameLength)
 		for(j = level->gridHeight - 1; j > 0; j--)
 			if(!grid[i + j * level->gridWidth]->IsDead())
 				break;
-		shared_ptr<Shooter> enemy = grid[i + j * level->gridWidth];
+		shared_ptr<DrawableShooter> enemy = grid[i + j * level->gridWidth];
 		if(enemy->IsDead())
 			continue;
 		if(d(gen) && enemy->GetLastFired() + enemy->GetFireRate() <= clock() / float(CLOCKS_PER_SEC))

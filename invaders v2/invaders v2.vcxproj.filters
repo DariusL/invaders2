@@ -60,9 +60,6 @@
     <ClCompile Include="ColorInstancedShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shooter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InstanceEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +67,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EntityListInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawableShooter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,9 +122,6 @@
     <ClInclude Include="ColorInstancedShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shooter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IDrawable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -144,6 +144,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityListInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableShooter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

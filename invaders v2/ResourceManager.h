@@ -7,7 +7,7 @@
 #include "Model.h"
 #include "ColorInstancedShader.h"
 #include "ColorShader.h"
-#include "Shooter.h"
+#include "DrawableShooter.h"
 #include "Level.h"
 
 using namespace std;
@@ -27,7 +27,7 @@ public:
 	bool Init();
 	shared_ptr<Model> GetModel(int i){return models[i];}
 	const D3DXVECTOR2 &GetHitbox(int i){return hitboxes[i];}
-	shared_ptr<Shooter> GetEnemy(int type);
+	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 
 	shared_ptr<ColorShader> GetColorShader(){return colorShader;}

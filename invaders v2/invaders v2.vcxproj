@@ -91,6 +91,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
+    <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />

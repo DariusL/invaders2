@@ -17,7 +17,7 @@ bool World::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	player = make_shared<Shooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
+	player = make_shared<DrawableShooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
@@ -82,7 +82,7 @@ int World::OnLoop(int input, float frameLength)
 			player->MoveTo(playerStart);
 		}
 	}
-	shared_ptr<Shooter> temp;
+	shared_ptr<DrawableShooter> temp;
 	for(auto &b : playerBullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));

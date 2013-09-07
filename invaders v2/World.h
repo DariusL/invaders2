@@ -8,7 +8,7 @@
 #include "EntityListInstancer.h"
 #include "EnemyGrid.h"
 #include "Level.h"
-#include "Shooter.h"
+#include "DrawableShooter.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class World : public IDrawable
 {
 	list<InstanceEntity> playerBullets;
 	unique_ptr<EntityListInstancer> playerBulletGraphics;
-	shared_ptr<Shooter> player;
+	shared_ptr<DrawableShooter> player;
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
 
@@ -35,7 +35,7 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	void CollideBullets();
-	shared_ptr<Shooter> GetPlayer(){return player;}
+	shared_ptr<DrawableShooter> GetPlayer(){return player;}
 
 	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
 
