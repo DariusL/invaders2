@@ -7,18 +7,18 @@
 #include <random>
 
 #include "IDrawable.h"
-#include "Bullets.h"
 #include "Level.h"
 #include "Globals.h"
 #include "Shooter.h"
 #include "InstanceEntity.h"
+#include "EntityListInstancer.h"
 
 using namespace std;
 class EnemyGrid : public IDrawable
 {
 	vector<shared_ptr<Shooter>> grid;
-	list<Entity> bullets;
-	unique_ptr<Bullets> enemyBulletGraphics;
+	list<InstanceEntity> bullets;
+	unique_ptr<EntityListInstancer> enemyBulletGraphics;
 	shared_ptr<Level> level;
 	D3DXVECTOR3 center;
 	D3DXVECTOR2 betweenCenters;
@@ -52,7 +52,7 @@ public:
 	bool GetEnemyAt(Entity bullet, shared_ptr<Shooter> &enemy);
 	bool IsInBounds(D3DXVECTOR3 pos);
 
-	list<Entity> &getBullets(){return bullets;}
+	list<InstanceEntity> &getBullets(){return bullets;}
 
 	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);

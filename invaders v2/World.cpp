@@ -98,7 +98,7 @@ int World::OnLoop(int input, float frameLength)
 
 void World::CollideBullets()
 {
-	list<Entity> &enemyBullets = enemies->getBullets();
+	list<InstanceEntity> &enemyBullets = enemies->getBullets();
 	for(auto &p : playerBullets)
 	{
 		for(auto &e : enemyBullets)

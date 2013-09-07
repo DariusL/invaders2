@@ -43,7 +43,8 @@ bool EnemyGrid::Init(ComPtr<ID3D11Device> device)
 	for(auto &a : grid)
 		if(!a->Init(device))
 			return false;
-	enemyBulletGraphics = unique_ptr<Bullets>(new Bullets());
+	ResourceManager *rm = App::Get()->GetResourceManager();
+	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
 	if(!enemyBulletGraphics->Init(device))
 		return false;
 	return true;
@@ -148,6 +149,6 @@ void EnemyGrid::Render(RenderParams params)
 {
 	for(auto &a : grid)
 		a->Render(params);
-	enemyBulletGraphics->setBullets(bullets);
+	enemyBulletGraphics->SetData(bullets);
 	enemyBulletGraphics->Render(params);
 }
