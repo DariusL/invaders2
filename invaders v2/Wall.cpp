@@ -18,7 +18,7 @@ Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<Model> model, D
 	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
 		(width - 1) * blockSize.x,
 		(height - 1) * blockSize.y);
-	topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
+	topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, center.z);
 }
 
 
