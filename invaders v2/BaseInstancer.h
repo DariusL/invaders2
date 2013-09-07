@@ -14,7 +14,7 @@ using namespace Microsoft::WRL;
 class BaseInstancer : public IDrawableObject
 {
 public:
-	BaseInstancer(shared_ptr<Model>, int maxObjectCount, int instanceSize);
+	BaseInstancer(shared_ptr<Model> model, int maxObjectCount, int instanceSize);
 	virtual ~BaseInstancer(void);
 
 protected:

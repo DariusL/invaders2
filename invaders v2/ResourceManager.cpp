@@ -15,8 +15,10 @@ shared_ptr<Shooter> ResourceManager::GetEnemy(int type)
 	switch (type)
 	{
 	case Enemies::BASIC:
-		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY]);
+		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
 		break;
+	case Enemies::LAPTOP:
+		return make_shared<Shooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
 	default:
 		return NULL;
 		break;
@@ -108,6 +110,37 @@ bool ResourceManager::Init()
 
 	vertex.position = D3DXVECTOR3(0.1f, 0.75f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	temp->vertices.push_back(vertex);
+
+	temp->indices.push_back(1);
+	temp->indices.push_back(2);
+	temp->indices.push_back(0);
+
+	temp->indices.push_back(1);
+	temp->indices.push_back(3);
+	temp->indices.push_back(2);
+
+	models.push_back(temp);
+
+	temp = make_shared<Model>();
+
+	temp->vertexCount = 4;
+	temp->indexCount = 6;
+
+	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
+	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	temp->vertices.push_back(vertex);
+
+	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
+	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	temp->vertices.push_back(vertex);
+
+	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	temp->vertices.push_back(vertex);
+
+	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
+	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
 	temp->vertices.push_back(vertex);
 
 	temp->indices.push_back(1);

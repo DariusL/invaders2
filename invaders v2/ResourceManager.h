@@ -38,8 +38,9 @@ public:
 	enum Models
 	{
 		MODEL_PLAYER = 0,
-		MODEL_ENEMY,
-		MODEL_BULLET
+		MODEL_ENEMY_BASIC,
+		MODEL_BULLET,
+		MODEL_ENEMY_LAPTOP
 	};
 
 	enum Hitboxes
@@ -52,7 +53,8 @@ public:
 
 	enum Enemies
 	{
-		BASIC = 0
+		BASIC = 0,
+		LAPTOP
 	};
 
 	enum Levels
