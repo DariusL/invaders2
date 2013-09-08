@@ -106,11 +106,7 @@ void World::CollideBullets()
 	{
 		for(auto &e : enemyBullets)
 		{
-			if(p.CollidesWith(e))
-			{
-				p.Kill();
-				e.Kill();
-			}
+			p.CollideWithAndKillBoth(e);
 		}
 	}
 }

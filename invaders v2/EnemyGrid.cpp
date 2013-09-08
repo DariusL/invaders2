@@ -71,12 +71,7 @@ bool EnemyGrid::GetEnemyAt(Entity bullet, shared_ptr<DrawableShooter> &enemy)
 		if(abs(Utils::Trunc(y, inty)) * level->gap.y < level->gap.y / 2)
 		{
 			enemy = grid[unsigned int(intx + inty * level->gridWidth)];
-			if(enemy->CollidesWith(bullet))
-			{
-				if(enemy->IsDead())
-					return false;
-				return true;
-			}
+			return enemy->CollideWithAndKillBoth(bullet);
 		}
 	return false;
 }
@@ -116,11 +111,7 @@ void EnemyGrid::OnLoop(float frameLength)
 	for(auto &b : bullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, -1.0f, 0.0f) * (b.GetSpeed() * frameLength));
-		if(player->CollidesWith(b))
-		{
-			b.Kill();
-			player->Kill();
-		}
+		player->CollideWithAndKillBoth(b);
 	}
 	bullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() < World::FIELD_HEIGHT / -2.0f;});
 }

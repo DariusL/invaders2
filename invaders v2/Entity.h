@@ -37,6 +37,8 @@ public:
 	void Kill();
 	void Revive(){dead = false;}
 	
-	bool CollidesWith(const Entity &other) const;
+	bool CollideWith(const Entity &other) const;
+	bool CollideWithAndKill(const Entity &other);
+	bool CollideWithAndKillBoth(Entity &other);
 };
 
