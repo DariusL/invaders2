@@ -20,7 +20,7 @@ class DrawableShooter : public Shooter, public IDrawableObject
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableShooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model> model);
+	DrawableShooter(float speed, float fireRate, shared_ptr<Model> model);
 	virtual ~DrawableShooter(void);
 
 	bool Init(ComPtr<ID3D11Device>);

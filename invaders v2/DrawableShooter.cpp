@@ -6,7 +6,7 @@ DrawableShooter::~DrawableShooter(void)
 {
 }
 
-DrawableShooter::DrawableShooter(D3DXVECTOR2 size, float speed, float fireRate, shared_ptr<Model> model): Shooter(size, speed, fireRate) 
+DrawableShooter::DrawableShooter(float speed, float fireRate, shared_ptr<Model> model): Shooter(model->hitbox, speed, fireRate)
 {
 	this->model = model;
 }

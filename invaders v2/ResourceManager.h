@@ -15,7 +15,6 @@ using namespace std;
 class ResourceManager
 {
 	vector<shared_ptr<Model>> models;
-	vector<D3DXVECTOR2> hitboxes;
 	vector<shared_ptr<Level>> levels;
 
 	shared_ptr<ColorShader> colorShader;
@@ -26,7 +25,6 @@ public:
 
 	bool Init();
 	shared_ptr<Model> GetModel(int i){return models[i];}
-	const D3DXVECTOR2 &GetHitbox(int i){return hitboxes[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 
@@ -42,15 +40,6 @@ public:
 		MODEL_BULLET,
 		MODEL_ENEMY_LAPTOP,
 		MODEL_WALL
-	};
-
-	enum Hitboxes
-	{
-		HITBOX_PLAYER = 0,
-		HITBOX_ENEMY,
-		HITBOX_BULLET,
-		HITBOX_ENEMY_GAP,
-		HITBOX_WALL_BLOCK
 	};
 
 	enum Enemies

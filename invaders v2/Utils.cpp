@@ -25,3 +25,19 @@ float Utils::Trunc(float x, float &trunced)
 	}
 	return frac;
 }
+
+std::vector<InstanceEntity> Utils::GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, std::shared_ptr<Model> model)
+{
+	vector<InstanceEntity> ret;
+	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
+		(width - 1) * gap.x,
+		(height - 1) * gap.y);
+	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
+
+	for(int i = 0; i < height; i++)
+		for(int j = 0; j < width; j++){
+			InstanceEntity object = InstanceEntity(topLeft + D3DXVECTOR3(j * gap.x, i * -gap.y, 0), model->hitbox, 0.0f);
+			ret.push_back(object);
+		}
+	return ret;
+}

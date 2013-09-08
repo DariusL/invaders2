@@ -11,4 +11,5 @@ struct Model
 	int vertexCount;
 	vector<int> indices;
 	int indexCount;
+	D3DXVECTOR2 hitbox;
 };

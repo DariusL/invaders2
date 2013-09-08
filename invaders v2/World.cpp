@@ -17,7 +17,7 @@ bool World::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	player = make_shared<DrawableShooter>(rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_PLAYER), 18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
+	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER));
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
@@ -39,7 +39,7 @@ bool World::Init(ComPtr<ID3D11Device> device)
 		return false;
 	if(!enemies->Init(device))
 		return false;
-	tempWall = make_shared<Wall>(D3DXVECTOR3(0.0f, -8.0f, 0.0f), 8, 6, rm->GetModel(ResourceManager::Models::MODEL_WALL), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_WALL_BLOCK));
+	tempWall = make_shared<Wall>(D3DXVECTOR3(0.0f, -8.0f, 0.0f), 8, 6, rm->GetModel(ResourceManager::Models::MODEL_WALL));
 	if(!tempWall->Init(device))
 		return false;
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
@@ -72,7 +72,7 @@ int World::OnLoop(int input, float frameLength)
 			&& !player->IsDead())
 		{
 			player->Fire();
-			playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetHitbox(ResourceManager::Hitboxes::HITBOX_BULLET), 18.0f));
+			playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET)->hitbox, 18.0f));
 		}
 
 	}

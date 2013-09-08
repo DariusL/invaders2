@@ -15,10 +15,10 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 	switch (type)
 	{
 	case Enemies::BASIC:
-		return make_shared<DrawableShooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
 		break;
 	case Enemies::LAPTOP:
-		return make_shared<DrawableShooter>(hitboxes[Hitboxes::HITBOX_ENEMY], 15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
 	default:
 		return NULL;
 		break;
@@ -27,10 +27,12 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 
 bool ResourceManager::Init()
 {
+	//player
 	shared_ptr<Model> temp = make_shared<Model>();
 	
 	temp->vertexCount = 4;
 	temp->indexCount = 6;
+	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	VertexType vertex;
 	
@@ -60,10 +62,12 @@ bool ResourceManager::Init()
 
 	models.push_back(temp);
 
+	//enemy basic
 	temp = make_shared<Model>();
 
 	temp->vertexCount = 4;
 	temp->indexCount = 6;
+	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 	
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -91,10 +95,12 @@ bool ResourceManager::Init()
 
 	models.push_back(temp);
 
+	//bullet
 	temp = make_shared<Model>();
 
 	temp->vertexCount = 4;
 	temp->indexCount = 6;
+	temp->hitbox = D3DXVECTOR2(0.2f, 1.5f);
 	
 	vertex.position = D3DXVECTOR3(-0.1f, -0.75f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -122,7 +128,9 @@ bool ResourceManager::Init()
 
 	models.push_back(temp);
 
+	//enemy laptop
 	temp = make_shared<Model>();
+	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	temp->vertexCount = 4;
 	temp->indexCount = 6;
@@ -153,7 +161,9 @@ bool ResourceManager::Init()
 
 	models.push_back(temp);
 
+	//wall
 	temp = make_shared<Model>();
+	temp->hitbox = D3DXVECTOR2(1.0f, 1.0f);
 
 	temp->vertexCount = 4;
 	temp->indexCount = 6;
@@ -183,12 +193,6 @@ bool ResourceManager::Init()
 	temp->indices.push_back(2);
 
 	models.push_back(temp);
-
-	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
-	hitboxes.push_back(D3DXVECTOR2(2.0f, 2.0f));
-	hitboxes.push_back(D3DXVECTOR2(0.2f, 1.5f));
-	hitboxes.push_back(D3DXVECTOR2(1.0f, 1.0f));
-	hitboxes.push_back(D3DXVECTOR2(1.0f, 1.0f));
 
 	Level *level = new Level();
 
