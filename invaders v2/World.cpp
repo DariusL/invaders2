@@ -53,6 +53,7 @@ int World::OnLoop(int input, float frameLength)
 	CollideBullets();
 	enemies->OnLoop(frameLength);
 	ResourceManager *rm = App::Get()->GetResourceManager();
+	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
 	if(input != 0)
 	{
 		if((input & ControlCodes::LEFT_AND_RIGHT) != ControlCodes::LEFT_AND_RIGHT)
@@ -91,7 +92,8 @@ int World::OnLoop(int input, float frameLength)
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 	}
 	enemies->CollideWith(playerBullets);
-	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
+	tempWall->CollideWith(playerBullets);
+	tempWall->CollideWith(enemies->getBullets());
 	if(lives <= 0)
 		return Result::GAME_OVER;
 	if(enemies->getAliveCount() <= 0)
