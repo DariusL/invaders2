@@ -24,7 +24,8 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 
 	unique_ptr<char> vBuffer;
 	int vSize;
-	Utils::ReadFileToArray(vsFilename, vBuffer, vSize);
+	if(!Utils::ReadFileToArray(vsFilename, vBuffer, vSize))
+		return false;
 
 	// Create the vertex shader from the buffer.
 	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader)))
@@ -32,7 +33,8 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 
 	unique_ptr<char> pBuffer;
 	int pSize;
-	Utils::ReadFileToArray(psFilename, pBuffer, pSize);
+	if(!Utils::ReadFileToArray(psFilename, pBuffer, pSize))
+		return false;
 
 	// Create the pixel shader from the buffer.
 	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader)))
