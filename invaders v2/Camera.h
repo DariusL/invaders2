@@ -8,9 +8,9 @@ class Camera
 public:
 	Camera();
 
-	void SetPosition(float, float, float);
-	void SetTarget(float, float, float);
-	void SetRotation(float, float, float);
+	void SetPosition(const D3DXVECTOR3&);
+	void SetTarget(const D3DXVECTOR3&);
+	void SetRotation(const D3DXVECTOR3&);
 
 	D3DXVECTOR3 GetPosition();
 	D3DXVECTOR3 GetRotation();

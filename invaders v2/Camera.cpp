@@ -7,19 +7,19 @@ Camera::Camera()
 	rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
-void Camera::SetTarget(float x, float y, float z)
+void Camera::SetTarget(const D3DXVECTOR3& pos)
 {
-	target = D3DXVECTOR3(x, y, z);
+	this->target = pos;
 }
 
-void Camera::SetPosition(float x, float y, float z)
+void Camera::SetPosition(const D3DXVECTOR3& pos)
 {
-	pos = D3DXVECTOR3(x, y, z);
+	this->pos = pos;
 }
 
-void Camera::SetRotation(float x, float y, float z)
+void Camera::SetRotation(const D3DXVECTOR3& pos)
 {
-	rot = D3DXVECTOR3(x, y, z);
+	this->rot = pos;
 }
 
 D3DXVECTOR3 Camera::GetPosition()

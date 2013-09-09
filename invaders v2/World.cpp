@@ -8,8 +8,8 @@ World::World()
 	lives = 3;
 	
 	// Set the initial position of the camera.
-	camera.SetTarget(0.0f, 0.0f, 1.0f);
-	camera.SetPosition(0.0f, -20.0f, -50.0f);
+	camera.SetTarget(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	camera.SetPosition(D3DXVECTOR3(0.0f, -20.0f, -50.0f));
 }
 
 World::~World()
@@ -95,6 +95,9 @@ int World::OnLoop(int input, float frameLength)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 	}
+	D3DXVECTOR3 cameraPos = camera.GetPosition();
+	cameraPos.x = player->GetPos().x / 2;
+	camera.SetPosition(cameraPos);
 	enemies->CollideWith(playerBullets);
 	tempWall->CollideWith(playerBullets);
 	tempWall->CollideWith(enemies->getBullets());
