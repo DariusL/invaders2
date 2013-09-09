@@ -10,6 +10,7 @@
 #include "Level.h"
 #include "DrawableShooter.h"
 #include "Wall.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ class World : public IDrawable
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
 	shared_ptr<Wall> tempWall;
+	Camera camera;
 
 	float enemyGridSpeed;
 	float bulletSpeed;
@@ -40,6 +42,7 @@ public:
 	shared_ptr<DrawableShooter> GetPlayer(){return player;}
 
 	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
+	Camera &GetCamera(){return camera;}
 
 	const list<InstanceEntity> &GetBullets(){return playerBullets;}
 

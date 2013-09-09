@@ -20,10 +20,6 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	if(!d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear))
 		return false;
 
-	// Set the initial position of the camera.
-	camera.SetTarget(0.0f, 0.0f, 1.0f);
-	camera.SetPosition(0.0f, -20.0f, -50.0f);
-
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
 		return false;
 
@@ -55,6 +51,7 @@ void Graphics::Render()
 	d3D.BeginScene();
 
 	// Generate the view matrix based on the camera's position.
+	Camera &camera = world->GetCamera();
 	camera.Render();
 
 	camera.GetViewMatrix(viewMatrix);

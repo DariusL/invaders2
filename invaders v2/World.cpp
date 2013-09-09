@@ -6,6 +6,10 @@ World::World()
 {
 	started = false;
 	lives = 3;
+	
+	// Set the initial position of the camera.
+	camera.SetTarget(0.0f, 0.0f, 1.0f);
+	camera.SetPosition(0.0f, -20.0f, -50.0f);
 }
 
 World::~World()
