@@ -34,15 +34,12 @@ D3DXVECTOR3 Camera::GetRotation()
 
 void Camera::Render()
 {
-	D3DXVECTOR3 up, position, lookAt;
+	D3DXVECTOR3 up, lookAt;
 	float yaw, pitch, roll;
 	D3DXMATRIX rotationMatrix;
 
 	// Setup the vector that points upwards.
 	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
-	// Setup the position of the camera in the world.
-	position = GetPosition();
 
 	// Setup where the camera is looking by default.
 
@@ -58,11 +55,8 @@ void Camera::Render()
 	D3DXVec3TransformCoord(&lookAt, &target, &rotationMatrix);
 	D3DXVec3TransformCoord(&up, &up, &rotationMatrix);
 
-	// Translate the rotated camera position to the location of the viewer.
-	//lookAt = position + lookAt;
-
 	// Finally create the view matrix from the three updated vectors.
-	D3DXMatrixLookAtLH(&viewMatrix, &position, &lookAt, &up);
+	D3DXMatrixLookAtLH(&viewMatrix, &pos, &lookAt, &up);
 }
 
 void Camera::GetViewMatrix(D3DXMATRIX& viewMatrix)
