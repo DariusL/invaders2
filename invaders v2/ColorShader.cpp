@@ -28,8 +28,7 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 		return false;
 
 	// Create the vertex shader from the buffer.
-	if(FAILED(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader)))
-		return false;
+	Assert(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader));
 
 	unique_ptr<char> pBuffer;
 	int pSize;
@@ -37,8 +36,7 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 		return false;
 
 	// Create the pixel shader from the buffer.
-	if(FAILED(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader)))
-		return false;
+	Assert(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader));
 
 	// Now setup the layout of the data that goes into the shader.
 	// This setup needs to match the VertexType stucture in the ModelClass and in the shader.
@@ -59,8 +57,7 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 	polygonLayout[1].InstanceDataStepRate = 0;
 
 	// Create the vertex input layout.
-	if(FAILED(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout)))
-		return false;
+	Assert(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout));
 
 	delete [] polygonLayout;
 
@@ -73,8 +70,7 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 	matrixBufferDesc.StructureByteStride = 0;
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
-	if(FAILED(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer)))
-		return false;
+	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	lightingBufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
@@ -83,8 +79,7 @@ bool ColorShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename
 	lightingBufferDesc.MiscFlags = 0;
 	lightingBufferDesc.StructureByteStride = 0;
 
-	if(FAILED(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer)))
-		return false;
+	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
 
 	return true;
 }

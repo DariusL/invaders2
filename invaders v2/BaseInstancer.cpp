@@ -40,8 +40,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
-	if(FAILED(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer)))
-		return false;
+	Assert(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer));
 
 	vertexInfo.offset = 0;
 	vertexInfo.stride = sizeof(VertexType);
@@ -55,8 +54,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
-	if(FAILED(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer)))
-		return false;
+	Assert(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer));
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -64,8 +62,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
-	if(FAILED(device->CreateBuffer(&instanceBufferDesc, NULL, &instanceBuffer)))
-		return false;
+	Assert(device->CreateBuffer(&instanceBufferDesc, NULL, &instanceBuffer));
 
 	instanceInfo.offset = 0;
 	instanceInfo.stride = instanceSize;

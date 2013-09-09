@@ -18,10 +18,7 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	this->fullScreen = fullscreen;
 	this->brightness = brightness;
 	if(!d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear))
-	{
-		MessageBox(handle, L"Could not intialize DirectX", L"Error", MB_OK);
 		return false;
-	}
 
 	// Set the initial position of the camera.
 	camera.SetTarget(0.0f, 0.0f, 1.0f);
