@@ -97,9 +97,8 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	swapChainDesc.Flags = 0;
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	if(FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
-		&swapChain, &device, NULL, &deviceContext)))
-		return false;
+	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
+		&swapChain, &device, NULL, &deviceContext));
 	if(FAILED(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr)))
 		return false;
 	if(FAILED(device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView)))

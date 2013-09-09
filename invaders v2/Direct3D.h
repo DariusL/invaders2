@@ -12,6 +12,8 @@
 #include <iostream>
 #include <wrl\client.h>
 
+#include "Utils.h"
+
 using namespace std;
 using namespace Microsoft::WRL;
 

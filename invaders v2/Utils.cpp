@@ -44,3 +44,8 @@ std::vector<InstanceEntity> Utils::GetGrid(int width, int height, D3DXVECTOR3 ce
 		}
 	return ret;
 }
+
+void Utils::ShowMessageBox(wstring text, wstring title)
+{
+	MessageBox(NULL, text.c_str(), title.c_str(), MB_OK);
+}
