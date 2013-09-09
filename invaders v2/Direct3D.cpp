@@ -37,17 +37,12 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	clearColor[2] = 0.0f;
 	clearColor[3] = 1.0f;
 
-	if(FAILED(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory)))
-		return false;
-	if(FAILED(factory->EnumAdapters(0, &adapter)))
-		return false;
-	if(FAILED(adapter->EnumOutputs(0, &adapterOutput)))
-		return false;
-	if(FAILED(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL)))
-		return false;
+	Assert(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory));
+	Assert(factory->EnumAdapters(0, &adapter));
+	Assert(adapter->EnumOutputs(0, &adapterOutput));
+	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL));
 	displayModeList = new DXGI_MODE_DESC[numModes];
-	if(FAILED(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList)))
-		return false;
+	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList));
 	for(unsigned int i = 0; i < numModes; i++)
 		if(displayModeList[i].Height == height && displayModeList[i].Width == width)
 		{
@@ -55,8 +50,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 			denominator = displayModeList[i].RefreshRate.Denominator;
 			break;
 		}
-	if(FAILED(adapter->GetDesc(&adapterDesc)))
-		return false;
+	Assert(adapter->GetDesc(&adapterDesc));
 	videoMem = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
 
@@ -99,10 +93,8 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 
 	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
-	if(FAILED(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr)))
-		return false;
-	if(FAILED(device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView)))
-		return false;
+	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
+	Assert(device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView));
 	backBufferPtr->Release();
 	backBufferPtr = NULL;
 
@@ -119,8 +111,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	depthBufferDesc.CPUAccessFlags = 0;
 	depthBufferDesc.MiscFlags = 0;
 
-	if(FAILED(device->CreateTexture2D(&depthBufferDesc, NULL, &depthStencilBuffer)))
-		return false;
+	Assert(device->CreateTexture2D(&depthBufferDesc, NULL, &depthStencilBuffer));
 
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 	depthStencilDesc.DepthEnable = true;
@@ -141,8 +132,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	if(FAILED(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState)))
-		return false;
+	Assert(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState))
 	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
 
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
@@ -150,8 +140,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
-	if(FAILED(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView)))
-		return false;
+	Assert(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView));
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
 
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
@@ -166,8 +155,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	rasterDesc.ScissorEnable = false;
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
-	if(FAILED(device->CreateRasterizerState(&rasterDesc, &rasterState)))
-		return false;
+	Assert(device->CreateRasterizerState(&rasterDesc, &rasterState))
 	deviceContext->RSSetState(rasterState.Get());
 
 	ZeroMemory(&viewport, sizeof(viewport));
