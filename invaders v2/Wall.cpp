@@ -62,12 +62,17 @@ void Wall::CollideWith(InstanceEntity &bullet)
 		column2 = column - 1;
 	if(column2 >= width)
 		column2 = -1;
+	if(column >= width)
+		column = -1;
 	for(int i = height - 1; i >= 0; i--)
 	{
-		if(GetBlock(column, i).CollideWithAndKillBoth(bullet))
+		if(column >= 0)
 		{
-			changed = true;
-			return;
+			if(GetBlock(column, i).CollideWithAndKillBoth(bullet))
+			{
+				changed = true;
+				return;
+			}
 		}
 		if(column2 >= 0)
 			if(GetBlock(column2, i).CollideWithAndKillBoth(bullet))
