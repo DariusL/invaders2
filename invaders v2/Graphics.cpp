@@ -24,7 +24,8 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	}
 
 	// Set the initial position of the camera.
-	camera.SetPosition(0.0f, 0.0f, -50.0f);
+	camera.SetTarget(0.0f, 0.0f, 1.0f);
+	camera.SetPosition(0.0f, -20.0f, -50.0f);
 
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
 		return false;
