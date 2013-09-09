@@ -25,6 +25,9 @@ bool World::Start(shared_ptr<Level> level)
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
+	float wallGap = 10.0f;
+	for(int i = 0; i < WALL_COUNT; i++)
+		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm->GetModel(ResourceManager::Models::MODEL_WALL)));
 	enemiesMovingRight = true;
 	started = true;
 	return true;
@@ -43,9 +46,8 @@ bool World::Init(ComPtr<ID3D11Device> device)
 		return false;
 	if(!enemies->Init(device))
 		return false;
-	tempWall = make_shared<Wall>(D3DXVECTOR3(0.0f, -8.0f, 0.0f), 8, 6, rm->GetModel(ResourceManager::Models::MODEL_WALL));
-	if(!tempWall->Init(device))
-		return false;
+	for(int i = 0; i < WALL_COUNT; i++)
+		walls[i]->Init(device);
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
 	if(!playerBulletGraphics->Init(device))
 		return false;
@@ -99,8 +101,11 @@ int World::OnLoop(int input, float frameLength)
 	cameraPos.x = player->GetPos().x / 2;
 	camera.SetPosition(cameraPos);
 	enemies->CollideWith(playerBullets);
-	tempWall->CollideWith(playerBullets);
-	tempWall->CollideWith(enemies->getBullets());
+	for(int i = 0; i < WALL_COUNT; i++)
+	{
+		walls[i]->CollideWith(playerBullets);
+		walls[i]->CollideWith(enemies->getBullets());
+	}
 	if(lives <= 0)
 		return Result::GAME_OVER;
 	if(enemies->getAliveCount() <= 0)
@@ -126,5 +131,6 @@ void World::Render(RenderParams params)
 	enemies->Render(params);
 	playerBulletGraphics->SetData(playerBullets);
 	playerBulletGraphics->Render(params);
-	tempWall->Render(params);
+	for(auto a : walls)
+		a->Render(params);
 }

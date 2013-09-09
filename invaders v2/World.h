@@ -14,6 +14,8 @@
 
 using namespace std;
 
+#define WALL_COUNT 4
+
 class World : public IDrawable
 {
 	list<InstanceEntity> playerBullets;
@@ -21,7 +23,7 @@ class World : public IDrawable
 	shared_ptr<DrawableShooter> player;
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
-	shared_ptr<Wall> tempWall;
+	vector<shared_ptr<Wall>> walls;
 	Camera camera;
 
 	float enemyGridSpeed;
