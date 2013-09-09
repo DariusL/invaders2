@@ -15,15 +15,15 @@ Direct3D::~Direct3D()
 
 bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
-	IDXGIFactory* factory;
-	IDXGIAdapter* adapter;
-	IDXGIOutput* adapterOutput;
+	ComPtr<IDXGIFactory> factory;
+	ComPtr<IDXGIAdapter> adapter;
+	ComPtr<IDXGIOutput> adapterOutput;
 	unsigned int numModes, numerator, denominator, stringLength;
-	DXGI_MODE_DESC* displayModeList;
+	unique_ptr<DXGI_MODE_DESC[]> displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	D3D_FEATURE_LEVEL featureLevel;
-	ID3D11Texture2D* backBufferPtr;
+	ComPtr<ID3D11Texture2D> backBufferPtr;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
@@ -41,8 +41,8 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(factory->EnumAdapters(0, &adapter));
 	Assert(adapter->EnumOutputs(0, &adapterOutput));
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL));
-	displayModeList = new DXGI_MODE_DESC[numModes];
-	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList));
+	displayModeList = unique_ptr<DXGI_MODE_DESC[]>(new DXGI_MODE_DESC[numModes]);
+	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList.get()));
 	for(unsigned int i = 0; i < numModes; i++)
 		if(displayModeList[i].Height == height && displayModeList[i].Width == width)
 		{
@@ -53,17 +53,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(adapter->GetDesc(&adapterDesc));
 	videoMem = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
-
-	delete [] displayModeList;
-
-	adapterOutput->Release();
-	adapterOutput = 0;
-
-	adapter->Release();
-	adapter = 0;
-
-	factory->Release();
-	factory = 0;
 
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 	swapChainDesc.BufferCount = 1;
@@ -91,12 +80,10 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	swapChainDesc.Flags = 0;
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, D3D11_CREATE_DEVICE_DEBUG, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
+	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
-	Assert(device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView));
-	backBufferPtr->Release();
-	backBufferPtr = NULL;
+	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;
