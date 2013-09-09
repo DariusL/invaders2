@@ -23,7 +23,7 @@ PixelInputType ColorVertexShader(VertexInputType input)
 
 	output.position = mul(input.position, transform);
     //output.position.x += sin(output.position.x);
-	//output.position.y += cos(output.position.x / 2.0f);
+	//output.position.y += cos(output.position.x);
     output.color = input.color;
     
     return output;

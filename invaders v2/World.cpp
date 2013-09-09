@@ -74,13 +74,11 @@ int World::OnLoop(int input, float frameLength)
 					player->MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
 				}
 		}
-		if((input & ControlCodes::FIRE) 
-			&& player->GetLastFired() + player->GetFireRate() <= clock() / double(CLOCKS_PER_SEC)
-			&& !player->IsDead())
-		{
-			player->Fire();
-			playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET)->hitbox, 18.0f));
-		}
+		if(input & ControlCodes::FIRE)
+			if(player->Fire())
+			{
+				playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET)->hitbox, 18.0f));
+			}
 
 	}
 	if(player->IsDead())

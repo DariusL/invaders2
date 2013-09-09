@@ -14,7 +14,7 @@ public:
 	void SetFireRate(float fireRate){this->fireRate = fireRate;}
 	float GetFireRate() const {return fireRate;}
 
-	void Fire(){lastFired = std::clock() / float(CLOCKS_PER_SEC);}
+	bool Fire();
 	float GetLastFired() const {return lastFired;}
 };
 

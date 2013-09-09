@@ -14,3 +14,12 @@ Shooter::Shooter(D3DXVECTOR2 size, float speed, float fireRate)
 Shooter::~Shooter(void)
 {
 }
+
+bool Shooter::Fire()
+{
+	float now = clock() / (float)CLOCKS_PER_SEC;
+	if(lastFired + fireRate > now || dead)
+		return false;
+	lastFired = now;
+	return true;
+}

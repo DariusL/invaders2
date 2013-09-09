@@ -128,11 +128,11 @@ void EnemyGrid::Fire(float frameLength)
 		shared_ptr<DrawableShooter> enemy = grid[i + j * level->gridWidth];
 		if(enemy->IsDead())
 			continue;
-		if(d(gen) && enemy->GetLastFired() + enemy->GetFireRate() <= clock() / float(CLOCKS_PER_SEC))
-		{
-			enemy->Fire();
-			bullets.emplace_back(enemy->GetPos(), D3DXVECTOR2(0.2f, 1.5f), 5.0f);
-		}
+		if(d(gen))
+			if(enemy->Fire())
+			{
+				bullets.emplace_back(enemy->GetPos(), D3DXVECTOR2(0.2f, 1.5f), 5.0f);
+			}
 	}
 }
 
