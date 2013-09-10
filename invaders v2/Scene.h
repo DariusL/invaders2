@@ -1,5 +1,6 @@
 #pragma once
 #include "iworld.h"
+#include "DrawableShooter.h"
 class Scene : public IWorld
 {
 public:
