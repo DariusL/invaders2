@@ -82,6 +82,7 @@
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
+    <ClCompile Include="GlobalDiffuseShader.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InstanceEntity.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="EnemyGrid.h" />
+    <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="IDrawable.h" />

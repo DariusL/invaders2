@@ -87,6 +87,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalDiffuseShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="IWorld.h">
       <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalDiffuseShader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
