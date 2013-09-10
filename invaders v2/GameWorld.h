@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 
 #include <cmath>
 #include <D3D11.h>
