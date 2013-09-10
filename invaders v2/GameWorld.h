@@ -17,7 +17,7 @@ using namespace std;
 
 #define WALL_COUNT 4
 
-class World : public IWorld
+class GameWorld : public IWorld
 {
 	list<InstanceEntity> playerBullets;
 	unique_ptr<EntityListInstancer> playerBulletGraphics;
@@ -32,8 +32,8 @@ class World : public IWorld
 	int lives;
 	D3DXVECTOR3 playerStart;
 public:
-	World();
-	~World();
+	GameWorld();
+	~GameWorld();
 
 	bool Start(shared_ptr<Level> level);
 	void Stop();

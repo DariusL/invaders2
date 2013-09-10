@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include "Graphics.h"
-#include "World.h"
+#include "GameWorld.h"
 #include "Logger.h"
 #include "ResourceManager.h"
 #include "Input.h"

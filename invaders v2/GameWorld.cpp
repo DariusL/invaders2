@@ -1,8 +1,8 @@
-#include "World.h"
+#include "GameWorld.h"
 #include "App.h"
 #include "Logger.h"
 
-World::World()
+GameWorld::GameWorld()
 {
 	started = false;
 	lives = 3;
@@ -12,12 +12,12 @@ World::World()
 	camera.SetPosition(D3DXVECTOR3(0.0f, -20.0f, -50.0f));
 }
 
-World::~World()
+GameWorld::~GameWorld()
 {
 
 }
 
-bool World::Start(shared_ptr<Level> level)
+bool GameWorld::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
@@ -33,13 +33,13 @@ bool World::Start(shared_ptr<Level> level)
 	return true;
 }
 
-void World::Stop()
+void GameWorld::Stop()
 {
 	playerBullets.clear();
 	started = false;
 }
 
-bool World::Init(ComPtr<ID3D11Device> device)
+bool GameWorld::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	if(!player->Init(device))
@@ -54,7 +54,7 @@ bool World::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-int World::OnLoop(int input, float frameLength)
+int GameWorld::OnLoop(int input, float frameLength)
 {
 	CollideBullets();
 	enemies->OnLoop(frameLength);
@@ -111,7 +111,7 @@ int World::OnLoop(int input, float frameLength)
 	return Result::CONTINUE;
 }
 
-void World::CollideBullets()
+void GameWorld::CollideBullets()
 {
 	list<InstanceEntity> &enemyBullets = enemies->getBullets();
 	for(auto &p : playerBullets)
@@ -123,7 +123,7 @@ void World::CollideBullets()
 	}
 }
 
-void World::Render(RenderParams params)
+void GameWorld::Render(RenderParams params)
 {
 	player->Render(params);
 	enemies->Render(params);

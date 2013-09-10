@@ -1,5 +1,5 @@
 #include "EnemyGrid.h"
-#include "World.h"
+#include "GameWorld.h"
 #include "App.h"
 #include "ResourceManager.h"
 #include "Utils.h"
@@ -97,23 +97,23 @@ bool EnemyGrid::IsInBounds(D3DXVECTOR3 pos)
 
 void EnemyGrid::OnLoop(float frameLength)
 {
-	if(GetLeftBorder() < float(World::FIELD_WIDTH) / -2)
+	if(GetLeftBorder() < float(GameWorld::FIELD_WIDTH) / -2)
 		movingRight = true;
-	else if(GetRightBorder() > float(World::FIELD_WIDTH) / 2)
+	else if(GetRightBorder() > float(GameWorld::FIELD_WIDTH) / 2)
 		movingRight = false;
 	if(movingRight)
 		MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (speed * frameLength));
 	else
 		MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (speed * frameLength));
 	Fire(frameLength);
-	shared_ptr<DrawableShooter> player = ((World*)App::Get()->GetWorld())->GetPlayer();
+	shared_ptr<DrawableShooter> player = ((GameWorld*)App::Get()->GetWorld())->GetPlayer();
 	D3DXVECTOR3 playerPos = player->GetPos();
 	for(auto &b : bullets)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, -1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 		player->CollideWithAndKillBoth(b);
 	}
-	bullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() < World::FIELD_HEIGHT / -2.0f;});
+	bullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() < GameWorld::FIELD_HEIGHT / -2.0f;});
 }
 
 void EnemyGrid::Fire(float frameLength)

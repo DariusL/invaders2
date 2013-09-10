@@ -96,7 +96,7 @@
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="World.cpp" />
+    <ClCompile Include="GameWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -126,7 +126,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Wall.h" />
-    <ClInclude Include="World.h" />
+    <ClInclude Include="GameWorld.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorInstancedVertex.hlsl">
