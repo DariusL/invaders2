@@ -7,15 +7,13 @@
 #include <d3dx11async.h>
 #include <fstream>
 #include <memory>
-#include <wrl\client.h>
 
-#include "Globals.h"
 #include "Utils.h"
+#include "IInstanceShader.h"
 
 using namespace std;
-using namespace Microsoft::WRL;
 
-class ColorInstancedShader
+class ColorInstancedShader : public IInstanceShader
 {
 public:
 	ColorInstancedShader(void);
@@ -26,7 +24,7 @@ public:
 	void RenderShader(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 
 private:
-	bool InitializeShader(ComPtr<ID3D11Device> , char*, char*);
+	bool InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename);
 
 private:
 	ComPtr<ID3D11VertexShader> vertexShader;

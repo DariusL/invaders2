@@ -8,24 +8,23 @@
 #include <fstream>
 #include <memory>
 
-#include "Globals.h"
 #include "Utils.h"
+#include "IPosShader.h"
 
-using namespace Microsoft::WRL;
 using namespace std;
 
-class ColorShader
+class ColorShader : public IPositionShader
 {
 public:
 	ColorShader(void);
 	~ColorShader(void);
 
 	bool Init(ComPtr<ID3D11Device>);
-	void SetShaderParameters(RenderParams, D3DXMATRIX);
-	void RenderShader(ComPtr<ID3D11DeviceContext>, int);
+	void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix);
+	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 private:
-	bool InitializeShader(ComPtr<ID3D11Device>, char*, char*);
+	bool InitializeShader(ComPtr<ID3D11Device> device, char* vs, char* ps);
 
 private:
 	ComPtr<ID3D11VertexShader> vertexShader;

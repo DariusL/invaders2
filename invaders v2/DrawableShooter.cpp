@@ -13,7 +13,9 @@ DrawableShooter::DrawableShooter(float speed, float fireRate, shared_ptr<Model> 
 
 bool DrawableShooter::Init(ComPtr<ID3D11Device> device)
 {
-	shader = App::Get()->GetResourceManager()->GetColorShader();
+	shader = static_pointer_cast<ColorShader, IShader>(App::Get()->GetResourceManager()->GetShader(ResourceManager::Shaders::COLOR));
+	if(shader == NULL)
+		return false;
 	if(!InitBuffers(device))
 		return false;
 	return true;

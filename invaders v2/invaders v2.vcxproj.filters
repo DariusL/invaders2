@@ -16,6 +16,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Abstract">
+      <UniqueIdentifier>{b8e86ffb-a094-4fe3-9b94-497c780f6a8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -128,19 +131,7 @@
     <ClInclude Include="ColorInstancedShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDrawable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IDrawableGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IDrawableObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InstanceEntity.h">
@@ -164,9 +155,6 @@
     <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IWorld.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameWorld.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -175,6 +163,30 @@
     </ClInclude>
     <ClInclude Include="NormalModel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawable.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawableGroup.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawableObject.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IInstance.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IInstanceShader.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IPosShader.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IShader.h">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorld.h">
+      <Filter>Abstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -112,9 +112,12 @@
     <ClInclude Include="IDrawableGroup.h" />
     <ClInclude Include="IDrawableObject.h" />
     <ClInclude Include="IInstance.h" />
+    <ClInclude Include="IInstanceShader.h" />
     <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="InstanceShooter.h" />
+    <ClInclude Include="IPosShader.h" />
+    <ClInclude Include="IShader.h" />
     <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />

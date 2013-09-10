@@ -19,6 +19,7 @@ class ResourceManager
 
 	shared_ptr<ColorShader> colorShader;
 	shared_ptr<ColorInstancedShader> colorInstancedShader;
+	vector<shared_ptr<IShader>> shaders;
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -28,8 +29,7 @@ public:
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 
-	shared_ptr<ColorShader> GetColorShader(){return colorShader;}
-	shared_ptr<ColorInstancedShader> GetColorInstancedShader(){return colorInstancedShader;}
+	shared_ptr<IShader> GetShader(int shader){return shaders[shader];}
 
 	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 
@@ -51,5 +51,12 @@ public:
 	enum Levels
 	{
 		L1 = 0
+	};
+
+	enum Shaders
+	{
+		COLOR,
+		COLOR_INSTANCED,
+		GLOBAL_DIFFUSE
 	};
 };
