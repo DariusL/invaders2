@@ -142,9 +142,9 @@ bool App::OnLoop()
 	lastFrame = clock();
 	switch (worldResult)
 	{
-	case World::Result::GAME_OVER:
+	case IWorld::Result::GAME_OVER:
 		return false;
-	case World::Result::NEXT_LEVEL:
+	case IWorld::Result::NEXT_LEVEL:
 		world->Stop();
 		break;
 	}

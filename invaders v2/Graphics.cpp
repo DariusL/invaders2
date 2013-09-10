@@ -35,7 +35,7 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-bool Graphics::Init(World *world)
+bool Graphics::Init(IWorld *world)
 {
 	this->world = world;
 	if(!world->Init(d3D.GetDevice()))

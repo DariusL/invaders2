@@ -14,7 +14,7 @@ class App
 	Graphics graphics;
 	Input input;
 
-	unique_ptr<World> world;
+	unique_ptr<IWorld> world;
 
 	Logger logger;
 	ResourceManager manager;
@@ -46,7 +46,7 @@ public:
 	HWND GetWindowHandle(){return wHandle;}
 	Logger *GetLogger(){return &logger;}
 	ResourceManager *GetResourceManager(){return &manager;}
-	World *GetWorld(){return world.get();}
+	IWorld *GetWorld(){return world.get();}
 
 	static App *Get(){return Handle;}
 private:

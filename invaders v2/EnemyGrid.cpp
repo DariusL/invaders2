@@ -106,7 +106,7 @@ void EnemyGrid::OnLoop(float frameLength)
 	else
 		MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (speed * frameLength));
 	Fire(frameLength);
-	shared_ptr<DrawableShooter> player = App::Get()->GetWorld()->GetPlayer();
+	shared_ptr<DrawableShooter> player = ((World*)App::Get()->GetWorld())->GetPlayer();
 	D3DXVECTOR3 playerPos = player->GetPos();
 	for(auto &b : bullets)
 	{

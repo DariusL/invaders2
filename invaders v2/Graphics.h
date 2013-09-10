@@ -3,13 +3,13 @@
 
 #include "Direct3D.h"
 #include "Camera.h"
-#include "World.h"
+#include "IWorld.h"
 
 class Graphics
 {
 	Direct3D d3D;
 
-	World *world;
+	IWorld *world;
 
 	bool fullScreen;
 	bool vsync;
@@ -22,7 +22,7 @@ public:
 	~Graphics(void);
 
 	bool Init(int width, int height, HWND handle, bool fullscreen, float brightness);
-	bool Init(World *world);
+	bool Init(IWorld *world);
 	void Render();
 
 	void SetBrightness(float brightness){this->brightness = brightness;}

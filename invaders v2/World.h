@@ -11,12 +11,13 @@
 #include "DrawableShooter.h"
 #include "Wall.h"
 #include "Camera.h"
+#include "IWorld.h"
 
 using namespace std;
 
 #define WALL_COUNT 4
 
-class World : public IDrawable
+class World : public IWorld
 {
 	list<InstanceEntity> playerBullets;
 	unique_ptr<EntityListInstancer> playerBulletGraphics;
@@ -24,14 +25,12 @@ class World : public IDrawable
 	shared_ptr<EnemyGrid> enemies;
 	bool enemiesMovingRight;
 	vector<shared_ptr<Wall>> walls;
-	Camera camera;
 
 	float enemyGridSpeed;
 	float bulletSpeed;
 
 	int lives;
 	D3DXVECTOR3 playerStart;
-	bool started;
 public:
 	World();
 	~World();
@@ -44,22 +43,12 @@ public:
 	shared_ptr<DrawableShooter> GetPlayer(){return player;}
 
 	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
-	Camera &GetCamera(){return camera;}
 
 	const list<InstanceEntity> &GetBullets(){return playerBullets;}
-
-	bool IsStarted(){return started;}
 
 	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);
 
 	static const int FIELD_WIDTH = 50;
 	static const int FIELD_HEIGHT = 30;
-
-	enum Result
-	{
-		CONTINUE,
-		GAME_OVER,
-		NEXT_LEVEL
-	};
 };

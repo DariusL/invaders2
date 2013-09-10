@@ -114,6 +114,7 @@
     <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="InstanceShooter.h" />
+    <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="DrawableShooter.h" />
