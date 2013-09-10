@@ -28,7 +28,7 @@ bool App::Init()
 		return false;
 
 	//world = unique_ptr<GameWorld>(new GameWorld());
-	world = unique_ptr<Scene>(new Scene());
+	world = unique_ptr<GameWorld>(new GameWorld());
 
 	if(!graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 1.0f))
 		return false;

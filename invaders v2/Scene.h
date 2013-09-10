@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable : 4005)
 #include "iworld.h"
 #include "DrawableShooter.h"
 class Scene : public IWorld

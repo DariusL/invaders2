@@ -14,6 +14,13 @@ struct VertexType
 	D3DXVECTOR4 color;
 };
 
+struct NormalVertexType
+{
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 normal;
+	D3DXVECTOR4 color;
+};
+
 struct InstanceType
 {
 	D3DXVECTOR3 position;
@@ -32,6 +39,7 @@ struct RenderParams
 {
 	float brightness;
 	D3DXMATRIX transMatrix;
+	D3DXVECTOR3 lightPos;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 };
 
