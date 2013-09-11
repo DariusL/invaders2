@@ -36,6 +36,7 @@ bool GameWorld::Start(shared_ptr<Level> level)
 void GameWorld::Stop()
 {
 	playerBullets.clear();
+	walls.clear();
 	started = false;
 }
 
