@@ -40,6 +40,7 @@ struct RenderParams
 	float brightness;
 	D3DXMATRIX transMatrix;
 	D3DXVECTOR3 lightPos;
+	D3DXVECTOR4 diffuseColor;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 };
 

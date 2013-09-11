@@ -1,4 +1,4 @@
-cbuffer LightBuffer
+cbuffer LightBuffer : register(b0)
 {
     float4 diffuseColor;
     float3 lightDirection;
@@ -15,7 +15,9 @@ struct PixelInputType
 float4 main(PixelInputType input) : SV_TARGET
 {
 	float4 diffuse;
-	diffuse = saturate(dot(-lightDirection, input.normal));
+	float4 dir;
+	dir = float4(lightDirection, 1.0f);
+	diffuse = saturate(dot(-dir, input.normal));
 	diffuse.w = 1.0f;
 	return diffuse * diffuseColor + brightness * input.color;
 }

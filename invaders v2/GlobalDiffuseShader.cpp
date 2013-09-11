@@ -78,7 +78,29 @@ bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void GlobalDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix)
 {
-	
+	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
+	ComPtr<ID3D11DeviceContext> cont = params.context;
+
+	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
+	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
+	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
+	cont->Unmap(matrixBuffer.Get(), 0);
+
+	LightBufferType data;
+	data.brightness = params.brightness;
+	data.diffuseColor = params.diffuseColor;
+	data.lightDir = D3DXVECTOR3() - params.lightPos;
+	cont->Map(lightingBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
+	memcpy(lightingRes.pData, &data, sizeof(LightBufferType));
+	cont->Unmap(lightingBuffer.Get(), 0);
+
+	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
+	cont->PSGetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
+
+	cont->IASetInputLayout(layout.Get());
+
+	cont->PSSetShader(pixelShader.Get(), NULL, 0);
+	cont->VSSetShader(vertexShader.Get(), NULL, 0);
 }
 
 void GlobalDiffuseShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
