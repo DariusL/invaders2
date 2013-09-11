@@ -17,5 +17,12 @@ private:
 
 	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11Buffer> lightingBuffer;
+
+	struct LightBufferType
+	{
+		D3DXVECTOR4 diffuseColor;
+		D3DXVECTOR3 lightDir;
+		float brightness;
+	};
 };
 

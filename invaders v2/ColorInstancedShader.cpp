@@ -52,7 +52,6 @@ bool ColorInstancedShader::Init(ComPtr<ID3D11Device> device)
 
 bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
 	
@@ -64,7 +63,6 @@ bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	matrixBufferDesc.MiscFlags = 0;
 	matrixBufferDesc.StructureByteStride = 0;
 
-	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -94,13 +92,11 @@ void ColorInstancedShader::SetShaderParameters(RenderParams params)
 	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
 	params.context->Unmap(lightingBuffer.Get(), 0);
 
-	// Finanly set the constant buffer in the vertex shader with the updated values.
 	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 	params.context->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
 	params.context->IASetInputLayout(layout.Get());
 
-	//set the shaders used for rendering
 	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 }
