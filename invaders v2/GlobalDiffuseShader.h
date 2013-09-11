@@ -13,11 +13,8 @@ public:
 	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 private:
-	bool InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename);
+	bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 
-	ComPtr<ID3D11VertexShader> vertexShader;
-	ComPtr<ID3D11InputLayout> layout;
-	ComPtr<ID3D11PixelShader> pixelShader;
 	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11Buffer> lightingBuffer;
 };

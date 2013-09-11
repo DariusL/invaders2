@@ -89,6 +89,7 @@
     <ClCompile Include="BaseInstancer.cpp" />
     <ClCompile Include="EntityListInstancer.cpp" />
     <ClCompile Include="InstanceShooter.cpp" />
+    <ClCompile Include="IShader.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />

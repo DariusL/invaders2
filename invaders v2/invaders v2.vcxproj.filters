@@ -90,6 +90,9 @@
     <ClCompile Include="GlobalDiffuseShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IShader.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">

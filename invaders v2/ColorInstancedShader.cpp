@@ -12,36 +12,9 @@ ColorInstancedShader::~ColorInstancedShader(void)
 
 bool ColorInstancedShader::Init(ComPtr<ID3D11Device> device)
 {
-	if(!InitializeShader(device, "ColorInstancedVertex.cso", "ColorPixel.cso"))
-		return false;
-	return true;
-}
-
-bool ColorInstancedShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename)
-{
 	unsigned int numElements = 3;
 	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
-	D3D11_BUFFER_DESC matrixBufferDesc;
-	D3D11_BUFFER_DESC lightingBufferDesc;
 
-	unique_ptr<char> vBuffer;
-	int vSize;
-	if(!Utils::ReadFileToArray(vsFilename, vBuffer, vSize))
-		return false;
-
-	// Create the vertex shader from the buffer.
-	Assert(device->CreateVertexShader(vBuffer.get(), vSize, NULL, &vertexShader));
-
-	unique_ptr<char> pBuffer;
-	int pSize;
-	if(!Utils::ReadFileToArray(psFilename, pBuffer, pSize))
-		return false;
-
-	// Create the pixel shader from the buffer.
-	Assert(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader));
-
-	// Now setup the layout of the data that goes into the shader.
-	// This setup needs to match the VertexType stucture in the ModelClass and in the shader.
 	polygonLayout[0].SemanticName = "POSITION";
 	polygonLayout[0].SemanticIndex = 0;
 	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
@@ -66,10 +39,23 @@ bool ColorInstancedShader::InitializeShader(ComPtr<ID3D11Device> device, char* v
 	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
 	polygonLayout[2].InstanceDataStepRate = 1;
 
-	// Create the vertex input layout.
-	Assert(device->CreateInputLayout(polygonLayout, numElements, vBuffer.get(), vSize, &layout));
-
+	if(!InitializeShader(device, "ColorInstancedVertex.cso", "ColorPixel.cso", polygonLayout, numElements))
+		return false;
+	
 	delete [] polygonLayout;
+
+	if(!InitializeShaderBuffers(device))
+		return false;
+
+	return true;
+}
+
+bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+{
+	
+	D3D11_BUFFER_DESC matrixBufferDesc;
+	D3D11_BUFFER_DESC lightingBufferDesc;
+	
 
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);
