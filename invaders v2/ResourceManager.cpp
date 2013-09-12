@@ -209,6 +209,42 @@ bool ResourceManager::Init()
 
 	levels.push_back(shared_ptr<Level>(level));
 
+	normalModel = make_shared<NormalModel>();
+
+	NormalVertexType nvertex;
+
+	normalModel->vertexCount = 4;
+	normalModel->indexCount = 6;
+	normalModel->hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	
+	nvertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
+	nvertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	nvertex.normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	normalModel->vertices.push_back(nvertex);
+
+	nvertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
+	nvertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	nvertex.normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	normalModel->vertices.push_back(nvertex);
+
+	nvertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	nvertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	nvertex.normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	normalModel->vertices.push_back(nvertex);
+
+	nvertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
+	nvertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	nvertex.normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	normalModel->vertices.push_back(nvertex);
+
+	normalModel->indices.push_back(1);
+	normalModel->indices.push_back(2);
+	normalModel->indices.push_back(0);
+
+	normalModel->indices.push_back(1);
+	normalModel->indices.push_back(3);
+	normalModel->indices.push_back(2);
+
 	return true;
 }
 
@@ -216,6 +252,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
 	shaders.push_back(make_shared<ColorShader>());
 	shaders.push_back(make_shared<ColorInstancedShader>());
+	shaders.push_back(make_shared<GlobalDiffuseShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;

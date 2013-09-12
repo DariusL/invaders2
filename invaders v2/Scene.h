@@ -2,8 +2,10 @@
 #pragma warning(disable : 4005)
 #include "iworld.h"
 #include "DrawableShooter.h"
+#include "DrawableEntity.h"
 class Scene : public IWorld
 {
+	shared_ptr<DrawableEntity> random;
 public:
 	Scene();
 	~Scene();

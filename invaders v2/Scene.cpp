@@ -34,12 +34,16 @@ int Scene::OnLoop(int input, float frameLength)
 }
 
 
-
 bool Scene::Init(ComPtr<ID3D11Device> device)
 {
+	ResourceManager *rm = App::Get()->GetResourceManager();
+	random = make_shared<DrawableEntity>(D3DXVECTOR3(), rm->GetNormalModel());
+	if(!random->Init(device))
+		return false;
 	return true;
 }
 
 void Scene::Render(RenderParams params)
 {
+	random->Render(params);
 }

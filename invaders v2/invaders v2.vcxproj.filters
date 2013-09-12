@@ -93,6 +93,9 @@
     <ClCompile Include="IShader.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="DrawableEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -195,6 +198,9 @@
       <Filter>Abstract</Filter>
     </ClInclude>
     <ClInclude Include="GlobalDiffuseShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

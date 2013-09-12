@@ -47,7 +47,7 @@ bool GlobalDiffuseShader::Init(ComPtr<ID3D11Device> device)
 	if(!InitializeShaderBuffers(device))
 		return false;
 
-	return false;
+	return true;
 }
 
 bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
@@ -89,13 +89,14 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mo
 	LightBufferType data;
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
-	data.lightDir = D3DXVECTOR3() - params.lightPos;
+	data.lightDir = D3DXVECTOR3(0.0f, 0.0f, 0.0f) - params.lightPos;
+	D3DXVec3Normalize(&data.lightDir, &data.lightDir);
 	cont->Map(lightingBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
 	memcpy(lightingRes.pData, &data, sizeof(LightBufferType));
 	cont->Unmap(lightingBuffer.Get(), 0);
 
 	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
-	cont->PSGetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
+	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
 	cont->IASetInputLayout(layout.Get());
 

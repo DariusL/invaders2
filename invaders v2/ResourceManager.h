@@ -4,8 +4,10 @@
 #include <memory>
 #include <wrl\client.h>
 
+#include "NormalModel.h"
 #include "Model.h"
 #include "ColorInstancedShader.h"
+#include "GlobalDiffuseShader.h"
 #include "ColorShader.h"
 #include "DrawableShooter.h"
 #include "Level.h"
@@ -15,6 +17,7 @@ using namespace std;
 class ResourceManager
 {
 	vector<shared_ptr<Model>> models;
+	shared_ptr<NormalModel> normalModel;
 	vector<shared_ptr<Level>> levels;
 
 	shared_ptr<ColorShader> colorShader;
@@ -28,6 +31,7 @@ public:
 	shared_ptr<Model> GetModel(int i){return models[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
+	shared_ptr<NormalModel> GetNormalModel(){return normalModel;}
 
 	shared_ptr<IShader> GetShader(int shader){return shaders[shader];}
 

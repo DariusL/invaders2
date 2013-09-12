@@ -6,7 +6,7 @@ cbuffer TransMatrix : register(b0)
 struct PixelInputType
 {
     float4 position : SV_POSITION;
-	float4 normal : NORMAL;
+	float3 normal : NORMAL;
 	float4 color : COLOR;
 };
 
@@ -14,7 +14,7 @@ struct VertexInputType
 {
     float4 position : POSITION;
 	float4 color : COLOR;
-    float4 normal : NORMAL;
+    float3 normal : NORMAL;
 };
 
 PixelInputType main(VertexInputType input)

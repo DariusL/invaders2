@@ -27,7 +27,6 @@ public:
 	void Render(RenderParams);
 private:
 	bool InitBuffers(ComPtr<ID3D11Device>);
-	void ShutdownBuffers();
 	void SetBuffers(ComPtr<ID3D11DeviceContext>);
 	bool Update(ComPtr<ID3D11DeviceContext>);
 };

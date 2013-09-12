@@ -65,13 +65,10 @@ void DrawableShooter::Render(RenderParams params)
 
 void DrawableShooter::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
-	// Set the vertex buffer to active in the input assembler so it can be rendered.
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 
-	// Set the index buffer to active in the input assembler so it can be rendered.
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
