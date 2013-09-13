@@ -33,6 +33,8 @@ struct ControlCodes
 	static const int LEFT_AND_RIGHT = LEFT | RIGHT;
 	static const int FIRE  = 1 << 2;
 	static const int PAUSE = 1 << 3;
+	static const int UP    = 1 << 4;
+	static const int DOWN  = 1 << 5;
 };
 
 struct RenderParams

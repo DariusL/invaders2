@@ -3,9 +3,13 @@
 #include "iworld.h"
 #include "DrawableShooter.h"
 #include "DrawableEntity.h"
+#include "Globals.h"
 class Scene : public IWorld
 {
 	vector<shared_ptr<DrawableEntity>> random;
+	float xz;
+	float yz;
+	float r;
 public:
 	Scene();
 	~Scene();

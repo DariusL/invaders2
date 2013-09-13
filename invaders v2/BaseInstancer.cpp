@@ -35,7 +35,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertices.size();
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
 	vertexData.pSysMem = &model->vertices[0];
@@ -49,7 +49,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 
 	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(int) * model->indexCount;
+	indexBufferDesc.ByteWidth = sizeof(int) * model->indices.size();
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
 	indexData.pSysMem = &model->indices[0];
@@ -79,7 +79,7 @@ void BaseInstancer::Render(RenderParams params)
 		return;
 	SetBuffers(params.context);
 	shader->SetShaderParameters(params);
-	shader->RenderShader(params.context, model->indexCount, instanceCount);
+	shader->RenderShader(params.context, model->indices.size(), instanceCount);
 }
 
 

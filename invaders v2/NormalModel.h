@@ -8,8 +8,6 @@ using namespace std;
 struct NormalModel
 {
 	vector<NormalVertexType> vertices;
-	int vertexCount;
 	vector<int> indices;
-	int indexCount;
 	D3DXVECTOR2 hitbox;
 };

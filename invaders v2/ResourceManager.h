@@ -23,6 +23,8 @@ class ResourceManager
 	shared_ptr<ColorShader> colorShader;
 	shared_ptr<ColorInstancedShader> colorInstancedShader;
 	vector<shared_ptr<IShader>> shaders;
+
+	unique_ptr<NormalModel> GetModelFromOBJ(char *filename);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -62,5 +64,10 @@ public:
 		COLOR,
 		COLOR_INSTANCED,
 		GLOBAL_DIFFUSE
+	};
+
+	enum NormalModels
+	{
+		NORMAL_TEACUP
 	};
 };

@@ -135,9 +135,9 @@ bool App::OnLoop()
 	if(input.IsKeyDown(VK_ESCAPE))
 		Quit();
 	if(input.IsKeyDown(VK_DOWN))
-		graphics.ChangeBrightness(-0.001f);
+		worldEvents |= ControlCodes::DOWN;
 	if(input.IsKeyDown(VK_UP))
-		graphics.ChangeBrightness(0.001f);
+		worldEvents |= ControlCodes::UP;
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();
