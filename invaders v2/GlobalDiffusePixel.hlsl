@@ -14,7 +14,9 @@ struct PixelInputType
 
 float4 main(PixelInputType input) : SV_TARGET
 {
-	float diffuse;
-	diffuse = saturate(dot(-lightDirection, input.normal));
-	return diffuse * diffuseColor + brightness * input.color;
+	float intensity;
+	float4 diffuse;
+	intensity = saturate(dot(-lightDirection, input.normal));
+	diffuse = saturate(intensity * diffuseColor);
+	return input.color * diffuse + brightness * input.color;
 }
