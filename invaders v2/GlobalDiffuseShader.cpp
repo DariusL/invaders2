@@ -81,6 +81,7 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mo
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 
+	params.transMatrix = moveMatrix * params.transMatrix;
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
 	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));

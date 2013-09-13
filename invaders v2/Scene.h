@@ -5,7 +5,7 @@
 #include "DrawableEntity.h"
 class Scene : public IWorld
 {
-	shared_ptr<DrawableEntity> random;
+	vector<shared_ptr<DrawableEntity>> random;
 public:
 	Scene();
 	~Scene();
