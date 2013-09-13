@@ -9,7 +9,6 @@ public:
 	Camera();
 
 	void SetPosition(const D3DXVECTOR3&);
-	void SetTarget(const D3DXVECTOR3&);
 	void SetRotation(const D3DXVECTOR3&);
 
 	D3DXVECTOR3 GetPosition();
@@ -21,6 +20,5 @@ public:
 private:
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 rot;
-	D3DXVECTOR3 target;
 	D3DXMATRIX viewMatrix;
 };

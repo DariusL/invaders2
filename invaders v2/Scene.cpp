@@ -7,8 +7,8 @@ Scene::Scene(void)
 {
 	started = false;
 	r = 50.0f;
-	camera.SetTarget(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	camera.SetPosition(D3DXVECTOR3(0.0f, -30.0f, -30.0f));
+	camera.SetPosition(D3DXVECTOR3(0.0f, -40.0f, -20.0f));
+	camera.SetRotation(D3DXVECTOR3(-70.0f, 0.0f, 0.0f));
 	xz = 0.0f;
 	yz = 0.0f;
 }

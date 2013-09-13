@@ -8,8 +8,7 @@ GameWorld::GameWorld()
 	lives = 3;
 	
 	// Set the initial position of the camera.
-	camera.SetTarget(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	camera.SetPosition(D3DXVECTOR3(0.0f, -20.0f, -50.0f));
+	camera.SetPosition(D3DXVECTOR3(0.0f, 0.0f, -50.0f));
 }
 
 GameWorld::~GameWorld()
