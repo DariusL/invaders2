@@ -13,10 +13,11 @@ void Camera::SetPosition(const D3DXVECTOR3& pos)
 	//this->pos = pos;
 }
 
-void Camera::SetRotation(float yaw, float pitch)
+void Camera::SetRotation(float yaw, float pitch, float r)
 {
 	this->yaw = yaw;
 	this->pitch = pitch;
+	this->r = r;
 }
 
 void Camera::Render()
@@ -28,7 +29,7 @@ void Camera::Render()
 	// Setup the vector that points upwards.
 	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	lookAt = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
-	pos = D3DXVECTOR3(0.0f, 0.0f, -50.0f);
+	pos = D3DXVECTOR3(0.0f, 0.0f, -r);
 
 	// Create the rotation matrix from the yaw, pitch, and roll values.
 	//D3DXMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, 0.0f);

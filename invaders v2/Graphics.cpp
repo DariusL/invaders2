@@ -64,6 +64,7 @@ void Graphics::Render()
 	params.transMatrix = transMatrix;
 	params.lightPos = D3DXVECTOR3(0.0f, 0.0f, -60.0f);
 	params.diffuseColor = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	params.cameraPos = camera.GetPosition();
 
 	world->Render(params);
 

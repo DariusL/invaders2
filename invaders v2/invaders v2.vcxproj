@@ -84,6 +84,7 @@
     <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
+    <ClCompile Include="GlobalSpecularShader.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InstanceEntity.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="GlobalSpecularShader.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableGroup.h" />
@@ -171,6 +173,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="GlobalDiffuseVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="GlobalSpecularPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="GlobalSpecularVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>

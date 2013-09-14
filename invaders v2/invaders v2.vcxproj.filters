@@ -96,6 +96,9 @@
     <ClCompile Include="DrawableEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalSpecularShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -203,6 +206,9 @@
     <ClInclude Include="DrawableEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalSpecularShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -224,6 +230,12 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="GlobalDiffuseVertex.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GlobalSpecularPixel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="GlobalSpecularVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

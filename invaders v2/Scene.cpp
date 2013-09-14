@@ -38,8 +38,17 @@ int Scene::OnLoop(int input, float frameLength)
 		yaw += frameLength;
 	if(input & ControlCodes::RIGHT)
 		yaw -= frameLength;
+	if(input & ControlCodes::PLUS)
+		r -= frameLength * 10;
+	if(input & ControlCodes::MINUS)
+		r += frameLength * 10;
+	if(input & ControlCodes::FIRE)
+	{
+		for(auto &a : random)
+			a->SwapShader();
+	}
 	
-	camera.SetRotation(yaw, pitch);
+	camera.SetRotation(yaw, pitch, r);
 	return IWorld::Result::CONTINUE;
 }
 

@@ -8,6 +8,7 @@
 #include "Model.h"
 #include "ColorInstancedShader.h"
 #include "GlobalDiffuseShader.h"
+#include "GlobalSpecularShader.h"
 #include "ColorShader.h"
 #include "DrawableShooter.h"
 #include "Level.h"
@@ -63,7 +64,8 @@ public:
 	{
 		COLOR,
 		COLOR_INSTANCED,
-		GLOBAL_DIFFUSE
+		GLOBAL_DIFFUSE,
+		GLOBAL_SPECULAR
 	};
 
 	enum NormalModels

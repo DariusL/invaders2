@@ -1,5 +1,4 @@
 #include "GlobalDiffuseShader.h"
-#include "Utils.h"
 
 GlobalDiffuseShader::GlobalDiffuseShader(void)
 {

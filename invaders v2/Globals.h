@@ -35,6 +35,8 @@ struct ControlCodes
 	static const int PAUSE = 1 << 3;
 	static const int UP    = 1 << 4;
 	static const int DOWN  = 1 << 5;
+	static const int PLUS  = 1 << 6;
+	static const int MINUS = 1 << 7;
 };
 
 struct RenderParams
@@ -43,6 +45,7 @@ struct RenderParams
 	D3DXMATRIX transMatrix;
 	D3DXVECTOR3 lightPos;
 	D3DXVECTOR4 diffuseColor;
+	D3DXVECTOR3 cameraPos;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 };
 

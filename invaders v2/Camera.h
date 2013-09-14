@@ -9,7 +9,7 @@ public:
 	Camera();
 
 	void SetPosition(const D3DXVECTOR3& pos);
-	void SetRotation(float yaw, float pitch);
+	void SetRotation(float yaw, float pitch, float r);
 
 	D3DXVECTOR3 GetPosition(){return pos;}
 
@@ -20,5 +20,6 @@ private:
 	D3DXVECTOR3 pos;
 	float yaw;
 	float pitch;
+	float r;
 	D3DXMATRIX viewMatrix;
 };

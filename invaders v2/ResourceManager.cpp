@@ -264,6 +264,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<ColorShader>());
 	shaders.push_back(make_shared<ColorInstancedShader>());
 	shaders.push_back(make_shared<GlobalDiffuseShader>());
+	shaders.push_back(make_shared<GlobalSpecularShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;
