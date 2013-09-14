@@ -7,8 +7,8 @@
 class Scene : public IWorld
 {
 	vector<shared_ptr<DrawableEntity>> random;
-	float xz;
-	float yz;
+	float yaw;
+	float pitch;
 	float r;
 public:
 	Scene();

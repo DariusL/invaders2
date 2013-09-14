@@ -4,7 +4,8 @@
 Camera::Camera()
 {
 	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	yaw = 0.0f;
+	pitch = 0.0f;
 }
 
 void Camera::SetPosition(const D3DXVECTOR3& pos)
@@ -12,42 +13,33 @@ void Camera::SetPosition(const D3DXVECTOR3& pos)
 	this->pos = pos;
 }
 
-void Camera::SetRotation(const D3DXVECTOR3& pos)
+void Camera::SetRotation(float yaw, float pitch)
 {
-	this->rot = pos;
-}
-
-D3DXVECTOR3 Camera::GetPosition()
-{
-	return pos;
-}
-
-D3DXVECTOR3 Camera::GetRotation()
-{
-	return rot;
+	this->yaw = yaw;
+	this->pitch = pitch;
 }
 
 void Camera::Render()
 {
 	D3DXVECTOR3 up, lookAt;
-	float yaw, pitch, roll;
-	D3DXMATRIX rotationMatrix;
+	D3DXMATRIX pitchMatrix;
+	D3DXMATRIX yawMatrix;
 
 	// Setup the vector that points upwards.
 	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	lookAt = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
 
-	// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.
-	pitch = rot.x * 0.0174532925f;
-	yaw   = rot.y * 0.0174532925f;
-	roll  = rot.z * 0.0174532925f;
-
 	// Create the rotation matrix from the yaw, pitch, and roll values.
-	D3DXMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, roll);
+	//D3DXMatrixRotationYawPitchRoll(&rotationMatrix, yaw, pitch, 0.0f);
+	D3DXMatrixRotationX(&pitchMatrix, pitch);
 
 	// Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.
-	D3DXVec3TransformCoord(&lookAt, &lookAt, &rotationMatrix);
-	D3DXVec3TransformCoord(&up, &up, &rotationMatrix);
+	D3DXVec3TransformCoord(&lookAt, &lookAt, &pitchMatrix);
+	D3DXVec3TransformCoord(&up, &up, &pitchMatrix);
+
+	D3DXMatrixRotationAxis(&yawMatrix, &up, yaw);
+
+	D3DXVec3TransformCoord(&lookAt, &lookAt, &yawMatrix);
 
 	lookAt = pos + lookAt;
 

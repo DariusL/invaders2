@@ -7,10 +7,8 @@ Scene::Scene(void)
 {
 	started = false;
 	r = 50.0f;
-	camera.SetPosition(D3DXVECTOR3(0.0f, -40.0f, -20.0f));
-	camera.SetRotation(D3DXVECTOR3(-70.0f, 0.0f, 0.0f));
-	xz = 0.0f;
-	yz = 0.0f;
+	yaw = 0.0f;
+	pitch = 0.2f;
 }
 
 
@@ -33,14 +31,17 @@ void Scene::Stop()
 int Scene::OnLoop(int input, float frameLength)
 {
 	if(input & ControlCodes::DOWN)
-		yz -= frameLength;
+		pitch -= frameLength;
 	if(input & ControlCodes::UP)
-		yz += frameLength;
-	if(yz < 0.0f)
-		yz += 360.0f;
-	if(yz > 360.0f)
-		yz -= 360.0f;
-
+		pitch += frameLength;
+	if(input & ControlCodes::LEFT)
+		yaw += frameLength;
+	if(input & ControlCodes::RIGHT)
+		yaw -= frameLength;
+	
+	camera.SetRotation(yaw, pitch);
+	camera.SetPosition(D3DXVECTOR3(-sin(yaw) * r, sin(pitch) * r, cos(yaw) * cos(pitch) * -r));
+	//camera.SetPosition(D3DXVECTOR3(0.0f, sin(pitch) * r, cos(pitch) * -r));
 	return IWorld::Result::CONTINUE;
 }
 
