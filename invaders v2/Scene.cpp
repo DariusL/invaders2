@@ -40,8 +40,6 @@ int Scene::OnLoop(int input, float frameLength)
 		yaw -= frameLength;
 	
 	camera.SetRotation(yaw, pitch);
-	camera.SetPosition(D3DXVECTOR3(-sin(yaw) * r, sin(pitch) * r, cos(yaw) * cos(pitch) * -r));
-	//camera.SetPosition(D3DXVECTOR3(0.0f, sin(pitch) * r, cos(pitch) * -r));
 	return IWorld::Result::CONTINUE;
 }
 
