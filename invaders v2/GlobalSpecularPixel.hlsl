@@ -27,10 +27,8 @@ float4 main(PixelInputType input) : SV_TARGET
 	reflection = normalize(2 * intensity * input.normal - lightDir);
 
 	diffuse = saturate(intensity * lightColor);
-	if(intensity > 0.0f)
-	{
-		specular = pow(saturate(dot(input.cameraDir, reflection)), 15);
-	}
 
-	return input.color * diffuse + brightness * input.color + specular;
+	specular = pow(saturate(dot(input.cameraDir, reflection)), 15);
+
+	return input.color * diffuse + brightness * input.color + specular * intensity;
 }
