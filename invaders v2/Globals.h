@@ -43,6 +43,10 @@ struct ControlCodes
 	static const int DOWN  = 1 << 5;
 	static const int PLUS  = 1 << 6;
 	static const int MINUS = 1 << 7;
+	static const int GLOBAL_DIFF = 1 << 8;
+	static const int GLOBAL_SPEC = 1 << 9;
+	static const int POINT_DIFF = 1 << 10;
+	static const int POINT_SPEC = 1 << 11;
 };
 
 struct RenderParams

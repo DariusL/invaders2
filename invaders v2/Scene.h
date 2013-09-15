@@ -4,9 +4,11 @@
 #include "DrawableShooter.h"
 #include "DrawableEntity.h"
 #include "Globals.h"
+#include "Light.h"
 class Scene : public IWorld
 {
 	vector<shared_ptr<DrawableEntity>> random;
+	shared_ptr<Light> light;
 	float yaw;
 	float pitch;
 	float r;
@@ -18,10 +20,7 @@ public:
 	void Stop();
 
 	int OnLoop(int input, float frameLength);
-
-	Camera &GetCamera(){return camera;}
-
-	bool IsStarted(){return started;}
+	shared_ptr<Light> GetLight(){return light;}
 
 	bool Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams);

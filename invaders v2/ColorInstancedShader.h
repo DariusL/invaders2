@@ -29,5 +29,4 @@ protected:
 
 private:
 	ComPtr<ID3D11Buffer> matrixBuffer;
-	ComPtr<ID3D11Buffer> lightingBuffer;
 };

@@ -184,6 +184,9 @@ bool ResourceManager::Init()
 	temp->indices.push_back(2);
 
 	models.push_back(temp);
+	auto tempObj = GetModelFromOBJ("ball.obj");
+	tempObj->hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	models.push_back(move(tempObj));
 
 	Level *level = new Level();
 
@@ -200,14 +203,30 @@ bool ResourceManager::Init()
 
 	levels.push_back(shared_ptr<Level>(level));
 
-	normalModel = GetModelFromOBJ("teapot.obj");
+	normalModel = GetNormalModelFromOBJ("teapot.obj");
 	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
 
 
 	return true;
 }
 
-unique_ptr<NormalModel> ResourceManager::GetModelFromOBJ(char *filename)
+unique_ptr<Model> ResourceManager::GetModelFromOBJ(char *filename)
+{
+	auto normalModel = GetNormalModelFromOBJ(filename);
+	auto ret = unique_ptr<Model>(new Model());
+	VertexType vertex;
+	ret->hitbox = normalModel->hitbox;
+	ret->indices = normalModel->indices;
+	for(NormalVertexType normalVertex : normalModel->vertices)
+	{
+		vertex.color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex.position = normalVertex.position;
+		ret->vertices.push_back(vertex);
+	}
+	return ret;
+}
+
+unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 {
 	unique_ptr<NormalModel> model = unique_ptr<NormalModel>(new NormalModel());
 	ifstream in = ifstream(filename, ios::binary);

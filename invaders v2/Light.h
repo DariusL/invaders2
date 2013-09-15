@@ -1,13 +1,18 @@
 #pragma once
 #include "entity.h"
 #include "IDrawableObject.h"
-#include "GlobalDiffuseShader.h"
+#include "Model.h"
+#include "IPosShader.h"
+#include "Globals.h"
 
 #include <memory>
-#include "NormalModel.h"
-class DrawableEntity : public Entity, public IDrawableObject
+using namespace std;
+using namespace Microsoft::WRL;
+
+class Light : public Entity, public IDrawableObject
 {
-	shared_ptr<NormalModel> model;
+	D3DXVECTOR4 color;
+	shared_ptr<Model> model;
 	D3DXMATRIX moveMatrix;
 	shared_ptr<IPositionShader> shader;
 
@@ -15,15 +20,16 @@ class DrawableEntity : public Entity, public IDrawableObject
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model);
-	~DrawableEntity(void);
+	Light(D3DXVECTOR3 pos, D3DXVECTOR4 color);
+	~Light(void);
 
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams renderParams);
-	void SetShader(int shader);
+
+	const D3DXVECTOR4 &GetColor(){return color;}
 private:
 	bool InitBuffers(ComPtr<ID3D11Device> device);
 	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	bool Update(ComPtr<ID3D11DeviceContext> context);
-};
 
+};

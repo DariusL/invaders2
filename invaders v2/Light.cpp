@@ -1,36 +1,36 @@
-#include "DrawableEntity.h"
+#include "Light.h"
 #include "App.h"
 #include "ResourceManager.h"
-#include "Utils.h"
 
-DrawableEntity::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model) : Entity(pos, model->hitbox)
+Light::Light(D3DXVECTOR3 pos, D3DXVECTOR4 color) : Entity(pos, D3DXVECTOR2(2.0f, 2.0f))
 {
-	this->model = model;
+	this->model = App::Get()->GetResourceManager()->GetModel(ResourceManager::Models::MODEL_BALL);
+	this->color = color;
 }
 
-DrawableEntity::~DrawableEntity(void)
+Light::~Light(void)
 {
 }
 
-bool DrawableEntity::Init(ComPtr<ID3D11Device> device)
+bool Light::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::POINT_SPECULAR));
+	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::COLOR));
 	if(!InitBuffers(device))
 		return false;
 	return true;
 }
 
-bool DrawableEntity::InitBuffers(ComPtr<ID3D11Device> device)
+bool Light::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(NormalVertexType);
+	vertexInfo.stride = sizeof(VertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(NormalVertexType) * model->vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(VertexType) * model->vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -58,14 +58,14 @@ bool DrawableEntity::InitBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void DrawableEntity::SetBuffers(ComPtr<ID3D11DeviceContext> context)
+void Light::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void DrawableEntity::Render(RenderParams params)
+void Light::Render(RenderParams params)
 {
 	if(!Update(params.context))
 		return;
@@ -74,18 +74,9 @@ void DrawableEntity::Render(RenderParams params)
 	shader->RenderShader(params.context, model->indices.size());
 }
 
-bool DrawableEntity::Update(ComPtr<ID3D11DeviceContext> context)
+bool Light::Update(ComPtr<ID3D11DeviceContext> context)
 {
-	if(dead)
-		return false;
-
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 
 	return true;
-}
-
-void DrawableEntity::SetShader(int shader)
-{
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	this->shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(shader));
 }

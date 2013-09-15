@@ -92,6 +92,7 @@
     <ClCompile Include="EntityListInstancer.cpp" />
     <ClCompile Include="InstanceShooter.cpp" />
     <ClCompile Include="IShader.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="DrawableShooter.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="NormalModel.h" />
     <ClInclude Include="PointDiffuseShader.h" />
     <ClInclude Include="PointSpecularShader.h" />

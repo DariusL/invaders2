@@ -41,6 +41,7 @@ public:
 	int OnLoop(int input, float frameLength);
 	void CollideBullets();
 	shared_ptr<DrawableShooter> GetPlayer(){return player;}
+	shared_ptr<Light> GetLight(){return NULL;}
 
 	shared_ptr<EnemyGrid> GetEnemies(){return enemies;}
 

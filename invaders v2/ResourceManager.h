@@ -18,7 +18,8 @@ class ResourceManager
 	vector<shared_ptr<Level>> levels;
 	vector<shared_ptr<IShader>> shaders;
 
-	unique_ptr<NormalModel> GetModelFromOBJ(char *filename);
+	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
+	unique_ptr<Model> GetModelFromOBJ(char *filename);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -39,7 +40,8 @@ public:
 		MODEL_ENEMY_BASIC,
 		MODEL_BULLET,
 		MODEL_ENEMY_LAPTOP,
-		MODEL_WALL
+		MODEL_WALL,
+		MODEL_BALL
 	};
 
 	enum Enemies

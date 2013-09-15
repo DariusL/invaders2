@@ -1,6 +1,6 @@
 cbuffer LightBuffer : register(b0)
 {
-    float4 diffuseColor;
+    float4 lightColor;
 	float4 ambient;
 };
 
@@ -18,7 +18,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	float4 diffuse;
 
 	intensity = saturate(dot(input.lightDir, input.normal));
-	diffuse = saturate(intensity * diffuseColor);
+	diffuse = saturate(intensity * lightColor);
 
 	return input.color * diffuse + ambient * input.color;
 }

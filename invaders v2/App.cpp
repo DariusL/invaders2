@@ -142,6 +142,14 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::PLUS;
 	if(input.IsKeyDown(VK_SUBTRACT))
 		worldEvents |= ControlCodes::MINUS;
+	if(input.IsKeyDown(VK_F1))
+		worldEvents |= ControlCodes::GLOBAL_DIFF;
+	if(input.IsKeyDown(VK_F2))
+		worldEvents |= ControlCodes::GLOBAL_SPEC;
+	if(input.IsKeyDown(VK_F3))
+		worldEvents |= ControlCodes::POINT_DIFF;
+	if(input.IsKeyDown(VK_F4))
+		worldEvents |= ControlCodes::POINT_SPEC;
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();

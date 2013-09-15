@@ -1,6 +1,6 @@
 cbuffer LightBuffer : register(b0)
 {
-    float4 diffuseColor;
+    float4 lightColor;
     float3 lightDirection;
 	float brightness;
 };
@@ -26,7 +26,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	intensity = saturate(dot(lightDir, input.normal));
 	reflection = normalize(2 * intensity * input.normal - lightDir);
 
-	diffuse = saturate(intensity * diffuseColor);
+	diffuse = saturate(intensity * lightColor);
 	if(intensity > 0.0f)
 	{
 		specular = pow(saturate(dot(input.cameraDir, reflection)), 15);

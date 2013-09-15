@@ -50,7 +50,6 @@ vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
 bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
-	D3D11_BUFFER_DESC lightingBufferDesc;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -63,22 +62,12 @@ bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
-	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightingBufferDesc.ByteWidth = sizeof(D3DXVECTOR4);
-	lightingBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightingBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightingBufferDesc.MiscFlags = 0;
-	lightingBufferDesc.StructureByteStride = 0;
-
-	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
-
 	return true;
 }
 
 void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
-	D3DXVECTOR4 brightnessVector = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
+	D3D11_MAPPED_SUBRESOURCE matrixRes;
 
 	params.transMatrix = moveMatrix * params.transMatrix;
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
@@ -87,12 +76,7 @@ void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix
 	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
 	params.context->Unmap(matrixBuffer.Get(), 0);
 
-	params.context->Map(lightingBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
-	memcpy(lightingRes.pData, &brightnessVector, sizeof(D3DXVECTOR4));
-	params.context->Unmap(lightingBuffer.Get(), 0);
-
 	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
-	params.context->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
 	params.context->IASetInputLayout(layout.Get());
 
