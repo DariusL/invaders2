@@ -76,6 +76,9 @@ void Light::Render(RenderParams params)
 
 bool Light::Update(ComPtr<ID3D11DeviceContext> context)
 {
+	if(dead)
+		return false;
+
 	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
 
 	return true;
