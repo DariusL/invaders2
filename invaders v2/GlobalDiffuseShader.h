@@ -9,14 +9,14 @@ public:
 	~GlobalDiffuseShader(void);
 
 public:
-	bool Init(ComPtr<ID3D11Device> device);
+	virtual bool Init(ComPtr<ID3D11Device> device);
 	
-	void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix);
-	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
+	virtual void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix);
+	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:
-	bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
-	vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
+	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
 	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11Buffer> lightingBuffer;

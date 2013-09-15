@@ -29,10 +29,10 @@ void PointSpecularShader::SetShaderParameters(RenderParams params, D3DXMATRIX po
 	D3D11_MAPPED_SUBRESOURCE cameraData;
 
 	params.context->Map(cameraBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &cameraData);
-	memcpy(cameraData.pData, params.cameraPos, sizeof(D3DXVECTOR3));
+	memcpy(cameraData.pData, &params.cameraPos, sizeof(D3DXVECTOR3));
 	params.context->Unmap(cameraBuffer.Get(), 0);
 
-	params.context->VSSetConstantBuffers(1, 1, cameraBuffer.GetAddressOf());
+	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
 }
 
 bool PointSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)

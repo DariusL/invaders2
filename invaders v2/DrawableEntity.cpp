@@ -7,7 +7,7 @@ DrawableEntity::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model) :
 {
 	this->model = model;
 	
-	shaderIndices.push_back(ResourceManager::Shaders::POINT_DIFFUSE);
+	shaderIndices.push_back(ResourceManager::Shaders::GLOBAL_SPECULAR);
 	shaderIndices.push_back(ResourceManager::Shaders::POINT_SPECULAR);
 	currentShader = 0;
 }
@@ -19,7 +19,7 @@ DrawableEntity::~DrawableEntity(void)
 bool DrawableEntity::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::POINT_DIFFUSE));
+	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(shaderIndices[currentShader]));
 	if(!InitBuffers(device))
 		return false;
 	return true;
