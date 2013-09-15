@@ -14,7 +14,8 @@ class DrawableEntity : public Entity, public IDrawableObject
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
-	bool spec;
+	vector<int> shaderIndices;
+	int currentShader;
 public:
 	DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model);
 	~DrawableEntity(void);

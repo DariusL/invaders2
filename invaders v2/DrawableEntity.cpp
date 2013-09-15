@@ -6,7 +6,10 @@
 DrawableEntity::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model) : Entity(pos, model->hitbox)
 {
 	this->model = model;
-	spec = true;
+	shaderIndices.push_back(ResourceManager::Shaders::GLOBAL_DIFFUSE);
+	shaderIndices.push_back(ResourceManager::Shaders::GLOBAL_SPECULAR);
+	shaderIndices.push_back(ResourceManager::Shaders::POINT_DIFFUSE);
+	currentShader = 1;
 }
 
 DrawableEntity::~DrawableEntity(void)
@@ -84,7 +87,7 @@ bool DrawableEntity::Update(ComPtr<ID3D11DeviceContext> context)
 
 void DrawableEntity::SwapShader()
 {
-	spec = !spec;
-	int ind = spec ? ResourceManager::Shaders::GLOBAL_SPECULAR : ResourceManager::Shaders::GLOBAL_DIFFUSE;
-	shader = static_pointer_cast<IPositionShader, IShader>(App::Get()->GetResourceManager()->GetShader(ind));
+	currentShader++;
+	currentShader = currentShader % shaderIndices.size();
+	shader = static_pointer_cast<IPositionShader, IShader>(App::Get()->GetResourceManager()->GetShader(shaderIndices[currentShader]));
 }
