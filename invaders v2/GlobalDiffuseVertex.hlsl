@@ -1,6 +1,7 @@
 cbuffer TransMatrix : register(b0)
 {
     matrix transform;
+	matrix move;
 };
 
 struct PixelInputType

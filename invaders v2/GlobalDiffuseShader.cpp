@@ -64,7 +64,7 @@ bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	D3D11_BUFFER_DESC lightingBufferDesc;
 
 	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);
+	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
 	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	matrixBufferDesc.MiscFlags = 0;
 	matrixBufferDesc.StructureByteStride = 0;
@@ -88,11 +88,15 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mo
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 	ComPtr<ID3D11DeviceContext> cont = params.context;
+	MatrixType vertexMatrices;
 
 	params.transMatrix = moveMatrix * params.transMatrix;
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
+	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
+	vertexMatrices.move = moveMatrix;
+	vertexMatrices.transform = params.transMatrix;
 	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
-	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
+	memcpy(matrixRes.pData, &vertexMatrices, sizeof(MatrixType));
 	cont->Unmap(matrixBuffer.Get(), 0);
 
 	LightBufferType data;

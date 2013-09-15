@@ -1,6 +1,7 @@
 cbuffer TransMatrix : register(b0)
 {
     matrix transform;
+	matrix move;
 };
 
 cbuffer CameraBuffer : register(b1)
@@ -27,13 +28,15 @@ struct VertexInputType
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
+	float4 worldPos;
     
     input.position.w = 1.0f;
+	worldPos = mul(input.position, move);
 
 	output.position = mul(input.position, transform);
     output.color = input.color;
 	output.normal = normalize(input.normal);
-	output.cameraDir = normalize(cameraPos.xyz - input.position.xyz);
+	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);
     
     return output;
 }
