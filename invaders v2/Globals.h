@@ -26,6 +26,12 @@ struct InstanceType
 	D3DXVECTOR3 position;
 };
 
+struct MatrixType
+{
+	D3DXMATRIX transform;
+	D3DXMATRIX move;
+};
+
 struct ControlCodes
 {
 	static const int LEFT  = 1 << 0;

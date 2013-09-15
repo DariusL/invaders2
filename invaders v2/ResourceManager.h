@@ -6,10 +6,6 @@
 
 #include "NormalModel.h"
 #include "Model.h"
-#include "ColorInstancedShader.h"
-#include "GlobalDiffuseShader.h"
-#include "GlobalSpecularShader.h"
-#include "ColorShader.h"
 #include "DrawableShooter.h"
 #include "Level.h"
 
@@ -20,9 +16,6 @@ class ResourceManager
 	vector<shared_ptr<Model>> models;
 	shared_ptr<NormalModel> normalModel;
 	vector<shared_ptr<Level>> levels;
-
-	shared_ptr<ColorShader> colorShader;
-	shared_ptr<ColorInstancedShader> colorInstancedShader;
 	vector<shared_ptr<IShader>> shaders;
 
 	unique_ptr<NormalModel> GetModelFromOBJ(char *filename);
@@ -65,7 +58,8 @@ public:
 		COLOR,
 		COLOR_INSTANCED,
 		GLOBAL_DIFFUSE,
-		GLOBAL_SPECULAR
+		GLOBAL_SPECULAR,
+		POINT_DIFFUSE
 	};
 
 	enum NormalModels

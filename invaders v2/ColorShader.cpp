@@ -10,34 +10,41 @@ ColorShader::~ColorShader()
 
 bool ColorShader::Init(ComPtr<ID3D11Device> device)
 {
-	unsigned int numElements = 2;
-	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
-
-	polygonLayout[0].SemanticName = "POSITION";
-	polygonLayout[0].SemanticIndex = 0;
-	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	polygonLayout[0].InputSlot = 0;
-	polygonLayout[0].AlignedByteOffset = 0;
-	polygonLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[0].InstanceDataStepRate = 0;
-
-	polygonLayout[1].SemanticName = "COLOR";
-	polygonLayout[1].SemanticIndex = 0;
-	polygonLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	polygonLayout[1].InputSlot = 0;
-	polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
-	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[1].InstanceDataStepRate = 0;
-
-	if(!InitializeShader(device, "ColorVertex.cso", "ColorPixel.cso", polygonLayout, numElements))
+	if(!InitializeShader(device, "ColorVertex.cso", "ColorPixel.cso", GetInputLayout()))
 		return false;
-
-	delete [] polygonLayout;
 
 	if(!InitializeShaderBuffers(device))
 		return false;
 
 	return true;
+}
+
+vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
+{
+	D3D11_INPUT_ELEMENT_DESC desc;
+	vector<D3D11_INPUT_ELEMENT_DESC> ret;
+
+	desc.SemanticName = "POSITION";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	desc.InputSlot = 0;
+	desc.AlignedByteOffset = 0;
+	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	desc.InstanceDataStepRate = 0;
+
+	ret.push_back(desc);
+
+	desc.SemanticName = "COLOR";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.InputSlot = 0;
+	desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	desc.InstanceDataStepRate = 0;
+
+	ret.push_back(desc);
+
+	return ret;
 }
 
 bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)

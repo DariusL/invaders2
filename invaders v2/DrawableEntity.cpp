@@ -16,7 +16,7 @@ DrawableEntity::~DrawableEntity(void)
 bool DrawableEntity::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::GLOBAL_SPECULAR));
+	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::POINT_DIFFUSE));
 	if(!InitBuffers(device))
 		return false;
 	return true;

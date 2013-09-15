@@ -1,7 +1,6 @@
 #pragma once
 #include "globaldiffuseshader.h"
-class GlobalSpecularShader :
-	public GlobalDiffuseShader
+class GlobalSpecularShader : public GlobalDiffuseShader
 {
 public:
 	GlobalSpecularShader(void);

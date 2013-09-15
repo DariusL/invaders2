@@ -1,4 +1,9 @@
 #include "ResourceManager.h"
+#include "ColorInstancedShader.h"
+#include "ColorShader.h"
+#include "GlobalDiffuseShader.h"
+#include "GlobalSpecularShader.h"
+#include "PointDiffuseShader.h"
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
@@ -197,6 +202,7 @@ bool ResourceManager::Init()
 	normalModel = GetModelFromOBJ("teapot.obj");
 	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
 
+
 	return true;
 }
 
@@ -265,6 +271,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<ColorInstancedShader>());
 	shaders.push_back(make_shared<GlobalDiffuseShader>());
 	shaders.push_back(make_shared<GlobalSpecularShader>());
+	shaders.push_back(make_shared<PointDiffuseShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool IShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename, D3D11_INPUT_ELEMENT_DESC *polygonLayout, int layoutCount)
+bool IShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, char* psFilename, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout)
 {
 	unique_ptr<char> vBuffer;
 	int vSize;
@@ -23,7 +23,7 @@ bool IShader::InitializeShader(ComPtr<ID3D11Device> device, char* vsFilename, ch
 	// Create the pixel shader from the buffer.
 	Assert(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader));
 
-	Assert(device->CreateInputLayout(polygonLayout, layoutCount, vBuffer.get(), vSize, &layout));
+	Assert(device->CreateInputLayout(&inputLayout[0], inputLayout.size(), vBuffer.get(), vSize, &layout));
 
 	return true;
 }

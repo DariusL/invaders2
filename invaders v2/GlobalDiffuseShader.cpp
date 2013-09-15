@@ -11,42 +11,51 @@ GlobalDiffuseShader::~GlobalDiffuseShader(void)
 
 bool GlobalDiffuseShader::Init(ComPtr<ID3D11Device> device)
 {
-	unsigned int numElements = 3;
-	D3D11_INPUT_ELEMENT_DESC *polygonLayout = new D3D11_INPUT_ELEMENT_DESC[numElements];
-
-	polygonLayout[0].SemanticName = "POSITION";
-	polygonLayout[0].SemanticIndex = 0;
-	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	polygonLayout[0].InputSlot = 0;
-	polygonLayout[0].AlignedByteOffset = 0;
-	polygonLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[0].InstanceDataStepRate = 0;
-
-	polygonLayout[1].SemanticName = "NORMAL";
-	polygonLayout[1].SemanticIndex = 0;
-	polygonLayout[1].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	polygonLayout[1].InputSlot = 0;
-	polygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
-	polygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[1].InstanceDataStepRate = 0;
-
-	polygonLayout[2].SemanticName = "COLOR";
-	polygonLayout[2].SemanticIndex = 0;
-	polygonLayout[2].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	polygonLayout[2].InputSlot = 0;
-	polygonLayout[2].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
-	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[2].InstanceDataStepRate = 0;
-
-	if(!InitializeShader(device, "GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso", polygonLayout, numElements))
+	if(!InitializeShader(device, "GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso", GetInputLayout()))
 		return false;
-
-	delete [] polygonLayout;
 
 	if(!InitializeShaderBuffers(device))
 		return false;
 
 	return true;
+}
+
+vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
+{
+		D3D11_INPUT_ELEMENT_DESC desc;
+	vector<D3D11_INPUT_ELEMENT_DESC> ret;
+
+	desc.SemanticName = "POSITION";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	desc.InputSlot = 0;
+	desc.AlignedByteOffset = 0;
+	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	desc.InstanceDataStepRate = 0;
+
+	ret.push_back(desc);
+
+	desc.SemanticName = "NORMAL";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	desc.InputSlot = 0;
+	desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	desc.InstanceDataStepRate = 0;
+
+	ret.push_back(desc);
+
+	desc.SemanticName = "COLOR";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.InputSlot = 0;
+	desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	desc.InstanceDataStepRate = 0;
+
+	ret.push_back(desc);
+
+	return ret;
 }
 
 bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
