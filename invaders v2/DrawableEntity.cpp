@@ -6,10 +6,10 @@
 DrawableEntity::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<NormalModel> model) : Entity(pos, model->hitbox)
 {
 	this->model = model;
-	shaderIndices.push_back(ResourceManager::Shaders::GLOBAL_DIFFUSE);
-	shaderIndices.push_back(ResourceManager::Shaders::GLOBAL_SPECULAR);
+	
 	shaderIndices.push_back(ResourceManager::Shaders::POINT_DIFFUSE);
-	currentShader = 1;
+	shaderIndices.push_back(ResourceManager::Shaders::POINT_SPECULAR);
+	currentShader = 0;
 }
 
 DrawableEntity::~DrawableEntity(void)

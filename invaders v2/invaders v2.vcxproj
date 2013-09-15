@@ -96,6 +96,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="PointDiffuseShader.cpp" />
+    <ClCompile Include="PointSpecularShader.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="NormalModel.h" />
     <ClInclude Include="PointDiffuseShader.h" />
+    <ClInclude Include="PointSpecularShader.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="Utils.h" />
@@ -191,6 +193,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="PointDiffuseVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="PointSpecularPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="PointSpecularVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>

@@ -102,6 +102,9 @@
     <ClCompile Include="PointDiffuseShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PointSpecularShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -215,6 +218,9 @@
     <ClInclude Include="PointDiffuseShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PointSpecularShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -248,6 +254,12 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="PointDiffuseVertex.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PointSpecularPixel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="PointSpecularVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
