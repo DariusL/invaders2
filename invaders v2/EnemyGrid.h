@@ -1,17 +1,13 @@
 #pragma once
 #pragma warning(disable : 4005)
 
-#include <vector>
-#include <memory>
-#include <list>
-#include <random>
-
 #include "IDrawable.h"
 #include "Level.h"
 #include "Globals.h"
 #include "DrawableShooter.h"
 #include "InstanceEntity.h"
 #include "EntityListInstancer.h"
+#include "includes.h"
 
 using namespace std;
 class EnemyGrid : public IDrawable

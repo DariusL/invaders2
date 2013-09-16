@@ -2,9 +2,8 @@
 #include "entity.h"
 #include "IDrawableObject.h"
 #include "GlobalDiffuseShader.h"
-
-#include <memory>
 #include "NormalModel.h"
+#include "includes.h"
 class DrawableEntity : public Entity, public IDrawableObject
 {
 	shared_ptr<NormalModel> model;

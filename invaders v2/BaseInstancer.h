@@ -1,12 +1,9 @@
 #pragma once
 #pragma warning(disable : 4005)
-
-#include <memory>
-#include <list>
-
 #include "IDrawableObject.h"
 #include "Model.h"
 #include "ColorInstancedShader.h"
+#include "includes.h"
 
 using namespace std;
 using namespace Microsoft::WRL;

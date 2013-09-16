@@ -1,10 +1,6 @@
 #pragma once
 #pragma warning(disable : 4005)
-
-#include <cmath>
-#include <D3D11.h>
-#include <list>
-
+#include "includes.h"
 #include "EntityListInstancer.h"
 #include "EnemyGrid.h"
 #include "Level.h"

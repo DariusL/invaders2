@@ -1,3 +1,4 @@
+#include "includes.h"
 #include "Input.h"
 
 Input::Input(void)

@@ -1,3 +1,4 @@
+#include "includes.h"
 #include "Logger.h"
 
 const char *Logger::FILE = "Log.txt";

@@ -1,12 +1,6 @@
 #pragma once
 
-#pragma warning(disable : 4005)
-
-#include <d3d11.h>
-#include <d3dx10math.h>
-#include <d3dx11async.h>
-#include <fstream>
-#include <memory>
+#include "includes.h"
 
 #include "Utils.h"
 #include "IPosShader.h"

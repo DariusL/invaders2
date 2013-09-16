@@ -1,9 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-#include <wrl\client.h>
-
+#include "includes.h"
 #include "NormalModel.h"
 #include "Model.h"
 #include "DrawableShooter.h"

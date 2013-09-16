@@ -1,6 +1,4 @@
 #pragma once
-#include <Windows.h>
-#include <sstream>
 
 #include "Graphics.h"
 #include "GameWorld.h"
@@ -8,6 +6,7 @@
 #include "Logger.h"
 #include "ResourceManager.h"
 #include "Input.h"
+
 
 class Graphics;
 class App

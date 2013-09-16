@@ -1,6 +1,5 @@
 #pragma once
-#include <string>
-#include <fstream>
+#include "includes.h"
 using namespace std;
 class Logger
 {

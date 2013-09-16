@@ -5,12 +5,7 @@
 #pragma comment(lib, "d3dx11.lib")
 #pragma comment(lib, "d3dx10.lib")
 
-#include <d3d11.h>
-#include <DXGI.h>
-#include <d3dcommon.h>
-#include <d3dx10math.h>
-#include <iostream>
-#include <wrl\client.h>
+#include "includes.h"
 
 #include "Utils.h"
 

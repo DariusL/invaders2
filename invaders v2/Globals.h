@@ -1,8 +1,5 @@
 #pragma once
-#pragma warning(disable : 4005)
-#include <D3D11.h>
-#include <D3DX10math.h>
-#include <wrl\client.h>
+#include "includes.h"
 
 #ifndef NULL
 	#define NULL 0

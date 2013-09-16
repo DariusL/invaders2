@@ -1,12 +1,11 @@
 #pragma once
 #pragma warning(disable : 4005)
 
-#include <memory>
-
 #include "Shooter.h"
 #include "IDrawableObject.h"
 #include "Model.h"
 #include "ColorShader.h"
+#include "includes.h"
 
 using namespace std;
 class DrawableShooter : public Shooter, public IDrawableObject

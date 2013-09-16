@@ -1,3 +1,4 @@
+#include "includes.h"
 #include "Utils.h"
 
 bool Utils::ReadFileToArray(std::string file, std::unique_ptr<char> &arr, int &size)

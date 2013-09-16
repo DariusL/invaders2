@@ -4,8 +4,6 @@
 #include "Model.h"
 #include "IPosShader.h"
 #include "Globals.h"
-
-#include <memory>
 using namespace std;
 using namespace Microsoft::WRL;
 

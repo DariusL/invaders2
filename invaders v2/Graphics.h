@@ -1,6 +1,4 @@
 #pragma once
-#include <Windows.h>
-
 #include "Direct3D.h"
 #include "Camera.h"
 #include "IWorld.h"
