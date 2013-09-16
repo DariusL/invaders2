@@ -5,6 +5,8 @@
 /release/*
 /invaders v2/release/*
 
+/ipch/*
+
 #something
 *.sdf
 *.txt

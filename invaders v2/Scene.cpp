@@ -44,6 +44,8 @@ int Scene::OnLoop(int input, float frameLength)
 		r -= frameLength * 10;
 	if(input & ControlCodes::MINUS)
 		r += frameLength * 10;
+	if(input & ControlCodes::FIRE)
+		lightPitch += frameLength;
 	int shader = -1;
 	if(input & ControlCodes::GLOBAL_DIFF)
 		shader = ResourceManager::Shaders::GLOBAL_DIFFUSE;
@@ -63,7 +65,6 @@ int Scene::OnLoop(int input, float frameLength)
 			a->SetShader(shader);
 	}
 	camera.SetRotation(yaw, pitch, r);
-	lightPitch += frameLength;
 	light->SetPos(lightPitch, 10.0f);
 	return IWorld::Result::CONTINUE;
 }
