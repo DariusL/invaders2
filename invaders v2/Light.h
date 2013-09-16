@@ -19,12 +19,17 @@ class Light : public Entity, public IDrawableObject
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
+
+	float pitch;
+	float r;
 public:
 	Light(D3DXVECTOR3 pos, D3DXVECTOR4 color);
 	~Light(void);
 
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams renderParams);
+	void SetPos(float pitch, float r);
+	D3DXVECTOR3 GetPos();
 
 	const D3DXVECTOR4 &GetColor(){return color;}
 private:

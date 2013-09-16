@@ -12,6 +12,7 @@ class Scene : public IWorld
 	float yaw;
 	float pitch;
 	float r;
+	float lightPitch;
 public:
 	Scene();
 	~Scene();

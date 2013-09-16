@@ -9,6 +9,7 @@ Scene::Scene(void)
 	r = 50.0f;
 	yaw = 0.0f;
 	pitch = 0.2f;
+	lightPitch = 0.0f;
 }
 
 
@@ -61,6 +62,8 @@ int Scene::OnLoop(int input, float frameLength)
 			a->SetShader(shader);
 	}
 	camera.SetRotation(yaw, pitch, r);
+	lightPitch += frameLength;
+	light->SetPos(lightPitch, 10.0f);
 	return IWorld::Result::CONTINUE;
 }
 

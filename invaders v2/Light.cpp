@@ -12,6 +12,17 @@ Light::~Light(void)
 {
 }
 
+void Light::SetPos(float pitch, float r)
+{
+	this->pitch = pitch;
+	this->r = r;
+}
+
+D3DXVECTOR3 Light::GetPos()
+{
+	return D3DXVECTOR3(0.0f, r * sin(pitch), -r * cos(pitch));
+}
+
 bool Light::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
@@ -78,8 +89,10 @@ bool Light::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(dead)
 		return false;
-
-	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
+	D3DXMATRIX rot;
+	D3DXMatrixTranslation(&moveMatrix, 0.0f, 0.0f, -r);
+	D3DXMatrixRotationX(&rot, pitch);
+	moveMatrix *= rot;
 
 	return true;
 }

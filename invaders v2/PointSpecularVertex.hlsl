@@ -11,19 +11,21 @@ cbuffer LightBuffer : register(b1)
 
 cbuffer CameraBuffer : register(b2)
 {
-	float3 cameraPos;
-	float padding;
+	float3 cameraPos;//kameros pozicija
+	float padding;//papildomi duomenys iki 16B
 };
 
+//output
 struct PixelInputType
 {
     float4 position : SV_POSITION;
 	float3 normal : NORMAL;
 	float4 color : COLOR;
-	float3 cameraDir : POSITION0;
-	float3 lightDir : POSITION1;
+	float3 cameraDir : POSITION0;//kameros kryptis nuo tasko
+	float3 lightDir : POSITION1;//sviesos kryptis nuo tasko
 };
 
+//input
 struct VertexInputType
 {
     float4 position : POSITION;
@@ -37,13 +39,14 @@ PixelInputType main(VertexInputType input)
 	float4 worldPos;
     
     input.position.w = 1.0f;
+	//virsunes padetis pasaulio erdveje
 	worldPos = mul(input.position, move);
 
 	output.position = mul(input.position, transform);
     output.color = input.color;
 	output.normal = normalize(input.normal);
-	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);
-	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);
+	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);//kamera nuo virsunes
+	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);//sviesa nuo virsunes
     
     return output;
 }
