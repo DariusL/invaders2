@@ -87,6 +87,6 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 void Scene::Render(RenderParams params)
 {
 	for(auto &a : random)
-		a->Render(params);
-	light->Render(params);
+		a->Render(params);//arbatinukai
+	light->Render(params);//balta sfera, kuri primena sviesa
 }

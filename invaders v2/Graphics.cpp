@@ -48,27 +48,31 @@ void Graphics::Render()
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, transMatrix;
 
-	// Clear the buffers to begin the scene.
+	//isvalomi buferiai, nuspalvinamas fonas
 	d3D.BeginScene();
 
-	// Generate the view matrix based on the camera's position.
+	//is scenos gaunama kamera ir sviesa
 	Camera &camera = world->GetCamera();
 	camera.Render();
 	shared_ptr<Light> light = world->GetLight();
 
 	camera.GetViewMatrix(viewMatrix);
 	d3D.GetProjectionMatrix(projectionMatrix);
+	//transformacijos matrica is pasaulio erdves i ekrano erdve
 	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 
+	//renderinimo informacijos struktura
 	RenderParams params;
-	params.brightness = brightness;
-	params.context = d3D.GetDeviceContext();
-	params.transMatrix = transMatrix;
-	params.lightPos = light->GetPos();
-	params.diffuseColor = light->GetColor();
-	params.cameraPos = camera.GetPosition();
+	params.brightness = brightness;//foninio apsvietimo stiprumas
+	params.context = d3D.GetDeviceContext();//kontekstas
+	params.transMatrix = transMatrix;//transformacijos matrica
+	params.lightPos = light->GetPos();//sviesos pozicija pasaulio erdveje
+	params.diffuseColor = light->GetColor();//difuzines sviesos spalva
+	params.cameraPos = camera.GetPosition();//kameros pozicija pasaulio erdveje
 
+	//visi grafiniai objektai sudaro medi, kurio virsus yra scena
 	world->Render(params);
 
+	//vaizdas perduodamas i ekrana
 	d3D.EndScene();
 }

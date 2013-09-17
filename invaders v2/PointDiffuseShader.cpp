@@ -102,6 +102,7 @@ void PointDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mov
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	MatrixType vertexMatrices;
 
+	//vertex shader transformacijos matricos
 	params.transMatrix = moveMatrix * params.transMatrix;
 	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
 	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
@@ -111,6 +112,7 @@ void PointDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mov
 	memcpy(matrixRes.pData, &vertexMatrices, sizeof(MatrixType));
 	cont->Unmap(matrixBuffer.Get(), 0);
 
+	//pixel shader sviesos duomenys
 	PixelLightBufferType data;
 	data.ambient = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
 	data.diffuseColor = params.diffuseColor;
@@ -118,12 +120,14 @@ void PointDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX mov
 	memcpy(lightingRes.pData, &data, sizeof(PixelLightBufferType));
 	cont->Unmap(pixelLightBuffer.Get(), 0);
 
+	//vertex shader sviesos duomenys
 	D3DXVECTOR4 lightPos = params.lightPos;
 	lightPos.w = 1.0f;
 	cont->Map(vertexLightBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &vertexLightRes);
 	memcpy(vertexLightRes.pData, &lightPos, sizeof(VertexLightBufferType));
 	cont->Unmap(vertexLightBuffer.Get(), 0);
 
+	//nustatomi konstantu buferiai
 	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 	cont->VSSetConstantBuffers(1, 1, vertexLightBuffer.GetAddressOf());
 	cont->PSSetConstantBuffers(0, 1, pixelLightBuffer.GetAddressOf());
