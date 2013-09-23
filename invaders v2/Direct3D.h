@@ -20,8 +20,8 @@ public:
 
 	bool Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear);
 
-	void BeginScene();
-	void EndScene();
+	void ClearRenderTarget();
+	void Present();
 
 	ComPtr<ID3D11Device> GetDevice(){return device;}
 	ComPtr<ID3D11DeviceContext> GetDeviceContext(){return deviceContext;}
@@ -33,6 +33,7 @@ public:
 
 	void SetRenderTarget(ComPtr<ID3D11RenderTargetView> target);
 	void ResetRenderTarget();
+	void DoingDepthCheck(bool check);
 private:
 	bool vsync;
 	int videoMem;
@@ -45,6 +46,7 @@ private:
 	ComPtr<ID3D11RenderTargetView> mainRenderTargetView;
 	ComPtr<ID3D11Texture2D> depthStencilBuffer;
 	ComPtr<ID3D11DepthStencilState> depthStencilState;
+	ComPtr<ID3D11DepthStencilState> depthStencilState2d;
 	ComPtr<ID3D11DepthStencilView> depthStencilView;
 	ComPtr<ID3D11RasterizerState> rasterState;
 	D3DXMATRIX projectionMatrix;

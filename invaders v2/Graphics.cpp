@@ -23,6 +23,9 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
 		return false;
+	
+	floater = unique_ptr<FloatingCamera>(new FloatingCamera(D3DXVECTOR2(5, 5), D3DXVECTOR2(0.0f, 0.0f)));
+	floater->SetRotation(0, 0, 20);
 
 	return true;
 }
@@ -41,38 +44,57 @@ bool Graphics::Init(IWorld *world)
 	this->world = world;
 	if(!world->Init(d3D.GetDevice()))
 		return false;
+	floater->Init(d3D.GetDevice());
 	return true;
 }
 
 void Graphics::Render()
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, transMatrix;
-
-	//isvalomi buferiai, nuspalvinamas fonas
-	d3D.BeginScene();
-
-	//is scenos gaunama kamera ir sviesa
-	Camera &camera = world->GetCamera();
-	camera.Render();
 	shared_ptr<Light> light = world->GetLight();
-
-	camera.GetViewMatrix(viewMatrix);
-	d3D.GetProjectionMatrix(projectionMatrix);
-	//transformacijos matrica is pasaulio erdves i ekrano erdve
-	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
 
 	//renderinimo informacijos struktura
 	RenderParams params;
 	params.brightness = brightness;//foninio apsvietimo stiprumas
 	params.context = d3D.GetDeviceContext();//kontekstas
-	params.transMatrix = transMatrix;//transformacijos matrica
 	params.lightPos = light->GetPos();//sviesos pozicija pasaulio erdveje
 	params.diffuseColor = light->GetColor();//difuzines sviesos spalva
-	params.cameraPos = camera.GetPosition();//kameros pozicija pasaulio erdveje
 
-	//visi grafiniai objektai sudaro medi, kurio virsus yra scena
+	d3D.SetRenderTarget(floater->GetRenderTargetView());
+	d3D.ClearRenderTarget();
+
+	d3D.DoingDepthCheck(true);
+	
+	floater->Render();
+	floater->GetViewMatrix(viewMatrix);
+	params.cameraPos = floater->GetPosition();
+	d3D.GetProjectionMatrix(projectionMatrix);
+	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
+
+	params.transMatrix = transMatrix;
+
 	world->Render(params);
 
-	//vaizdas perduodamas i ekrana
-	d3D.EndScene();
+	d3D.ResetRenderTarget();
+	d3D.ClearRenderTarget();
+
+	Camera &camera = world->GetCamera();
+	camera.Render();
+
+	params.cameraPos = camera.GetPosition();
+
+	camera.GetViewMatrix(viewMatrix);
+	d3D.GetProjectionMatrix(projectionMatrix);
+
+	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
+	params.transMatrix = transMatrix;
+	
+	world->Render(params);
+
+	d3D.DoingDepthCheck(false);
+
+	//d3D.GetOrthoMatrix(params.transMatrix);
+	floater->Render(params);
+	
+	d3D.Present();
 }

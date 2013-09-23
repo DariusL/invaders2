@@ -15,6 +15,7 @@ class Graphics
 	float screenNear;
 	float brightness;
 	HWND handle;
+	unique_ptr<FloatingCamera> floater;
 public:
 	Graphics(void);
 	~Graphics(void);

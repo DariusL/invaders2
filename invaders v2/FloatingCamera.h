@@ -27,6 +27,7 @@ public:
 
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams renderParams);
+	void Render(){Camera::Render();}
 
 	ComPtr<ID3D11RenderTargetView> GetRenderTargetView(){return renderTargetView;}
 private:

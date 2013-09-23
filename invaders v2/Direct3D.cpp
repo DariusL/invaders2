@@ -120,8 +120,11 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	Assert(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState))
-	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
+	Assert(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState));
+	depthStencilDesc.DepthEnable = false;
+	Assert(device->CreateDepthStencilState(&depthStencilDesc, &depthStencilState2d));
+
+	DoingDepthCheck(true);
 
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
 	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -162,13 +165,13 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	return true;
 }
 
-void Direct3D::BeginScene()
+void Direct3D::ClearRenderTarget()
 {
 	deviceContext->ClearRenderTargetView(renderTargetView.Get(), clearColor);
 	deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-void Direct3D::EndScene()
+void Direct3D::Present()
 {
 	if(vsync)
 		swapChain->Present(1, 0);
@@ -180,10 +183,21 @@ void Direct3D::SetRenderTarget(ComPtr<ID3D11RenderTargetView> target)
 {
 	renderTargetView = target;
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	clearColor[0] = 1.0f;
 }
 
 void Direct3D::ResetRenderTarget()
 {
 	renderTargetView = mainRenderTargetView;
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	clearColor[0] = 0.0f;
+}
+
+void Direct3D::DoingDepthCheck(bool check)
+{
+	if(check)
+		deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
+	else
+		deviceContext->OMSetDepthStencilState(depthStencilState2d.Get(), 1);
+
 }

@@ -21,6 +21,9 @@ bool FloatingCamera::Init(ComPtr<ID3D11Device> device)
 	shader = static_pointer_cast<ITextureShader, IShader>(rm->GetShader(ResourceManager::Shaders::TEXTURE));
 	if(!InitBuffers(device))
 		return false;
+
+	InitRenderTarget(device);
+
 	return true;
 }
 
@@ -59,10 +62,10 @@ bool FloatingCamera::InitBuffers(ComPtr<ID3D11Device> device)
 	indices.push_back(2);
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(NormalVertexType);
+	vertexInfo.stride = sizeof(TextureVertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(TextureVertexType) * vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -95,7 +98,7 @@ void FloatingCamera::InitRenderTarget(ComPtr<ID3D11Device> device)
 	D3D11_TEXTURE2D_DESC textureDesc;
 	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
-
+	
 	textureDesc.ArraySize = 1;
 	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	textureDesc.CPUAccessFlags = 0;

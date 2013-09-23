@@ -12,7 +12,7 @@ public:
 
 	D3DXVECTOR3 GetPosition(){return pos;}
 
-	void Render();
+	virtual void Render();
 	void GetViewMatrix(D3DXMATRIX&);
 
 private:
