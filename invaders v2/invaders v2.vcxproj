@@ -83,6 +83,7 @@
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
+    <ClCompile Include="FloatingCamera.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
     <ClCompile Include="GlobalSpecularShader.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shooter.cpp" />
+    <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="GameWorld.cpp" />
@@ -118,6 +120,7 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="EnemyGrid.h" />
+    <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GlobalSpecularShader.h" />
@@ -133,6 +136,7 @@
     <ClInclude Include="InstanceShooter.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
+    <ClInclude Include="ITextureShader.h" />
     <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
@@ -143,6 +147,7 @@
     <ClInclude Include="PointSpecularShader.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shooter.h" />
+    <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />

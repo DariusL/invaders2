@@ -111,6 +111,12 @@
     <ClCompile Include="includes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FloatingCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -232,6 +238,15 @@
     </ClInclude>
     <ClInclude Include="includes.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ITextureShader.h">
+      <Filter>Abstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
