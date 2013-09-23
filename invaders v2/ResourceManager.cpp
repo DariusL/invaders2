@@ -6,6 +6,7 @@
 #include "GlobalSpecularShader.h"
 #include "PointDiffuseShader.h"
 #include "PointSpecularShader.h"
+#include "TextureShader.h"
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
@@ -294,6 +295,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<GlobalSpecularShader>());
 	shaders.push_back(make_shared<PointDiffuseShader>());
 	shaders.push_back(make_shared<PointSpecularShader>());
+	shaders.push_back(make_shared<TextureShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;

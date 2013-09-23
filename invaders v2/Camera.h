@@ -8,7 +8,6 @@ class Camera
 public:
 	Camera();
 
-	void SetPosition(const D3DXVECTOR3& pos);
 	void SetRotation(float yaw, float pitch, float r);
 
 	D3DXVECTOR3 GetPosition(){return pos;}

@@ -4,14 +4,8 @@
 
 Camera::Camera()
 {
-	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	yaw = 0.0f;
 	pitch = 0.0f;
-}
-
-void Camera::SetPosition(const D3DXVECTOR3& pos)
-{
-	//this->pos = pos;
 }
 
 void Camera::SetRotation(float yaw, float pitch, float r)
