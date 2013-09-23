@@ -11,7 +11,7 @@ struct VertexType
 	D3DXVECTOR4 color;
 };
 
-struct TextureVertextType
+struct TextureVertexType
 {
 	D3DXVECTOR3 position;
 	D3DXVECTOR2 tex;

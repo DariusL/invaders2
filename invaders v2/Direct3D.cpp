@@ -84,7 +84,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
-	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
+	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &mainRenderTargetView));
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;
@@ -129,7 +129,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	Assert(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView));
-	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	ResetRenderTarget();
 
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	rasterDesc.AntialiasedLineEnable = false;
@@ -174,4 +174,16 @@ void Direct3D::EndScene()
 		swapChain->Present(1, 0);
 	else
 		swapChain->Present(0, 0);
+}
+
+void Direct3D::SetRenderTarget(ComPtr<ID3D11RenderTargetView> target)
+{
+	renderTargetView = target;
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+}
+
+void Direct3D::ResetRenderTarget()
+{
+	renderTargetView = mainRenderTargetView;
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
 }

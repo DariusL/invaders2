@@ -30,6 +30,9 @@ public:
 	void GetOrthoMatrix(D3DXMATRIX &matrix){matrix = orthoMatrix;}
 
 	void GetVideoCardInfo(char* name, int& memory){strcpy_s(name, 128, videoDesc); memory = videoMem;}
+
+	void SetRenderTarget(ComPtr<ID3D11RenderTargetView> target);
+	void ResetRenderTarget();
 private:
 	bool vsync;
 	int videoMem;
@@ -39,6 +42,7 @@ private:
 	ComPtr<ID3D11Device> device;
 	ComPtr<ID3D11DeviceContext> deviceContext;
 	ComPtr<ID3D11RenderTargetView> renderTargetView;
+	ComPtr<ID3D11RenderTargetView> mainRenderTargetView;
 	ComPtr<ID3D11Texture2D> depthStencilBuffer;
 	ComPtr<ID3D11DepthStencilState> depthStencilState;
 	ComPtr<ID3D11DepthStencilView> depthStencilView;
