@@ -24,7 +24,8 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
 		return false;
 	
-	floater = unique_ptr<FloatingCamera>(new FloatingCamera(D3DXVECTOR2(width / 4, heigth / 4), D3DXVECTOR2(0.0f, 0.0f)));
+	D3DXVECTOR2 viewportSize(width / 4, heigth / 4);
+	floater = unique_ptr<FloatingCamera>(new FloatingCamera(viewportSize, D3DXVECTOR2(width / 2 - viewportSize.x / 2, heigth / -2 + viewportSize.y / 2)));
 	floater->SetRotation(0, 0, 20);
 
 	return true;
@@ -52,6 +53,8 @@ void Graphics::Render()
 {
 	D3DXMATRIX viewMatrix, projectionMatrix, transMatrix;
 	shared_ptr<Light> light = world->GetLight();
+	Camera &camera = world->GetCamera();
+	camera.Render();
 
 	//renderinimo informacijos struktura
 	RenderParams params;
@@ -77,8 +80,7 @@ void Graphics::Render()
 	d3D.DoingDepthCheck(true);
 	d3D.ClearRenderTarget();
 
-	Camera &camera = world->GetCamera();
-	camera.Render();
+	
 
 	params.cameraPos = camera.GetPosition();
 

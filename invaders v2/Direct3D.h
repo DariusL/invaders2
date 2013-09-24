@@ -47,6 +47,7 @@ private:
 	ComPtr<ID3D11DepthStencilState> depthStencilState2d;
 	ComPtr<ID3D11DepthStencilView> depthStencilView;
 	ComPtr<ID3D11RasterizerState> rasterState;
+	D3D11_VIEWPORT viewport;
 	D3DXMATRIX projectionMatrix;
 	D3DXMATRIX orthoMatrix;
 };

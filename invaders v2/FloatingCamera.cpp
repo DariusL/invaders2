@@ -17,10 +17,18 @@ FloatingCamera::~FloatingCamera(void)
 
 bool FloatingCamera::Init(ComPtr<ID3D11Device> device)
 {
-	clear[0] = 1.0f;
+	clear[0] = 0.0f;
 	clear[1] = 0.0f;
 	clear[2] = 0.0f;
 	clear[3] = 1.0f;
+
+	viewport.Width = viewportSize.x;
+	viewport.Height = viewportSize.y;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	viewport.TopLeftX = 0.0f;
+	viewport.TopLeftY = 0.0f;
+
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	shader = static_pointer_cast<ITextureShader, IShader>(rm->GetShader(ResourceManager::Shaders::TEXTURE));
 	if(!InitBuffers(device))
@@ -133,8 +141,8 @@ void FloatingCamera::InitRenderTarget(ComPtr<ID3D11Device> device)
 
 	Assert(device->CreateShaderResourceView(renderTargetTexture.Get(), &shaderResourceViewDesc, &shaderResourceView));
 
-	depthBufferDesc.Width = viewportSize.y;
-	depthBufferDesc.Height = viewportSize.x;
+	depthBufferDesc.Width = viewportSize.x;
+	depthBufferDesc.Height = viewportSize.y;
 	depthBufferDesc.MipLevels = 1;
 	depthBufferDesc.ArraySize = 1;
 	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -203,6 +211,7 @@ void FloatingCamera::SetRenderTarget(ComPtr<ID3D11DeviceContext> context)
 {
 	context->OMSetDepthStencilState(depthStencilState.Get(), 1);
 	context->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	context->RSSetViewports(1, &viewport);
 }
 
 void FloatingCamera::ClearTarget(ComPtr<ID3D11DeviceContext> context)

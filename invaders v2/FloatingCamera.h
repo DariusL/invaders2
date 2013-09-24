@@ -25,6 +25,7 @@ class FloatingCamera : public Camera, public IDrawableObject
 	ComPtr<ID3D11DepthStencilState> depthStencilState;
 	ComPtr<ID3D11Texture2D> depthStencilBuffer;
 	ComPtr<ID3D11ShaderResourceView> shaderResourceView;
+	D3D11_VIEWPORT viewport;
 public:
 	FloatingCamera(D3DXVECTOR2 viewportSize, D3DXVECTOR2 screenPos);
 	~FloatingCamera(void);

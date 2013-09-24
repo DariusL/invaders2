@@ -29,7 +29,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	D3D11_RASTERIZER_DESC rasterDesc;
-	D3D11_VIEWPORT viewport;
 	float fieldOfView, screenAspect;
 	this->vsync = vsync;
 
@@ -81,7 +80,13 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	swapChainDesc.Flags = 0;
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
+	int debug = 0;
+
+#ifdef _DEBUG
+	debug = D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, debug, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
 	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
@@ -137,6 +142,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	rasterDesc.AntialiasedLineEnable = false;
 	rasterDesc.CullMode = D3D11_CULL_BACK;
+	//rasterDesc.CullMode = D3D11_CULL_NONE;//fun
 	rasterDesc.DepthBias = 0;
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;
@@ -149,14 +155,12 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(device->CreateRasterizerState(&rasterDesc, &rasterState))
 	deviceContext->RSSetState(rasterState.Get());
 
-	ZeroMemory(&viewport, sizeof(viewport));
 	viewport.Width = (FLOAT) width;
 	viewport.Height = (FLOAT) height;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
-	deviceContext->RSSetViewports(1, &viewport);
 
 	fieldOfView = (FLOAT) D3DX_PI / 4.0f;
 	screenAspect = width / (float)height;
@@ -182,6 +186,7 @@ void Direct3D::Present()
 void Direct3D::ResetRenderTarget()
 {
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	deviceContext->RSSetViewports(1, &viewport);
 }
 
 void Direct3D::DoingDepthCheck(bool check)
