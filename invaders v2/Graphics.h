@@ -14,8 +14,9 @@ class Graphics
 	float screenDepth;
 	float screenNear;
 	float brightness;
+	int width;
+	int height;
 	HWND handle;
-	unique_ptr<FloatingCamera> floater;
 public:
 	Graphics(void);
 	~Graphics(void);

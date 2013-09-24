@@ -84,6 +84,18 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 
+void Scene::InitCameras(ComPtr<ID3D11Device> device, int width, int height)
+{
+	D3DXVECTOR2 size(width / 4.0f, height / 4.0f);
+	cameras.push_back(make_shared<FloatingCamera>(size, D3DXVECTOR2(width / 2.0f - size.x / 2.0f, height / -2.0f + size.y / 2.0f)));
+	cameras[0]->SetRotation(0.0f, -1.5f, 30.0f);
+	cameras.push_back(make_shared<FloatingCamera>(size, D3DXVECTOR2(width / 2.0f - size.x / 2.0f, height / -2.0f + size.y / 2.0f + size.y)));
+	cameras[1]->SetRotation(0.785f, -0.785f, 20.0f);
+
+	for(auto floater : cameras)
+		floater->Init(device);
+}
+
 void Scene::Render(const RenderParams &params)
 {
 	for(auto &a : random)

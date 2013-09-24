@@ -26,6 +26,7 @@ public:
 	shared_ptr<Light> GetLight(){return light;}
 	const vector<shared_ptr<FloatingCamera>> GetCameras(){return cameras;}
 	bool Init(ComPtr<ID3D11Device> device);
+	void InitCameras(ComPtr<ID3D11Device> device, int width, int height);
 	void Render(const RenderParams &params);
 };
 
