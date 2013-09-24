@@ -108,7 +108,7 @@ void TextureShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatr
 
 	params.context->IASetInputLayout(layout.Get());
 
-	params.context->VSSetShaderResources(0, 1, texture.GetAddressOf());
+	params.context->PSSetShaderResources(0, 1, texture.GetAddressOf());
 
 	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
@@ -116,6 +116,9 @@ void TextureShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatr
 
 void TextureShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
 {
+	deviceContext->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 	//unleash the grafiks
 	deviceContext->DrawIndexed(indexCount, 0, 0);
+
+	deviceContext->PSSetShaderResources(0, 1, nullResource.GetAddressOf());
  }

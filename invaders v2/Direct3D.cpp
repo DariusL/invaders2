@@ -84,7 +84,7 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
-	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &mainRenderTargetView));
+	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;
@@ -179,18 +179,9 @@ void Direct3D::Present()
 		swapChain->Present(0, 0);
 }
 
-void Direct3D::SetRenderTarget(ComPtr<ID3D11RenderTargetView> target)
-{
-	renderTargetView = target;
-	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
-	clearColor[0] = 1.0f;
-}
-
 void Direct3D::ResetRenderTarget()
 {
-	renderTargetView = mainRenderTargetView;
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
-	clearColor[0] = 0.0f;
 }
 
 void Direct3D::DoingDepthCheck(bool check)
@@ -199,5 +190,4 @@ void Direct3D::DoingDepthCheck(bool check)
 		deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1);
 	else
 		deviceContext->OMSetDepthStencilState(depthStencilState2d.Get(), 1);
-
 }

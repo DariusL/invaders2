@@ -18,5 +18,6 @@ protected:
 private:
 	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11SamplerState> samplerState;
+	ComPtr<ID3D11ShaderResourceView> nullResource;
 };
 
