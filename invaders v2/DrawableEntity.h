@@ -18,7 +18,7 @@ public:
 	~DrawableEntity(void);
 
 	bool Init(ComPtr<ID3D11Device> device);
-	void Render(RenderParams renderParams);
+	void Render(const RenderParams &renderParams);
 	void SetShader(int shader);
 private:
 	bool InitBuffers(ComPtr<ID3D11Device> device);

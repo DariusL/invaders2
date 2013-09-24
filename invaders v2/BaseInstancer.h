@@ -33,7 +33,7 @@ protected:
 
 public:
 	bool Init(ComPtr<ID3D11Device>);
-	void Render(RenderParams);
+	void Render(const RenderParams&);
 
 protected:
 	bool InitBuffers(ComPtr<ID3D11Device>);

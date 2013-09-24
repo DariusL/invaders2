@@ -14,7 +14,7 @@ public:
 	~ColorShader(void);
 
 	bool Init(ComPtr<ID3D11Device>);
-	void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix);
+	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:

@@ -22,7 +22,7 @@ bool GlobalSpecularShader::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 	
-void GlobalSpecularShader::SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix)
+void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
 {
 	GlobalDiffuseShader::SetShaderParameters(params, posMatrix);
 

@@ -55,7 +55,7 @@ bool DrawableShooter::InitBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void DrawableShooter::Render(RenderParams params)
+void DrawableShooter::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

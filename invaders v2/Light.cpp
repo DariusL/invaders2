@@ -77,7 +77,7 @@ void Light::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void Light::Render(RenderParams params)
+void Light::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

@@ -96,18 +96,19 @@ bool PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void PointDiffuseShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix)
+void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes, vertexLightRes;
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	MatrixType vertexMatrices;
 
 	//vertex shader transformacijos matricos
-	params.transMatrix = moveMatrix * params.transMatrix;
-	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
-	D3DXMatrixTranspose(&moveMatrix, &moveMatrix);
+	vertexMatrices.transform = moveMatrix * params.transMatrix;
 	vertexMatrices.move = moveMatrix;
-	vertexMatrices.transform = params.transMatrix;
+
+	D3DXMatrixTranspose(&vertexMatrices.transform, &vertexMatrices.transform);
+	D3DXMatrixTranspose(&vertexMatrices.move, &vertexMatrices.move);
+
 	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
 	memcpy(matrixRes.pData, &vertexMatrices, sizeof(MatrixType));
 	cont->Unmap(matrixBuffer.Get(), 0);

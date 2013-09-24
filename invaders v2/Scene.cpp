@@ -84,7 +84,7 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void Scene::Render(RenderParams params)
+void Scene::Render(const RenderParams &params)
 {
 	for(auto &a : random)
 		a->Render(params);//arbatinukai

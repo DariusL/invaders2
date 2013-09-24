@@ -66,15 +66,15 @@ bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void ColorShader::SetShaderParameters(RenderParams params, D3DXMATRIX moveMatrix)
+void ColorShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
 	D3D11_MAPPED_SUBRESOURCE matrixRes;
+	D3DXMATRIX transpose(moveMatrix * params.transMatrix);
 
-	params.transMatrix = moveMatrix * params.transMatrix;
-	D3DXMatrixTranspose(&params.transMatrix, &params.transMatrix);
+	D3DXMatrixTranspose(&transpose, &transpose);
 
 	params.context->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
-	memcpy(matrixRes.pData, &params.transMatrix, sizeof(D3DXMATRIX));
+	memcpy(matrixRes.pData, &transpose, sizeof(D3DXMATRIX));
 	params.context->Unmap(matrixBuffer.Get(), 0);
 
 	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());

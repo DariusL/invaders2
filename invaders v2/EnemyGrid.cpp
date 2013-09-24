@@ -137,7 +137,7 @@ void EnemyGrid::Fire(float frameLength)
 	}
 }
 
-void EnemyGrid::Render(RenderParams params)
+void EnemyGrid::Render(const RenderParams &params)
 {
 	for(auto &a : grid)
 		a->Render(params);

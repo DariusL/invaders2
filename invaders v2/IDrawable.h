@@ -10,5 +10,5 @@ class IDrawable
 {
 public:
 	virtual bool Init(ComPtr<ID3D11Device>) = 0;
-	virtual void Render(RenderParams) = 0;
+	virtual void Render(const RenderParams&) = 0;
 };

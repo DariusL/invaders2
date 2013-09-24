@@ -74,7 +74,7 @@ bool BaseInstancer::InitBuffers(ComPtr<ID3D11Device> device)
 }
 
 
-void BaseInstancer::Render(RenderParams params)
+void BaseInstancer::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

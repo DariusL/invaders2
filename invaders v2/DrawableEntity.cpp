@@ -66,7 +66,7 @@ void DrawableEntity::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void DrawableEntity::Render(RenderParams params)
+void DrawableEntity::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

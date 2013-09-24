@@ -191,7 +191,7 @@ void FloatingCamera::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void FloatingCamera::Render(RenderParams params)
+void FloatingCamera::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

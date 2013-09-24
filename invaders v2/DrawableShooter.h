@@ -23,7 +23,7 @@ public:
 	virtual ~DrawableShooter(void);
 
 	bool Init(ComPtr<ID3D11Device>);
-	void Render(RenderParams);
+	void Render(const RenderParams&);
 private:
 	bool InitBuffers(ComPtr<ID3D11Device>);
 	void SetBuffers(ComPtr<ID3D11DeviceContext>);

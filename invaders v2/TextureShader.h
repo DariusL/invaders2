@@ -7,7 +7,7 @@ public:
 	~TextureShader(void);
 
 	bool Init(ComPtr<ID3D11Device>);
-	void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);
+	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);
 	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:

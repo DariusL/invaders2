@@ -31,7 +31,7 @@ public:
 	~FloatingCamera(void);
 
 	bool Init(ComPtr<ID3D11Device> device);
-	void Render(RenderParams renderParams);
+	void Render(const RenderParams &renderParams);
 	void Render(){Camera::Render();}
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);

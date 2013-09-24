@@ -8,7 +8,7 @@ public:
 
 	virtual bool Init(ComPtr<ID3D11Device> device);
 	
-	virtual void SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix);
+	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 
 private:
 	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);

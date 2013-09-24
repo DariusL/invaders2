@@ -23,7 +23,7 @@ bool PointSpecularShader::Init(ComPtr<ID3D11Device> device)
 	return true;
 }
 	
-void PointSpecularShader::SetShaderParameters(RenderParams params, D3DXMATRIX posMatrix)
+void PointSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
 {
 	PointDiffuseShader::SetShaderParameters(params, posMatrix);
 

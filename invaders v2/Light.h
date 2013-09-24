@@ -25,7 +25,7 @@ public:
 	~Light(void);
 
 	bool Init(ComPtr<ID3D11Device> device);
-	void Render(RenderParams renderParams);
+	void Render(const RenderParams &renderParams);
 	void SetPos(float pitch, float r);
 	D3DXVECTOR3 GetPos();
 

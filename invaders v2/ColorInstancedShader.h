@@ -16,7 +16,7 @@ public:
 	~ColorInstancedShader(void);
 
 	bool Init(ComPtr<ID3D11Device>);
-	void SetShaderParameters(RenderParams);
+	void SetShaderParameters(const RenderParams&);
 	void RenderShader(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 
 protected:
