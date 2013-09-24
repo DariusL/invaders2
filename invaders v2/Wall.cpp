@@ -58,9 +58,9 @@ void Wall::CollideWith(InstanceEntity &bullet)
 	float x = (bullet.GetPos().x - topLeft.x) / model->hitbox.x;
 	float offset = Utils::Trunc(x, column);
 	if(Utils::Trunc(x, column) > 0)
-		column2 = column + 1;
+		column2 = (int)column + 1;
 	else
-		column2 = column - 1;
+		column2 = (int)column - 1;
 	if(column2 >= width)
 		column2 = -1;
 	if(column >= width)
@@ -69,7 +69,7 @@ void Wall::CollideWith(InstanceEntity &bullet)
 	{
 		if(column >= 0)
 		{
-			if(GetBlock(column, i).CollideWithAndKillBoth(bullet))
+			if(GetBlock((int)column, i).CollideWithAndKillBoth(bullet))
 			{
 				changed = true;
 				return;

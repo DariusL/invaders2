@@ -24,7 +24,7 @@ bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
 		return false;
 	
-	D3DXVECTOR2 viewportSize(width / 4, heigth / 4);
+	D3DXVECTOR2 viewportSize(width / 4.0f, heigth / 4.0f);
 	floater = unique_ptr<FloatingCamera>(new FloatingCamera(viewportSize, D3DXVECTOR2(width / 2 - viewportSize.x / 2, heigth / -2 + viewportSize.y / 2)));
 	floater->SetRotation(0, 0, 20);
 
@@ -40,7 +40,7 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-bool Graphics::Init(IWorld *world)
+bool Graphics::Init(Scene *world)
 {
 	this->world = world;
 	if(!world->Init(d3D.GetDevice()))
@@ -79,7 +79,6 @@ void Graphics::Render()
 	d3D.ResetRenderTarget();
 	d3D.DoingDepthCheck(true);
 	d3D.ClearRenderTarget();
-
 	
 
 	params.cameraPos = camera.GetPosition();

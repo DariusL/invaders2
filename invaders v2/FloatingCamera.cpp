@@ -118,8 +118,8 @@ void FloatingCamera::InitRenderTarget(ComPtr<ID3D11Device> device)
 	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureDesc.Height = viewportSize.y;
-	textureDesc.Width = viewportSize.x;
+	textureDesc.Height = (UINT)viewportSize.y;
+	textureDesc.Width = (UINT)viewportSize.x;
 	textureDesc.MipLevels = 1;
 	textureDesc.MiscFlags = 0;
 	textureDesc.SampleDesc.Count = 1;
@@ -141,8 +141,8 @@ void FloatingCamera::InitRenderTarget(ComPtr<ID3D11Device> device)
 
 	Assert(device->CreateShaderResourceView(renderTargetTexture.Get(), &shaderResourceViewDesc, &shaderResourceView));
 
-	depthBufferDesc.Width = viewportSize.x;
-	depthBufferDesc.Height = viewportSize.y;
+	depthBufferDesc.Width = (UINT)viewportSize.x;
+	depthBufferDesc.Height = (UINT)viewportSize.y;
 	depthBufferDesc.MipLevels = 1;
 	depthBufferDesc.ArraySize = 1;
 	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

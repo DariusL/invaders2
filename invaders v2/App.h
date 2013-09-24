@@ -14,7 +14,7 @@ class App
 	Graphics graphics;
 	Input input;
 
-	unique_ptr<IWorld> world;
+	unique_ptr<Scene> world;
 
 	Logger logger;
 	ResourceManager manager;

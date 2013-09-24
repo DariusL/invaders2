@@ -1,13 +1,13 @@
 #include "includes.h"
 #include "Utils.h"
 
-bool Utils::ReadFileToArray(std::string file, std::unique_ptr<char> &arr, int &size)
+bool Utils::ReadFileToArray(std::string file, std::unique_ptr<char> &arr, UINT &size)
 {
 	std::ifstream stream = std::ifstream(file, std::ios::binary);
 	if(!stream.is_open())
 		return false;
 	stream.seekg(0, stream.end);
-	size = stream.tellg();
+	size = (UINT)stream.tellg();
 	stream.seekg(0, stream.beg);
 	arr = std::unique_ptr<char>(new char[size]);
 	stream.read(arr.get(), size);

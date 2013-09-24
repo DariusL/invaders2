@@ -25,7 +25,6 @@ public:
 	virtual void Stop() = 0;
 
 	virtual int OnLoop(int input, float frameLength) = 0;
-	virtual shared_ptr<Light> GetLight() = 0;
 
 	Camera &GetCamera(){return camera;}
 

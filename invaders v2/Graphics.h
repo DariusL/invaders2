@@ -1,13 +1,13 @@
 #pragma once
 #include "Direct3D.h"
 #include "FloatingCamera.h"
-#include "IWorld.h"
+#include "Scene.h"
 
 class Graphics
 {
 	Direct3D d3D;
 
-	IWorld *world;
+	Scene *world;
 
 	bool fullScreen;
 	bool vsync;
@@ -21,7 +21,7 @@ public:
 	~Graphics(void);
 
 	bool Init(int width, int height, HWND handle, bool fullscreen, float brightness);
-	bool Init(IWorld *world);
+	bool Init(Scene *world);
 	void Render();
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
