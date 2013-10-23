@@ -208,6 +208,8 @@ bool ResourceManager::Init()
 	normalModel = GetNormalModelFromOBJ("teapot.obj");
 	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
 
+	texturedModel = GetTexturedModelFromOBJ("textured_teapot.obj");
+	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
 
 	return true;
 }
@@ -230,8 +232,8 @@ unique_ptr<Model> ResourceManager::GetModelFromOBJ(char *filename)
 
 unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 {
-	unique_ptr<NormalModel> model = unique_ptr<NormalModel>(new NormalModel());
-	ifstream in = ifstream(filename, ios::binary);
+	auto model = unique_ptr<NormalModel>(new NormalModel());
+	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	vector<int> temp;
 	string input;
@@ -251,40 +253,136 @@ unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 		}
 
 		if (input == "v")
-			{
-					in >> x >> y >> z;
-					vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-					vertex.normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-					vertex.position = D3DXVECTOR3(x, y, -z);
-					model->vertices.push_back(vertex);
-			}
-			else if (input == "vn")
-			{
-					in >> x >> y >> z;
-					normals.emplace_back(x, y, -z);
-			}
-			else if (input == "f")
-			{
-					string blob;
-					int v, n;
-					int index;
-					temp.clear();
+		{
+				in >> x >> y >> z;
+				vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+				vertex.normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				vertex.position = D3DXVECTOR3(x, y, -z);
+				model->vertices.push_back(vertex);
+		}
+		else if (input == "vn")
+		{
+				in >> x >> y >> z;
+				normals.emplace_back(x, y, -z);
+		}
+		else if (input == "f")
+		{
+				string blob;
+				int v, n;
+				int index;
+				temp.clear();
 
-					for (int i = 0; i < 3; i++)
-					{
-						in >> blob;
-						index = blob.find_first_of('/');
-						v = stoi(blob.substr(0, index)) - 1;
-						n = stoi(blob.substr(index + 2)) - 1;
-						temp.push_back(v);
-						model->vertices[v].normal += normals[n];
-					}
-					for(int i = 2; i >= 0; i--)
-						model->indices.push_back(temp[i]);
-			}
+				for (int i = 0; i < 3; i++)
+				{
+					in >> blob;
+					index = blob.find_first_of('/');
+					v = stoi(blob.substr(0, index)) - 1;
+					n = stoi(blob.substr(index + 2)) - 1;
+					temp.push_back(v);
+					model->vertices[v].normal += normals[n];
+				}
+				for(int i = 2; i >= 0; i--)
+					model->indices.push_back(temp[i]);
+		}
 	}
 
 	return model;
+}
+
+unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *filename)
+{
+	auto model = unique_ptr<TexturedNormalModel>(new TexturedNormalModel());
+	ifstream in(filename, ios::binary);
+	vector<D3DXVECTOR3> normals;
+	vector<D3DXVECTOR2> tex;
+	vector<int> temp;
+	string input;
+	TextureVertexType vertex;
+	D3DXVECTOR3 binormal, tangent;
+	float x, y, z;
+	if(!in.is_open())
+		return NULL;
+
+	while(!in.eof())
+	{
+		in >> input;
+
+		if(input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+				in >> x >> y >> z;
+				vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+				vertex.position = D3DXVECTOR3(x, y, -z);
+				model->vertices.push_back(vertex);
+		}
+		else if (input == "vn")
+		{
+				in >> x >> y >> z;
+				normals.emplace_back(x, y, -z);
+		}
+		else if (input == "vt")
+		{
+				in >> x >> y >> z;
+				tex.emplace_back(x, y);
+		}
+		else if (input == "f")
+		{
+				string blob;
+				int v, n, t;
+				int index, index2;
+				temp.clear();
+
+				for (int i = 0; i < 3; i++)
+				{
+					in >> blob;
+					index = blob.find_first_of('/');
+					v = stoi(blob.substr(0, index)) - 1;
+					index2 = blob.find_first_of('/', index + 1);
+					t = stoi(blob.substr(index + 1, index2)) - 1;
+					n = stoi(blob.substr(index2 + 1)) - 1;
+					temp.push_back(v);
+					model->vertices[v].normal = normals[n];
+					model->vertices[v].tex = tex[t];
+				}
+				reverse(temp.begin(), temp.end());
+				CalculateTangentAndBinormal(temp, model->vertices);
+				model->indices.insert(model->indices.end(), temp.begin(), temp.end());
+		}
+	}
+
+	return model;
+}
+
+void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector<TextureVertexType> &v)
+{
+	int v1 = ind[1];
+	int v2 = ind[2];
+	int v3 = ind[3];
+
+	D3DXVECTOR2 tu(v[v1].tex.x - v[v1].tex.x, v[v3].tex.x - v[v1].tex.x);
+	D3DXVECTOR2 tv(v[v2].tex.y - v[v1].tex.y, v[v3].tex.y - v[v1].tex.y);
+
+	D3DXVECTOR3 edge1(v[v2].position - v[v1].position);
+	D3DXVECTOR3 edge2(v[v3].position - v[v1].position);
+
+	float den = 1.0f / (tu.x * tv.y - tu.y * tv.x);
+
+	D3DXVECTOR3 tangent((tv.y * edge1 - tv.x * edge2) * den);
+	D3DXVECTOR3 binormal((tu.x * edge2 - tv.y * edge1) * den);
+
+	D3DXVec3Normalize(&tangent, &tangent);
+	D3DXVec3Normalize(&binormal, &binormal);
+
+	for(auto &i : ind)
+	{
+		v[i].binormal += binormal;
+		v[i].tangent += tangent;
+	}
 }
 
 bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)

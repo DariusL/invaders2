@@ -2,6 +2,7 @@
 
 #include "includes.h"
 #include "NormalModel.h"
+#include "TexturedNormalModel.h"
 #include "Model.h"
 #include "DrawableShooter.h"
 #include "Level.h"
@@ -12,11 +13,14 @@ class ResourceManager
 {
 	vector<shared_ptr<Model>> models;
 	shared_ptr<NormalModel> normalModel;
+	shared_ptr<TexturedNormalModel> texturedModel;
 	vector<shared_ptr<Level>> levels;
 	vector<shared_ptr<IShader>> shaders;
 
 	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
 	unique_ptr<Model> GetModelFromOBJ(char *filename);
+	unique_ptr<TexturedNormalModel> GetTexturedModelFromOBJ(char *filename);
+	void CalculateTangentAndBinormal(const vector<int> &ind, vector<TextureVertexType> &v);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -26,6 +30,7 @@ public:
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 	shared_ptr<NormalModel> GetNormalModel(){return normalModel;}
+	shared_ptr<TexturedNormalModel> GetTexturedModel(){return texturedModel;}
 
 	shared_ptr<IShader> GetShader(int shader){return shaders[shader];}
 
