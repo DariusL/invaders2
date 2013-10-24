@@ -51,53 +51,6 @@ bool Graphics::Init(Scene *world)
 
 void Graphics::Render()
 {
-	/*D3DXMATRIX viewMatrix, projectionMatrix, transMatrix;
-	shared_ptr<Light> light = world->GetLight();
-	Camera &camera = world->GetCamera();
-	camera.Render();
-
-	//renderinimo informacijos struktura
-	RenderParams params;
-	params.brightness = brightness;//foninio apsvietimo stiprumas
-	params.context = d3D.GetDeviceContext();//kontekstas
-	params.lightPos = light->GetPos();//sviesos pozicija pasaulio erdveje
-	params.diffuseColor = light->GetColor();//difuzines sviesos spalva
-
-	floater->SetRenderTarget(params.context);
-	floater->ClearTarget(params.context);
-	
-	floater->Render();
-	floater->GetViewMatrix(viewMatrix);
-	params.cameraPos = floater->GetPosition();
-	d3D.GetProjectionMatrix(projectionMatrix);
-	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
-
-	params.transMatrix = transMatrix;
-
-	world->Render(params);
-
-	d3D.ResetRenderTarget();
-	d3D.DoingDepthCheck(true);
-	d3D.ClearRenderTarget();
-	
-
-	params.cameraPos = camera.GetPosition();
-
-	camera.GetViewMatrix(viewMatrix);
-	d3D.GetProjectionMatrix(projectionMatrix);
-
-	D3DXMatrixMultiply(&transMatrix, &viewMatrix, &projectionMatrix);
-	params.transMatrix = transMatrix;
-
-	world->Render(params);
-
-	d3D.DoingDepthCheck(false);
-
-	d3D.GetOrthoMatrix(params.transMatrix);
-	floater->Render(params);
-	
-	d3D.Present();*/
-
 	D3DXMATRIX viewMatrix, projectionMatrix;
 	shared_ptr<Light> light = world->GetLight();
 

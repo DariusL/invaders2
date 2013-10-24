@@ -7,6 +7,7 @@
 #include "PointDiffuseShader.h"
 #include "PointSpecularShader.h"
 #include "TextureShader.h"
+#include "NormalMappedShader.h"
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
@@ -360,9 +361,9 @@ unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *f
 
 void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector<TextureVertexType> &v)
 {
-	int v1 = ind[1];
-	int v2 = ind[2];
-	int v3 = ind[3];
+	int v1 = ind[0];
+	int v2 = ind[1];
+	int v3 = ind[2];
 
 	D3DXVECTOR2 tu(v[v1].tex.x - v[v1].tex.x, v[v3].tex.x - v[v1].tex.x);
 	D3DXVECTOR2 tv(v[v2].tex.y - v[v1].tex.y, v[v3].tex.y - v[v1].tex.y);
@@ -394,6 +395,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<PointDiffuseShader>());
 	shaders.push_back(make_shared<PointSpecularShader>());
 	shaders.push_back(make_shared<TextureShader>());
+	shaders.push_back(make_shared<NormalMappedShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;
