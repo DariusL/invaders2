@@ -19,6 +19,14 @@ bool NormalMappedShader::Init(ComPtr<ID3D11Device> device)
 	if(!InitializeShaderBuffers(device))
 		return false;
 
+	if(!InitializeSampler(device))
+		return false;
+
+	return true;
+}
+
+bool NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
+{
 	D3D11_SAMPLER_DESC samplerDesc;
 
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -38,6 +46,11 @@ bool NormalMappedShader::Init(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 
 	return true;
+}
+
+bool NormalMappedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+{
+	return PointSpecularShader::InitializeShaderBuffers(device);
 }
 
 vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
@@ -108,9 +121,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
 	return ret;
 }
 
-void NormalMappedShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
+void NormalMappedShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture)
 {
 	PointSpecularShader::SetShaderParameters(params, posMatrix);
-
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
+	params.context->PSSetShaderResources(0, 1, texture.GetAddressOf());
 }

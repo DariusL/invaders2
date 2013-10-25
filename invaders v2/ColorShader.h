@@ -15,7 +15,6 @@ public:
 
 	bool Init(ComPtr<ID3D11Device>);
 	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
-	void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:
 	bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);

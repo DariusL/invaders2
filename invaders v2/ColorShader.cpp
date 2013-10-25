@@ -84,9 +84,3 @@ void ColorShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX mov
 	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 }
-
-void ColorShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
-{
-	//unleash the grafiks
-	deviceContext->DrawIndexed(indexCount, 0, 0);
- }

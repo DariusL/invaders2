@@ -20,7 +20,7 @@ class ResourceManager
 	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
 	unique_ptr<Model> GetModelFromOBJ(char *filename);
 	unique_ptr<TexturedNormalModel> GetTexturedModelFromOBJ(char *filename);
-	void CalculateTangentAndBinormal(const vector<int> &ind, vector<TextureVertexType> &v);
+	void CalculateTangentAndBinormal(const vector<int> &ind, vector<NormalMappedVertexType> &v);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -65,7 +65,8 @@ public:
 		GLOBAL_SPECULAR,
 		POINT_DIFFUSE,
 		POINT_SPECULAR,
-		TEXTURE
+		TEXTURE,
+		NORMAL_MAPPED
 	};
 
 	enum NormalModels

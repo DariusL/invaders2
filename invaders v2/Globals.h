@@ -14,6 +14,12 @@ struct VertexType
 struct TextureVertexType
 {
 	D3DXVECTOR3 position;
+	D3DXVECTOR2 tex;
+};
+
+struct NormalMappedVertexType
+{
+	D3DXVECTOR3 position;
 	D3DXVECTOR3 normal;
 	D3DXVECTOR4 color;
 	D3DXVECTOR2 tex;

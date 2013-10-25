@@ -113,13 +113,12 @@ void TextureShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX m
 
 	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
+
+	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 }
 
 void TextureShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
 {
-	deviceContext->PSSetSamplers(0, 1, samplerState.GetAddressOf());
-	//unleash the grafiks
 	deviceContext->DrawIndexed(indexCount, 0, 0);
-
 	deviceContext->PSSetShaderResources(0, 1, nullResource.GetAddressOf());
  }

@@ -120,6 +120,9 @@
     <ClCompile Include="NormalMappedShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DrawableBumpyEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -200,9 +203,6 @@
     <ClInclude Include="IDrawable.h">
       <Filter>Abstract</Filter>
     </ClInclude>
-    <ClInclude Include="IDrawableGroup.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
     <ClInclude Include="IDrawableObject.h">
       <Filter>Abstract</Filter>
     </ClInclude>
@@ -255,6 +255,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NormalMappedShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableBumpyEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

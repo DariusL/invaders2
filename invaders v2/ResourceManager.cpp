@@ -209,8 +209,8 @@ bool ResourceManager::Init()
 	normalModel = GetNormalModelFromOBJ("teapot.obj");
 	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
 
-	texturedModel = GetTexturedModelFromOBJ("textured_teapot.obj");
-	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
+	texturedModel = GetTexturedModelFromOBJ("textured_ball.obj");
+	normalModel->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	return true;
 }
@@ -298,7 +298,7 @@ unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *f
 	vector<D3DXVECTOR2> tex;
 	vector<int> temp;
 	string input;
-	TextureVertexType vertex;
+	NormalMappedVertexType vertex;
 	D3DXVECTOR3 binormal, tangent;
 	float x, y, z;
 	if(!in.is_open())
@@ -317,8 +317,10 @@ unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *f
 		if (input == "v")
 		{
 				in >> x >> y >> z;
-				vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+				vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
 				vertex.position = D3DXVECTOR3(x, y, -z);
+				vertex.tangent = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				vertex.binormal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				model->vertices.push_back(vertex);
 		}
 		else if (input == "vn")
@@ -359,17 +361,17 @@ unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *f
 	return model;
 }
 
-void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector<TextureVertexType> &v)
+void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector<NormalMappedVertexType> &v)
 {
-	int v1 = ind[0];
-	int v2 = ind[1];
-	int v3 = ind[2];
+	auto &v1 = v[ind[0]];
+	auto &v2 = v[ind[1]];
+	auto &v3 = v[ind[2]];
 
-	D3DXVECTOR2 tu(v[v1].tex.x - v[v1].tex.x, v[v3].tex.x - v[v1].tex.x);
-	D3DXVECTOR2 tv(v[v2].tex.y - v[v1].tex.y, v[v3].tex.y - v[v1].tex.y);
+	D3DXVECTOR2 tu(v2.tex.x - v1.tex.x, v3.tex.x - v1.tex.x);
+	D3DXVECTOR2 tv(v2.tex.y - v1.tex.y, v3.tex.y - v1.tex.y);
 
-	D3DXVECTOR3 edge1(v[v2].position - v[v1].position);
-	D3DXVECTOR3 edge2(v[v3].position - v[v1].position);
+	D3DXVECTOR3 edge1(v2.position - v1.position);
+	D3DXVECTOR3 edge2(v3.position - v1.position);
 
 	float den = 1.0f / (tu.x * tv.y - tu.y * tv.x);
 
@@ -379,11 +381,14 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector
 	D3DXVec3Normalize(&tangent, &tangent);
 	D3DXVec3Normalize(&binormal, &binormal);
 
-	for(auto &i : ind)
-	{
-		v[i].binormal += binormal;
-		v[i].tangent += tangent;
-	}
+	v1.binormal += binormal;
+	v1.tangent += tangent;
+
+	v2.binormal += binormal;
+	v2.tangent += tangent;
+
+	v3.binormal += binormal;
+	v3.tangent += tangent;
 }
 
 bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)

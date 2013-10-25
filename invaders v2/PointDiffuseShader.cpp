@@ -138,9 +138,3 @@ void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMAT
 	cont->PSSetShader(pixelShader.Get(), NULL, 0);
 	cont->VSSetShader(vertexShader.Get(), NULL, 0);
 }
-
-void PointDiffuseShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
-{
-	//unleash the grafiks
-	deviceContext->DrawIndexed(indexCount, 0, 0);
- }

@@ -1,7 +1,6 @@
 #include "includes.h"
 #include "Direct3D.h"
 
-
 Direct3D::Direct3D(void)
 {
 }
@@ -142,7 +141,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	ZeroMemory(&rasterDesc, sizeof(rasterDesc));
 	rasterDesc.AntialiasedLineEnable = false;
 	rasterDesc.CullMode = D3D11_CULL_BACK;
-	//rasterDesc.CullMode = D3D11_CULL_NONE;//fun
 	rasterDesc.DepthBias = 0;
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;

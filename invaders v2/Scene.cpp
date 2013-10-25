@@ -75,6 +75,8 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	light = make_shared<Light>(D3DXVECTOR3(0.0f, -10.0f, 0.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
 	light->Init(device);
+	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetTexturedModel());
+	bumpy->Init(device);
 	for(int i = 0; i < 5; i++)
 	{
 		random.push_back(make_shared<DrawableEntity>(D3DXVECTOR3(i * 10.0f - 20, 0.0f, 0.0f), rm->GetNormalModel()));
@@ -98,7 +100,8 @@ void Scene::InitCameras(ComPtr<ID3D11Device> device, int width, int height)
 
 void Scene::Render(const RenderParams &params)
 {
-	for(auto &a : random)
-		a->Render(params);//arbatinukai
+	/*for(auto &a : random)
+		a->Render(params);//arbatinukai*/
 	light->Render(params);//balta sfera, kuri primena sviesa
+	bumpy->Render(params);
 }

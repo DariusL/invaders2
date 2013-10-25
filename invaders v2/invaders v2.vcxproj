@@ -81,6 +81,7 @@
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
+    <ClCompile Include="DrawableBumpyEntity.cpp" />
     <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="FloatingCamera.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="Direct3D.h" />
+    <ClInclude Include="DrawableBumpyEntity.h" />
     <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="FloatingCamera.h" />
@@ -127,7 +129,6 @@
     <ClInclude Include="GlobalSpecularShader.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="IDrawable.h" />
-    <ClInclude Include="IDrawableGroup.h" />
     <ClInclude Include="IDrawableObject.h" />
     <ClInclude Include="IInstance.h" />
     <ClInclude Include="IInstanceShader.h" />

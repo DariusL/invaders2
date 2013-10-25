@@ -6,10 +6,12 @@
 #include "Globals.h"
 #include "Light.h"
 #include "FloatingCamera.h"
+#include "DrawableBumpyEntity.h"
 class Scene : public IWorld
 {
 	vector<shared_ptr<DrawableEntity>> random;
 	vector<shared_ptr<FloatingCamera>> cameras;
+	shared_ptr<DrawableBumpyEntity> bumpy;
 	shared_ptr<Light> light;
 	float yaw;
 	float pitch;
@@ -29,4 +31,3 @@ public:
 	void InitCameras(ComPtr<ID3D11Device> device, int width, int height);
 	void Render(const RenderParams &params);
 };
-

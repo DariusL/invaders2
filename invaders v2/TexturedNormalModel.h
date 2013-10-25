@@ -5,7 +5,7 @@
 using namespace std;
 struct TexturedNormalModel
 {
-	vector<TextureVertexType> vertices;
+	vector<NormalMappedVertexType> vertices;
 	vector<int> indices;
 	D3DXVECTOR2 hitbox;
 };
