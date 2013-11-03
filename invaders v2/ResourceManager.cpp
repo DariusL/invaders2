@@ -8,6 +8,8 @@
 #include "PointSpecularShader.h"
 #include "TextureShader.h"
 #include "NormalMappedShader.h"
+#include "WaterShader.h"
+
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
@@ -159,7 +161,7 @@ bool ResourceManager::Init()
 	models.push_back(temp);
 
 	//wall
-	temp = make_shared<Model<VertexType>>();
+	temp = make_shared<ColorModel>();
 	temp->hitbox = D3DXVECTOR2(1.0f, 1.0f);
 	
 	vertex.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
@@ -190,6 +192,34 @@ bool ResourceManager::Init()
 	auto tempObj = GetModelFromOBJ("ball.obj");
 	tempObj->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 	models.push_back(move(tempObj));
+
+	plane = make_shared<TexturedModel>();
+	plane->hitbox = D3DXVECTOR2(20, 20);
+	TextureVertexType tv;
+
+	tv.position = D3DXVECTOR3(-10.0f, -10.0f, 0.0f);  // Bottom left.
+	tv.tex = D3DXVECTOR2(0.0f, 1.0f);
+	plane->vertices.push_back(tv);
+
+	tv.position = D3DXVECTOR3(-10.0f, 10.0f, 0.0f);  // Top left
+	tv.tex = D3DXVECTOR2(0.0f, 0.0f);
+	plane->vertices.push_back(tv);
+
+	tv.position = D3DXVECTOR3(10.0f, -10.0f, 0.0f);  // Bottom right.
+	tv.tex = D3DXVECTOR2(1.0f, 1.0f);
+	plane->vertices.push_back(tv);
+
+	tv.position = D3DXVECTOR3(10.0f, 10.0f, 0.0f);  // Top right.
+	tv.tex = D3DXVECTOR2(1.0f, 0.0f);
+	plane->vertices.push_back(tv);
+
+	plane->indices.push_back(1);
+	plane->indices.push_back(2);
+	plane->indices.push_back(0);
+
+	plane->indices.push_back(1);
+	plane->indices.push_back(3);
+	plane->indices.push_back(2);
 
 	Level *level = new Level();
 
@@ -401,6 +431,7 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<PointSpecularShader>());
 	shaders.push_back(make_shared<TextureShader>());
 	shaders.push_back(make_shared<NormalMappedShader>());
+	shaders.push_back(make_shared<WaterShader>());
 	for(auto &shader : shaders)
 		shader->Init(device);
 	return true;

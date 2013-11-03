@@ -22,5 +22,7 @@ public:
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
 	void ClearTarget(ComPtr<ID3D11DeviceContext> context);
+
+	ComPtr<ID3D11ShaderResourceView> GetRenderedTexture(){return shaderResourceView;}
 };
 

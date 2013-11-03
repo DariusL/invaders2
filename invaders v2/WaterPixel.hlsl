@@ -34,19 +34,20 @@ float4 main(PixelInputType input) : SV_TARGET
     reflextTex.x = input.reflectionMapPos.x / input.reflectionMapPos.w / 2.0f + 0.5f;
     reflextTex.y = -input.reflectionMapPos.y / input.reflectionMapPos.w / 2.0f + 0.5f;
 	
-    refractTex.x = input.refractionMapPos.x / input.refractionMapPos.w / 2.0f + 0.5f;
-    refractTex.y = -input.refractionMapPos.y / input.refractionMapPos.w / 2.0f + 0.5f;
+    //refractTex.x = input.refractionMapPos.x / input.refractionMapPos.w / 2.0f + 0.5f;
+    //refractTex.y = -input.refractionMapPos.y / input.refractionMapPos.w / 2.0f + 0.5f;
 
     normalMap = normalTexture.Sample(SampleType, input.tex);
 
     normal = (normalMap.xyz * 2.0f) - 1.0f;
 
     reflextTex = reflextTex + (normal.xy * scale);
-    refractTex = refractTex + (normal.xy * scale);
+    //refractTex = refractTex + (normal.xy * scale);
 
     // Sample the texture pixels from the textures using the updated texture coordinates.
     reflectionColor = reflectionTexture.Sample(SampleType, reflextTex);
-    refractionColor = refractionTexture.Sample(SampleType, refractTex);
+    //refractionColor = refractionTexture.Sample(SampleType, refractTex);
 	
-    return lerp(reflectionColor, refractionColor, 0.6f);
+    //return lerp(reflectionColor, refractionColor, 0.6f);
+	return reflectionColor;
 }

@@ -45,52 +45,44 @@ bool Graphics::Init(Scene *world)
 	this->world = world;
 	if(!world->Init(d3D.GetDevice()))
 		return false;
-	world->InitCameras(d3D.GetDevice(), width, height);
 	return true;
 }
 
 void Graphics::Render()
 {
 	D3DXMATRIX viewMatrix, projectionMatrix;
-	shared_ptr<Light> light = world->GetLight();
+	auto light = world->GetLight();
+
+	Camera &camera = world->GetCamera();
+	camera.Render();
+	camera.RenderMirror();
 
 	RenderParams params;
 	params.brightness = brightness;
 	params.context = d3D.GetDeviceContext();
 	params.lightPos = light->GetPos();
 	params.diffuseColor = light->GetColor();
-
-	auto &floaters = world->GetCameras();
+	params.cameraPos = camera.GetPosition();
 
 	d3D.GetProjectionMatrix(projectionMatrix);
 
-	for(auto floater : floaters)
-	{
-		floater->Render();
-		params.cameraPos = floater->GetPosition();
-		floater->SetRenderTarget(params.context);
-		floater->ClearTarget(params.context);
-		floater->GetViewMatrix(viewMatrix);
-		D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
-		world->Render(params);
-	}
+	auto water = world->GetWater();
+	auto target = water->GetRenderTarget();
+	target->SetRenderTarget(params.context);
+	target->ClearTarget(params.context);
+	camera.GetMirrorMatrix(viewMatrix);
+	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
+	world->Render(params);
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
 	d3D.DoingDepthCheck(true);
 
-	Camera &camera = world->GetCamera();
-	camera.Render();
 	camera.GetViewMatrix(viewMatrix);
-	params.cameraPos = camera.GetPosition();
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
 
 	world->Render(params);
-
-	d3D.DoingDepthCheck(false);
-	d3D.GetOrthoMatrix(params.transMatrix);
-	for(auto floater : floaters)
-		floater->Render(params);
+	water->Render(params);
 
 	d3D.Present();
 }

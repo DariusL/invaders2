@@ -7,7 +7,7 @@ RenderTarget::RenderTarget(int width, int height)
 	this->width = width;
 	this->height = height;
 
-	clear[0] = 0.0f;
+	clear[0] = 1.0f;
 	clear[1] = 0.0f;
 	clear[2] = 0.0f;
 	clear[3] = 1.0f;

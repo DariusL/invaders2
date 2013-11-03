@@ -11,6 +11,7 @@ public:
 public:
 	virtual bool Init(ComPtr<ID3D11Device> device);
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, vector<ComPtr<ID3D11ShaderResourceView>> textures);
+	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 protected:
 	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 

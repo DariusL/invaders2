@@ -93,7 +93,7 @@ int GameWorld::OnLoop(int input, float frameLength)
 	{
 		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 	}
-	camera.SetRotation(0, 0, 50);
+	camera.SetRotation(D3DXVECTOR3(0.0f, 0.0f, 50.0f));
 	enemies->CollideWith(playerBullets);
 	for(int i = 0; i < WALL_COUNT; i++)
 	{

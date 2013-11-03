@@ -15,10 +15,18 @@ WaterPlane::~WaterPlane(void)
 
 bool WaterPlane::Init(ComPtr<ID3D11Device> device)
 {
+	for(int i = 0; i < 3; i++)
+		textures.push_back(nullResource);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::POINT_SPECULAR));
+	shader = static_pointer_cast<WaterShader, IShader>(rm->GetShader(ResourceManager::Shaders::WATER));
 	if(!InitBuffers(device))
 		return false;
+	renderTarget = make_shared<RenderTarget>((int)model->hitbox.x, (int)model->hitbox.y);
+	if(!renderTarget->Init(device))
+		return false;
+
+	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"wave.dds", NULL, NULL, &textures[2], NULL));
+
 	return true;
 }
 
@@ -28,10 +36,10 @@ bool WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(NormalVertexType);
+	vertexInfo.stride = sizeof(TextureVertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(NormalVertexType) * model->vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(TextureVertexType) * model->vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -70,8 +78,9 @@ void WaterPlane::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;
+	textures[0] = renderTarget->GetRenderedTexture();
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params, moveMatrix);
+	shader->SetShaderParameters(params, moveMatrix, textures);
 	shader->RenderShader(params.context, model->indices.size());
 }
 

@@ -7,16 +7,12 @@
 #include "Light.h"
 #include "FloatingCamera.h"
 #include "DrawableBumpyEntity.h"
+#include "WaterPlane.h"
 class Scene : public IWorld
 {
-	vector<shared_ptr<DrawableEntity>> random;
-	vector<shared_ptr<FloatingCamera>> cameras;
 	shared_ptr<DrawableBumpyEntity> bumpy;
 	shared_ptr<Light> light;
-	float yaw;
-	float pitch;
-	float r;
-	float lightPitch;
+	shared_ptr<WaterPlane> water;
 public:
 	Scene();
 	~Scene();
@@ -26,8 +22,7 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	shared_ptr<Light> GetLight(){return light;}
-	const vector<shared_ptr<FloatingCamera>> GetCameras(){return cameras;}
+	shared_ptr<WaterPlane> GetWater(){return water;}
 	bool Init(ComPtr<ID3D11Device> device);
-	void InitCameras(ComPtr<ID3D11Device> device, int width, int height);
 	void Render(const RenderParams &params);
 };

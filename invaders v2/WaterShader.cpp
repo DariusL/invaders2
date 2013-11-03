@@ -27,7 +27,18 @@ bool WaterShader::Init(ComPtr<ID3D11Device> device)
 
 bool WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	TextureShader::InitializeShaderBuffers(device);
+	D3D11_BUFFER_DESC matrixBufferDesc;
+
+	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
+	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
+	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	matrixBufferDesc.MiscFlags = 0;
+	matrixBufferDesc.StructureByteStride = 0;
+
+	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
+	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	D3D11_BUFFER_DESC cameraDesc, waterDesc, reflectionDesc;
 
@@ -81,7 +92,6 @@ void WaterShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX pos
 	water.waterTranslation = params.waterTranslation;
 	Utils::CopyToBuffer(waterBuffer, water, con);
 
-
 	con->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 	con->VSSetConstantBuffers(1, 1, cameraBuffer.GetAddressOf());
 	con->VSSetConstantBuffers(2, 1, reflectionBuffer.GetAddressOf());
@@ -90,11 +100,18 @@ void WaterShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX pos
 	con->IASetInputLayout(layout.Get());
 
 	auto textureCount = textures.size();
-	for(int i = 0; i < textureCount; i++)
+	for(auto i = 0; i < textureCount; i++)
 		con->PSSetShaderResources(i, 1, textures[i].GetAddressOf());
 
 	con->VSSetShader(vertexShader.Get(), NULL, 0);
 	con->PSSetShader(pixelShader.Get(), NULL, 0);
 
 	con->PSSetSamplers(0, 1, samplerState.GetAddressOf());
+}
+
+void WaterShader::RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount)
+{
+	TextureShader::RenderShader(context, indexCount);
+	for(int i = 0; i < 3; i++)
+		context->PSSetShaderResources(i, 1, nullResource.GetAddressOf());
 }
