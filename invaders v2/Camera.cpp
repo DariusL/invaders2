@@ -2,28 +2,75 @@
 #include "Camera.h"
 
 
-Camera::Camera()
+Camera::Camera() : up(0.0f, 1.0f, 0.0f), pos(0.0f, 0.0f, 0.0f), forward(0.0f, 0.0f, 1.0f), right(1.0f, 0.0f, 0.0f)
 {
-	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
 void Camera::Render()
 {
-	D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
-	float radians = rot.y * 0.0174532925f;
-
-	D3DXVECTOR3 lookAt(sinf(radians) + pos.x, pos.y, cosf(radians) + pos.z);
-
-	D3DXMatrixLookAtLH(&viewMatrix, &pos, &lookAt, &up);
+	D3DXMatrixLookAtLH(&viewMatrix, &pos, &forward, &up);
 }
 
 void Camera::RenderMirror()
 {
-	D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
-	float radians = rot.y * 0.0174532925f;
+	D3DXMatrixLookAtLH(&mirrorMatrix, &pos, &forward, &up);
+}
 
-	D3DXVECTOR3 lookAt(sinf(radians) + pos.x, -pos.y, cosf(radians) + pos.z);
 
-	D3DXMatrixLookAtLH(&mirrorMatrix, &pos, &lookAt, &up);
+void Camera::Yaw(float angle)
+{
+	D3DXMATRIX matrix;
+	D3DXVECTOR4 temp;
+	auto vec = (up - pos);
+
+	D3DXMatrixRotationAxis(&matrix, &vec, angle);
+	D3DXVec3Transform(&temp, &right, &matrix);
+	right = D3DXVECTOR3(temp);
+	D3DXVec3Transform(&temp, &forward, &matrix);
+	forward = D3DXVECTOR3(temp);
+}
+
+void Camera::Pitch(float angle)
+{
+	D3DXMATRIX matrix;
+	D3DXVECTOR4 temp;
+	auto vec = (right - pos);
+
+	D3DXMatrixRotationAxis(&matrix, &vec, angle);
+	D3DXVec3Transform(&temp, &up, &matrix);
+	up = D3DXVECTOR3(temp);
+	D3DXVec3Transform(&temp, &forward, &matrix);
+	forward = D3DXVECTOR3(temp);
+}
+
+void Camera::Up(float dist)
+{
+	auto vec = dist * (up - pos);
+	pos += vec;
+	right += vec;
+	forward += vec;
+}
+
+void Camera::Right(float dist)
+{
+	auto vec = dist * (right - pos);
+	pos += vec;
+	up += vec;
+	forward += vec;
+}
+
+void Camera::Forward(float dist)
+{
+	auto vec = dist * (forward - pos);
+	pos += vec;
+	right += vec;
+	up += vec;
+}
+
+void Camera::Move(D3DXVECTOR3 offset)
+{
+	pos += offset;
+	right += offset;
+	up += offset;
+	forward += offset;
 }

@@ -7,7 +7,9 @@
 Scene::Scene(void)
 {
 	started = false;
-	camera.SetPostion(D3DXVECTOR3(0.0f, 0.0f, -30.0f));
+	camera.Forward(-30.0f);
+	camera.Up(-30.0f);
+	camera.Pitch(0.78f);
 }
 
 
@@ -36,9 +38,9 @@ int Scene::OnLoop(int input, float frameLength)
 bool Scene::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	light = make_shared<Light>(D3DXVECTOR3(0.0f, -10.0f, 0.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
 	light->Init(device);
-	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetTexturedModel());
+	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel());
 	bumpy->Init(device);
 	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane());
 	water->Init(device);

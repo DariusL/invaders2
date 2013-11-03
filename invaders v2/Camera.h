@@ -8,10 +8,12 @@ class Camera
 public:
 	Camera();
 
-	void SetPostion(D3DXVECTOR3 pos){this->pos = pos;}
-	void SetRotation(D3DXVECTOR3 rot){this->rot = rot;}
-	void Rotate(D3DXVECTOR3 offset){rot += offset;}
-	void Move(D3DXVECTOR3 offset){pos += offset;}
+	void Up(float dist);
+	void Right(float dist);
+	void Forward(float dist);
+	void Yaw(float angle);
+	void Pitch(float angle);
+	void Move(D3DXVECTOR3 offset);
 
 	D3DXVECTOR3 GetPosition(){return pos;}
 
@@ -22,7 +24,10 @@ public:
 
 private:
 	D3DXVECTOR3 pos;
-	D3DXVECTOR3 rot;
+	D3DXVECTOR3 forward;
+	D3DXVECTOR3 up;
+	D3DXVECTOR3 right;
+
 	D3DXMATRIX viewMatrix;
 	D3DXMATRIX mirrorMatrix;
 };
