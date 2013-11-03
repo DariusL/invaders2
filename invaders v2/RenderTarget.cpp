@@ -7,13 +7,13 @@ RenderTarget::RenderTarget(int width, int height)
 	this->width = width;
 	this->height = height;
 
-	clear[0] = 1.0f;
+	clear[0] = 0.0f;
 	clear[1] = 0.0f;
-	clear[2] = 0.0f;
+	clear[2] = 0.8f;
 	clear[3] = 1.0f;
 
-	viewport.Width = width;
-	viewport.Height = height;
+	viewport.Width = (float)width;
+	viewport.Height = (float)height;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;

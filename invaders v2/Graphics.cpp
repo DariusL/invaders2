@@ -68,10 +68,12 @@ void Graphics::Render()
 
 	auto water = world->GetWater();
 	auto target = water->GetRenderTarget();
+
 	target->SetRenderTarget(params.context);
 	target->ClearTarget(params.context);
 	camera.GetMirrorMatrix(viewMatrix);
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
+	D3DXMatrixMultiply(&params.reflecMatrix, &viewMatrix, &projectionMatrix);
 	world->Render(params);
 
 	d3D.ResetRenderTarget();

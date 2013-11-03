@@ -4,13 +4,13 @@ cbuffer TransMatrix : register(b0)
 	matrix move;
 };
 
-cbuffer CameraBuffer : register(b2)
+cbuffer CameraBuffer : register(b1)
 {
 	float3 cameraPos;
 	float padding;
 };
 
-cbuffer ReflectionBuffer : register(b3)
+cbuffer ReflectionBuffer : register(b2)
 {
     matrix reflectionTransform;
 	matrix refractionTransform;

@@ -68,7 +68,6 @@ bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void ColorShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE matrixRes;
 	D3DXMATRIX transpose(moveMatrix * params.transMatrix);
 
 	D3DXMatrixTranspose(&transpose, &transpose);

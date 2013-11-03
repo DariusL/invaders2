@@ -8,8 +8,8 @@ Scene::Scene(void)
 {
 	started = false;
 	camera.Forward(-30.0f);
-	camera.Up(-30.0f);
-	camera.Pitch(0.78f);
+	camera.Up(-10.0f);
+	camera.Pitch(1.0f);
 }
 
 

@@ -13,6 +13,15 @@ void Camera::Render()
 
 void Camera::RenderMirror()
 {
+	D3DXMATRIX scale;
+	D3DXMatrixScaling(&scale, 1.0f, 1.0f, -1.0f);
+	D3DXVECTOR4 temp;
+	D3DXVec3Transform(&temp, &this->pos, &scale);
+	D3DXVECTOR3 pos(temp);
+	D3DXVec3Transform(&temp, &this->forward, &scale);
+	D3DXVECTOR3 forward(temp);
+	D3DXVec3Transform(&temp, &this->up, &scale);
+	D3DXVECTOR3 up(temp);
 	D3DXMatrixLookAtLH(&mirrorMatrix, &pos, &forward, &up);
 }
 

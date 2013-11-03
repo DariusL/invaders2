@@ -100,7 +100,7 @@ void WaterShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX pos
 	con->IASetInputLayout(layout.Get());
 
 	auto textureCount = textures.size();
-	for(auto i = 0; i < textureCount; i++)
+	for(unsigned int i = 0; i < textureCount; i++)
 		con->PSSetShaderResources(i, 1, textures[i].GetAddressOf());
 
 	con->VSSetShader(vertexShader.Get(), NULL, 0);
