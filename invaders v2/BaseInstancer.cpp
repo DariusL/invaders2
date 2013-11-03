@@ -3,7 +3,7 @@
 #include "App.h"
 
 
-BaseInstancer::BaseInstancer(shared_ptr<Model> model, int maxObjectCount, int instanceSize)
+BaseInstancer::BaseInstancer(shared_ptr<ColorModel> model, int maxObjectCount, int instanceSize)
 {
 	this->maxInstanceCount = maxObjectCount;
 	this->model = model;

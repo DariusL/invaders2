@@ -30,7 +30,7 @@ float Utils::Trunc(float x, float &trunced)
 	return frac;
 }
 
-std::vector<InstanceEntity> Utils::GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, std::shared_ptr<Model> model)
+std::vector<InstanceEntity> Utils::GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, std::shared_ptr<ColorModel> model)
 {
 	vector<InstanceEntity> ret;
 	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(

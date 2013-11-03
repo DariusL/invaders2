@@ -1,7 +1,5 @@
 #pragma once
 
-#include <wrl\client.h>
-#include <vector>
 #include "Globals.h"
 
 using namespace Microsoft::WRL;

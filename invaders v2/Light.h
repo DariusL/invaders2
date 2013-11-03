@@ -1,7 +1,7 @@
 #pragma once
 #include "entity.h"
 #include "IDrawableObject.h"
-#include "Model.h"
+#include "Models.h"
 #include "IPosShader.h"
 #include "Globals.h"
 using namespace std;
@@ -10,7 +10,7 @@ using namespace Microsoft::WRL;
 class Light : public Entity, public IDrawableObject
 {
 	D3DXVECTOR4 color;
-	shared_ptr<Model> model;
+	shared_ptr<ColorModel> model;
 	D3DXMATRIX moveMatrix;
 	shared_ptr<IPositionShader> shader;
 

@@ -70,6 +70,22 @@ struct RenderParams
 	D3DXVECTOR4 diffuseColor;
 	D3DXVECTOR3 cameraPos;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+	D3DXVECTOR2 waterTranslation;
+	float waterScale;
+	D3DXMATRIX reflecMatrix;
+};
+
+struct ReflectionType
+{
+	D3DXMATRIX reflection;
+	D3DXMATRIX refraction;
+};
+
+struct WaterType
+{
+	D3DXVECTOR2 waterTranslation;
+	float scale;
+	float padding;
 };
 
 struct BufferInfo

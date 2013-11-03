@@ -1,13 +1,12 @@
 #pragma once
 #include "idrawableobject.h"
 #include "Entity.h"
-#include "TexturedNormalModel.h"
 #include "includes.h"
 #include "NormalMappedShader.h"
 
 class DrawableBumpyEntity : public IDrawableObject, public Entity
 {
-	shared_ptr<TexturedNormalModel> model;
+	shared_ptr<NormalMappedModel> model;
 	D3DXMATRIX moveMatrix;
 	shared_ptr<NormalMappedShader> shader;
 
@@ -16,7 +15,7 @@ class DrawableBumpyEntity : public IDrawableObject, public Entity
 	ComPtr<ID3D11Buffer> indexBuffer;
 	ComPtr<ID3D11ShaderResourceView> normalMap;
 public:
-	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<TexturedNormalModel> model);
+	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<NormalMappedModel> model);
 	~DrawableBumpyEntity(void);
 
 	bool Init(ComPtr<ID3D11Device> device);

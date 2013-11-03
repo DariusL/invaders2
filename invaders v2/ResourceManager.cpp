@@ -37,7 +37,7 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 bool ResourceManager::Init()
 {
 	//player
-	shared_ptr<Model> temp = make_shared<Model>();
+	shared_ptr<Model<VertexType>> temp = make_shared<Model<VertexType>>();
 	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	VertexType vertex;
@@ -69,7 +69,7 @@ bool ResourceManager::Init()
 	models.push_back(temp);
 
 	//enemy basic
-	temp = make_shared<Model>();
+	temp = make_shared<Model<VertexType>>();
 	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 	
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
@@ -99,7 +99,7 @@ bool ResourceManager::Init()
 	models.push_back(temp);
 
 	//bullet
-	temp = make_shared<Model>();
+	temp = make_shared<Model<VertexType>>();
 	temp->hitbox = D3DXVECTOR2(0.2f, 1.5f);
 	
 	vertex.position = D3DXVECTOR3(-0.1f, -0.75f, 0.0f);  // Bottom left.
@@ -129,7 +129,7 @@ bool ResourceManager::Init()
 	models.push_back(temp);
 
 	//enemy laptop
-	temp = make_shared<Model>();
+	temp = make_shared<Model<VertexType>>();
 	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
@@ -159,7 +159,7 @@ bool ResourceManager::Init()
 	models.push_back(temp);
 
 	//wall
-	temp = make_shared<Model>();
+	temp = make_shared<Model<VertexType>>();
 	temp->hitbox = D3DXVECTOR2(1.0f, 1.0f);
 	
 	vertex.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
@@ -215,10 +215,10 @@ bool ResourceManager::Init()
 	return true;
 }
 
-unique_ptr<Model> ResourceManager::GetModelFromOBJ(char *filename)
+unique_ptr<Model<VertexType>> ResourceManager::GetModelFromOBJ(char *filename)
 {
 	auto normalModel = GetNormalModelFromOBJ(filename);
-	auto ret = unique_ptr<Model>(new Model());
+	auto ret = unique_ptr<Model<VertexType>>(new Model<VertexType>());
 	VertexType vertex;
 	ret->hitbox = normalModel->hitbox;
 	ret->indices = normalModel->indices;
@@ -231,9 +231,9 @@ unique_ptr<Model> ResourceManager::GetModelFromOBJ(char *filename)
 	return ret;
 }
 
-unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
+unique_ptr<Model<NormalVertexType>> ResourceManager::GetNormalModelFromOBJ(char *filename)
 {
-	auto model = unique_ptr<NormalModel>(new NormalModel());
+	auto model = unique_ptr<Model<NormalVertexType>>(new Model<NormalVertexType>());
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	vector<int> temp;
@@ -290,9 +290,9 @@ unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 	return model;
 }
 
-unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *filename)
+unique_ptr<Model<NormalMappedVertexType>> ResourceManager::GetTexturedModelFromOBJ(char *filename)
 {
-	auto model = unique_ptr<TexturedNormalModel>(new TexturedNormalModel());
+	auto model = unique_ptr<Model<NormalMappedVertexType>>(new Model<NormalMappedVertexType>());
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	vector<D3DXVECTOR2> tex;
@@ -354,7 +354,7 @@ unique_ptr<TexturedNormalModel> ResourceManager::GetTexturedModelFromOBJ(char *f
 				}
 				reverse(temp.begin(), temp.end());
 				CalculateTangentAndBinormal(temp, model->vertices);
-				model->indices.insert(model->indices.end(), temp.begin(), temp.end());
+				Utils::VectorAppend(model->indices, temp);
 		}
 	}
 

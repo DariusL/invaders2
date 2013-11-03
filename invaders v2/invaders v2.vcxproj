@@ -105,6 +105,7 @@
     <ClCompile Include="NormalMappedShader.cpp" />
     <ClCompile Include="PointDiffuseShader.cpp" />
     <ClCompile Include="PointSpecularShader.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -113,6 +114,8 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="WaterPlane.cpp" />
+    <ClCompile Include="WaterShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -144,22 +147,23 @@
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Models.h" />
     <ClInclude Include="NormalMappedShader.h" />
-    <ClInclude Include="NormalModel.h" />
     <ClInclude Include="PointDiffuseShader.h" />
     <ClInclude Include="PointSpecularShader.h" />
+    <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shooter.h" />
-    <ClInclude Include="TexturedNormalModel.h" />
     <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="WaterPlane.h" />
+    <ClInclude Include="WaterShader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorInstancedVertex.hlsl">
@@ -237,6 +241,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="WaterPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="WaterVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

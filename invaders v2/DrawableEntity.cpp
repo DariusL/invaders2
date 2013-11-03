@@ -84,9 +84,3 @@ bool DrawableEntity::Update(ComPtr<ID3D11DeviceContext> context)
 
 	return true;
 }
-
-void DrawableEntity::SetShader(int shader)
-{
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	this->shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(shader));
-}

@@ -26,11 +26,7 @@ void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, D3DXM
 {
 	GlobalDiffuseShader::SetShaderParameters(params, posMatrix);
 
-	D3D11_MAPPED_SUBRESOURCE cameraData;
-
-	params.context->Map(cameraBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &cameraData);
-	memcpy(cameraData.pData, &params.cameraPos, sizeof(D3DXVECTOR3));
-	params.context->Unmap(cameraBuffer.Get(), 0);
+	Utils::CopyToBuffer(cameraBuffer, &params.cameraPos, params.context);
 
 	params.context->VSSetConstantBuffers(1, 1, cameraBuffer.GetAddressOf());
 }

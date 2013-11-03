@@ -2,7 +2,7 @@
 #include "EntityListInstancer.h"
 
 
-EntityListInstancer::EntityListInstancer(shared_ptr<Model> model, int maxInstanceCount): BaseInstancer(model, maxInstanceCount, sizeof(InstanceType))
+EntityListInstancer::EntityListInstancer(shared_ptr<ColorModel> model, int maxInstanceCount): BaseInstancer(model, maxInstanceCount, sizeof(InstanceType))
 {
 }
 

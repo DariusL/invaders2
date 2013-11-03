@@ -1,21 +1,6 @@
 #include "includes.h"
 #include "Entity.h"
 
-Entity::Entity()
-{
-	pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	size = D3DXVECTOR2(0.0f, 0.0f);
-	deathTime = 0;
-	dead = false;
-}
-
-Entity::Entity(D3DXVECTOR3 start, D3DXVECTOR2 size)
-{
-	pos = start;
-	this->size = size;
-	dead = false;
-}
-
 Entity::Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed)
 {
 	this->pos = start;

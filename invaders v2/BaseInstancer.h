@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable : 4005)
 #include "IDrawableObject.h"
-#include "Model.h"
+#include "Models.h"
 #include "ColorInstancedShader.h"
 #include "includes.h"
 
@@ -11,7 +11,7 @@ using namespace Microsoft::WRL;
 class BaseInstancer : public IDrawableObject
 {
 public:
-	BaseInstancer(shared_ptr<Model> model, int maxObjectCount, int instanceSize);
+	BaseInstancer(shared_ptr<ColorModel> model, int maxObjectCount, int instanceSize);
 	virtual ~BaseInstancer(void);
 
 protected:
@@ -19,7 +19,7 @@ protected:
 	int instanceCount;
 	int instanceSize;
 
-	shared_ptr<Model> model;
+	shared_ptr<ColorModel> model;
 
 	shared_ptr<ColorInstancedShader> shader;
 	unique_ptr<byte[]> instanceData;

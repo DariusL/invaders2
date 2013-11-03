@@ -1,41 +1,37 @@
 #include "includes.h"
-#include "DrawableBumpyEntity.h"
+#include "WaterPlane.h"
 #include "App.h"
 #include "ResourceManager.h"
 #include "Utils.h"
 
-DrawableBumpyEntity::DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<NormalMappedModel> model) : Entity(pos, model->hitbox)
+WaterPlane::WaterPlane(D3DXVECTOR3 pos, shared_ptr<TexturedModel> model) : Entity(pos)
 {
 	this->model = model;
 }
 
-
-DrawableBumpyEntity::~DrawableBumpyEntity(void)
+WaterPlane::~WaterPlane(void)
 {
 }
 
-bool DrawableBumpyEntity::Init(ComPtr<ID3D11Device> device)
+bool WaterPlane::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<NormalMappedShader, IShader>(rm->GetShader(ResourceManager::Shaders::NORMAL_MAPPED));
+	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::POINT_SPECULAR));
 	if(!InitBuffers(device))
 		return false;
-
-	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"stage7.dds", NULL, NULL, &normalMap, NULL));
-
 	return true;
 }
 
-bool DrawableBumpyEntity::InitBuffers(ComPtr<ID3D11Device> device)
+bool WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(NormalMappedVertexType);
+	vertexInfo.stride = sizeof(NormalVertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(NormalMappedVertexType) * model->vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(NormalVertexType) * model->vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -63,23 +59,23 @@ bool DrawableBumpyEntity::InitBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void DrawableBumpyEntity::SetBuffers(ComPtr<ID3D11DeviceContext> context)
+void WaterPlane::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void DrawableBumpyEntity::Render(const RenderParams &params)
+void WaterPlane::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params, moveMatrix, normalMap);
+	shader->SetShaderParameters(params, moveMatrix);
 	shader->RenderShader(params.context, model->indices.size());
 }
 
-bool DrawableBumpyEntity::Update(ComPtr<ID3D11DeviceContext> context)
+bool WaterPlane::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(dead)
 		return false;

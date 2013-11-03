@@ -2,7 +2,7 @@
 #include "Wall.h"
 
 
-Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<Model> model) : 
+Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model) : 
 	BaseInstancer(model, width * height, sizeof(InstanceType)),
 	Entity(center, D3DXVECTOR2(model->hitbox.x * width, model->hitbox.y * height))
 {

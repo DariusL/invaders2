@@ -1,9 +1,7 @@
 #pragma once
 
 #include "includes.h"
-#include "NormalModel.h"
-#include "TexturedNormalModel.h"
-#include "Model.h"
+#include "Models.h"
 #include "DrawableShooter.h"
 #include "Level.h"
 
@@ -11,26 +9,26 @@ using namespace std;
 
 class ResourceManager
 {
-	vector<shared_ptr<Model>> models;
-	shared_ptr<NormalModel> normalModel;
-	shared_ptr<TexturedNormalModel> texturedModel;
+	vector<shared_ptr<ColorModel>> models;
+	shared_ptr<Model<NormalVertexType>> normalModel;
+	shared_ptr<NormalMappedModel> texturedModel;
 	vector<shared_ptr<Level>> levels;
 	vector<shared_ptr<IShader>> shaders;
 
 	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
-	unique_ptr<Model> GetModelFromOBJ(char *filename);
-	unique_ptr<TexturedNormalModel> GetTexturedModelFromOBJ(char *filename);
+	unique_ptr<ColorModel> GetModelFromOBJ(char *filename);
+	unique_ptr<NormalMappedModel> GetTexturedModelFromOBJ(char *filename);
 	void CalculateTangentAndBinormal(const vector<int> &ind, vector<NormalMappedVertexType> &v);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
 
 	bool Init();
-	shared_ptr<Model> GetModel(int i){return models[i];}
+	shared_ptr<ColorModel> GetModel(int i){return models[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 	shared_ptr<NormalModel> GetNormalModel(){return normalModel;}
-	shared_ptr<TexturedNormalModel> GetTexturedModel(){return texturedModel;}
+	shared_ptr<NormalMappedModel> GetTexturedModel(){return texturedModel;}
 
 	shared_ptr<IShader> GetShader(int shader){return shaders[shader];}
 

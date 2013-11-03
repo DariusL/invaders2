@@ -7,7 +7,7 @@ DrawableShooter::~DrawableShooter(void)
 {
 }
 
-DrawableShooter::DrawableShooter(float speed, float fireRate, shared_ptr<Model> model): Shooter(model->hitbox, speed, fireRate)
+DrawableShooter::DrawableShooter(float speed, float fireRate, shared_ptr<ColorModel> model): Shooter(model->hitbox, speed, fireRate)
 {
 	this->model = model;
 }

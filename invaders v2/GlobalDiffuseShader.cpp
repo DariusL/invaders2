@@ -87,7 +87,6 @@ bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes;
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	MatrixType vertexMatrices;
 
@@ -97,18 +96,14 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMA
 	D3DXMatrixTranspose(&vertexMatrices.transform, &vertexMatrices.transform);
 	D3DXMatrixTranspose(&vertexMatrices.move, &vertexMatrices.move);
 
-	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
-	memcpy(matrixRes.pData, &vertexMatrices, sizeof(MatrixType));
-	cont->Unmap(matrixBuffer.Get(), 0);
+	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);
 
 	LightBufferType data;
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
 	data.lightDir = D3DXVECTOR3(0.0f, 0.0f, 0.0f) - params.lightPos;
 	D3DXVec3Normalize(&data.lightDir, &data.lightDir);
-	cont->Map(lightingBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
-	memcpy(lightingRes.pData, &data, sizeof(LightBufferType));
-	cont->Unmap(lightingBuffer.Get(), 0);
+	Utils::CopyToBuffer(lightingBuffer, data, cont);
 
 	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());

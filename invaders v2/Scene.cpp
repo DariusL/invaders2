@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "App.h"
 #include "ResourceManager.h"
-#include "Model.h"
+#include "Models.h"
 
 Scene::Scene(void)
 {
@@ -55,15 +55,7 @@ int Scene::OnLoop(int input, float frameLength)
 		shader = ResourceManager::Shaders::POINT_DIFFUSE;
 	if(input & ControlCodes::POINT_SPEC)
 		shader = ResourceManager::Shaders::POINT_SPECULAR;
-	if(shader != -1)
-	{
-		if(shader == ResourceManager::Shaders::GLOBAL_DIFFUSE || shader == ResourceManager::Shaders::GLOBAL_SPECULAR)
-			light->Kill();
-		else
-			light->Revive();
-		for(auto &a : random)
-			a->SetShader(shader);
-	}
+
 	camera.SetRotation(yaw, pitch, r);
 	light->SetPos(lightPitch, 10.0f);
 	return IWorld::Result::CONTINUE;

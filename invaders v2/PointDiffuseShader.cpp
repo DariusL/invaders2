@@ -98,7 +98,6 @@ bool PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE matrixRes, lightingRes, vertexLightRes;
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	MatrixType vertexMatrices;
 
@@ -109,24 +108,18 @@ void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMAT
 	D3DXMatrixTranspose(&vertexMatrices.transform, &vertexMatrices.transform);
 	D3DXMatrixTranspose(&vertexMatrices.move, &vertexMatrices.move);
 
-	cont->Map(matrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &matrixRes);
-	memcpy(matrixRes.pData, &vertexMatrices, sizeof(MatrixType));
-	cont->Unmap(matrixBuffer.Get(), 0);
+	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);
 
 	//pixel shader sviesos duomenys
 	PixelLightBufferType data;
 	data.ambient = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
 	data.diffuseColor = params.diffuseColor;
-	cont->Map(pixelLightBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &lightingRes);
-	memcpy(lightingRes.pData, &data, sizeof(PixelLightBufferType));
-	cont->Unmap(pixelLightBuffer.Get(), 0);
+	Utils::CopyToBuffer(pixelLightBuffer, data, cont);
 
 	//vertex shader sviesos duomenys
 	D3DXVECTOR4 lightPos = params.lightPos;
 	lightPos.w = 1.0f;
-	cont->Map(vertexLightBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &vertexLightRes);
-	memcpy(vertexLightRes.pData, &lightPos, sizeof(VertexLightBufferType));
-	cont->Unmap(vertexLightBuffer.Get(), 0);
+	Utils::CopyToBuffer(vertexLightBuffer, lightPos, cont);
 
 	//nustatomi konstantu buferiai
 	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());

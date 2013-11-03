@@ -2,7 +2,7 @@
 
 #include "includes.h"
 #include "InstanceEntity.h"
-#include "Model.h"
+#include "Models.h"
 
 typedef unsigned int UINT;
 
@@ -11,8 +11,23 @@ namespace Utils{
 	bool ReadFileToArray(std::string file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
-	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, std::shared_ptr<Model> model);
+	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, std::shared_ptr<Model<VertexType>> model);
 	void ShowMessageBox(wstring text, wstring title);
+
+	template<class T>
+	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)
+	{
+		dest.insert(dest.end(), source.begin(), source.end());
+	}
+
+	template<class T>
+	void CopyToBuffer(Microsoft::WRL::ComPtr<ID3D11Buffer> buffer, const T &data, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context)
+	{
+		D3D11_MAPPED_SUBRESOURCE resource;
+		context->Map(buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+		memcpy(resource.pData, &data, sizeof(T));
+		context->Unmap(buffer.Get(), 0);
+	}
 }
 
 #define WIDE2(x) L##x

@@ -3,15 +3,14 @@
 
 #include "Shooter.h"
 #include "IDrawableObject.h"
-#include "Model.h"
+#include "Models.h"
 #include "ColorShader.h"
 #include "includes.h"
 
 using namespace std;
 class DrawableShooter : public Shooter, public IDrawableObject
 {
-	//grafiks
-	shared_ptr<Model> model;
+	shared_ptr<ColorModel> model;
 	D3DXMATRIX moveMatrix;
 	shared_ptr<ColorShader> shader;
 
@@ -19,7 +18,7 @@ class DrawableShooter : public Shooter, public IDrawableObject
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableShooter(float speed, float fireRate, shared_ptr<Model> model);
+	DrawableShooter(float speed, float fireRate, shared_ptr<ColorModel> model);
 	virtual ~DrawableShooter(void);
 
 	bool Init(ComPtr<ID3D11Device>);

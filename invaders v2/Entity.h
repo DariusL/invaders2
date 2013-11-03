@@ -13,9 +13,7 @@ protected:
 	float deathTime;
 	bool dead;
 public:
-	Entity();
-	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size);
-	Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed);
+	Entity(D3DXVECTOR3 start = D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR2 size = D3DXVECTOR2(0.0f, 0.0f), float speed = 0.0f);
 	virtual ~Entity(void);
 
 	D3DXVECTOR3 GetPos() const {return pos;}
