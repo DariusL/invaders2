@@ -1,7 +1,7 @@
 #pragma once
 #include "entity.h"
 #include "IDrawableObject.h"
-#include "GlobalDiffuseShader.h"
+#include "ColorShader.h"
 #include "models.h"
 #include "includes.h"
 #include "Utils.h"
@@ -28,6 +28,8 @@ protected:
 	virtual void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
+
+typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
 bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)

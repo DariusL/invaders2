@@ -96,9 +96,6 @@
     <ClCompile Include="PointSpecularShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="includes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
