@@ -6,30 +6,31 @@
 #include "includes.h"
 #include "Utils.h"
 
-template<class vt>
+template<class vt, class sh>
 class DrawableEntity : public Entity, public IDrawableObject
 {
+protected:
 	shared_ptr<Model<vt>> model;
 	D3DXMATRIX moveMatrix;
-	shared_ptr<IPositionShader> shader;
+	shared_ptr<sh> shader;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, shared_ptr<IShader> shader);
-	~DrawableEntity(void);
+	DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, shared_ptr<sh> shader);
+	virtual ~DrawableEntity(void);
 
-	bool Init(ComPtr<ID3D11Device> device);
-	void Render(const RenderParams &renderParams);
-private:
-	bool InitBuffers(ComPtr<ID3D11Device> device);
-	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
-	bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Init(ComPtr<ID3D11Device> device);
+	virtual void Render(const RenderParams &renderParams);
+protected:
+	virtual bool InitBuffers(ComPtr<ID3D11Device> device);
+	virtual void SetBuffers(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-template<class vt>
-bool DrawableEntity<vt>::InitBuffers(ComPtr<ID3D11Device> device)
+template<class vt, class sh>
+bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -66,36 +67,36 @@ bool DrawableEntity<vt>::InitBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-template<class vt>
-DrawableEntity<vt>::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, shared_ptr<IShader> shader) : Entity(pos, model->hitbox)
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, shared_ptr<sh> shader) : Entity(pos, model->hitbox)
 {
 	this->model = model;
-	this->shader = static_pointer_cast<IPositionShader, IShader>(shader);
+	this->shader = shader;
 }
 
-template<class vt>
-DrawableEntity<vt>::~DrawableEntity(void)
+template<class vt, class sh>
+DrawableEntity<vt, sh>::~DrawableEntity(void)
 {
 }
 
-template<class vt>
-bool DrawableEntity<vt>::Init(ComPtr<ID3D11Device> device)
+template<class vt, class sh>
+bool DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
 {
 	if(!InitBuffers(device))
 		return false;
 	return true;
 }
 
-template<class vt>
-void DrawableEntity<vt>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-template<class vt>
-void DrawableEntity<vt>::Render(const RenderParams &params)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;
@@ -104,8 +105,8 @@ void DrawableEntity<vt>::Render(const RenderParams &params)
 	shader->RenderShader(params.context, model->indices.size());
 }
 
-template<class vt>
-bool DrawableEntity<vt>::Update(ComPtr<ID3D11DeviceContext> context)
+template<class vt, class sh>
+bool DrawableEntity<vt, sh>::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if(dead)
 		return false;

@@ -1,28 +1,31 @@
 #pragma once
-#include "idrawableobject.h"
-#include "Entity.h"
-#include "includes.h"
+
+#include "DrawableEntity.h"
 #include "NormalMappedShader.h"
+#include "Models.h"
 
-class DrawableBumpyEntity : public IDrawableObject, public Entity
+class DrawableBumpyEntity : public DrawableEntity<NormalMappedVertexType, NormalMappedShader>
 {
-	shared_ptr<NormalMappedModel> model;
-	D3DXMATRIX moveMatrix;
-	shared_ptr<NormalMappedShader> shader;
-
-	ComPtr<ID3D11Buffer> vertexBuffer;
-	BufferInfo vertexInfo;
-	ComPtr<ID3D11Buffer> indexBuffer;
 	ComPtr<ID3D11ShaderResourceView> normalMap;
 public:
-	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<NormalMappedModel> model);
-	~DrawableBumpyEntity(void);
+	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<Model<NormalMappedVertexType>> model, shared_ptr<NormalMappedShader> shader)
+		:DrawableEntity(pos, model, shader){}
 
-	bool Init(ComPtr<ID3D11Device> device);
-	void Render(const RenderParams &renderParams);
-private:
-	bool InitBuffers(ComPtr<ID3D11Device> device);
-	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
-	bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual void Render(const RenderParams &renderParams)
+	{
+		if(!Update(renderParams.context))
+			return;
+		SetBuffers(renderParams.context);
+		shader->SetShaderParameters(renderParams, moveMatrix, normalMap);
+		shader->RenderShader(renderParams.context, model->indices.size());
+	}
+
+	virtual bool Init(ComPtr<ID3D11Device> device)
+	{
+		DrawableEntity::Init(device);
+
+		Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"stage7.dds", NULL, NULL, &normalMap, NULL));
+
+		return true;
+	}
 };
-
