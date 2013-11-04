@@ -2,7 +2,7 @@
 #include "EntityListInstancer.h"
 
 
-EntityListInstancer::EntityListInstancer(shared_ptr<ColorModel> model, int maxInstanceCount): BaseInstancer(model, maxInstanceCount, sizeof(InstanceType))
+EntityListInstancer::EntityListInstancer(shared_ptr<ColorModel> model, shared_ptr<ColorInstancedShader> shader, int maxInstanceCount): BaseInstancer(model, shader, maxInstanceCount)
 {
 }
 
@@ -14,15 +14,13 @@ EntityListInstancer::~EntityListInstancer(void)
 
 void EntityListInstancer::SetData(list<InstanceEntity> &instances)
 {
-	InstanceType instance;
 	instanceCount = 0;
 
 	for(auto &x : instances)
 	{
 		if(instanceCount >= maxInstanceCount)
 			break;
-		instance = x.GetInstanceData();
-		memcpy(instanceData.get() + instanceCount * instanceSize, &instance, instanceSize);
+		instanceData[instanceCount] = x.GetInstanceData();
 		instanceCount++;
 	}
 }

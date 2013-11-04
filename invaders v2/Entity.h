@@ -25,6 +25,8 @@ public:
 	float GetTopBorder() const {return pos.y + size.y / 2;}
 	float GetBottomBorder() const {return pos.y - size.y / 2;}
 
+	void SetSize(D3DXVECTOR2 size){this->size = size;}
+
 	void SetSpeed(float speed){this->speed = speed;}
 	float GetSpeed() const {return speed;}
 

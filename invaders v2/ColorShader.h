@@ -13,12 +13,12 @@ public:
 	ColorShader(void);
 	~ColorShader(void);
 
-	bool Init(ComPtr<ID3D11Device>);
-	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
+	virtual bool Init(ComPtr<ID3D11Device>);
+	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 
 protected:
-	bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
-	vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
+	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
 private:
 	ComPtr<ID3D11Buffer> matrixBuffer;

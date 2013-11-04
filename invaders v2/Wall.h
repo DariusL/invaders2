@@ -2,7 +2,8 @@
 #pragma warning(disable : 4005)
 #include "baseinstancer.h"
 #include "InstanceEntity.h"
-class Wall : public BaseInstancer, public Entity
+#include "ColorInstancedShader.h"
+class Wall : public SimpleBaseInstancer
 {
 	vector<InstanceEntity> blocks;
 	int width;
@@ -11,7 +12,7 @@ class Wall : public BaseInstancer, public Entity
 	D3DXVECTOR3 topLeft;
 	bool changed;
 public:
-	Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model);
+	Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, shared_ptr<ColorInstancedShader> shader);
 	~Wall(void);
 	bool Update(ComPtr<ID3D11DeviceContext>);
 

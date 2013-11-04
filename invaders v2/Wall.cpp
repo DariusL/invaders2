@@ -2,10 +2,10 @@
 #include "Wall.h"
 
 
-Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model) : 
-	BaseInstancer(model, width * height, sizeof(InstanceType)),
-	Entity(center, D3DXVECTOR2(model->hitbox.x * width, model->hitbox.y * height))
+Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, shared_ptr<ColorInstancedShader> shader) : 
+	SimpleBaseInstancer(model, shader, width * height, center)
 {
+	SetSize(D3DXVECTOR2(model->hitbox.x * width, model->hitbox.y * height));
 	this->width = width;
 	this->height = height;
 	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
@@ -34,7 +34,7 @@ bool Wall::Update(ComPtr<ID3D11DeviceContext> context)
 		{
 			if(!b.IsDead())
 			{
-				memcpy(instanceData.get() + instanceCount * instanceSize, &b.GetInstanceData(), instanceSize);
+				instanceData[instanceCount] = b.GetInstanceData();
 				instanceCount++;
 			}
 		}

@@ -8,7 +8,7 @@
 #include "includes.h"
 
 using namespace std;
-class DrawableShooter : public Shooter, public DrawableEntity<VertexType, ColorShader>
+class DrawableShooter : public Shooter, public SimpleDrawableEntity
 {
 public:
 	DrawableShooter(float speed, float fireRate, shared_ptr<ColorModel> model, shared_ptr<ColorShader> shader)

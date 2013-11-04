@@ -63,9 +63,6 @@
     <ClCompile Include="InstanceEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseInstancer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EntityListInstancer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

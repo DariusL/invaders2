@@ -45,7 +45,7 @@ bool EnemyGrid::Init(ComPtr<ID3D11Device> device)
 		if(!a->Init(device))
 			return false;
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), 100));
+	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(ResourceManager::Shaders::COLOR_INSTANCED), 100));
 	if(!enemyBulletGraphics->Init(device))
 		return false;
 	return true;
