@@ -7,6 +7,7 @@
 #include "DrawableShooter.h"
 #include "InstanceEntity.h"
 #include "EntityListInstancer.h"
+#include "ColorShader.h"
 #include "includes.h"
 
 using namespace std;

@@ -94,7 +94,6 @@
     <ClCompile Include="InstanceEntity.cpp" />
     <ClCompile Include="BaseInstancer.cpp" />
     <ClCompile Include="EntityListInstancer.cpp" />
-    <ClCompile Include="InstanceShooter.cpp" />
     <ClCompile Include="IShader.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -105,7 +104,6 @@
     <ClCompile Include="PointSpecularShader.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="DrawableShooter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="TextureShader.cpp" />
@@ -136,7 +134,6 @@
     <ClInclude Include="includes.h" />
     <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
-    <ClInclude Include="InstanceShooter.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="ITextureShader.h" />

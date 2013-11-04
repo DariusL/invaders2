@@ -26,10 +26,10 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 	switch (type)
 	{
 	case Enemies::BASIC:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC]);
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC], static_pointer_cast<ColorShader, IShader>(shaders[Shaders::COLOR]));
 		break;
 	case Enemies::LAPTOP:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP]);
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP], static_pointer_cast<ColorShader, IShader>(shaders[Shaders::COLOR]));
 	default:
 		return NULL;
 		break;

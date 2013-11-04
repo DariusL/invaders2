@@ -39,7 +39,7 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
 	light->Init(device);
-	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), static_pointer_cast<NormalMappedShader, IShader>(rm->GetShader(ResourceManager::Shaders::NORMAL_MAPPED)));
+	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), rm->GetShader<NormalMappedShader>(ResourceManager::Shaders::NORMAL_MAPPED));
 	bumpy->Init(device);
 	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane());
 	water->Init(device);

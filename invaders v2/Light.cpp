@@ -21,7 +21,7 @@ D3DXVECTOR3 Light::GetPos()
 bool Light::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = static_pointer_cast<IPositionShader, IShader>(rm->GetShader(ResourceManager::Shaders::COLOR));
+	shader = rm->GetShader<IPositionShader>(ResourceManager::Shaders::COLOR);
 	if(!InitBuffers(device))
 		return false;
 	return true;

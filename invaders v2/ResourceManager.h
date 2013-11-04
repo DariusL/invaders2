@@ -40,7 +40,8 @@ public:
 	shared_ptr<TexturedModel> GetPlane(){return plane;}
 	shared_ptr<NormalMappedModel> GetTexturedModel(){return texturedModel;}
 
-	shared_ptr<IShader> GetShader(int shader){return shaders[shader];}
+	template <class sh>
+	shared_ptr<sh> GetShader(int shader){return static_pointer_cast<sh, IShader>(shaders[shader]);}
 
 	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 

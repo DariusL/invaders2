@@ -1,6 +1,5 @@
 #pragma once
-#include "entity.h"
-class Shooter : public Entity
+class Shooter
 {
 	//fiziks
 	//per second
@@ -8,7 +7,7 @@ class Shooter : public Entity
 	float lastFired;
 
 public:
-	Shooter(D3DXVECTOR2 size, float speed, float fireRate);
+	Shooter(float fireRate);
 	~Shooter(void);
 
 	void SetFireRate(float fireRate){this->fireRate = fireRate;}
@@ -17,4 +16,3 @@ public:
 	bool Fire();
 	float GetLastFired() const {return lastFired;}
 };
-

@@ -18,7 +18,7 @@ BaseInstancer::~BaseInstancer(void)
 
 bool BaseInstancer::Init(ComPtr<ID3D11Device> device)
 {
-	shader = static_pointer_cast<ColorInstancedShader, IShader>(App::Get()->GetResourceManager()->GetShader(ResourceManager::Shaders::COLOR_INSTANCED));
+	shader = App::Get()->GetResourceManager()->GetShader<ColorInstancedShader>(ResourceManager::Shaders::COLOR_INSTANCED);
 	if(shader == NULL)
 		return false;
 	if(!InitBuffers(device))
