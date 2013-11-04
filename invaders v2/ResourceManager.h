@@ -4,6 +4,15 @@
 #include "Models.h"
 #include "DrawableShooter.h"
 #include "Level.h"
+#include "ColorInstancedShader.h"
+#include "ColorShader.h"
+#include "GlobalDiffuseShader.h"
+#include "GlobalSpecularShader.h"
+#include "PointDiffuseShader.h"
+#include "PointSpecularShader.h"
+#include "TextureShader.h"
+#include "NormalMappedShader.h"
+#include "WaterShader.h"
 
 using namespace std;
 
@@ -40,8 +49,26 @@ public:
 	shared_ptr<TexturedModel> GetPlane(){return plane;}
 	shared_ptr<NormalMappedModel> GetTexturedModel(){return texturedModel;}
 
-	template <class sh>
-	shared_ptr<sh> GetShader(int shader){return static_pointer_cast<sh, IShader>(shaders[shader]);}
+	template<class sh>
+	shared_ptr<sh> GetShader(){return nullptr;}
+	template<>
+	shared_ptr<ColorShader> GetShader<ColorShader>(){return static_pointer_cast<ColorShader, IShader>(shaders[Shaders::COLOR]);}
+	template<>
+	shared_ptr<ColorInstancedShader> GetShader<ColorInstancedShader>(){return static_pointer_cast<ColorInstancedShader, IShader>(shaders[Shaders::COLOR_INSTANCED]);}
+	template<>
+	shared_ptr<TextureShader> GetShader<TextureShader>(){return static_pointer_cast<TextureShader, IShader>(shaders[Shaders::TEXTURE]);}
+	template<>
+	shared_ptr<GlobalDiffuseShader> GetShader<GlobalDiffuseShader>(){return static_pointer_cast<GlobalDiffuseShader, IShader>(shaders[Shaders::GLOBAL_DIFFUSE]);}
+	template<>
+	shared_ptr<GlobalSpecularShader> GetShader<GlobalSpecularShader>(){return static_pointer_cast<GlobalSpecularShader, IShader>(shaders[Shaders::GLOBAL_SPECULAR]);}
+	template<>
+	shared_ptr<PointDiffuseShader> GetShader<PointDiffuseShader>(){return static_pointer_cast<PointDiffuseShader, IShader>(shaders[Shaders::POINT_DIFFUSE]);}
+	template<>
+	shared_ptr<PointSpecularShader> GetShader<PointSpecularShader>(){return static_pointer_cast<PointSpecularShader, IShader>(shaders[Shaders::POINT_SPECULAR]);}
+	template<>
+	shared_ptr<WaterShader> GetShader<WaterShader>(){return static_pointer_cast<WaterShader, IShader>(shaders[Shaders::WATER]);}
+	template<>
+	shared_ptr<NormalMappedShader> GetShader<NormalMappedShader>(){return static_pointer_cast<NormalMappedShader, IShader>(shaders[Shaders::NORMAL_MAPPED]);}
 
 	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 

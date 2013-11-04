@@ -37,9 +37,9 @@ int Scene::OnLoop(int input, float frameLength)
 bool Scene::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), rm->GetModel(ResourceManager::Models::MODEL_BALL), rm->GetShader<ColorShader>(ResourceManager::Shaders::COLOR));
+	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), rm->GetModel(ResourceManager::Models::MODEL_BALL), rm->GetShader<ColorShader>());
 	light->Init(device);
-	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), rm->GetShader<NormalMappedShader>(ResourceManager::Shaders::NORMAL_MAPPED));
+	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), rm->GetShader<NormalMappedShader>());
 	bumpy->Init(device);
 	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane());
 	water->Init(device);

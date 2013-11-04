@@ -18,13 +18,13 @@ bool GameWorld::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER), rm->GetShader<ColorShader>(ResourceManager::Shaders::COLOR));
+	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER), rm->GetShader<ColorShader>());
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
 	float wallGap = 10.0f;
 	for(int i = 0; i < WALL_COUNT; i++)
-		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm->GetModel(ResourceManager::Models::MODEL_WALL), rm->GetShader<ColorInstancedShader>(ResourceManager::Shaders::COLOR_INSTANCED)));
+		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm->GetModel(ResourceManager::Models::MODEL_WALL), rm->GetShader<ColorInstancedShader>()));
 	enemiesMovingRight = true;
 	started = true;
 	return true;
@@ -46,7 +46,7 @@ bool GameWorld::Init(ComPtr<ID3D11Device> device)
 		return false;
 	for(int i = 0; i < WALL_COUNT; i++)
 		walls[i]->Init(device);
-	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(ResourceManager::Shaders::COLOR_INSTANCED), 100));
+	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(), 100));
 	if(!playerBulletGraphics->Init(device))
 		return false;
 	return true;

@@ -1,15 +1,5 @@
 #include "includes.h"
 #include "ResourceManager.h"
-#include "ColorInstancedShader.h"
-#include "ColorShader.h"
-#include "GlobalDiffuseShader.h"
-#include "GlobalSpecularShader.h"
-#include "PointDiffuseShader.h"
-#include "PointSpecularShader.h"
-#include "TextureShader.h"
-#include "NormalMappedShader.h"
-#include "WaterShader.h"
-
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)

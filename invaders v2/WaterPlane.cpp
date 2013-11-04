@@ -18,7 +18,7 @@ bool WaterPlane::Init(ComPtr<ID3D11Device> device)
 	for(int i = 0; i < 3; i++)
 		textures.push_back(nullResource);
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = rm->GetShader<WaterShader>(ResourceManager::Shaders::WATER);
+	shader = rm->GetShader<WaterShader>();
 	if(!InitBuffers(device))
 		return false;
 	renderTarget = make_shared<RenderTarget>((int)model->hitbox.x, (int)model->hitbox.y);

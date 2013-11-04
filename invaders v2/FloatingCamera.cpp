@@ -30,7 +30,7 @@ bool FloatingCamera::Init(ComPtr<ID3D11Device> device)
 	viewport.TopLeftY = 0.0f;
 
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = rm->GetShader<ITextureShader>(ResourceManager::Shaders::TEXTURE);
+	shader = rm->GetShader<ITextureShader>();
 	if(!InitBuffers(device))
 		return false;
 
