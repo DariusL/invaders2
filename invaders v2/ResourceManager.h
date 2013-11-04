@@ -9,6 +9,12 @@ using namespace std;
 
 class ResourceManager
 {
+	struct FaceVertex
+	{
+		int normal;
+		int tex;
+		int vertex;
+	};
 	vector<shared_ptr<ColorModel>> models;
 	shared_ptr<Model<NormalVertexType>> normalModel;
 	shared_ptr<NormalMappedModel> texturedModel;
@@ -19,7 +25,9 @@ class ResourceManager
 	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
 	unique_ptr<ColorModel> GetModelFromOBJ(char *filename);
 	unique_ptr<NormalMappedModel> GetTexturedModelFromOBJ(char *filename);
-	void CalculateTangentAndBinormal(const vector<int> &ind, vector<NormalMappedVertexType> &v);
+	void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
+	vector<FaceVertex> GetVerticesFromFace(string &line);
+	FaceVertex GetVertexFromString(string &vertex);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);

@@ -28,6 +28,12 @@ namespace Utils{
 		memcpy(resource.pData, &data, sizeof(T));
 		context->Unmap(buffer.Get(), 0);
 	}
+
+	template<class T>
+	void Reverse(std::vector<T> &vec)
+	{
+		reverse(vec.begin(), vec.end());
+	}
 }
 
 #define WIDE2(x) L##x

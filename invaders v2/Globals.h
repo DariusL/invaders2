@@ -25,6 +25,8 @@ struct NormalMappedVertexType
 	D3DXVECTOR2 tex;
 	D3DXVECTOR3 tangent;
 	D3DXVECTOR3 binormal;
+
+	NormalMappedVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
 };
 
 struct NormalVertexType
@@ -32,6 +34,8 @@ struct NormalVertexType
 	D3DXVECTOR3 position;
 	D3DXVECTOR3 normal;
 	D3DXVECTOR4 color;
+
+	NormalVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)), color(1.0f, 0.0f, 0.0f, 1.0f){}
 };
 
 struct InstanceType

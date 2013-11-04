@@ -245,7 +245,7 @@ bool ResourceManager::Init()
 	return true;
 }
 
-unique_ptr<Model<VertexType>> ResourceManager::GetModelFromOBJ(char *filename)
+unique_ptr<ColorModel> ResourceManager::GetModelFromOBJ(char *filename)
 {
 	auto normalModel = GetNormalModelFromOBJ(filename);
 	auto ret = unique_ptr<Model<VertexType>>(new Model<VertexType>());
@@ -261,14 +261,12 @@ unique_ptr<Model<VertexType>> ResourceManager::GetModelFromOBJ(char *filename)
 	return ret;
 }
 
-unique_ptr<Model<NormalVertexType>> ResourceManager::GetNormalModelFromOBJ(char *filename)
+unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 {
 	auto model = unique_ptr<Model<NormalVertexType>>(new Model<NormalVertexType>());
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
-	vector<int> temp;
 	string input;
-	NormalVertexType vertex;
 	float x, y, z;
 	if(!in.is_open())
 		return NULL;
@@ -285,51 +283,38 @@ unique_ptr<Model<NormalVertexType>> ResourceManager::GetNormalModelFromOBJ(char 
 
 		if (input == "v")
 		{
-				in >> x >> y >> z;
-				vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-				vertex.normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				vertex.position = D3DXVECTOR3(x, y, -z);
-				model->vertices.push_back(vertex);
+			in >> x >> y >> z;
+			model->vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vn")
 		{
-				in >> x >> y >> z;
-				normals.emplace_back(x, y, -z);
+			in >> x >> y >> z;
+			normals.emplace_back(x, y, -z);
 		}
 		else if (input == "f")
 		{
-				string blob;
-				int v, n;
-				int index;
-				temp.clear();
-
-				for (int i = 0; i < 3; i++)
-				{
-					in >> blob;
-					index = blob.find_first_of('/');
-					v = stoi(blob.substr(0, index)) - 1;
-					n = stoi(blob.substr(index + 2)) - 1;
-					temp.push_back(v);
-					model->vertices[v].normal += normals[n];
-				}
-				for(int i = 2; i >= 0; i--)
-					model->indices.push_back(temp[i]);
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			Utils::Reverse(vertices);
+			for(auto &vertex : vertices)
+			{
+				model->vertices[vertex.vertex].normal = normals[vertex.normal];
+				model->indices.push_back(vertex.vertex);
+			}
 		}
 	}
 
 	return model;
 }
 
-unique_ptr<Model<NormalMappedVertexType>> ResourceManager::GetTexturedModelFromOBJ(char *filename)
+unique_ptr<NormalMappedModel> ResourceManager::GetTexturedModelFromOBJ(char *filename)
 {
 	auto model = unique_ptr<Model<NormalMappedVertexType>>(new Model<NormalMappedVertexType>());
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	vector<D3DXVECTOR2> tex;
-	vector<int> temp;
 	string input;
-	NormalMappedVertexType vertex;
-	D3DXVECTOR3 binormal, tangent;
 	float x, y, z;
 	if(!in.is_open())
 		return NULL;
@@ -346,56 +331,75 @@ unique_ptr<Model<NormalMappedVertexType>> ResourceManager::GetTexturedModelFromO
 
 		if (input == "v")
 		{
-				in >> x >> y >> z;
-				vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
-				vertex.position = D3DXVECTOR3(x, y, -z);
-				vertex.tangent = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				vertex.binormal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				model->vertices.push_back(vertex);
+			in >> x >> y >> z;
+			model->vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vn")
 		{
-				in >> x >> y >> z;
-				normals.emplace_back(x, y, -z);
+			in >> x >> y >> z;
+			normals.emplace_back(x, y, -z);
 		}
 		else if (input == "vt")
 		{
-				in >> x >> y >> z;
-				tex.emplace_back(x, y);
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
 		}
 		else if (input == "f")
 		{
-				string blob;
-				int v, n, t;
-				int index, index2;
-				temp.clear();
-
-				for (int i = 0; i < 3; i++)
-				{
-					in >> blob;
-					index = blob.find_first_of('/');
-					v = stoi(blob.substr(0, index)) - 1;
-					index2 = blob.find_first_of('/', index + 1);
-					t = stoi(blob.substr(index + 1, index2)) - 1;
-					n = stoi(blob.substr(index2 + 1)) - 1;
-					temp.push_back(v);
-					model->vertices[v].normal = normals[n];
-					model->vertices[v].tex = tex[t];
-				}
-				reverse(temp.begin(), temp.end());
-				CalculateTangentAndBinormal(temp, model->vertices);
-				Utils::VectorAppend(model->indices, temp);
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			Utils::Reverse(vertices);
+			for(auto &vertex : vertices)
+			{
+				model->vertices[vertex.vertex].normal = normals[vertex.normal];
+				model->vertices[vertex.vertex].tex = tex[vertex.tex];
+				model->indices.push_back(vertex.vertex);
+			}
+			CalculateTangentAndBinormal(vertices, model->vertices);
 		}
 	}
 
 	return model;
 }
 
-void ResourceManager::CalculateTangentAndBinormal(const vector<int> &ind, vector<NormalMappedVertexType> &v)
+vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line)
 {
-	auto &v1 = v[ind[0]];
-	auto &v2 = v[ind[1]];
-	auto &v3 = v[ind[2]];
+	vector<FaceVertex> ret;
+	int ind1 = 0, ind2 = 0;
+
+	for(int i = 0; i < 3; i++)
+	{
+		ind2 = line.find(' ', ind1+1);
+		ret.push_back(GetVertexFromString(line.substr(ind1, ind2-ind1)));
+		ind1 = ++ind2;
+	}
+	return ret;
+}
+
+ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
+{
+	FaceVertex ret;
+	string temp;
+	int ind1 = 0, ind2 = 0;
+
+	ind1 = vertex.find('/');
+	temp = vertex.substr(0, ind1);
+	ret.vertex = temp.length() > 0 ? stoi(temp) - 1 : -1;
+	ind2 = vertex.find('/', ind1+1);
+	temp = vertex.substr(ind1+1, ind2-ind1-1);
+	ret.tex = temp.length() > 0 ? stoi(temp) - 1 : -1;
+	temp = vertex.substr(ind2+1);
+	ret.normal = temp.length() > 0 ? stoi(temp) - 1 : -1;
+
+	return ret;
+}
+
+void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v)
+{
+	auto &v1 = v[ind[0].vertex];
+	auto &v2 = v[ind[1].vertex];
+	auto &v3 = v[ind[2].vertex];
 
 	D3DXVECTOR2 tu(v2.tex.x - v1.tex.x, v3.tex.x - v1.tex.x);
 	D3DXVECTOR2 tv(v2.tex.y - v1.tex.y, v3.tex.y - v1.tex.y);
