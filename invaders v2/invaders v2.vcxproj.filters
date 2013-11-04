@@ -93,9 +93,6 @@
     <ClCompile Include="IShader.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
-    <ClCompile Include="DrawableEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalSpecularShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

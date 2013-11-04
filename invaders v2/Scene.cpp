@@ -20,7 +20,6 @@ Scene::~Scene(void)
 bool Scene::Start(shared_ptr<Level> level)
 {
 	started = true;
-
 	return true;
 }
 

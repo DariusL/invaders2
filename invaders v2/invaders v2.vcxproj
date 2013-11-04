@@ -82,7 +82,6 @@
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="DrawableBumpyEntity.cpp" />
-    <ClCompile Include="DrawableEntity.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="FloatingCamera.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
