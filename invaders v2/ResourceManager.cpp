@@ -417,16 +417,16 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind,
 
 bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(unique_ptr<ColorShader>(new ColorShader("ColorVertex.cso", "ColorPixel.cso")));
-	shaders.push_back(unique_ptr<ColorInstancedShader>(new ColorInstancedShader("ColorInstancedVertex.cso", "ColorPixel.cso")));
-	shaders.push_back(unique_ptr<GlobalDiffuseShader>(new GlobalDiffuseShader("GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso")));
-	shaders.push_back(unique_ptr<GlobalSpecularShader>(new GlobalSpecularShader("GlobalSpecularVertex.cso", "GlobalSpecularPixel.cso")));
-	shaders.push_back(unique_ptr<PointDiffuseShader>(new PointDiffuseShader("PointDiffuseVertex.cso", "PointDiffusePixel.cso")));
-	shaders.push_back(unique_ptr<PointSpecularShader>(new PointSpecularShader("PointSpecularVertex.cso", "PointSpecularPixel.cso")));
-	shaders.push_back(unique_ptr<TextureShader>(new TextureShader("TextureVertex.cso", "TexturePixel.cso")));
-	shaders.push_back(unique_ptr<NormalMappedShader>(new NormalMappedShader("NormalMapVertex.cso", "NormalMapPixel.cso")));
-	shaders.push_back(unique_ptr<WaterShader>(new WaterShader("WaterVertex.cso", "WaterPixel.cso")));
-	for(auto &shader : shaders)
+	shaders.push_back(make_shared<ColorShader>("ColorVertex.cso", "ColorPixel.cso"));
+	shaders.push_back(make_shared<ColorInstancedShader>("ColorInstancedVertex.cso", "ColorPixel.cso"));
+	shaders.push_back(make_shared<GlobalDiffuseShader>("GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso"));
+	shaders.push_back(make_shared<GlobalSpecularShader>("GlobalSpecularVertex.cso", "GlobalSpecularPixel.cso"));
+	shaders.push_back(make_shared<PointDiffuseShader>("PointDiffuseVertex.cso", "PointDiffusePixel.cso"));
+	shaders.push_back(make_shared<PointSpecularShader>("PointSpecularVertex.cso", "PointSpecularPixel.cso"));
+	shaders.push_back(make_shared<TextureShader>("TextureVertex.cso", "TexturePixel.cso"));
+	shaders.push_back(make_shared<NormalMappedShader>("NormalMapVertex.cso", "NormalMapPixel.cso"));
+	shaders.push_back(make_shared<WaterShader>("WaterVertex.cso", "WaterPixel.cso"));
+	for(auto shader : shaders)
 		shader->Init(device);
 	return true;
 }

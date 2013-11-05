@@ -29,7 +29,7 @@ class ResourceManager
 	shared_ptr<NormalMappedModel> texturedModel;
 	shared_ptr<TexturedModel> plane;
 	vector<shared_ptr<Level>> levels;
-	vector<unique_ptr<IShader>> shaders;
+	vector<shared_ptr<IShader>> shaders;
 
 	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
 	unique_ptr<ColorModel> GetModelFromOBJ(char *filename);
