@@ -16,11 +16,8 @@ public:
 	~ColorInstancedShader(void);
 
 	virtual bool Init(ComPtr<ID3D11Device> device);
-	virtual void SetShaderParameters(const RenderParams &params);
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
-	//because fuck the linker
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){};
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){};
+	virtual void SetShaderParametersInstanced(const RenderParams &params);
+	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 
 protected:
 	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);

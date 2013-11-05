@@ -5,9 +5,8 @@
 class IInstanceShader : public IPositionShader
 {
 public:
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount, int instanceCount) = 0;
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount) = 0;
+	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext> context, int indexCount, int instanceCount) = 0;
+	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){}
 
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix) = 0;
-	virtual void SetShaderParameters(const RenderParams &params) = 0;
+	virtual void SetShaderParametersInstanced(const RenderParams &params) = 0;
 };

@@ -196,7 +196,7 @@ void FloatingCamera::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params, moveMatrix, shaderResourceView);
+	shader->SetShaderParametersTextured(params, moveMatrix, shaderResourceView);
 	shader->RenderShader(params.context, 6);
 }
 

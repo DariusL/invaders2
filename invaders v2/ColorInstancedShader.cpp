@@ -77,7 +77,7 @@ bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void ColorInstancedShader::SetShaderParameters(const RenderParams &params)
+void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params)
 {
 	D3DXMATRIX transpose;
 
@@ -92,7 +92,7 @@ void ColorInstancedShader::SetShaderParameters(const RenderParams &params)
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 }
 
-void ColorInstancedShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount, int instanceCount)
+void ColorInstancedShader::RenderShaderInstanced(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount, int instanceCount)
 {
 	//unleash the grafiks
 	deviceContext->DrawIndexedInstanced(indexCount, instanceCount, 0, 0, 0);

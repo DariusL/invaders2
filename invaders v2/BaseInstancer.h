@@ -86,8 +86,8 @@ void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params);
-	shader->RenderShader(params.context, model->indices.size(), instanceCount);
+	shader->SetShaderParametersInstanced(params);
+	shader->RenderShaderInstanced(params.context, model->indices.size(), instanceCount);
 }
 
 template<class vt, class sh, class it>

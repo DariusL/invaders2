@@ -93,7 +93,7 @@ bool TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void TextureShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix, ComPtr<ID3D11ShaderResourceView> texture)
+void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, ComPtr<ID3D11ShaderResourceView> texture)
 {
 	D3DXMATRIX transform;
 
