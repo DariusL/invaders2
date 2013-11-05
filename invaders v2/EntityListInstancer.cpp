@@ -2,7 +2,7 @@
 #include "EntityListInstancer.h"
 
 
-EntityListInstancer::EntityListInstancer(shared_ptr<ColorModel> model, shared_ptr<ColorInstancedShader> shader, int maxInstanceCount): BaseInstancer(model, shader, maxInstanceCount)
+EntityListInstancer::EntityListInstancer(shared_ptr<ColorModel> model, ColorInstancedShader &shader, int maxInstanceCount): BaseInstancer(model, shader, maxInstanceCount)
 {
 }
 

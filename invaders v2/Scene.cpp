@@ -3,6 +3,7 @@
 #include "App.h"
 #include "ResourceManager.h"
 #include "Models.h"
+#include "WaterShader.h"
 
 Scene::Scene(void)
 {
@@ -41,7 +42,7 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	light->Init(device);
 	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), rm->GetShader<NormalMappedShader>());
 	bumpy->Init(device);
-	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane());
+	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane(), rm->GetShader<WaterShader>());
 	water->Init(device);
 	return true;
 }

@@ -1,10 +1,9 @@
 #include "includes.h"
 #include "WaterPlane.h"
-#include "App.h"
-#include "ResourceManager.h"
 #include "Utils.h"
 
-WaterPlane::WaterPlane(D3DXVECTOR3 pos, shared_ptr<TexturedModel> model) : Entity(pos)
+WaterPlane::WaterPlane(D3DXVECTOR3 pos, shared_ptr<TexturedModel> model, WaterShader &shader)
+	:Entity(pos), shader(shader)
 {
 	this->model = model;
 }
@@ -17,8 +16,6 @@ bool WaterPlane::Init(ComPtr<ID3D11Device> device)
 {
 	for(int i = 0; i < 3; i++)
 		textures.push_back(nullResource);
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = rm->GetShader<WaterShader>();
 	if(!InitBuffers(device))
 		return false;
 	renderTarget = make_shared<RenderTarget>((int)model->hitbox.x, (int)model->hitbox.y);
@@ -80,8 +77,8 @@ void WaterPlane::Render(const RenderParams &params)
 		return;
 	textures[0] = renderTarget->GetRenderedTexture();
 	SetBuffers(params.context);
-	shader->SetShaderParameters(params, moveMatrix, textures);
-	shader->RenderShader(params.context, model->indices.size());
+	shader.SetShaderParameters(params, moveMatrix, textures);
+	shader.RenderShader(params.context, model->indices.size());
 }
 
 bool WaterPlane::Update(ComPtr<ID3D11DeviceContext> context)

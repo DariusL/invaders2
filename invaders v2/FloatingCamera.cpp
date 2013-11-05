@@ -1,10 +1,9 @@
 #include "includes.h"
 #include "FloatingCamera.h"
-#include "ResourceManager.h"
-#include "App.h"
+#include "Utils.h"
 
-
-FloatingCamera::FloatingCamera(D3DXVECTOR2 viewportSize, D3DXVECTOR2 screenPos)
+FloatingCamera::FloatingCamera(D3DXVECTOR2 viewportSize, D3DXVECTOR2 screenPos, TextureShader &shader)
+	:shader(shader)
 {
 	this->viewportSize = viewportSize;
 	this->screenPos = screenPos;
@@ -29,8 +28,6 @@ bool FloatingCamera::Init(ComPtr<ID3D11Device> device)
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
 
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	shader = rm->GetShader<ITextureShader>();
 	if(!InitBuffers(device))
 		return false;
 
@@ -196,8 +193,8 @@ void FloatingCamera::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParametersTextured(params, moveMatrix, shaderResourceView);
-	shader->RenderShader(params.context, 6);
+	shader.SetShaderParametersTextured(params, moveMatrix, shaderResourceView);
+	shader.RenderShader(params.context, 6);
 }
 
 bool FloatingCamera::Update(ComPtr<ID3D11DeviceContext> context)

@@ -8,7 +8,7 @@ class DrawableBumpyEntity : public DrawableEntity<NormalMappedVertexType, Normal
 {
 	ComPtr<ID3D11ShaderResourceView> normalMap;
 public:
-	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<Model<NormalMappedVertexType>> model, shared_ptr<NormalMappedShader> shader)
+	DrawableBumpyEntity(D3DXVECTOR3 pos, shared_ptr<Model<NormalMappedVertexType>> model, NormalMappedShader &shader)
 		:DrawableEntity(pos, model, shader){}
 
 	virtual void Render(const RenderParams &renderParams)
@@ -16,8 +16,8 @@ public:
 		if(!Update(renderParams.context))
 			return;
 		SetBuffers(renderParams.context);
-		shader->SetShaderParametersTextured(renderParams, moveMatrix, normalMap);
-		shader->RenderShader(renderParams.context, model->indices.size());
+		shader.SetShaderParametersTextured(renderParams, moveMatrix, normalMap);
+		shader.RenderShader(renderParams.context, model->indices.size());
 	}
 
 	virtual bool Init(ComPtr<ID3D11Device> device)

@@ -11,6 +11,6 @@ using namespace std;
 class DrawableShooter : public Shooter, public SimpleDrawableEntity
 {
 public:
-	DrawableShooter(float speed, float fireRate, shared_ptr<ColorModel> model, shared_ptr<ColorShader> shader)
+	DrawableShooter(float speed, float fireRate, shared_ptr<ColorModel> model, ColorShader &shader)
 		:DrawableEntity(D3DXVECTOR3(), model, shader, speed), Shooter(fireRate){}
 };

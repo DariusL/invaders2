@@ -12,7 +12,7 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(shared_ptr<Model<vt>> model, shared_ptr<sh> shader, int maxObjectCount, D3DXVECTOR3 pos = D3DXVECTOR3());
+	BaseInstancer(shared_ptr<Model<vt>> model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos = D3DXVECTOR3());
 	virtual ~BaseInstancer(void){}
 
 protected:
@@ -21,7 +21,6 @@ protected:
 
 	shared_ptr<Model<vt>> model;
 
-	shared_ptr<sh> shader;
 	vector<it> instanceData;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
@@ -44,7 +43,7 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(shared_ptr<Model<vt>> model, shared_ptr<sh>, int maxObjectCount, D3DXVECTOR3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(shared_ptr<Model<vt>> model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
@@ -86,8 +85,8 @@ void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader->SetShaderParametersInstanced(params);
-	shader->RenderShaderInstanced(params.context, model->indices.size(), instanceCount);
+	shader.SetShaderParametersInstanced(params);
+	shader.RenderShaderInstanced(params.context, model->indices.size(), instanceCount);
 }
 
 template<class vt, class sh, class it>

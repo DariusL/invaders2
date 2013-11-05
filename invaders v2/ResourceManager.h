@@ -50,25 +50,25 @@ public:
 	shared_ptr<NormalMappedModel> GetTexturedModel(){return texturedModel;}
 
 	template<class sh>
-	shared_ptr<sh> GetShader(){return nullptr;}
+	sh &GetShader(){return ColorShader("", "");}
 	template<>
-	shared_ptr<ColorShader> GetShader<ColorShader>(){return static_pointer_cast<ColorShader, IShader>(shaders[Shaders::COLOR]);}
+	ColorShader &GetShader<ColorShader>(){return static_cast<ColorShader&>(*shaders[Shaders::COLOR]);}
 	template<>
-	shared_ptr<ColorInstancedShader> GetShader<ColorInstancedShader>(){return static_pointer_cast<ColorInstancedShader, IShader>(shaders[Shaders::COLOR_INSTANCED]);}
+	ColorInstancedShader &GetShader<ColorInstancedShader>(){return static_cast<ColorInstancedShader&>(*shaders[Shaders::COLOR_INSTANCED]);}
 	template<>
-	shared_ptr<TextureShader> GetShader<TextureShader>(){return static_pointer_cast<TextureShader, IShader>(shaders[Shaders::TEXTURE]);}
+	GlobalDiffuseShader &GetShader<GlobalDiffuseShader>(){return static_cast<GlobalDiffuseShader&>(*shaders[Shaders::GLOBAL_DIFFUSE]);}
 	template<>
-	shared_ptr<GlobalDiffuseShader> GetShader<GlobalDiffuseShader>(){return static_pointer_cast<GlobalDiffuseShader, IShader>(shaders[Shaders::GLOBAL_DIFFUSE]);}
+	GlobalSpecularShader &GetShader<GlobalSpecularShader>(){return static_cast<GlobalSpecularShader&>(*shaders[Shaders::GLOBAL_SPECULAR]);}
 	template<>
-	shared_ptr<GlobalSpecularShader> GetShader<GlobalSpecularShader>(){return static_pointer_cast<GlobalSpecularShader, IShader>(shaders[Shaders::GLOBAL_SPECULAR]);}
+	PointDiffuseShader &GetShader<PointDiffuseShader>(){return static_cast<PointDiffuseShader&>(*shaders[Shaders::POINT_DIFFUSE]);}
 	template<>
-	shared_ptr<PointDiffuseShader> GetShader<PointDiffuseShader>(){return static_pointer_cast<PointDiffuseShader, IShader>(shaders[Shaders::POINT_DIFFUSE]);}
+	PointSpecularShader &GetShader<PointSpecularShader>(){return static_cast<PointSpecularShader&>(*shaders[Shaders::POINT_SPECULAR]);}
 	template<>
-	shared_ptr<PointSpecularShader> GetShader<PointSpecularShader>(){return static_pointer_cast<PointSpecularShader, IShader>(shaders[Shaders::POINT_SPECULAR]);}
+	TextureShader &GetShader<TextureShader>(){return static_cast<TextureShader&>(*shaders[Shaders::TEXTURE]);}
 	template<>
-	shared_ptr<WaterShader> GetShader<WaterShader>(){return static_pointer_cast<WaterShader, IShader>(shaders[Shaders::WATER]);}
+	NormalMappedShader &GetShader<NormalMappedShader>(){return static_cast<NormalMappedShader&>(*shaders[Shaders::NORMAL_MAPPED]);}
 	template<>
-	shared_ptr<NormalMappedShader> GetShader<NormalMappedShader>(){return static_pointer_cast<NormalMappedShader, IShader>(shaders[Shaders::NORMAL_MAPPED]);}
+	WaterShader &GetShader<WaterShader>(){return static_cast<WaterShader&>(*shaders[Shaders::WATER]);}
 
 	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 

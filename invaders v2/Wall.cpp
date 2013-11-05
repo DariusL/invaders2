@@ -2,7 +2,7 @@
 #include "Wall.h"
 
 
-Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, shared_ptr<ColorInstancedShader> shader) : 
+Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, ColorInstancedShader &shader) : 
 	SimpleBaseInstancer(model, shader, width * height, center)
 {
 	SetSize(D3DXVECTOR2(model->hitbox.x * width, model->hitbox.y * height));
