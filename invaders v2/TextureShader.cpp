@@ -2,29 +2,6 @@
 #include "TextureShader.h"
 #include "Utils.h"
 
-TextureShader::TextureShader(void)
-{
-}
-
-
-TextureShader::~TextureShader(void)
-{
-}
-
-bool TextureShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "TextureVertex.cso", "TexturePixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	if(!InitializeSampler(device))
-		return false;
-
-	return true;
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> TextureShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;

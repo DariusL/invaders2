@@ -12,10 +12,9 @@ using namespace std;
 class ColorInstancedShader : public IInstanceShader
 {
 public:
-	ColorInstancedShader(void);
-	~ColorInstancedShader(void);
+	ColorInstancedShader(string vs, string ps):IInstanceShader(vs, ps){}
+	~ColorInstancedShader(void){}
 
-	virtual bool Init(ComPtr<ID3D11Device> device);
 	virtual void SetShaderParametersInstanced(const RenderParams &params);
 	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 

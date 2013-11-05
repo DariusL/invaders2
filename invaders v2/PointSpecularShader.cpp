@@ -1,27 +1,6 @@
 #include "includes.h"
 #include "PointSpecularShader.h"
 #include "Utils.h"
-
-
-PointSpecularShader::PointSpecularShader(void)
-{
-}
-
-
-PointSpecularShader::~PointSpecularShader(void)
-{
-}
-
-bool PointSpecularShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "PointSpecularVertex.cso", "PointSpecularPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
 	
 void PointSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
 {

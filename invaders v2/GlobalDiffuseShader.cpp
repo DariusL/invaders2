@@ -1,26 +1,6 @@
 #include "includes.h"
 #include "GlobalDiffuseShader.h"
 
-GlobalDiffuseShader::GlobalDiffuseShader(void)
-{
-}
-
-
-GlobalDiffuseShader::~GlobalDiffuseShader(void)
-{
-}
-
-bool GlobalDiffuseShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 {
 		D3D11_INPUT_ELEMENT_DESC desc;

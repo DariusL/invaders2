@@ -1,30 +1,6 @@
 #include "includes.h"
 #include "NormalMappedShader.h"
 
-
-NormalMappedShader::NormalMappedShader(void)
-{
-}
-
-
-NormalMappedShader::~NormalMappedShader(void)
-{
-}
-
-bool NormalMappedShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "NormalMapVertex.cso", "NormalMapPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	if(!InitializeSampler(device))
-		return false;
-
-	return true;
-}
-
 bool NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
 	D3D11_SAMPLER_DESC samplerDesc;
@@ -121,7 +97,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
 	return ret;
 }
 
-void NormalMappedShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture)
+void NormalMappedShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture)
 {
 	PointSpecularShader::SetShaderParameters(params, posMatrix);
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());

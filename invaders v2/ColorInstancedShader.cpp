@@ -1,27 +1,6 @@
 #include "includes.h"
 #include "ColorInstancedShader.h"
 
-
-ColorInstancedShader::ColorInstancedShader(void)
-{
-}
-
-
-ColorInstancedShader::~ColorInstancedShader(void)
-{
-}
-
-bool ColorInstancedShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "ColorInstancedVertex.cso", "ColorPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;
@@ -63,7 +42,6 @@ vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
-	
 
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);

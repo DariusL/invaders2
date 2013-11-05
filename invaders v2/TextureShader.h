@@ -3,10 +3,9 @@
 class TextureShader : public ITextureShader
 {
 public:
-	TextureShader(void);
-	~TextureShader(void);
+	TextureShader(string vs, string ps):ITextureShader(vs, ps){}
+	~TextureShader(void){}
 
-	virtual bool Init(ComPtr<ID3D11Device>);
 	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 

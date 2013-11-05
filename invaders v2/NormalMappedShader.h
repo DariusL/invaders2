@@ -6,12 +6,11 @@
 class NormalMappedShader : public PointSpecularShader
 {
 public:
-	NormalMappedShader(void);
-	~NormalMappedShader(void);
+	NormalMappedShader(string vs, string ps):PointSpecularShader(vs, ps){}
+	~NormalMappedShader(void){}
 
-	virtual bool Init(ComPtr<ID3D11Device> device);
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){}
+	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);
+	virtual void Init(ComPtr<ID3D11Device> device){PointSpecularShader::Init(device); InitializeSampler(device);}
 protected:
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 	virtual bool InitializeSampler(ComPtr<ID3D11Device> device);

@@ -1,25 +1,6 @@
 #include "includes.h"
 #include "ColorShader.h"
 
-ColorShader::ColorShader()
-{
-}
-
-ColorShader::~ColorShader()
-{
-}
-
-bool ColorShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "ColorVertex.cso", "ColorPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;

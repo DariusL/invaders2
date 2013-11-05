@@ -2,29 +2,6 @@
 #include "WaterShader.h"
 #include "Utils.h"
 
-WaterShader::WaterShader(void)
-{
-}
-
-
-WaterShader::~WaterShader(void)
-{
-}
-
-bool WaterShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "WaterVertex.cso", "WaterPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	if(!InitializeSampler(device))
-		return false;
-
-	return true;
-}
-
 bool WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;

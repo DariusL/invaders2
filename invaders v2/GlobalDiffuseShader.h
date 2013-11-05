@@ -5,12 +5,10 @@
 class GlobalDiffuseShader : public IPositionShader
 {
 public:
-	GlobalDiffuseShader(void);
-	~GlobalDiffuseShader(void);
+	GlobalDiffuseShader(string vs, string ps):IPositionShader(vs, ps){}
+	~GlobalDiffuseShader(void){}
 
-public:
-	virtual bool Init(ComPtr<ID3D11Device> device);
-	
+public:	
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 
 protected:

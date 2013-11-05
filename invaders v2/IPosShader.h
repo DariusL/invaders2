@@ -5,6 +5,8 @@
 class IPositionShader : public IShader
 {
 public:
+	IPositionShader(string vs, string ps):IShader(vs, ps){}
+	virtual ~IPositionShader(){}
+
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix) = 0;
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
 };

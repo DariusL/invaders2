@@ -5,11 +5,10 @@ using namespace std;
 class WaterShader : public TextureShader
 {
 public:
-	WaterShader(void);
-	~WaterShader(void);
+	WaterShader(string vs, string ps):TextureShader(vs, ps){}
+	~WaterShader(void){}
 
 public:
-	virtual bool Init(ComPtr<ID3D11Device> device);
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, vector<ComPtr<ID3D11ShaderResourceView>> textures);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 protected:

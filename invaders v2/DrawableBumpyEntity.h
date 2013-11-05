@@ -16,7 +16,7 @@ public:
 		if(!Update(renderParams.context))
 			return;
 		SetBuffers(renderParams.context);
-		shader->SetShaderParameters(renderParams, moveMatrix, normalMap);
+		shader->SetShaderParametersTextured(renderParams, moveMatrix, normalMap);
 		shader->RenderShader(renderParams.context, model->indices.size());
 	}
 

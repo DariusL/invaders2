@@ -3,12 +3,10 @@
 class PointDiffuseShader : public IPositionShader
 {
 public:
-	PointDiffuseShader(void);
-	~PointDiffuseShader(void);
+	PointDiffuseShader(string vs, string ps):IPositionShader(vs, ps){}
+	~PointDiffuseShader(void){}
 
-public:
-	virtual bool Init(ComPtr<ID3D11Device> device);
-	
+public:	
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 
 protected:

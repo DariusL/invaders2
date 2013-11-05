@@ -2,27 +2,6 @@
 #include "PointDiffuseShader.h"
 #include "Utils.h"
 
-
-PointDiffuseShader::PointDiffuseShader(void)
-{
-}
-
-
-PointDiffuseShader::~PointDiffuseShader(void)
-{
-}
-
-bool PointDiffuseShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "PointDiffuseVertex.cso", "PointDiffusePixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> PointDiffuseShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;

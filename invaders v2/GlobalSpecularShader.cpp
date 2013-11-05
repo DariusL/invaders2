@@ -1,26 +1,5 @@
 #include "includes.h"
 #include "GlobalSpecularShader.h"
-
-
-GlobalSpecularShader::GlobalSpecularShader(void)
-{
-}
-
-
-GlobalSpecularShader::~GlobalSpecularShader(void)
-{
-}
-
-bool GlobalSpecularShader::Init(ComPtr<ID3D11Device> device)
-{
-	if(!InitializeShader(device, "GlobalSpecularVertex.cso", "GlobalSpecularPixel.cso", GetInputLayout()))
-		return false;
-
-	if(!InitializeShaderBuffers(device))
-		return false;
-
-	return true;
-}
 	
 void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
 {
