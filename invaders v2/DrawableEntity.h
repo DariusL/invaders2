@@ -2,7 +2,7 @@
 #include "entity.h"
 #include "IDrawableObject.h"
 #include "ColorShader.h"
-#include "models.h"
+#include "Model.h"
 #include "includes.h"
 #include "Utils.h"
 
@@ -10,7 +10,7 @@ template<class vt, class sh>
 class DrawableEntity : public Entity, public IDrawableObject
 {
 protected:
-	shared_ptr<Model<vt>> model;
+	Model<vt> &model;
 	D3DXMATRIX moveMatrix;
 	sh &shader;
 
@@ -18,7 +18,7 @@ protected:
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, sh &shader, float speed = 0.0f);
+	DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
 	virtual ~DrawableEntity(void);
 
 	virtual bool Init(ComPtr<ID3D11Device> device);
@@ -41,26 +41,26 @@ bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 	vertexInfo.stride = sizeof(vt);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(vt) * model->vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(vt) * model.vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
 	vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	vertexData.pSysMem = &model->vertices[0];
+	vertexData.pSysMem = model.vertices.data();
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
 	Assert(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer));
 
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = sizeof(int) * model->indices.size();
+	indexBufferDesc.ByteWidth = sizeof(int) * model.indices.size();
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	indexData.pSysMem = &model->indices[0];
+	indexData.pSysMem = model.indices.data();
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
@@ -70,8 +70,8 @@ bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 }
 
 template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, shared_ptr<Model<vt>> model, sh &shader, float speed) 
-	:Entity(pos, model->hitbox, speed), model(model), shader(shader)
+DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed) 
+:Entity(pos, model.hitbox, speed), model(model), shader(shader)
 {
 }
 
@@ -103,7 +103,7 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 		return;
 	SetBuffers(params.context);
 	shader.SetShaderParameters(params, moveMatrix);
-	shader.RenderShader(params.context, model->indices.size());
+	shader.RenderShader(params.context, model.indices.size());
 }
 
 template<class vt, class sh>

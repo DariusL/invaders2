@@ -5,7 +5,7 @@
 using namespace Microsoft::WRL;
 using namespace std;
 
-class IShader
+class IShader : public NonCopyable
 {
 public:
 	IShader(string vs, string ps){this->vs = vs; this->ps = ps;}
@@ -21,7 +21,5 @@ protected:
 	ComPtr<ID3D11PixelShader> pixelShader;
 	ComPtr<ID3D11InputLayout> layout;
 private:
-	IShader(const IShader &other){}
-	IShader &operator=(const IShader &other){}
 	string vs, ps;
 };

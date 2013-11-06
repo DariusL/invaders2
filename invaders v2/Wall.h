@@ -12,7 +12,7 @@ class Wall : public SimpleBaseInstancer
 	D3DXVECTOR3 topLeft;
 	bool changed;
 public:
-	Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, ColorInstancedShader &shader);
+	Wall(D3DXVECTOR3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader);
 	~Wall(void);
 	bool Update(ComPtr<ID3D11DeviceContext>);
 

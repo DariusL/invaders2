@@ -2,17 +2,17 @@
 #include "Wall.h"
 
 
-Wall::Wall(D3DXVECTOR3 center, int width, int height, shared_ptr<ColorModel> model, ColorInstancedShader &shader) : 
+Wall::Wall(D3DXVECTOR3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) : 
 	SimpleBaseInstancer(model, shader, width * height, center)
 {
-	SetSize(D3DXVECTOR2(model->hitbox.x * width, model->hitbox.y * height));
+	SetSize(D3DXVECTOR2(model.hitbox.x * width, model.hitbox.y * height));
 	this->width = width;
 	this->height = height;
 	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
-		(width - 1) * model->hitbox.x,
-		(height - 1) * model->hitbox.y);
+		(width - 1) * model.hitbox.x,
+		(height - 1) * model.hitbox.y);
 	this->topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
-	blocks = Utils::GetGrid(width, height, center, model->hitbox, model);
+	blocks = Utils::GetGrid(width, height, center, model.hitbox, model);
 	blocks[0].Kill();
 	blocks[width - 1].Kill();
 	changed = true;
@@ -55,7 +55,7 @@ void Wall::CollideWith(InstanceEntity &bullet)
 		return;
 	float column;
 	int column2;
-	float x = (bullet.GetPos().x - topLeft.x) / model->hitbox.x;
+	float x = (bullet.GetPos().x - topLeft.x) / model.hitbox.x;
 	float offset = Utils::Trunc(x, column);
 	if(Utils::Trunc(x, column) > 0)
 		column2 = (int)column + 1;

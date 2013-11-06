@@ -1,7 +1,7 @@
 #pragma once
 
 #include "includes.h"
-#include "Models.h"
+#include "Model.h"
 #include "DrawableShooter.h"
 #include "Level.h"
 #include "ColorInstancedShader.h"
@@ -24,30 +24,36 @@ class ResourceManager
 		int tex;
 		int vertex;
 	};
-	vector<shared_ptr<ColorModel>> models;
-	shared_ptr<Model<NormalVertexType>> normalModel;
-	shared_ptr<NormalMappedModel> texturedModel;
-	shared_ptr<TexturedModel> plane;
+	vector<ColorModel> models;
+	NormalModel normalModel;
+	NormalMappedModel texturedModel;
+	TexturedModel plane;
 	vector<shared_ptr<Level>> levels;
 	vector<shared_ptr<IShader>> shaders;
 
-	unique_ptr<NormalModel> GetNormalModelFromOBJ(char *filename);
-	unique_ptr<ColorModel> GetModelFromOBJ(char *filename);
-	unique_ptr<NormalMappedModel> GetTexturedModelFromOBJ(char *filename);
-	void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
-	vector<FaceVertex> GetVerticesFromFace(string &line);
-	FaceVertex GetVertexFromString(string &vertex);
+	static NormalModel GetNormalModelFromOBJ(string filename);
+	static ColorModel GetModelFromOBJ(string filename);
+	static NormalMappedModel GetTexturedModelFromOBJ(string filename);
+	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
+	static vector<FaceVertex> GetVerticesFromFace(string &line);
+	static FaceVertex GetVertexFromString(string &vertex);
+
+	ResourceManager(const ResourceManager&);
+	ResourceManager &operator=(const ResourceManager&);
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
 
+	ResourceManager(ResourceManager&&){}
+	ResourceManager &operator=(ResourceManager&&){}
+
 	bool Init();
-	shared_ptr<ColorModel> GetModel(int i){return models[i];}
+	ColorModel &GetModel(int i){return models[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
-	shared_ptr<NormalModel> GetNormalModel(){return normalModel;}
-	shared_ptr<TexturedModel> GetPlane(){return plane;}
-	shared_ptr<NormalMappedModel> GetTexturedModel(){return texturedModel;}
+	NormalModel &GetNormalModel(){return normalModel;}
+	TexturedModel &GetPlane(){return plane;}
+	NormalMappedModel &GetTexturedModel(){return texturedModel;}
 
 	template<class sh>
 	sh &GetShader(){return ColorShader("", "");}

@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable : 4005)
 #include "DrawableEntity.h"
-#include "Models.h"
+#include "Model.h"
 #include "ColorInstancedShader.h"
 #include "includes.h"
 
@@ -12,14 +12,12 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(shared_ptr<Model<vt>> model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos = D3DXVECTOR3());
+	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos = D3DXVECTOR3());
 	virtual ~BaseInstancer(void){}
 
 protected:
 	int maxInstanceCount;
 	int instanceCount;
-
-	shared_ptr<Model<vt>> model;
 
 	vector<it> instanceData;
 
@@ -43,11 +41,10 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(shared_ptr<Model<vt>> model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
-	this->model = model;
 }
 
 template<class vt, class sh, class it>
@@ -86,7 +83,7 @@ void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 		return;
 	SetBuffers(params.context);
 	shader.SetShaderParametersInstanced(params);
-	shader.RenderShaderInstanced(params.context, model->indices.size(), instanceCount);
+	shader.RenderShaderInstanced(params.context, model.indices.size(), instanceCount);
 }
 
 template<class vt, class sh, class it>

@@ -3,7 +3,12 @@
 using namespace Microsoft::WRL;
 
 ResourceManager::ResourceManager(void)
+	:texturedModel(GetTexturedModelFromOBJ("textured_ball.obj")),
+	normalModel(GetNormalModelFromOBJ("teapot.obj")),
+	models()
 {
+	texturedModel.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	normalModel.hitbox = D3DXVECTOR2(1.5f, 1.5f);
 }
 
 
@@ -29,187 +34,184 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 bool ResourceManager::Init()
 {
 	//player
-	shared_ptr<Model<VertexType>> temp = make_shared<Model<VertexType>>();
-	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	ColorModel temp;
+	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	VertexType vertex;
 	
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
 	vertex.color = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
 	vertex.color = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(2);
-	temp->indices.push_back(0);
+	temp.indices.push_back(1);
+	temp.indices.push_back(2);
+	temp.indices.push_back(0);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(3);
-	temp->indices.push_back(2);
+	temp.indices.push_back(1);
+	temp.indices.push_back(3);
+	temp.indices.push_back(2);
 
-	models.push_back(temp);
+	models.push_back(move(temp));
 
 	//enemy basic
-	temp = make_shared<Model<VertexType>>();
-	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
 	
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(2);
-	temp->indices.push_back(0);
+	temp.indices.push_back(1);
+	temp.indices.push_back(2);
+	temp.indices.push_back(0);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(3);
-	temp->indices.push_back(2);
+	temp.indices.push_back(1);
+	temp.indices.push_back(3);
+	temp.indices.push_back(2);
 
-	models.push_back(temp);
+	models.push_back(move(temp));
 
 	//bullet
-	temp = make_shared<Model<VertexType>>();
-	temp->hitbox = D3DXVECTOR2(0.2f, 1.5f);
+	temp.hitbox = D3DXVECTOR2(0.2f, 1.5f);
 	
 	vertex.position = D3DXVECTOR3(-0.1f, -0.75f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(-0.1f, 0.75f, 0.0f);  // Top left
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(0.1f, -0.75f, 0.0f);  // Bottom right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(0.1f, 0.75f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(2);
-	temp->indices.push_back(0);
+	temp.indices.push_back(1);
+	temp.indices.push_back(2);
+	temp.indices.push_back(0);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(3);
-	temp->indices.push_back(2);
+	temp.indices.push_back(1);
+	temp.indices.push_back(3);
+	temp.indices.push_back(2);
 
-	models.push_back(temp);
+	models.push_back(move(temp));
 
 	//enemy laptop
-	temp = make_shared<Model<VertexType>>();
-	temp->hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
 
 	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(2);
-	temp->indices.push_back(0);
+	temp.indices.push_back(1);
+	temp.indices.push_back(2);
+	temp.indices.push_back(0);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(3);
-	temp->indices.push_back(2);
+	temp.indices.push_back(1);
+	temp.indices.push_back(3);
+	temp.indices.push_back(2);
 
-	models.push_back(temp);
+	models.push_back(move(temp));
 
 	//wall
-	temp = make_shared<ColorModel>();
-	temp->hitbox = D3DXVECTOR2(1.0f, 1.0f);
+	temp.hitbox = D3DXVECTOR2(1.0f, 1.0f);
 	
 	vertex.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);  // Top left
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(0.5f, -0.5f, 0.0f);  // Bottom right.
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
 	vertex.position = D3DXVECTOR3(0.5f, 0.5f, 0.0f);  // Top right.
 	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
-	temp->vertices.push_back(vertex);
+	temp.vertices.push_back(vertex);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(2);
-	temp->indices.push_back(0);
+	temp.indices.push_back(1);
+	temp.indices.push_back(2);
+	temp.indices.push_back(0);
 
-	temp->indices.push_back(1);
-	temp->indices.push_back(3);
-	temp->indices.push_back(2);
+	temp.indices.push_back(1);
+	temp.indices.push_back(3);
+	temp.indices.push_back(2);
 
-	models.push_back(temp);
-	auto tempObj = GetModelFromOBJ("ball.obj");
-	tempObj->hitbox = D3DXVECTOR2(2.0f, 2.0f);
-	models.push_back(move(tempObj));
+	models.push_back(move(temp));
 
-	plane = make_shared<TexturedModel>();
-	plane->hitbox = D3DXVECTOR2(20, 20);
+	temp = GetModelFromOBJ("ball.obj");
+	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+
+	models.push_back(move(temp));
+
+	plane.hitbox = D3DXVECTOR2(20, 20);
 	TextureVertexType tv;
 
 	tv.position = D3DXVECTOR3(-10.0f, -10.0f, 0.0f);  // Bottom left.
 	tv.tex = D3DXVECTOR2(0.0f, 1.0f);
-	plane->vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = D3DXVECTOR3(-10.0f, 10.0f, 0.0f);  // Top left
 	tv.tex = D3DXVECTOR2(0.0f, 0.0f);
-	plane->vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = D3DXVECTOR3(10.0f, -10.0f, 0.0f);  // Bottom right.
 	tv.tex = D3DXVECTOR2(1.0f, 1.0f);
-	plane->vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = D3DXVECTOR3(10.0f, 10.0f, 0.0f);  // Top right.
 	tv.tex = D3DXVECTOR2(1.0f, 0.0f);
-	plane->vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
-	plane->indices.push_back(1);
-	plane->indices.push_back(2);
-	plane->indices.push_back(0);
+	plane.indices.push_back(1);
+	plane.indices.push_back(2);
+	plane.indices.push_back(0);
 
-	plane->indices.push_back(1);
-	plane->indices.push_back(3);
-	plane->indices.push_back(2);
+	plane.indices.push_back(1);
+	plane.indices.push_back(3);
+	plane.indices.push_back(2);
 
 	Level *level = new Level();
 
@@ -226,40 +228,34 @@ bool ResourceManager::Init()
 
 	levels.push_back(shared_ptr<Level>(level));
 
-	normalModel = GetNormalModelFromOBJ("teapot.obj");
-	normalModel->hitbox = D3DXVECTOR2(1.5f, 1.5f);
-
-	texturedModel = GetTexturedModelFromOBJ("textured_ball.obj");
-	normalModel->hitbox = D3DXVECTOR2(2.0f, 2.0f);
-
 	return true;
 }
 
-unique_ptr<ColorModel> ResourceManager::GetModelFromOBJ(char *filename)
+ColorModel ResourceManager::GetModelFromOBJ(string filename)
 {
 	auto normalModel = GetNormalModelFromOBJ(filename);
-	auto ret = unique_ptr<Model<VertexType>>(new Model<VertexType>());
+	ColorModel ret;
 	VertexType vertex;
-	ret->hitbox = normalModel->hitbox;
-	ret->indices = normalModel->indices;
-	for(NormalVertexType normalVertex : normalModel->vertices)
+	ret.hitbox = normalModel.hitbox;
+	ret.indices = normalModel.indices;
+	for(NormalVertexType normalVertex : normalModel.vertices)
 	{
 		vertex.color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex.position = normalVertex.position;
-		ret->vertices.push_back(vertex);
+		ret.vertices.push_back(vertex);
 	}
 	return ret;
 }
 
-unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
+NormalModel ResourceManager::GetNormalModelFromOBJ(string filename)
 {
-	auto model = unique_ptr<Model<NormalVertexType>>(new Model<NormalVertexType>());
+	NormalModel model;
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	string input;
 	float x, y, z;
-	if(!in.is_open())
-		return NULL;
+	/*if(!in.is_open())
+		return NULL;*/
 
 	while(!in.eof())
 	{
@@ -274,7 +270,7 @@ unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			model->vertices.emplace_back(x, y, -z);
+			model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vn")
 		{
@@ -289,8 +285,8 @@ unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 			Utils::Reverse(vertices);
 			for(auto &vertex : vertices)
 			{
-				model->vertices[vertex.vertex].normal = normals[vertex.normal];
-				model->indices.push_back(vertex.vertex);
+				model.vertices[vertex.vertex].normal = normals[vertex.normal];
+				model.indices.push_back(vertex.vertex);
 			}
 		}
 	}
@@ -298,16 +294,16 @@ unique_ptr<NormalModel> ResourceManager::GetNormalModelFromOBJ(char *filename)
 	return model;
 }
 
-unique_ptr<NormalMappedModel> ResourceManager::GetTexturedModelFromOBJ(char *filename)
+NormalMappedModel ResourceManager::GetTexturedModelFromOBJ(string filename)
 {
-	auto model = unique_ptr<Model<NormalMappedVertexType>>(new Model<NormalMappedVertexType>());
+	NormalMappedModel model;
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	vector<D3DXVECTOR2> tex;
 	string input;
 	float x, y, z;
-	if(!in.is_open())
-		return NULL;
+	/*if(!in.is_open())
+		return NULL;*/
 
 	while(!in.eof())
 	{
@@ -322,7 +318,7 @@ unique_ptr<NormalMappedModel> ResourceManager::GetTexturedModelFromOBJ(char *fil
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			model->vertices.emplace_back(x, y, -z);
+			model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vn")
 		{
@@ -342,11 +338,11 @@ unique_ptr<NormalMappedModel> ResourceManager::GetTexturedModelFromOBJ(char *fil
 			Utils::Reverse(vertices);
 			for(auto &vertex : vertices)
 			{
-				model->vertices[vertex.vertex].normal = normals[vertex.normal];
-				model->vertices[vertex.vertex].tex = tex[vertex.tex];
-				model->indices.push_back(vertex.vertex);
+				model.vertices[vertex.vertex].normal = normals[vertex.normal];
+				model.vertices[vertex.vertex].tex = tex[vertex.tex];
+				model.indices.push_back(vertex.vertex);
 			}
-			CalculateTangentAndBinormal(vertices, model->vertices);
+			CalculateTangentAndBinormal(vertices, model.vertices);
 		}
 	}
 

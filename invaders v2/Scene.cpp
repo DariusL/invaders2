@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "App.h"
 #include "ResourceManager.h"
-#include "Models.h"
+#include "Model.h"
 #include "WaterShader.h"
 
 Scene::Scene(void)

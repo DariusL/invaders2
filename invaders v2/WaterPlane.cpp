@@ -2,10 +2,9 @@
 #include "WaterPlane.h"
 #include "Utils.h"
 
-WaterPlane::WaterPlane(D3DXVECTOR3 pos, shared_ptr<TexturedModel> model, WaterShader &shader)
-	:Entity(pos), shader(shader)
+WaterPlane::WaterPlane(D3DXVECTOR3 pos, TexturedModel &model, WaterShader &shader)
+	:Entity(pos), shader(shader), model(model)
 {
-	this->model = model;
 }
 
 WaterPlane::~WaterPlane(void)
@@ -18,7 +17,7 @@ bool WaterPlane::Init(ComPtr<ID3D11Device> device)
 		textures.push_back(nullResource);
 	if(!InitBuffers(device))
 		return false;
-	renderTarget = make_shared<RenderTarget>((int)model->hitbox.x, (int)model->hitbox.y);
+	renderTarget = make_shared<RenderTarget>((int)model.hitbox.x, (int)model.hitbox.y);
 	if(!renderTarget->Init(device))
 		return false;
 
@@ -36,26 +35,26 @@ bool WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
 	vertexInfo.stride = sizeof(TextureVertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(TextureVertexType) * model->vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(TextureVertexType) * model.vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
 	vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	vertexData.pSysMem = &model->vertices[0];
+	vertexData.pSysMem = model.vertices.data();
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
 	Assert(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer));
 
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = sizeof(int) * model->indices.size();
+	indexBufferDesc.ByteWidth = sizeof(int) * model.indices.size();
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	indexData.pSysMem = &model->indices[0];
+	indexData.pSysMem = model.indices.data();
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 
@@ -78,7 +77,7 @@ void WaterPlane::Render(const RenderParams &params)
 	textures[0] = renderTarget->GetRenderedTexture();
 	SetBuffers(params.context);
 	shader.SetShaderParameters(params, moveMatrix, textures);
-	shader.RenderShader(params.context, model->indices.size());
+	shader.RenderShader(params.context, model.indices.size());
 }
 
 bool WaterPlane::Update(ComPtr<ID3D11DeviceContext> context)

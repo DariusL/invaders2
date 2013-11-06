@@ -245,10 +245,10 @@
     <ClInclude Include="WaterPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Models.h">
+    <ClInclude Include="DrawableBumpyEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableBumpyEntity.h">
+    <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

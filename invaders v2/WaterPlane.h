@@ -3,13 +3,13 @@
 #include "entity.h"
 #include "IDrawableObject.h"
 #include "GlobalDiffuseShader.h"
-#include "models.h"
+#include "Model.h"
 #include "includes.h"
 #include "WaterShader.h"
 #include "RenderTarget.h"
 class WaterPlane : public Entity, public IDrawableObject
 {
-	shared_ptr<TexturedModel> model;
+	TexturedModel &model;
 	D3DXMATRIX moveMatrix;
 	WaterShader &shader;
 
@@ -22,7 +22,7 @@ class WaterPlane : public Entity, public IDrawableObject
 
 	shared_ptr<RenderTarget> renderTarget;
 public:
-	WaterPlane(D3DXVECTOR3 pos, shared_ptr<TexturedModel> model, WaterShader &shader);
+	WaterPlane(D3DXVECTOR3 pos, TexturedModel &model, WaterShader &shader);
 	~WaterPlane(void);
 
 	bool Init(ComPtr<ID3D11Device> device);

@@ -75,7 +75,7 @@ int GameWorld::OnLoop(int input, float frameLength)
 		if(input & ControlCodes::FIRE)
 			if(player->Fire())
 			{
-				playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET)->hitbox, 18.0f));
+				playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET).hitbox, 18.0f));
 			}
 
 	}
