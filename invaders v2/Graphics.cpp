@@ -84,7 +84,7 @@ void Graphics::Render()
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
 
 	world->Render(params);
-	water->Render(params);
+	//water->Render(params);
 
 	d3D.Present();
 }

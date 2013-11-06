@@ -2,7 +2,7 @@
 #pragma warning(disable : 4005)
 #include "iworld.h"
 #include "DrawableShooter.h"
-#include "DrawableEntity.h"
+#include "DrawableTexturedEntity.h"
 #include "Globals.h"
 #include "Light.h"
 #include "FloatingCamera.h"
@@ -13,6 +13,8 @@ class Scene : public IWorld
 	shared_ptr<DrawableBumpyEntity> bumpy;
 	shared_ptr<Light> light;
 	shared_ptr<WaterPlane> water;
+	ComPtr<ID3D11ShaderResourceView> gaben;
+	shared_ptr<SimpleTexturedEntity> gabener;
 public:
 	Scene();
 	~Scene();

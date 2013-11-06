@@ -43,6 +43,9 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	bumpy->Init(device);
 	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane(), rm->GetShader<WaterShader>());
 	water->Init(device);
+	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"gaben.dds", NULL, NULL, &gaben, NULL));
+	gabener = make_shared<SimpleTexturedEntity>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane(), rm->GetShader<TextureShader>(), gaben);
+	gabener->Init(device);
 	return true;
 }
 
@@ -50,4 +53,5 @@ void Scene::Render(const RenderParams &params)
 {
 	light->Render(params);
 	bumpy->Render(params);
+	gabener->Render(params);
 }

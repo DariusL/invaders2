@@ -136,7 +136,8 @@ void FloatingCamera::InitRenderTarget(ComPtr<ID3D11Device> device)
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
-	Assert(device->CreateShaderResourceView(renderTargetTexture.Get(), &shaderResourceViewDesc, &shaderResourceView));
+	shaderResourceView.emplace_back();
+	Assert(device->CreateShaderResourceView(renderTargetTexture.Get(), &shaderResourceViewDesc, &shaderResourceView[0]));
 
 	depthBufferDesc.Width = (UINT)viewportSize.x;
 	depthBufferDesc.Height = (UINT)viewportSize.y;

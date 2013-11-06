@@ -7,6 +7,7 @@
 #include "includes.h"
 #include "WaterShader.h"
 #include "RenderTarget.h"
+
 class WaterPlane : public Entity, public IDrawableObject
 {
 	TexturedModel &model;

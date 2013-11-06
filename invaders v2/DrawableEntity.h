@@ -39,8 +39,10 @@ DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &sh
 }
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
-: IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)), model(move(other.model)), shader(move(other.shader)),
-vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)), moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
+: IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)),
+model(move(other.model)), shader(move(other.shader)),
+vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)), 
+moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
 {
 }
 

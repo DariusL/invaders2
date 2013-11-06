@@ -5,6 +5,9 @@
 	#define NULL 0
 #endif
 
+template <typename T>
+using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
+
 struct VertexType
 {
 	D3DXVECTOR3 position;

@@ -21,13 +21,8 @@ protected:
 
 	vector<it> instanceData;
 
-	ComPtr<ID3D11Buffer> vertexBuffer;
-	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> instanceBuffer;
 	BufferInfo instanceInfo;
-
-	ComPtr<ID3D11Buffer> indexBuffer;
-
 public:
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams& params);

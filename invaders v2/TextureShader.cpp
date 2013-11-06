@@ -70,7 +70,7 @@ bool TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, ComPtr<ID3D11ShaderResourceView> texture)
+void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	D3DXMATRIX transform;
 
@@ -82,7 +82,7 @@ void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DX
 
 	params.context->IASetInputLayout(layout.Get());
 
-	params.context->PSSetShaderResources(0, 1, texture.GetAddressOf());
+	params.context->PSSetShaderResources(0, 1, textures[0].GetAddressOf());
 
 	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);

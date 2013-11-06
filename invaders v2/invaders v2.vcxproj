@@ -119,6 +119,7 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="DrawableBumpyEntity.h" />
     <ClInclude Include="DrawableEntity.h" />
+    <ClInclude Include="DrawableTexturedEntity.h" />
     <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="FloatingCamera.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
