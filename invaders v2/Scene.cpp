@@ -34,7 +34,6 @@ int Scene::OnLoop(int input, float frameLength)
 	return IWorld::Result::CONTINUE;
 }
 
-
 bool Scene::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();

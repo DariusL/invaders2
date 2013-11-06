@@ -187,6 +187,7 @@ bool ResourceManager::Init()
 	models.push_back(move(temp));
 
 	plane.hitbox = D3DXVECTOR2(20, 20);
+
 	TextureVertexType tv;
 
 	tv.position = D3DXVECTOR3(-10.0f, -10.0f, 0.0f);  // Bottom left.

@@ -5,7 +5,7 @@
 using namespace std;
 
 template<class T>
-struct Model : NonCopyable
+struct Model
 {
 	vector<T> vertices;
 	vector<int> indices;
@@ -14,6 +14,8 @@ struct Model : NonCopyable
 	Model(){}
 	Model(Model &&other);
 	Model &operator=(Model &&other);
+	Model(Model&) = delete;
+	Model &operator=(Model&) = delete;
 };
 
 typedef Model<VertexType> ColorModel;

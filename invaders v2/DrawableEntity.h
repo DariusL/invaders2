@@ -19,6 +19,7 @@ protected:
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
 	DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
+	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
 	virtual bool Init(ComPtr<ID3D11Device> device);
@@ -30,6 +31,18 @@ protected:
 };
 
 typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
+
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed)
+: Entity(pos, model.hitbox, speed), model(model), shader(shader)
+{
+}
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
+: IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)), model(move(other.model)), shader(move(other.shader)),
+vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)), moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
+{
+}
 
 template<class vt, class sh>
 bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
@@ -67,12 +80,6 @@ bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer));
 
 	return true;
-}
-
-template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed) 
-:Entity(pos, model.hitbox, speed), model(model), shader(shader)
-{
 }
 
 template<class vt, class sh>

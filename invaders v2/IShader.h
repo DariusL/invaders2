@@ -5,10 +5,12 @@
 using namespace Microsoft::WRL;
 using namespace std;
 
-class IShader : public NonCopyable
+class IShader
 {
 public:
-	IShader(string vs, string ps){this->vs = vs; this->ps = ps;}
+	IShader(string vs, string ps){ this->vs = vs; this->ps = ps; }
+	IShader(IShader&) = delete;
+	IShader &operator=(IShader&) = delete;
 	virtual ~IShader(){}
 	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}

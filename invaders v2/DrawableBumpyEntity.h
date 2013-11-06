@@ -11,6 +11,12 @@ public:
 	DrawableBumpyEntity(D3DXVECTOR3 pos, NormalMappedModel &model, NormalMappedShader &shader)
 		:DrawableEntity(pos, model, shader){}
 
+	DrawableBumpyEntity(DrawableBumpyEntity &&other)
+		:DrawableEntity(forward<DrawableBumpyEntity>(other))
+	{
+		normalMap = move(other.normalMap);
+	}
+
 	virtual void Render(const RenderParams &renderParams)
 	{
 		if(!Update(renderParams.context))

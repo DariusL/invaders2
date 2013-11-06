@@ -1,4 +1,5 @@
 #pragma once
+#include "includes.h"
 class Shooter
 {
 	//fiziks
@@ -15,4 +16,10 @@ public:
 
 	bool Fire();
 	float GetLastFired() const {return lastFired;}
+
+	Shooter &operator=(Shooter &&other)
+	{
+		std::swap(fireRate, other.fireRate);
+		std::swap(lastFired, other.lastFired);
+	}
 };
