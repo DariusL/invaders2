@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "Screen.h"
 
-Screen::Screen(D3DXVECTOR3 screenPos, TexturedModel &screenModel, TextureShader &screenShader, int width, int height)
-:renderTarget(width, height), screen(screenPos, screenModel, screenShader, NULL, D3DXVECTOR3((float)width, (float)height, 0.0f))
+Screen::Screen(D3DXVECTOR3 screenPos, TexturedModel &screenModel, TextureShader &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
+:renderTarget(resWidth, resHeight), screen(screenPos, screenModel, screenShader, NULL, D3DXVECTOR3(screenWidth, screenHeight, 1.0f))
 {
 }
 

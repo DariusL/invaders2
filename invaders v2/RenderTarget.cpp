@@ -3,9 +3,8 @@
 #include "Utils.h"
 
 RenderTarget::RenderTarget(int width, int height)
+:width(width), height(height)
 {
-	this->width = width;
-	this->height = height;
 
 	clear[0] = 0.0f;
 	clear[1] = 0.0f;
