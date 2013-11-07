@@ -16,7 +16,11 @@ class RenderTarget
 	D3D11_VIEWPORT viewport;
 public:
 	RenderTarget(int width, int height);
+	RenderTarget(RenderTarget &&other);
 	~RenderTarget(void);
+
+	RenderTarget(RenderTarget&) = delete;
+	RenderTarget &operator=(RenderTarget&) = delete;
 
 	bool Init(ComPtr<ID3D11Device> device);
 

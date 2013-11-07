@@ -6,7 +6,7 @@ Camera::Camera() : up(0.0f, 1.0f, 0.0f), pos(0.0f, 0.0f, 0.0f), forward(0.0f, 0.
 {
 }
 
-void Camera::Render()
+void Camera::RenderMain()
 {
 	D3DXMatrixLookAtLH(&viewMatrix, &pos, &forward, &up);
 }

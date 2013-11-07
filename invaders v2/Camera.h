@@ -17,7 +17,7 @@ public:
 
 	D3DXVECTOR3 GetPosition(){return pos;}
 
-	virtual void Render();
+	virtual void RenderMain();
 	virtual void RenderMirror();
 	void GetViewMatrix(D3DXMATRIX &matrix){matrix = viewMatrix;}
 	void GetMirrorMatrix(D3DXMATRIX &matrix){matrix = mirrorMatrix;}

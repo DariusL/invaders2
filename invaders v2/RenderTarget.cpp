@@ -20,6 +20,14 @@ RenderTarget::RenderTarget(int width, int height)
 	viewport.TopLeftY = 0.0f;
 }
 
+RenderTarget::RenderTarget(RenderTarget &&other)
+:width(other.width), height(other.height), renderTargetTexture(other.renderTargetTexture),
+renderTargetView(other.renderTargetView), depthStencilBuffer(other.depthStencilBuffer),
+depthStencilState(other.depthStencilState), depthStencilView(other.depthStencilView),
+shaderResourceView(other.shaderResourceView), viewport(other.viewport)
+{
+	memcpy(&clear, &other.clear, sizeof(float)* 4);
+} 
 
 RenderTarget::~RenderTarget(void)
 {

@@ -76,7 +76,7 @@ void WaterPlane::Render(const RenderParams &params)
 		return;
 	textures[0] = renderTarget->GetRenderedTexture();
 	SetBuffers(params.context);
-	shader.SetShaderParameters(params, moveMatrix, textures);
+	shader.SetShaderParametersTextured(params, moveMatrix, textures);
 	shader.RenderShader(params.context, model.indices.size());
 }
 

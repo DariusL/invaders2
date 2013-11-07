@@ -14,6 +14,7 @@ struct Model
 	Model(){}
 	Model(Model &&other);
 	Model &operator=(Model &&other);
+
 	Model(Model&) = delete;
 	Model &operator=(Model&) = delete;
 };

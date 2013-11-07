@@ -49,7 +49,7 @@ bool WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	return true;
 }
 
-void WaterShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
+void WaterShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	ComPtr<ID3D11DeviceContext> con = params.context;
 
@@ -89,6 +89,6 @@ void WaterShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX pos
 void WaterShader::RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount)
 {
 	TextureShader::RenderShader(context, indexCount);
-	for(int i = 0; i < 3; i++)
+	for(int i = 1; i < 3; i++)
 		context->PSSetShaderResources(i, 1, nullResource.GetAddressOf());
 }

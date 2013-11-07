@@ -10,9 +10,10 @@ class IDrawable
 {
 public:
 	IDrawable(){}
+	IDrawable(IDrawable&&){}
+
 	IDrawable(IDrawable&) = delete;
 	IDrawable &operator=(IDrawable&) = delete;
-	IDrawable(IDrawable&&){}
 
 	virtual bool Init(ComPtr<ID3D11Device>) = 0;
 	virtual void Render(const RenderParams&) = 0;

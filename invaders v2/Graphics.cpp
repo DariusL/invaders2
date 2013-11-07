@@ -54,7 +54,7 @@ void Graphics::Render()
 	auto light = world->GetLight();
 
 	Camera &camera = world->GetCamera();
-	camera.Render();
+	camera.RenderMain();
 	camera.RenderMirror();
 
 	RenderParams params;

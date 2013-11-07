@@ -32,7 +32,6 @@ public:
 
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &renderParams);
-	void Render(){Camera::Render();}
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
 	void ClearTarget(ComPtr<ID3D11DeviceContext> context);
