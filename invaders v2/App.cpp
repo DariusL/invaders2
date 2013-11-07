@@ -127,8 +127,6 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::LEFT;
 	if(input.IsKeyDown(VK_RIGHT))
 		worldEvents |= ControlCodes::RIGHT;
-	if(input.IsKeyDown(VK_SPACE))
-		worldEvents |= ControlCodes::FIRE;
 	if(input.IsKeyDown(VK_ESCAPE))
 		Quit();
 	if(input.IsKeyDown(VK_DOWN))
@@ -139,14 +137,18 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::PLUS;
 	if(input.IsKeyDown(VK_SUBTRACT))
 		worldEvents |= ControlCodes::MINUS;
-	if(input.IsKeyDown(VK_F1))
-		worldEvents |= ControlCodes::GLOBAL_DIFF;
-	if(input.IsKeyDown(VK_F2))
-		worldEvents |= ControlCodes::GLOBAL_SPEC;
-	if(input.IsKeyDown(VK_F3))
-		worldEvents |= ControlCodes::POINT_DIFF;
-	if(input.IsKeyDown(VK_F4))
-		worldEvents |= ControlCodes::POINT_SPEC;
+	if (input.IsKeyDown('W'))
+		worldEvents |= ControlCodes::MOVE_FORWARD;
+	if (input.IsKeyDown('S'))
+		worldEvents |= ControlCodes::MOVE_BACK;
+	if (input.IsKeyDown('A'))
+		worldEvents |= ControlCodes::MOVE_LEFT;
+	if (input.IsKeyDown('D'))
+		worldEvents |= ControlCodes::MOVE_RIGHT;
+	if (input.IsKeyDown(VK_SPACE))
+		worldEvents |= ControlCodes::MOVE_UP;
+	if (input.IsKeyDown(VK_CONTROL))
+		worldEvents |= ControlCodes::MOVE_DOWN;
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();

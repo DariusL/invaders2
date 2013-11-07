@@ -219,7 +219,7 @@ bool ResourceManager::Init()
 	plane.indices.push_back(2);
 
 	texturedModels.push_back(move(plane));
-	texturedModels.push_back(GetTexturedModelFromOBJUnindexed("box.obj", true));
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed("box.obj"));
 
 	Level *level = new Level();
 
