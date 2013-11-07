@@ -34,7 +34,7 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 	}
 }
 
-bool ResourceManager::Init()
+void ResourceManager::Init()
 {
 	//player
 	ColorModel temp;
@@ -235,8 +235,6 @@ bool ResourceManager::Init()
 	}
 
 	levels.push_back(shared_ptr<Level>(level));
-
-	return true;
 }
 
 ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
@@ -527,9 +525,9 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 	return ret;
 }
 
-bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
+void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(make_shared<ColorShader>(L"aColorVertex.cso", L"ColorPixel.cso"));
+	shaders.push_back(make_shared<ColorShader>(L"ColorVertex.cso", L"ColorPixel.cso"));
 	shaders.push_back(make_shared<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
 	shaders.push_back(make_shared<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
 	shaders.push_back(make_shared<GlobalSpecularShader>(L"GlobalSpecularVertex.cso", L"GlobalSpecularPixel.cso"));
@@ -544,5 +542,4 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"gaben.dds", device));
 	textures.push_back(GetTextureFromFile(L"stage7.dds", device));
 	textures.push_back(GetTextureFromFile(L"wave.dds", device));
-	return true;
 }

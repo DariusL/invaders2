@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "NormalMappedShader.h"
 
-bool NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
+void NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
 	D3D11_SAMPLER_DESC samplerDesc;
 
@@ -20,13 +20,11 @@ bool NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
-
-	return true;
 }
 
-bool NormalMappedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void NormalMappedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	return PointSpecularShader::InitializeShaderBuffers(device);
+	PointSpecularShader::InitializeShaderBuffers(device);
 }
 
 vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()

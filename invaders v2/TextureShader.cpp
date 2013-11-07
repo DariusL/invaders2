@@ -30,7 +30,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> TextureShader::GetInputLayout()
 	return ret;
 }
 
-bool TextureShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void TextureShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
@@ -44,11 +44,9 @@ bool TextureShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
-
-	return true;
 }
 
-bool TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
+void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
 	D3D11_SAMPLER_DESC samplerDesc;
 
@@ -67,7 +65,6 @@ bool TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	samplerDesc.MipLODBias = 0;
 
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
-	return true;
 }
 
 void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, const ComVector<ID3D11ShaderResourceView> &textures)

@@ -12,7 +12,7 @@ public:
 	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 protected:
-	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 
 	ComPtr<ID3D11Buffer> cameraBuffer;
 	ComPtr<ID3D11Buffer> waterBuffer;

@@ -19,7 +19,7 @@ public:
 	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext>, int indexCount, int instanceCount);
 
 protected:
-	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
 private:

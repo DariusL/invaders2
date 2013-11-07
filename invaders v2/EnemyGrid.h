@@ -34,7 +34,7 @@ public:
 	EnemyGrid(void);
 	~EnemyGrid(void);
 
-	bool Init(D3DXVECTOR3 center, shared_ptr<Level> level);
+	void Init(D3DXVECTOR3 center, shared_ptr<Level> level);
 
 	shared_ptr<DrawableShooter> GetEnemy(int i){return grid[i];}
 
@@ -55,7 +55,7 @@ public:
 
 	list<InstanceEntity> &getBullets(){return bullets;}
 
-	bool Init(ComPtr<ID3D11Device>);
+	void Init(ComPtr<ID3D11Device>);
 	void Render(const RenderParams&);
 
 	int getAliveCount(){return alive;}

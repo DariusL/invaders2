@@ -11,22 +11,18 @@ WaterPlane::~WaterPlane(void)
 {
 }
 
-bool WaterPlane::Init(ComPtr<ID3D11Device> device)
+void WaterPlane::Init(ComPtr<ID3D11Device> device)
 {
 	for(int i = 0; i < 3; i++)
 		textures.push_back(nullResource);
-	if(!InitBuffers(device))
-		return false;
+	InitBuffers(device);
 	renderTarget = make_shared<RenderTarget>((int)model.hitbox.x, (int)model.hitbox.y);
-	if(!renderTarget->Init(device))
-		return false;
+	renderTarget->Init(device);
 
 	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"wave.dds", NULL, NULL, &textures[2], NULL));
-
-	return true;
 }
 
-bool WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
+void WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -59,8 +55,6 @@ bool WaterPlane::InitBuffers(ComPtr<ID3D11Device> device)
 	indexData.SysMemSlicePitch = 0;
 
 	Assert(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer));
-
-	return true;
 }
 
 void WaterPlane::SetBuffers(ComPtr<ID3D11DeviceContext> context)

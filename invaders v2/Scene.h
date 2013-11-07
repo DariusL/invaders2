@@ -24,6 +24,6 @@ public:
 	int OnLoop(int input, float frameLength);
 	Light &GetLight(){return light;}
 	RemoteCamera &GetRemoteCamera(){ return remoteCamera; }
-	bool Init(ComPtr<ID3D11Device> device);
+	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 };

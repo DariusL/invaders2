@@ -15,8 +15,8 @@ public:
 	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
 protected:
-	bool InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
-	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device) = 0;
+	void InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device) = 0;
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout() = 0;
 
 	ComPtr<ID3D11VertexShader> vertexShader;

@@ -29,7 +29,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
 	return ret;
 }
 
-bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
@@ -43,8 +43,6 @@ bool ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
-
-	return true;
 }
 
 void ColorShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)

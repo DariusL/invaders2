@@ -37,7 +37,7 @@ public:
 
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 
-	bool Init();
+	void Init();
 	void Run();
 	void Quit();
 

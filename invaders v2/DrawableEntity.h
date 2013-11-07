@@ -22,10 +22,10 @@ public:
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
-	virtual bool Init(ComPtr<ID3D11Device> device);
+	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void Render(const RenderParams &renderParams);
 protected:
-	virtual bool InitBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitBuffers(ComPtr<ID3D11Device> device);
 	virtual void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
@@ -47,7 +47,7 @@ moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
 }
 
 template<class vt, class sh>
-bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
+void DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -80,8 +80,6 @@ bool DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 	indexData.SysMemSlicePitch = 0;
 
 	Assert(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer));
-
-	return true;
 }
 
 template<class vt, class sh>
@@ -90,11 +88,9 @@ DrawableEntity<vt, sh>::~DrawableEntity(void)
 }
 
 template<class vt, class sh>
-bool DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
+void DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
 {
-	if(!InitBuffers(device))
-		return false;
-	return true;
+	InitBuffers(device);
 }
 
 template<class vt, class sh>

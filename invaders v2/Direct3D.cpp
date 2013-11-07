@@ -13,7 +13,7 @@ Direct3D::~Direct3D()
 	}
 }
 
-bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
+void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
 	ComPtr<IDXGIFactory> factory;
 	ComPtr<IDXGIAdapter> adapter;
@@ -164,7 +164,6 @@ bool Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	screenAspect = width / (float)height;
 	D3DXMatrixPerspectiveFovLH(&projectionMatrix, fieldOfView, screenAspect, screennear, screendepth);
 	D3DXMatrixOrthoLH(&orthoMatrix, (FLOAT) width, (FLOAT) height, screennear, screendepth);
-	return true;
 }
 
 void Direct3D::ClearRenderTarget()

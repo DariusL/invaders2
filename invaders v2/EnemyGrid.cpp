@@ -14,7 +14,7 @@ EnemyGrid::~EnemyGrid(void)
 {
 }
 
-bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
+void EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 {
 	this->center = center;
 	this->level = level;
@@ -36,19 +36,15 @@ bool EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 			grid.push_back(enemy);
 			alive++;
 		}
-	return true;
 }
 
-bool EnemyGrid::Init(ComPtr<ID3D11Device> device)
+void EnemyGrid::Init(ComPtr<ID3D11Device> device)
 {
-	for(auto &a : grid)
-		if(!a->Init(device))
-			return false;
+	for (auto &a : grid)
+		a->Init(device);
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(), 100));
-	if(!enemyBulletGraphics->Init(device))
-		return false;
-	return true;
+	enemyBulletGraphics->Init(device);
 }
 
 void EnemyGrid::MoveBy(D3DXVECTOR3 vec)

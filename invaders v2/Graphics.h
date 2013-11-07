@@ -20,8 +20,8 @@ public:
 	Graphics(void);
 	~Graphics(void);
 
-	bool Init(int width, int height, HWND handle, bool fullscreen, float brightness);
-	bool Init(Scene *world);
+	void Init(int width, int height, HWND handle, bool fullscreen, float brightness);
+	void Init(Scene *world);
 	void Render();
 
 	void SetBrightness(float brightness){this->brightness = brightness;}

@@ -10,10 +10,9 @@ void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, D3DXM
 	params.context->VSSetConstantBuffers(1, 1, cameraBuffer.GetAddressOf());
 }
 
-bool GlobalSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void GlobalSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	if(!GlobalDiffuseShader::InitializeShaderBuffers(device))
-		return false;
+	GlobalDiffuseShader::InitializeShaderBuffers(device);
 
 	D3D11_BUFFER_DESC cameraDesc;
 
@@ -25,6 +24,4 @@ bool GlobalSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	cameraDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	Assert(device->CreateBuffer(&cameraDesc, NULL, &cameraBuffer));
-
-	return true;
 }

@@ -10,6 +10,6 @@ public:
 protected:
 	ComPtr<ID3D11Buffer> reflectionBuffer;
 
-	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 };
 

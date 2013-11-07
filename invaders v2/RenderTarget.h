@@ -22,7 +22,7 @@ public:
 	RenderTarget(RenderTarget&) = delete;
 	RenderTarget &operator=(RenderTarget&) = delete;
 
-	bool Init(ComPtr<ID3D11Device> device);
+	void Init(ComPtr<ID3D11Device> device);
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
 	void ClearTarget(ComPtr<ID3D11DeviceContext> context);

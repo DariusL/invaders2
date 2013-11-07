@@ -11,10 +11,9 @@ void PointSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMA
 	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
 }
 
-bool PointSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void PointSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	if(!PointDiffuseShader::InitializeShaderBuffers(device))
-		return false;
+	PointDiffuseShader::InitializeShaderBuffers(device);
 
 	D3D11_BUFFER_DESC cameraDesc;
 
@@ -26,6 +25,4 @@ bool PointSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	cameraDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	Assert(device->CreateBuffer(&cameraDesc, NULL, &cameraBuffer));
-
-	return true;
 }

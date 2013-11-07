@@ -39,7 +39,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 	return ret;
 }
 
-bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightingBufferDesc;
@@ -61,8 +61,6 @@ bool GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
-
-	return true;
 }
 
 void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)

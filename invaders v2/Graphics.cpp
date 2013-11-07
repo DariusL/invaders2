@@ -13,22 +13,18 @@ Graphics::~Graphics()
 {
 }
 
-bool Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
+void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
 {
 	this->handle = handle;
 	this->fullScreen = fullscreen;
 	this->brightness = brightness;
 	this->width = width;
 	this->height = heigth;
-	if(!d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear))
-		return false;
+	d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear);
 
-	if(!App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice()))
-		return false;
+	App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice());
 	
 	D3DXVECTOR2 viewportSize(width / 4.0f, heigth / 4.0f);
-
-	return true;
 }
 
 void Graphics::ChangeBrightness(float offset)
@@ -40,12 +36,10 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-bool Graphics::Init(Scene *world)
+void Graphics::Init(Scene *world)
 {
 	this->world = world;
-	if(!world->Init(d3D.GetDevice()))
-		return false;
-	return true;
+	world->Init(d3D.GetDevice());
 }
 
 void Graphics::Render()

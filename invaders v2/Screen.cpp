@@ -11,12 +11,11 @@ Screen::Screen(Screen &&other)
 {
 }
 
-bool Screen::Init(ComPtr<ID3D11Device> device)
+void Screen::Init(ComPtr<ID3D11Device> device)
 {
 	renderTexture.push_back(NULL);
 	renderTarget.Init(device);
 	screen.Init(device);
-	return true;
 }
 
 void Screen::Render(const RenderParams &params)

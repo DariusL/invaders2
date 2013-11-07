@@ -52,7 +52,8 @@ public:
 	ResourceManager(ResourceManager&&){}
 	ResourceManager &operator=(ResourceManager&&){}
 
-	bool Init();
+	void Init();
+	void InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 	ColorModel &GetModel(int i){return models[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
@@ -82,8 +83,6 @@ public:
 	NormalMappedShader &GetShader<NormalMappedShader>(){return static_cast<NormalMappedShader&>(*shaders[Shaders::NORMAL_MAPPED]);}
 	template<>
 	WaterShader &GetShader<WaterShader>(){return static_cast<WaterShader&>(*shaders[Shaders::WATER]);}
-
-	bool InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
 
 	enum Models
 	{

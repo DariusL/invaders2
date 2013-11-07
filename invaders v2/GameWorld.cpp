@@ -37,19 +37,15 @@ void GameWorld::Stop()
 	started = false;
 }
 
-bool GameWorld::Init(ComPtr<ID3D11Device> device)
+void GameWorld::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	if(!player->Init(device))
-		return false;
-	if(!enemies->Init(device))
-		return false;
+	player->Init(device);
+	enemies->Init(device);
 	for(int i = 0; i < WALL_COUNT; i++)
 		walls[i]->Init(device);
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(), 100));
-	if(!playerBulletGraphics->Init(device))
-		return false;
-	return true;
+	playerBulletGraphics->Init(device);
 }
 
 int GameWorld::OnLoop(int input, float frameLength)

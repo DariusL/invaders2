@@ -40,7 +40,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> PointDiffuseShader::GetInputLayout()
 	return ret;
 }
 
-bool PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC pixelLightDesc, vertexLightDesc;
@@ -71,8 +71,6 @@ bool PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	vertexLightDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	Assert(device->CreateBuffer(&vertexLightDesc, NULL, &vertexLightBuffer));
-
-	return true;
 }
 
 void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)

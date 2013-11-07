@@ -39,7 +39,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 	return ret;
 }
 
-bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
@@ -51,8 +51,6 @@ bool ColorInstancedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	matrixBufferDesc.StructureByteStride = 0;
 
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
-
-	return true;
 }
 
 void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params)

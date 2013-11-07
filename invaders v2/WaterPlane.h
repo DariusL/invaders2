@@ -26,11 +26,11 @@ public:
 	WaterPlane(D3DXVECTOR3 pos, TexturedModel &model, WaterShader &shader);
 	~WaterPlane(void);
 
-	bool Init(ComPtr<ID3D11Device> device);
+	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &renderParams);
 	shared_ptr<RenderTarget> GetRenderTarget(){return renderTarget;}
 private:
-	bool InitBuffers(ComPtr<ID3D11Device> device);
+	void InitBuffers(ComPtr<ID3D11Device> device);
 	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	bool Update(ComPtr<ID3D11DeviceContext> context);
 };

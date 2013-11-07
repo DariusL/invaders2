@@ -12,7 +12,7 @@ public:
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
 
 protected:
-	virtual bool InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
 	ComPtr<ID3D11Buffer> matrixBuffer;

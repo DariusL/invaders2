@@ -26,12 +26,10 @@ public:
 		shader.RenderShader(renderParams.context, model.indices.size());
 	}
 
-	virtual bool Init(ComPtr<ID3D11Device> device)
+	virtual void Init(ComPtr<ID3D11Device> device)
 	{
 		DrawableEntity::Init(device);
 
 		Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"stage7.dds", NULL, NULL, &normalMap, NULL));
-
-		return true;
 	}
 };

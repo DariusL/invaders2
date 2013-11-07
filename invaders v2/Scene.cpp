@@ -80,14 +80,13 @@ int Scene::OnLoop(int input, float frameLength)
 	return IWorld::Result::CONTINUE;
 }
 
-bool Scene::Init(ComPtr<ID3D11Device> device)
+void Scene::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	light.Init(device);
 	bumpy.Init(device);
 	remoteCamera.Init(device);
 	gabenizer.Init(device);
-	return true;
 }
 
 void Scene::Render(const RenderParams &params)

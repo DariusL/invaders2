@@ -24,11 +24,11 @@ protected:
 	ComPtr<ID3D11Buffer> instanceBuffer;
 	BufferInfo instanceInfo;
 public:
-	bool Init(ComPtr<ID3D11Device> device);
+	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams& params);
 
 protected:
-	bool InitBuffers(ComPtr<ID3D11Device> device);
+	void InitBuffers(ComPtr<ID3D11Device> device);
 	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
@@ -43,15 +43,13 @@ BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxOb
 }
 
 template<class vt, class sh, class it>
-bool BaseInstancer<vt, sh, it>::Init(ComPtr<ID3D11Device> device)
+void BaseInstancer<vt, sh, it>::Init(ComPtr<ID3D11Device> device)
 {
-	if(!InitBuffers(device))
-		return false;
-	return true;
+	InitBuffers(device);
 }
 
 template<class vt, class sh, class it>
-bool BaseInstancer<vt, sh, it>::InitBuffers(ComPtr<ID3D11Device> device)
+void BaseInstancer<vt, sh, it>::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	DrawableEntity::InitBuffers(device);
 
@@ -67,8 +65,6 @@ bool BaseInstancer<vt, sh, it>::InitBuffers(ComPtr<ID3D11Device> device)
 
 	instanceInfo.offset = 0;
 	instanceInfo.stride = sizeof(it);
-	
-	return true;
 }
 
 template<class vt, class sh, class it>

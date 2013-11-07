@@ -12,7 +12,7 @@ void IShader::Init(ComPtr<ID3D11Device> device)
 	InitializeShaderBuffers(device);
 }
 
-bool IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout)
+void IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout)
 {
 	unique_ptr<char> vBuffer;
 	UINT vSize;
@@ -30,6 +30,4 @@ bool IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring 
 	Assert(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader));
 
 	Assert(device->CreateInputLayout(&inputLayout[0], inputLayout.size(), vBuffer.get(), vSize, &layout));
-
-	return true;
 }

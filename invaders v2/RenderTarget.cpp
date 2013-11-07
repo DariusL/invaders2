@@ -32,7 +32,7 @@ RenderTarget::~RenderTarget(void)
 {
 }
 
-bool RenderTarget::Init(ComPtr<ID3D11Device> device)
+void RenderTarget::Init(ComPtr<ID3D11Device> device)
 {
 	D3D11_TEXTURE2D_DESC textureDesc;
 	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
@@ -109,8 +109,6 @@ bool RenderTarget::Init(ComPtr<ID3D11Device> device)
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	Assert(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView));
-
-	return true;
 }
 
 void RenderTarget::SetRenderTarget(ComPtr<ID3D11DeviceContext> context)

@@ -17,23 +17,18 @@ App::~App()
 	ShutdownWindows();
 }
 
-bool App::Init()
+void App::Init()
 {
 	InitWindows();
 	Handle = this;
 
-	if(!manager.Init())
-		return false;
+	manager.Init();
 
-	if(!graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.1f))
-		return false;
+	graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.1f);
 
-	if(!logger.Init())
-		return false;
+	logger.Init();
 
 	world = unique_ptr<Scene>(new Scene());
-
-	return true;
 }
 
 void App::InitWindows()
@@ -119,8 +114,7 @@ bool App::OnLoop()
 	if(!world->IsStarted())
 	{
 		world->Start(manager.GetLevel(ResourceManager::Levels::L1));
-		if(!graphics.Init(world.get()))
-			return false;
+		graphics.Init(world.get());
 	}
 	int worldEvents = 0;
 	if(input.IsKeyDown(VK_LEFT))

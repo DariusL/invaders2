@@ -12,5 +12,5 @@ public:
 
 	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){}
 protected:
-	virtual bool InitializeSampler(ComPtr<ID3D11Device> device) = 0;
+	virtual void InitializeSampler(ComPtr<ID3D11Device> device) = 0;
 };

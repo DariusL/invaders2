@@ -2,7 +2,7 @@
 #include "WaterShader.h"
 #include "Utils.h"
 
-bool WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 
@@ -45,8 +45,6 @@ bool WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	reflectionDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	Assert(device->CreateBuffer(&reflectionDesc, NULL, &reflectionBuffer));
-
-	return true;
 }
 
 void WaterShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
