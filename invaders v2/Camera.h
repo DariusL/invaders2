@@ -13,7 +13,9 @@ public:
 	void Forward(float dist);
 	void Yaw(float angle);
 	void Pitch(float angle);
-	void Move(D3DXVECTOR3 offset);
+	void Roll(float angle);
+	void Move(D3DXVECTOR3 vec){ Move(vec.x, vec.y, vec.z); }
+	void Move(float x, float y, float z);
 
 	D3DXVECTOR3 GetPosition(){return pos;}
 

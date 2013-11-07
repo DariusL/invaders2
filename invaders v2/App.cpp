@@ -149,6 +149,10 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::MOVE_UP;
 	if (input.IsKeyDown(VK_CONTROL))
 		worldEvents |= ControlCodes::MOVE_DOWN;
+	if (input.IsKeyDown('Q'))
+		worldEvents |= ControlCodes::ROLL_LEFT;
+	if (input.IsKeyDown('E'))
+		worldEvents |= ControlCodes::ROLL_RIGHT;
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();

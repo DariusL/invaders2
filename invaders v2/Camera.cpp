@@ -41,6 +41,18 @@ void Camera::Pitch(float angle)
 	forward = D3DXVECTOR3(temp);
 }
 
+void Camera::Roll(float angle)
+{
+	D3DXMATRIX matrix;
+	D3DXVECTOR4 temp;
+
+	D3DXMatrixRotationAxis(&matrix, &forward, angle);
+	D3DXVec3Transform(&temp, &up, &matrix);
+	up = D3DXVECTOR3(temp);
+	D3DXVec3Transform(&temp, &right, &matrix);
+	right = D3DXVECTOR3(temp);
+}
+
 void Camera::Up(float dist)
 {
 	pos += dist * up;
@@ -56,7 +68,9 @@ void Camera::Forward(float dist)
 	pos += dist * forward;
 }
 
-void Camera::Move(D3DXVECTOR3 offset)
+void Camera::Move(float x, float y, float z)
 {
-	pos += offset;
+	Forward(z);
+	Right(x);
+	Up(y);
 }

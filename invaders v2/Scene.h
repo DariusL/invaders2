@@ -11,8 +11,8 @@
 #include "RemoteCamera.h"
 class Scene : public IWorld
 {
-	shared_ptr<DrawableBumpyEntity> bumpy;
-	shared_ptr<Light> light;
+	DrawableBumpyEntity bumpy;
+	Light light;
 	RemoteCamera remoteCamera;
 	SimpleTexturedEntity gabenizer;
 public:
@@ -23,7 +23,7 @@ public:
 	void Stop();
 
 	int OnLoop(int input, float frameLength);
-	shared_ptr<Light> GetLight(){return light;}
+	Light &GetLight(){return light;}
 	RemoteCamera &GetRemoteCamera(){ return remoteCamera; }
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);

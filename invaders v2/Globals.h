@@ -74,6 +74,8 @@ struct ControlCodes
 	static const int MOVE_RIGHT = 1 << 11;
 	static const int MOVE_FORWARD = 1 << 12;
 	static const int MOVE_BACK = 1 << 13;
+	static const int ROLL_LEFT = 1 << 14;
+	static const int ROLL_RIGHT = 1 << 15;
 };
 
 struct RenderParams

@@ -51,7 +51,7 @@ bool Graphics::Init(Scene *world)
 void Graphics::Render()
 {
 	D3DXMATRIX viewMatrix, projectionMatrix;
-	auto light = world->GetLight();
+	auto &light = world->GetLight();
 
 	auto &camera = world->GetCamera();
 	camera.RenderMain();
@@ -59,14 +59,13 @@ void Graphics::Render()
 	RenderParams params;
 	params.brightness = brightness;
 	params.context = d3D.GetDeviceContext();
-	params.lightPos = light->GetPos();
-	params.diffuseColor = light->GetColor();
+	params.lightPos = light.GetPos();
+	params.diffuseColor = light.GetColor();
 	params.cameraPos = camera.GetPosition(); 
 	camera.GetViewMatrix(viewMatrix);
 
 	d3D.GetProjectionMatrix(projectionMatrix);
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
-
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();

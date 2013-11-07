@@ -10,9 +10,13 @@ Scene::Scene(void)
 	ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::PLANE), ResourceManager::Get().GetShader<TextureShader>(), 20, 10),
 
 	gabenizer(DefVec3, ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::INV_BOX), ResourceManager::Get().GetShader<TextureShader>(),
-	ResourceManager::Get().GetTexture(ResourceManager::Textures::TEXTURE_GABEN), D3DXVECTOR3(100.0f, 100.0f, 100.0f))
+	ResourceManager::Get().GetTexture(ResourceManager::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),
+
+	light(DefVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), ResourceManager::Get().GetModel(ResourceManager::Models::MODEL_BALL), ResourceManager::Get().GetShader<ColorShader>()),
+
+	bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), ResourceManager::Get().GetNormalMappedModel(), ResourceManager::Get().GetShader<NormalMappedShader>())
 {
-	camera.Forward(-30);
+	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
 }
 
@@ -34,7 +38,7 @@ void Scene::Stop()
 
 int Scene::OnLoop(int input, float frameLength)
 {
-	float yaw = 0.0f, pitch = 0.0f;
+	float yaw = 0.0f, pitch = 0.0f, roll = 0.0f;
 	if (input & ControlCodes::LEFT)
 		yaw -= frameLength;
 	if (input & ControlCodes::RIGHT)
@@ -43,10 +47,16 @@ int Scene::OnLoop(int input, float frameLength)
 		pitch += frameLength;
 	if (input & ControlCodes::UP)
 		pitch -= frameLength;
-	if (yaw != 0)
+	if (input & ControlCodes::ROLL_LEFT)
+		roll += frameLength;
+	if (input & ControlCodes::ROLL_RIGHT)
+		roll -= frameLength;
+	if (yaw != 0.0f)
 		camera.Yaw(yaw);
-	if (pitch != 0)
+	if (pitch != 0.0f)
 		camera.Pitch(pitch);
+	if (roll != 0.0f)
+		camera.Roll(roll);
 
 	auto move = DefVec3;
 	frameLength *= 10;
@@ -73,10 +83,8 @@ int Scene::OnLoop(int input, float frameLength)
 bool Scene::Init(ComPtr<ID3D11Device> device)
 {
 	ResourceManager *rm = App::Get()->GetResourceManager();
-	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), rm->GetModel(ResourceManager::Models::MODEL_BALL), rm->GetShader<ColorShader>());
-	light->Init(device);
-	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetNormalMappedModel(), rm->GetShader<NormalMappedShader>());
-	bumpy->Init(device);
+	light.Init(device);
+	bumpy.Init(device);
 	remoteCamera.Init(device);
 	gabenizer.Init(device);
 	return true;
@@ -84,7 +92,7 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 
 void Scene::Render(const RenderParams &params)
 {
-	//light->Render(params);
-	//bumpy->Render(params);
+	light.Render(params);
+	bumpy.Render(params);
 	gabenizer.Render(params);
 }
