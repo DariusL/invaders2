@@ -8,6 +8,8 @@
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
+extern D3DXVECTOR3 DefVec3;
+
 struct VertexType
 {
 	D3DXVECTOR3 position;
@@ -18,6 +20,9 @@ struct TextureVertexType
 {
 	D3DXVECTOR3 position;
 	D3DXVECTOR2 tex;
+
+	TextureVertexType(){}
+	TextureVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)){}
 };
 
 struct NormalMappedVertexType

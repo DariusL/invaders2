@@ -2,13 +2,16 @@
 #include "ResourceManager.h"
 using namespace Microsoft::WRL;
 
+ResourceManager *ResourceManager::handle;
+
 ResourceManager::ResourceManager(void)
-	:texturedModel(GetTexturedModelFromOBJ("textured_ball.obj")),
+:normalMappedModel(GetNormalMappedModelFromOBJ("textured_ball.obj")),
 	normalModel(GetNormalModelFromOBJ("teapot.obj")),
 	models()
 {
-	texturedModel.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	normalMappedModel.hitbox = D3DXVECTOR2(2.0f, 2.0f);
 	normalModel.hitbox = D3DXVECTOR2(1.5f, 1.5f);
+	handle = this;
 }
 
 
@@ -186,23 +189,24 @@ bool ResourceManager::Init()
 
 	models.push_back(move(temp));
 
+	TexturedModel plane;
 	plane.hitbox = D3DXVECTOR2(20, 20);
 
 	TextureVertexType tv;
 
-	tv.position = D3DXVECTOR3(-10.0f, -10.0f, 0.0f);  // Bottom left.
+	tv.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
 	tv.tex = D3DXVECTOR2(0.0f, 1.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(-10.0f, 10.0f, 0.0f);  // Top left
+	tv.position = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);  // Top left
 	tv.tex = D3DXVECTOR2(0.0f, 0.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(10.0f, -10.0f, 0.0f);  // Bottom right.
+	tv.position = D3DXVECTOR3(0.5f, -0.5f, 0.0f);  // Bottom right.
 	tv.tex = D3DXVECTOR2(1.0f, 1.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(10.0f, 10.0f, 0.0f);  // Top right.
+	tv.position = D3DXVECTOR3(0.5f, 0.5f, 0.0f);  // Top right.
 	tv.tex = D3DXVECTOR2(1.0f, 0.0f);
 	plane.vertices.push_back(tv);
 
@@ -213,6 +217,9 @@ bool ResourceManager::Init()
 	plane.indices.push_back(1);
 	plane.indices.push_back(3);
 	plane.indices.push_back(2);
+
+	texturedModels.push_back(move(plane));
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed("box.obj", true));
 
 	Level *level = new Level();
 
@@ -232,9 +239,9 @@ bool ResourceManager::Init()
 	return true;
 }
 
-ColorModel ResourceManager::GetModelFromOBJ(string filename)
+ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
 {
-	auto normalModel = GetNormalModelFromOBJ(filename);
+	auto normalModel = GetNormalModelFromOBJ(filename, invert);
 	ColorModel ret;
 	VertexType vertex;
 	ret.hitbox = normalModel.hitbox;
@@ -248,15 +255,13 @@ ColorModel ResourceManager::GetModelFromOBJ(string filename)
 	return ret;
 }
 
-NormalModel ResourceManager::GetNormalModelFromOBJ(string filename)
+NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
 {
 	NormalModel model;
 	ifstream in(filename, ios::binary);
 	vector<D3DXVECTOR3> normals;
 	string input;
 	float x, y, z;
-	/*if(!in.is_open())
-		return NULL;*/
 
 	while(!in.eof())
 	{
@@ -283,7 +288,10 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(string filename)
 			string blob;
 			getline(in, blob, '\n');
 			auto vertices = GetVerticesFromFace(blob);
-			Utils::Reverse(vertices);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
 			for(auto &vertex : vertices)
 			{
 				model.vertices[vertex.vertex].normal = normals[vertex.normal];
@@ -295,7 +303,7 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(string filename)
 	return model;
 }
 
-NormalMappedModel ResourceManager::GetTexturedModelFromOBJ(string filename)
+NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(string filename, bool invert)
 {
 	NormalMappedModel model;
 	ifstream in(filename, ios::binary);
@@ -303,8 +311,6 @@ NormalMappedModel ResourceManager::GetTexturedModelFromOBJ(string filename)
 	vector<D3DXVECTOR2> tex;
 	string input;
 	float x, y, z;
-	/*if(!in.is_open())
-		return NULL;*/
 
 	while(!in.eof())
 	{
@@ -336,7 +342,10 @@ NormalMappedModel ResourceManager::GetTexturedModelFromOBJ(string filename)
 			string blob;
 			getline(in, blob, '\n');
 			auto vertices = GetVerticesFromFace(blob);
-			Utils::Reverse(vertices);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
 			for(auto &vertex : vertices)
 			{
 				model.vertices[vertex.vertex].normal = normals[vertex.normal];
@@ -344,6 +353,105 @@ NormalMappedModel ResourceManager::GetTexturedModelFromOBJ(string filename)
 				model.indices.push_back(vertex.vertex);
 			}
 			CalculateTangentAndBinormal(vertices, model.vertices);
+		}
+	}
+
+	return model;
+}
+
+TexturedModel ResourceManager::GetTexturedModelFromOBJ(string filename, bool invert)
+{
+	TexturedModel model;
+	ifstream in(filename, ios::binary);
+	vector<D3DXVECTOR2> tex;
+	string input;
+	float x, y, z;
+
+	while (!in.eof())
+	{
+		in >> input;
+
+		if (input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+			in >> x >> y >> z;
+			model.vertices.emplace_back(x, y, -z);
+		}
+		else if (input == "vt")
+		{
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
+		}
+		else if (input == "f")
+		{
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
+			for (auto &vertex : vertices)
+			{
+				model.vertices[vertex.vertex].tex = tex[vertex.tex];
+				model.indices.push_back(vertex.vertex);
+			}
+		}
+	}
+
+	return model;
+}
+
+TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(string filename, bool invert)
+{
+	TexturedModel model;
+	vector<TextureVertexType> v;
+	ifstream in(filename, ios::binary);
+	vector<D3DXVECTOR2> tex;
+	string input;
+	float x, y, z;
+
+	while (!in.eof())
+	{
+		in >> input;
+
+		if (input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+			in >> x >> y >> z;
+			v.emplace_back(x, y, -z);
+		}
+		else if (input == "vt")
+		{
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
+		}
+		else if (input == "f")
+		{
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
+			for (auto &vertex : vertices)
+			{
+				TextureVertexType temp = v[vertex.vertex];
+				temp.tex = tex[vertex.tex];
+				model.vertices.push_back(temp);
+				model.indices.push_back(model.vertices.size() - 1);
+			}
 		}
 	}
 
@@ -412,6 +520,13 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind,
 	v3.tangent += tangent;
 }
 
+ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device)
+{
+	ComPtr<ID3D11ShaderResourceView> ret;
+	D3DX11CreateShaderResourceViewFromFile(device.Get(), filename.c_str(), NULL, NULL, &ret, NULL);
+	return ret;
+}
+
 bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
 	shaders.push_back(make_shared<ColorShader>("ColorVertex.cso", "ColorPixel.cso"));
@@ -425,5 +540,9 @@ bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_shared<WaterShader>("WaterVertex.cso", "WaterPixel.cso"));
 	for(auto shader : shaders)
 		shader->Init(device);
+
+	textures.push_back(GetTextureFromFile(L"gaben.dds", device));
+	textures.push_back(GetTextureFromFile(L"stage7.dds", device));
+	textures.push_back(GetTextureFromFile(L"wave.dds", device));
 	return true;
 }

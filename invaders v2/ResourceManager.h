@@ -25,21 +25,26 @@ class ResourceManager
 		int vertex;
 	};
 	vector<ColorModel> models;
+	vector<TexturedModel> texturedModels;
 	NormalModel normalModel;
-	NormalMappedModel texturedModel;
-	TexturedModel plane;
+	NormalMappedModel normalMappedModel;
 	vector<shared_ptr<Level>> levels;
 	vector<shared_ptr<IShader>> shaders;
+	ComVector<ID3D11ShaderResourceView> textures;
 
-	static NormalModel GetNormalModelFromOBJ(string filename);
-	static ColorModel GetModelFromOBJ(string filename);
-	static NormalMappedModel GetTexturedModelFromOBJ(string filename);
+	static NormalModel GetNormalModelFromOBJ(string filename, bool invert = false);
+	static ColorModel GetModelFromOBJ(string filename, bool invert = false);
+	static NormalMappedModel GetNormalMappedModelFromOBJ(string filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJ(string filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJUnindexed(string filename, bool invert = false);
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
 	static FaceVertex GetVertexFromString(string &vertex);
+	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
 
 	ResourceManager(const ResourceManager&);
 	ResourceManager &operator=(const ResourceManager&);
+	static ResourceManager *handle;
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
@@ -52,8 +57,10 @@ public:
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 	NormalModel &GetNormalModel(){return normalModel;}
-	TexturedModel &GetPlane(){return plane;}
-	NormalMappedModel &GetTexturedModel(){return texturedModel;}
+	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
+	TexturedModel &GetTexturedModel(int i){ return texturedModels[i]; }
+	ComPtr < ID3D11ShaderResourceView> GetTexture(int i){ return textures[i]; }
+	static ResourceManager &Get(){ return *handle; }
 
 	template<class sh>
 	sh &GetShader(){return ColorShader("", "");}
@@ -115,5 +122,18 @@ public:
 	enum NormalModels
 	{
 		NORMAL_TEACUP
+	};
+
+	enum Textures
+	{
+		TEXTURE_GABEN,
+		TEXTURE_PAPER_NORMAL_MAP,
+		TEXTURE_WATER_NORMAL_MAP
+	};
+
+	enum TexturedModels
+	{
+		PLANE,
+		INV_BOX
 	};
 };

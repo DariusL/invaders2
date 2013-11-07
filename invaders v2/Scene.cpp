@@ -6,11 +6,14 @@
 #include "WaterShader.h"
 
 Scene::Scene(void)
+:remoteCamera(D3DXVECTOR3(-30.0f, -10.0f, 0.0f), D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -5.0f, 0.0f),
+	ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::PLANE), ResourceManager::Get().GetShader<TextureShader>(), 20, 10),
+
+	gabenizer(DefVec3, ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::INV_BOX), ResourceManager::Get().GetShader<TextureShader>(),
+	ResourceManager::Get().GetTexture(ResourceManager::Textures::TEXTURE_GABEN), D3DXVECTOR3(10.0f, 10.0f, 10.0f))
 {
 	started = false;
 	camera.Forward(-30.0f);
-	camera.Up(-10.0f);
-	camera.Pitch(1.0f);
 }
 
 
@@ -39,19 +42,16 @@ bool Scene::Init(ComPtr<ID3D11Device> device)
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	light = make_shared<Light>(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), rm->GetModel(ResourceManager::Models::MODEL_BALL), rm->GetShader<ColorShader>());
 	light->Init(device);
-	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetTexturedModel(), rm->GetShader<NormalMappedShader>());
+	bumpy = make_shared<DrawableBumpyEntity>(D3DXVECTOR3(0.0f, 0.0f, -5.0f), rm->GetNormalMappedModel(), rm->GetShader<NormalMappedShader>());
 	bumpy->Init(device);
-	water = make_shared<WaterPlane>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane(), rm->GetShader<WaterShader>());
-	water->Init(device);
-	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"gaben.dds", NULL, NULL, &gaben, NULL));
-	gabener = make_shared<SimpleTexturedEntity>(D3DXVECTOR3(0.0f, 0.0f, 0.0f), rm->GetPlane(), rm->GetShader<TextureShader>(), gaben);
-	gabener->Init(device);
+	remoteCamera.Init(device);
+	gabenizer.Init(device);
 	return true;
 }
 
 void Scene::Render(const RenderParams &params)
 {
-	light->Render(params);
-	bumpy->Render(params);
-	gabener->Render(params);
+	//light->Render(params);
+	//bumpy->Render(params);
+	gabenizer.Render(params);
 }

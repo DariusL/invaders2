@@ -84,6 +84,7 @@
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="FloatingCamera.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="GlobalSpecularShader.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="includes.cpp">

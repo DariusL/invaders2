@@ -54,37 +54,36 @@ void Graphics::Render()
 	auto light = world->GetLight();
 
 	Camera &camera = world->GetCamera();
+	auto &remote = world->GetRemoteCamera();
+	auto &target = remote.GetRenderTarget();
+	remote.RenderMain();
 	camera.RenderMain();
-	camera.RenderMirror();
 
 	RenderParams params;
 	params.brightness = brightness;
 	params.context = d3D.GetDeviceContext();
 	params.lightPos = light->GetPos();
 	params.diffuseColor = light->GetColor();
-	params.cameraPos = camera.GetPosition();
+	params.cameraPos = remote.GetPosition();
 
+	remote.GetViewMatrix(viewMatrix);
 	d3D.GetProjectionMatrix(projectionMatrix);
 
-	auto water = world->GetWater();
-	auto target = water->GetRenderTarget();
-
-	target->SetRenderTarget(params.context);
-	target->ClearTarget(params.context);
-	camera.GetMirrorMatrix(viewMatrix);
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
-	D3DXMatrixMultiply(&params.reflecMatrix, &viewMatrix, &projectionMatrix);
+	target.SetRenderTarget(params.context);
+	target.ClearTarget(params.context);
+
 	world->Render(params);
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
-	d3D.DoingDepthCheck(true);
 
 	camera.GetViewMatrix(viewMatrix);
+	params.cameraPos = camera.GetPosition();
 	D3DXMatrixMultiply(&params.transMatrix, &viewMatrix, &projectionMatrix);
 
 	world->Render(params);
-	//water->Render(params);
+	//remote.Render(params);
 
 	d3D.Present();
 }

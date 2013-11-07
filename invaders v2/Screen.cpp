@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "Screen.h"
 
-Screen::Screen(D3DXVECTOR3 screenPos, int width, int height, TexturedModel &screenModel, TextureShader &screenShader)
-:renderTarget(width, height), screen(screenPos, screenModel, screenShader)
+Screen::Screen(D3DXVECTOR3 screenPos, TexturedModel &screenModel, TextureShader &screenShader, int width, int height)
+:renderTarget(width, height), screen(screenPos, screenModel, screenShader, NULL, D3DXVECTOR3((float)width, (float)height, 0.0f))
 {
 }
 
@@ -21,6 +21,6 @@ bool Screen::Init(ComPtr<ID3D11Device> device)
 
 void Screen::Render(const RenderParams &params)
 {
-	renderTexture[0] = renderTarget.GetRenderedTexture();
+ 	renderTexture[0] = renderTarget.GetRenderedTexture();
 	screen.Render(params, renderTexture);
 }

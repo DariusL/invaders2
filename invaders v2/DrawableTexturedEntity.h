@@ -9,8 +9,9 @@ template<class vt, class sh>
 class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 {
 	ComVector<ID3D11ShaderResourceView> texture;
+	D3DXMATRIX scale;
 public:
-	DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL);
+	DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, D3DXVECTOR3 scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
 	virtual ~DrawableTexturedEntity(void){}
 
@@ -21,10 +22,11 @@ public:
 typedef DrawableTexturedEntity<TextureVertexType, TextureShader> SimpleTexturedEntity;
 
 template<class vt, class sh>
-DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture)
+DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, D3DXVECTOR3 scale)
 : DrawableEntity(pos, model, shader)
 {
 	this->texture.push_back(texture);
+	D3DXMatrixScaling(&this->scale, scale.x, scale.y, scale.z);
 }
 
 template<class vt, class sh>
@@ -39,7 +41,7 @@ void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
 	if (!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader.SetShaderParametersTextured(params, moveMatrix, texture);
+	shader.SetShaderParametersTextured(params, scale * moveMatrix, texture);
 	shader.RenderShader(params.context, model.indices.size());
 }
 

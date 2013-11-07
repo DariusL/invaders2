@@ -9,7 +9,7 @@ class Screen : public IDrawable
 	RenderTarget renderTarget;
 	SimpleTexturedEntity screen;
 public:
-	Screen(D3DXVECTOR3 screenPos, int width, int height, TexturedModel &screenModel, TextureShader &screenShader);
+	Screen(D3DXVECTOR3 screenPos, TexturedModel &screenModel, TextureShader &screenShader, int width, int height);
 	Screen(Screen &&other);
 
 	bool Init(ComPtr<ID3D11Device> device);

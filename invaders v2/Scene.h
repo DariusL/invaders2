@@ -8,13 +8,13 @@
 #include "FloatingCamera.h"
 #include "DrawableBumpyEntity.h"
 #include "WaterPlane.h"
+#include "RemoteCamera.h"
 class Scene : public IWorld
 {
 	shared_ptr<DrawableBumpyEntity> bumpy;
 	shared_ptr<Light> light;
-	shared_ptr<WaterPlane> water;
-	ComPtr<ID3D11ShaderResourceView> gaben;
-	shared_ptr<SimpleTexturedEntity> gabener;
+	RemoteCamera remoteCamera;
+	SimpleTexturedEntity gabenizer;
 public:
 	Scene();
 	~Scene();
@@ -24,7 +24,7 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	shared_ptr<Light> GetLight(){return light;}
-	shared_ptr<WaterPlane> GetWater(){return water;}
+	RemoteCamera &GetRemoteCamera(){ return remoteCamera; }
 	bool Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 };
