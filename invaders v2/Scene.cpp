@@ -6,8 +6,8 @@
 #include "WaterShader.h"
 
 Scene::Scene(void)
-:remoteCamera(D3DXVECTOR3(-30.0f, -10.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -5.0f, 0.0f),
-	ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::PLANE), ResourceManager::Get().GetShader<TextureShader>(), 20, 10),
+:remoteCamera(D3DXVECTOR3(0.0f, -10.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -5.0f, 0.0f),
+	ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::PLANE), ResourceManager::Get().GetShader<TextureShader>(), 200, 100),
 
 	gabenizer(DefVec3, ResourceManager::Get().GetTexturedModel(ResourceManager::TexturedModels::INV_BOX), ResourceManager::Get().GetShader<TextureShader>(),
 	ResourceManager::Get().GetTexture(ResourceManager::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),

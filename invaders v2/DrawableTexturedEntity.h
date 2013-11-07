@@ -10,6 +10,7 @@ class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 {
 	ComVector<ID3D11ShaderResourceView> texture;
 	D3DXMATRIX scale;
+	D3DXMATRIX rot;
 public:
 	DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, D3DXVECTOR3 scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);

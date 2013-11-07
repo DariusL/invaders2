@@ -20,9 +20,7 @@ public:
 	D3DXVECTOR3 GetPosition(){return pos;}
 
 	virtual void RenderMain();
-	virtual void RenderMirror();
-	void GetViewMatrix(D3DXMATRIX &matrix){matrix = viewMatrix;}
-	void GetMirrorMatrix(D3DXMATRIX &matrix){matrix = mirrorMatrix;}
+	const D3DXMATRIX &GetViewMatrix(){ return viewMatrix; }
 
 private:
 	D3DXVECTOR3 pos;
@@ -31,5 +29,4 @@ private:
 	D3DXVECTOR3 right;
 
 	D3DXMATRIX viewMatrix;
-	D3DXMATRIX mirrorMatrix;
 };

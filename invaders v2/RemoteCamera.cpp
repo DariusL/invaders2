@@ -7,6 +7,7 @@ RemoteCamera::RemoteCamera(D3DXVECTOR3 cameraPos, D3DXVECTOR3 cameraDir, D3DXVEC
 	Move(cameraPos);
 	Yaw(cameraDir.x);
 	Pitch(cameraDir.y);
+	Roll(cameraDir.z);
 }
 
 RemoteCamera::RemoteCamera(RemoteCamera &&other)

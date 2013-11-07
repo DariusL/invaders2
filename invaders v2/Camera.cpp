@@ -12,11 +12,6 @@ void Camera::RenderMain()
 	D3DXMatrixLookAtLH(&viewMatrix, &pos, &forward, &up);
 }
 
-void Camera::RenderMirror()
-{
-	D3DXMatrixLookAtLH(&mirrorMatrix, &pos, &forward, &up);
-}
-
 void Camera::Yaw(float angle)
 {
 	D3DXMATRIX matrix;

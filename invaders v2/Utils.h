@@ -13,6 +13,7 @@ namespace Utils{
 	float Trunc(float x, float &trunced);
 	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, ColorModel &model);
 	void ShowMessageBox(wstring text, wstring title);
+	D3DXPLANE PlaneFromPointAndRot(D3DXVECTOR3 point, D3DXVECTOR3 rot);
 
 	template<class T>
 	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)
