@@ -1,6 +1,5 @@
 #pragma once
 #include "Direct3D.h"
-#include "FloatingCamera.h"
 #include "Scene.h"
 
 class Graphics

@@ -5,7 +5,6 @@
 #include "DrawableTexturedEntity.h"
 #include "Globals.h"
 #include "Light.h"
-#include "FloatingCamera.h"
 #include "DrawableBumpyEntity.h"
 #include "WaterPlane.h"
 #include "RemoteCamera.h"
