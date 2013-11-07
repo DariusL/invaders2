@@ -13,6 +13,7 @@
 #include "TextureShader.h"
 #include "NormalMappedShader.h"
 #include "WaterShader.h"
+#include "MirrorShader.h"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ class ResourceManager
 	NormalModel normalModel;
 	NormalMappedModel normalMappedModel;
 	vector<shared_ptr<Level>> levels;
-	vector<shared_ptr<IShader>> shaders;
+	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
 
 	static NormalModel GetNormalModelFromOBJ(string filename, bool invert = false);
@@ -83,6 +84,8 @@ public:
 	NormalMappedShader &GetShader<NormalMappedShader>(){return static_cast<NormalMappedShader&>(*shaders[Shaders::NORMAL_MAPPED]);}
 	template<>
 	WaterShader &GetShader<WaterShader>(){return static_cast<WaterShader&>(*shaders[Shaders::WATER]);}
+	template<>
+	MirrorShader &GetShader<MirrorShader>(){ return static_cast<MirrorShader&>(*shaders[Shaders::MIRROR]); }
 
 	enum Models
 	{
@@ -115,7 +118,8 @@ public:
 		POINT_SPECULAR,
 		TEXTURE,
 		NORMAL_MAPPED,
-		WATER
+		WATER,
+		MIRROR
 	};
 
 	enum NormalModels

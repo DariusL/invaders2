@@ -527,16 +527,18 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 
 void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(make_shared<ColorShader>(L"ColorVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_shared<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_shared<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
-	shaders.push_back(make_shared<GlobalSpecularShader>(L"GlobalSpecularVertex.cso", L"GlobalSpecularPixel.cso"));
-	shaders.push_back(make_shared<PointDiffuseShader>(L"PointDiffuseVertex.cso", L"PointDiffusePixel.cso"));
-	shaders.push_back(make_shared<PointSpecularShader>(L"PointSpecularVertex.cso", L"PointSpecularPixel.cso"));
-	shaders.push_back(make_shared<TextureShader>(L"TextureVertex.cso", L"TexturePixel.cso"));
-	shaders.push_back(make_shared<NormalMappedShader>(L"NormalMapVertex.cso", L"NormalMapPixel.cso"));
-	shaders.push_back(make_shared<WaterShader>(L"WaterVertex.cso", L"WaterPixel.cso"));
-	for(auto shader : shaders)
+	shaders.push_back(make_unique<ColorShader>(L"ColorVertex.cso", L"ColorPixel.cso"));
+	shaders.push_back(make_unique<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
+	shaders.push_back(make_unique<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
+	shaders.push_back(make_unique<GlobalSpecularShader>(L"GlobalSpecularVertex.cso", L"GlobalSpecularPixel.cso"));
+	shaders.push_back(make_unique<PointDiffuseShader>(L"PointDiffuseVertex.cso", L"PointDiffusePixel.cso"));
+	shaders.push_back(make_unique<PointSpecularShader>(L"PointSpecularVertex.cso", L"PointSpecularPixel.cso"));
+	shaders.push_back(make_unique<TextureShader>(L"TextureVertex.cso", L"TexturePixel.cso"));
+	shaders.push_back(make_unique<NormalMappedShader>(L"NormalMapVertex.cso", L"NormalMapPixel.cso"));
+	shaders.push_back(make_unique<WaterShader>(L"WaterVertex.cso", L"WaterPixel.cso"));
+	shaders.push_back(make_unique<MirrorShader>(L"MirrorVertex.cso", L"MirrorPixel.cso"));
+	
+	for(auto &shader : shaders)
 		shader->Init(device);
 
 	textures.push_back(GetTextureFromFile(L"gaben.dds", device));
