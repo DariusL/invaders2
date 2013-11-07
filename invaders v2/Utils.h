@@ -8,7 +8,7 @@ typedef unsigned int UINT;
 
 namespace Utils{
 	//returns a new array with the contents of the file
-	bool ReadFileToArray(std::string file, std::unique_ptr<char> &arr, UINT &size);
+	bool ReadFileToArray(wstring file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
 	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, ColorModel &model);
@@ -56,5 +56,19 @@ namespace Utils{
 							stream << hex << x; \
 							Utils::ShowMessageBox(L"Error number 0x" + stream.str(), __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
 							DebugBreak(); \
+						}
+#endif
+
+#ifndef _DEBUG
+#define AssertBool(x, error)   if (x != true) \
+{ \
+	Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+	exit(-1); \
+						}
+#else
+#define AssertBool(x, error)   if (x != true) \
+{ \
+	Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+	DebugBreak(); \
 						}
 #endif

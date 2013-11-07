@@ -5,7 +5,7 @@
 class GlobalDiffuseShader : public IPositionShader
 {
 public:
-	GlobalDiffuseShader(string vs, string ps):IPositionShader(vs, ps){}
+	GlobalDiffuseShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
 	~GlobalDiffuseShader(void){}
 
 public:	

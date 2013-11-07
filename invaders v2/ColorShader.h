@@ -10,7 +10,7 @@ using namespace std;
 class ColorShader : public IPositionShader
 {
 public:
-	ColorShader(string vs, string ps):IPositionShader(vs, ps){}
+	ColorShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
 	~ColorShader(void){}
 
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);

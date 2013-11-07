@@ -6,7 +6,7 @@
 class NormalMappedShader : public PointSpecularShader
 {
 public:
-	NormalMappedShader(string vs, string ps):PointSpecularShader(vs, ps){}
+	NormalMappedShader(wstring vs, wstring ps):PointSpecularShader(vs, ps){}
 	~NormalMappedShader(void){}
 
 	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture);

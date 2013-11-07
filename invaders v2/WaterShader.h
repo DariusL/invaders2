@@ -5,7 +5,7 @@ using namespace std;
 class WaterShader : public TextureShader
 {
 public:
-	WaterShader(string vs, string ps):TextureShader(vs, ps){}
+	WaterShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
 	~WaterShader(void){}
 
 public:

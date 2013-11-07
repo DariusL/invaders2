@@ -3,7 +3,7 @@
 
 namespace Utils
 {
-	bool ReadFileToArray(std::string file, std::unique_ptr<char> &arr, UINT &size)
+	bool ReadFileToArray(wstring file, std::unique_ptr<char> &arr, UINT &size)
 	{
 		std::ifstream stream = std::ifstream(file, std::ios::binary);
 		if (!stream.is_open())

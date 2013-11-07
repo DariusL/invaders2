@@ -3,7 +3,7 @@
 class GlobalSpecularShader : public GlobalDiffuseShader
 {
 public:
-	GlobalSpecularShader(string vs, string ps):GlobalDiffuseShader(vs, ps){}
+	GlobalSpecularShader(wstring vs, wstring ps) :GlobalDiffuseShader(vs, ps){}
 	~GlobalSpecularShader(void){}
 	
 	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);

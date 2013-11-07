@@ -529,15 +529,15 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 
 bool ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(make_shared<ColorShader>("ColorVertex.cso", "ColorPixel.cso"));
-	shaders.push_back(make_shared<ColorInstancedShader>("ColorInstancedVertex.cso", "ColorPixel.cso"));
-	shaders.push_back(make_shared<GlobalDiffuseShader>("GlobalDiffuseVertex.cso", "GlobalDiffusePixel.cso"));
-	shaders.push_back(make_shared<GlobalSpecularShader>("GlobalSpecularVertex.cso", "GlobalSpecularPixel.cso"));
-	shaders.push_back(make_shared<PointDiffuseShader>("PointDiffuseVertex.cso", "PointDiffusePixel.cso"));
-	shaders.push_back(make_shared<PointSpecularShader>("PointSpecularVertex.cso", "PointSpecularPixel.cso"));
-	shaders.push_back(make_shared<TextureShader>("TextureVertex.cso", "TexturePixel.cso"));
-	shaders.push_back(make_shared<NormalMappedShader>("NormalMapVertex.cso", "NormalMapPixel.cso"));
-	shaders.push_back(make_shared<WaterShader>("WaterVertex.cso", "WaterPixel.cso"));
+	shaders.push_back(make_shared<ColorShader>(L"aColorVertex.cso", L"ColorPixel.cso"));
+	shaders.push_back(make_shared<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
+	shaders.push_back(make_shared<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
+	shaders.push_back(make_shared<GlobalSpecularShader>(L"GlobalSpecularVertex.cso", L"GlobalSpecularPixel.cso"));
+	shaders.push_back(make_shared<PointDiffuseShader>(L"PointDiffuseVertex.cso", L"PointDiffusePixel.cso"));
+	shaders.push_back(make_shared<PointSpecularShader>(L"PointSpecularVertex.cso", L"PointSpecularPixel.cso"));
+	shaders.push_back(make_shared<TextureShader>(L"TextureVertex.cso", L"TexturePixel.cso"));
+	shaders.push_back(make_shared<NormalMappedShader>(L"NormalMapVertex.cso", L"NormalMapPixel.cso"));
+	shaders.push_back(make_shared<WaterShader>(L"WaterVertex.cso", L"WaterPixel.cso"));
 	for(auto shader : shaders)
 		shader->Init(device);
 

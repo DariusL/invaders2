@@ -3,7 +3,7 @@
 class TextureShader : public ITextureShader
 {
 public:
-	TextureShader(string vs, string ps):ITextureShader(vs, ps){}
+	TextureShader(wstring vs, wstring ps):ITextureShader(vs, ps){}
 	~TextureShader(void){}
 
 	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures);

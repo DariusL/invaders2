@@ -12,7 +12,7 @@ using namespace std;
 class ColorInstancedShader : public IInstanceShader
 {
 public:
-	ColorInstancedShader(string vs, string ps):IInstanceShader(vs, ps){}
+	ColorInstancedShader(wstring vs, wstring ps) :IInstanceShader(vs, ps){}
 	~ColorInstancedShader(void){}
 
 	virtual void SetShaderParametersInstanced(const RenderParams &params);

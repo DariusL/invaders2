@@ -3,7 +3,7 @@
 class PointDiffuseShader : public IPositionShader
 {
 public:
-	PointDiffuseShader(string vs, string ps):IPositionShader(vs, ps){}
+	PointDiffuseShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
 	~PointDiffuseShader(void){}
 
 public:	

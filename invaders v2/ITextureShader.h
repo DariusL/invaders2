@@ -4,7 +4,7 @@
 class ITextureShader : public IPositionShader
 {
 public:
-	ITextureShader(string vs, string ps):IPositionShader(vs, ps){}
+	ITextureShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
 	virtual ~ITextureShader(){}
 
 	virtual void Init(ComPtr<ID3D11Device> device){IPositionShader::Init(device); InitializeSampler(device);}
