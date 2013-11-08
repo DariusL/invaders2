@@ -19,10 +19,11 @@ public:
 
 	D3DXVECTOR3 GetPosition() const {return pos;}
 
-	void RenderMain();
-	const D3DXMATRIX &GetViewMatrix() const { return viewMatrix; }
+	const D3DXMATRIX &GetViewMatrix(){ RenderMain(); return viewMatrix; }
 
 private:
+	void RenderMain();
+
 	D3DXVECTOR3 pos;
 	D3DXVECTOR3 forward;
 	D3DXVECTOR3 up;

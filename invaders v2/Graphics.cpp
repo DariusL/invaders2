@@ -53,8 +53,6 @@ void Graphics::Render()
 	auto &remotes = world->GetRemoteCamera();
 	d3D.GetProjectionMatrix(projectionMatrix);
 
-	camera.RenderMain();
-
 	RenderParams params;
 	params.brightness = brightness;
 	params.context = context;
@@ -63,7 +61,6 @@ void Graphics::Render()
 
 	for (auto &remote : remotes)
 	{
-		remote.RenderMain();
 		params.cameraPos = remote.GetPosition();
 		params.transMatrix = remote.GetViewMatrix() * projectionMatrix;
 		auto &target = remote.GetRenderTarget();
