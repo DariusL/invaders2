@@ -8,7 +8,7 @@ RenderTarget::RenderTarget(int width, int height)
 
 	clear[0] = 0.0f;
 	clear[1] = 0.0f;
-	clear[2] = 0.8f;
+	clear[2] = 0.0f;
 	clear[3] = 1.0f;
 
 	viewport.Width = (float)width;

@@ -105,7 +105,6 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -143,6 +142,7 @@
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Mirror.h" />
     <ClInclude Include="MirrorShader.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="NormalMappedShader.h" />

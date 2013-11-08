@@ -114,9 +114,6 @@
     <ClCompile Include="RemoteCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Globals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -267,6 +264,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MirrorShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mirror.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

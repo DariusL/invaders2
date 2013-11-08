@@ -1,9 +1,9 @@
 #include "includes.h"
 #include "RemoteCamera.h"
 
-RemoteCamera::RemoteCamera(D3DXVECTOR3 cameraPos, D3DXVECTOR3 cameraDir, D3DXVECTOR3 screenPos, TexturedModel &screenModel, TextureShader &screenShader, 
+RemoteCamera::RemoteCamera(D3DXVECTOR3 cameraPos, D3DXVECTOR3 cameraDir, D3DXVECTOR3 screenPos, D3DXVECTOR3 screenRot, TexturedModel &screenModel, TextureShader &screenShader,
 	int resWidth, int resHeight, float screenWidth, float screenHeight)
-:Screen(screenPos, screenModel, screenShader, resWidth, resHeight, screenWidth, screenHeight)
+:Screen(screenPos, screenRot, screenModel, screenShader, resWidth, resHeight, screenWidth, screenHeight)
 {
 	Move(cameraPos);
 	Yaw(cameraDir.x);

@@ -45,38 +45,43 @@ void Graphics::Init(Scene *world)
 void Graphics::Render()
 {
 	D3DXMATRIX projectionMatrix;
+	D3DXMATRIX reflectionMatrix;
+	auto context = d3D.GetDeviceContext();
 
 	auto &light = world->GetLight();
 	auto &camera = world->GetCamera();
-	auto &remote = world->GetRemoteCamera();
-	auto &target = remote.GetRenderTarget();
-
+	auto &remotes = world->GetRemoteCamera();
 	d3D.GetProjectionMatrix(projectionMatrix);
 
 	camera.RenderMain();
-	remote.RenderMain();
 
 	RenderParams params;
 	params.brightness = brightness;
-	params.context = d3D.GetDeviceContext();
+	params.context = context;
 	params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
-	params.cameraPos = remote.GetPosition(); 
 
-	D3DXMatrixMultiply(&params.transMatrix, &remote.GetViewMatrix(), &projectionMatrix);
-
-	target.SetRenderTarget(params.context);
-	target.ClearTarget(params.context);
-
-	world->Render(params);
+	for (auto &remote : remotes)
+	{
+		remote.RenderMain();
+		params.cameraPos = remote.GetPosition();
+		params.transMatrix = remote.GetViewMatrix() * projectionMatrix;
+		auto &target = remote.GetRenderTarget();
+		target.SetRenderTarget(context);
+		target.ClearTarget(context);
+		world->Render(params);
+	}
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
-	params.cameraPos = camera.GetPosition();
-	D3DXMatrixMultiply(&params.transMatrix, &camera.GetViewMatrix(), &projectionMatrix);
+
+	params.transMatrix = camera.GetViewMatrix() * projectionMatrix;
 
 	world->Render(params);
-	remote.Render(params);
+	for (auto &remote : remotes)
+	{
+		remote.Render(params);
+	}
 
 	d3D.Present();
 }

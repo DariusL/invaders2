@@ -8,12 +8,14 @@
 #include "DrawableBumpyEntity.h"
 #include "WaterPlane.h"
 #include "RemoteCamera.h"
+#include "Mirror.h"
 class Scene : public IWorld
 {
 	DrawableBumpyEntity bumpy;
 	Light light;
-	RemoteCamera remoteCamera;
+	vector<RemoteCamera> cameras;
 	SimpleTexturedEntity gabenizer;
+	SimpleMirror mirror;
 public:
 	Scene();
 	~Scene();
@@ -22,8 +24,9 @@ public:
 	void Stop();
 
 	int OnLoop(int input, float frameLength);
-	Light &GetLight(){return light;}
-	RemoteCamera &GetRemoteCamera(){ return remoteCamera; }
+	Light &GetLight(){ return light; }
+	SimpleMirror &GetMirror(){ return mirror; }
+	vector<RemoteCamera> &GetRemoteCamera(){ return cameras; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "Utils.h"
 
 using namespace Microsoft::WRL;
 using namespace std;

@@ -65,7 +65,7 @@ public:
 	static ResourceManager &Get(){ return *handle; }
 
 	template<class sh>
-	sh &GetShader(){return ColorShader("", "");}
+	sh &GetShader(){}
 	template<>
 	ColorShader &GetShader<ColorShader>(){return static_cast<ColorShader&>(*shaders[Shaders::COLOR]);}
 	template<>
@@ -140,3 +140,5 @@ public:
 		INV_BOX
 	};
 };
+
+typedef ResourceManager RM;

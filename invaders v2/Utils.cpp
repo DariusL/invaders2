@@ -60,7 +60,6 @@ namespace Utils
 		D3DXVECTOR4 temp;
 		D3DXMatrixRotationYawPitchRoll(&matrix, rot.x, rot.y, rot.z);
 		D3DXVec3Transform(&temp, &normal, &matrix);
-		D3DXPLANE ret(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y, temp.z*point.z));
-		return ret;
+		return D3DXPLANE(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
 	}
 }

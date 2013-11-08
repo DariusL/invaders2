@@ -12,7 +12,7 @@ class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 	D3DXMATRIX scale;
 	D3DXMATRIX rot;
 public:
-	DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, D3DXVECTOR3 scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	DrawableTexturedEntity(D3DXVECTOR3 pos, D3DXVECTOR3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, D3DXVECTOR3 scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
 	virtual ~DrawableTexturedEntity(void){}
 
@@ -23,11 +23,12 @@ public:
 typedef DrawableTexturedEntity<TextureVertexType, TextureShader> SimpleTexturedEntity;
 
 template<class vt, class sh>
-DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, D3DXVECTOR3 scale)
+DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(D3DXVECTOR3 pos, D3DXVECTOR3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, D3DXVECTOR3 scale)
 : DrawableEntity(pos, model, shader)
 {
 	this->texture.push_back(texture);
 	D3DXMatrixScaling(&this->scale, scale.x, scale.y, scale.z);
+	D3DXMatrixRotationYawPitchRoll(&this->rot, rot.x, rot.y, rot.z);
 }
 
 template<class vt, class sh>
@@ -42,7 +43,7 @@ void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
 	if (!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader.SetShaderParametersTextured(params, scale * moveMatrix, texture);
+	shader.SetShaderParametersTextured(params, scale * rot * moveMatrix, texture);
 	shader.RenderShader(params.context, model.indices.size());
 }
 
