@@ -8,7 +8,10 @@ public:
 	virtual ~ITextureShader(){}
 
 	virtual void Init(ComPtr<ID3D11Device> device){IPositionShader::Init(device); InitializeSampler(device);}
-	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures) = 0;
+	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
+	{ 
+		IPositionShader::SetShaderParameters(params, posMatrix);
+	}
 
 	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){ AssertBool(false, L"SetShaderParameters called on a texture shader"); }
 protected:

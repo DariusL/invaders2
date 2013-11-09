@@ -95,7 +95,7 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 
 void Scene::Render(const RenderParams &params)
 {
-	//light.Render(params);
-	//bumpy.Render(params);
+	light.Render(params);
+	bumpy.Render(params);
 	gabenizer.Render(params);
 }

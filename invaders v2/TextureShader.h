@@ -10,11 +10,9 @@ public:
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	virtual void InitializeSampler(ComPtr<ID3D11Device> device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
-	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11SamplerState> samplerState;
 	ComPtr<ID3D11ShaderResourceView> nullResource;
 };

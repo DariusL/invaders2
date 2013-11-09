@@ -30,22 +30,6 @@ vector<D3D11_INPUT_ELEMENT_DESC> TextureShader::GetInputLayout()
 	return ret;
 }
 
-void TextureShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
-{
-	D3D11_BUFFER_DESC matrixBufferDesc;
-
-	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
-	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
-	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	matrixBufferDesc.MiscFlags = 0;
-	matrixBufferDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
-	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
-}
-
 void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
 	D3D11_SAMPLER_DESC samplerDesc;
@@ -69,21 +53,9 @@ void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 
 void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	MatrixType vertexMatrices;
-
-	D3DXMatrixTranspose(&vertexMatrices.projection, &params.projection);
-	D3DXMatrixTranspose(&vertexMatrices.view, &params.view);
-	D3DXMatrixTranspose(&vertexMatrices.world, &moveMatrix);
-	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, params.context);
-
-	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
-
-	params.context->IASetInputLayout(layout.Get());
+	ITextureShader::SetShaderParametersTextured(params, moveMatrix, textures);
 
 	params.context->PSSetShaderResources(0, 1, textures[0].GetAddressOf());
-
-	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
-	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 }

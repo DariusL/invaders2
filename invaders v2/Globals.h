@@ -58,6 +58,12 @@ struct MatrixType
 	D3DXMATRIX projection;
 };
 
+struct InstancedMatrixType
+{
+	D3DXMATRIX view;
+	D3DXMATRIX projection;
+};
+
 struct ControlCodes
 {
 	static const int LEFT  = 1 << 0;

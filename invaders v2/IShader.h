@@ -17,12 +17,14 @@ public:
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
 protected:
 	void InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device) = 0;
+	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout() = 0;
 
 	ComPtr<ID3D11VertexShader> vertexShader;
 	ComPtr<ID3D11PixelShader> pixelShader;
 	ComPtr<ID3D11InputLayout> layout;
+
+	ComPtr<ID3D11Buffer> matrixBuffer;
 private:
 	wstring vs, ps;
 };

@@ -32,6 +32,7 @@ PixelInputType main(VertexInputType input)
 	output.position = mul(input.position, world);
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
+
 	output.reflectionPos = input.position;
 	output.reflectionPos = mul(output.reflectionPos, world);
 	output.reflectionPos = mul(output.reflectionPos, reflectView);

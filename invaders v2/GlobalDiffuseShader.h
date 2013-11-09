@@ -15,7 +15,6 @@ protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
-	ComPtr<ID3D11Buffer> matrixBuffer;
 	ComPtr<ID3D11Buffer> lightingBuffer;
 
 	struct LightBufferType

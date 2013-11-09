@@ -42,17 +42,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> PointDiffuseShader::GetInputLayout()
 
 void PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	D3D11_BUFFER_DESC matrixBufferDesc;
+	IPositionShader::InitializeShaderBuffers(device);
+
 	D3D11_BUFFER_DESC pixelLightDesc, vertexLightDesc;
-
-	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
-	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	matrixBufferDesc.MiscFlags = 0;
-	matrixBufferDesc.StructureByteStride = 0;
-	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-
-	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	pixelLightDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	pixelLightDesc.ByteWidth = sizeof(PixelLightBufferType);

@@ -1,6 +1,8 @@
 cbuffer TransMatrix : register(b0)
 {
-    matrix transform;
+	matrix world;
+	matrix view;
+	matrix projection;
 };
 
 struct VertexInputType
@@ -21,9 +23,10 @@ PixelInputType ColorVertexShader(VertexInputType input)
     
     input.position.w = 1.0f;
 
-	output.position = mul(input.position, transform);
-    //output.position.x += sin(output.position.x);
-	//output.position.y += cos(output.position.x);
+	output.position = mul(input.position, world);
+	output.position = mul(output.position, view);
+	output.position = mul(output.position, projection);
+
     output.color = input.color;
     
     return output;

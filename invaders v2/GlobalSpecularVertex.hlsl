@@ -1,7 +1,8 @@
 cbuffer TransMatrix : register(b0)
 {
-    matrix transform;
-	matrix move;
+	matrix world;
+	matrix view;
+	matrix projection;
 };
 
 cbuffer CameraBuffer : register(b1)
@@ -31,9 +32,12 @@ PixelInputType main(VertexInputType input)
 	float4 worldPos;
     
     input.position.w = 1.0f;
-	worldPos = mul(input.position, move);
+	worldPos = mul(input.position, world);
 
-	output.position = mul(input.position, transform);
+	output.position = mul(input.position, world);
+	output.position = mul(output.position, view);
+	output.position = mul(output.position, projection);
+
     output.color = input.color;
 	output.normal = normalize(input.normal);
 	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);

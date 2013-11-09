@@ -41,17 +41,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 
 void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	D3D11_BUFFER_DESC matrixBufferDesc;
+	IPositionShader::InitializeShaderBuffers(device);
+
 	D3D11_BUFFER_DESC lightingBufferDesc;
-
-	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
-	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	matrixBufferDesc.MiscFlags = 0;
-	matrixBufferDesc.StructureByteStride = 0;
-	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-
-	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	lightingBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	lightingBufferDesc.ByteWidth = sizeof(LightBufferType);
@@ -65,17 +57,9 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
+	IPositionShader::SetShaderParameters(params, moveMatrix);
+
 	ComPtr<ID3D11DeviceContext> cont = params.context;
-	MatrixType vertexMatrices;
-
-	AssertBool(false, L"not reimplemented");
-	/*vertexMatrices.viewproject = moveMatrix * params.transMatrix;
-	vertexMatrices.world = moveMatrix;
-
-	D3DXMatrixTranspose(&vertexMatrices.viewproject, &vertexMatrices.viewproject);
-	D3DXMatrixTranspose(&vertexMatrices.world, &vertexMatrices.world);
-
-	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);*/
 
 	LightBufferType data;
 	data.brightness = params.brightness;
@@ -84,7 +68,6 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMA
 	D3DXVec3Normalize(&data.lightDir, &data.lightDir);
 	Utils::CopyToBuffer(lightingBuffer, data, cont);
 
-	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
 	cont->IASetInputLayout(layout.Get());
