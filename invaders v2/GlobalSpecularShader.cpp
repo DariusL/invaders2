@@ -7,7 +7,7 @@ void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, D3DXM
 
 	Utils::CopyToBuffer(cameraBuffer, &params.cameraPos, params.context);
 
-	params.context->VSSetConstantBuffers(1, 1, cameraBuffer.GetAddressOf());
+	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
 }
 
 void GlobalSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)

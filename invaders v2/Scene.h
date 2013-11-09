@@ -16,6 +16,7 @@ class Scene : public IWorld
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
+	SimpleTexturedEntity suniaus;
 public:
 	Scene();
 	~Scene();

@@ -11,7 +11,7 @@ void MirrorShader::SetShaderParametersTextured(const RenderParams &params, D3DXM
 
 	Utils::CopyToBuffer(reflectionBuffer, reflection, params.context);
 
-	params.context->VSSetConstantBuffers(1, 1, reflectionBuffer.GetAddressOf());
+	params.context->VSSetConstantBuffers(2, 1, reflectionBuffer.GetAddressOf());
 }
 
 void MirrorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)

@@ -7,16 +7,19 @@
 
 Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
-	ResourceManager::Get().GetTexture(RM::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),
+	RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),
 
-	light(ZeroVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
+light(ZeroVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
 
-bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>())
+bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>()),
+
+suniaus(D3DXVECTOR3(55.0f, 0.0f, 0.0f), D3DXVECTOR3(-1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), 
+	RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_FREAKY_RECTANGLES), D3DXVECTOR3(20.0f, 20.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
 	cameras.emplace_back(D3DXVECTOR3(0.0f, 0.0f, -50.0f), ZeroVec3, D3DXVECTOR3(0.0f, -5.0f, 0.0f), ZeroVec3,
-		ResourceManager::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
+		RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
 	mirrors.emplace_back(D3DXVECTOR3(50.0f, 0.0f, 0.0f), D3DXVECTOR3(1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
@@ -83,9 +86,9 @@ int Scene::OnLoop(int input, float frameLength)
 
 void Scene::Init(ComPtr<ID3D11Device> device)
 {
-	ResourceManager *rm = App::Get()->GetResourceManager();
 	light.Init(device);
 	bumpy.Init(device);
+	suniaus.Init(device);
 	for (auto &mirror : mirrors)
 		mirror.Init(device);
 	for (auto &camera : cameras)
@@ -97,5 +100,6 @@ void Scene::Render(const RenderParams &params)
 {
 	light.Render(params);
 	bumpy.Render(params);
+	suniaus.Render(params);
 	gabenizer.Render(params);
 }

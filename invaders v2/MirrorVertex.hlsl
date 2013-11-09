@@ -5,7 +5,12 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
-cbuffer ReflectionBuffer : register(b1)
+cbuffer ClipBuffer : register(b1)
+{
+	float4 clip;
+}
+
+cbuffer ReflectionBuffer : register(b2)
 {
 	matrix reflectView;
 };
@@ -23,6 +28,7 @@ struct PixelInputType
 	float4 reflectionPos : TEXCOORD1;
 };
 
+[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;

@@ -5,7 +5,12 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
-cbuffer CameraBuffer : register(b1)
+cbuffer ClipBuffer : register(b1)
+{
+	float4 clip;
+}
+
+cbuffer CameraBuffer : register(b3)
 {
 	float3 cameraPos;
 	float padding;
@@ -13,16 +18,14 @@ cbuffer CameraBuffer : register(b1)
 
 cbuffer ReflectionBuffer : register(b2)
 {
-    matrix reflectionTransform;
-	matrix refractionTransform;
+	matrix reflectView;
 };
 
 struct PixelInputType
 {
 	float4 position : SV_POSITION;
 	float2 tex : TEXCOORD0;
-	float4 reflectionMapPos : TEXCOORD1;
-	float4 refractionMapPos : TEXCOORD2;
+	float4 reflectionPos : TEXCOORD1;
 	float3 cameraDir : POSITION0;
 };
 
@@ -32,6 +35,7 @@ struct VertexInputType
     float2 tex : TEXCOORD;
 };
 
+[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
@@ -47,8 +51,10 @@ PixelInputType main(VertexInputType input)
 	output.tex = input.tex;
 
 	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);
-	output.reflectionMapPos = mul(input.position, reflectionTransform);
-	output.refractionMapPos = mul(input.position, refractionTransform);
+
+	output.reflectionPos = mul(input.position, world);
+	output.reflectionPos = mul(output.reflectionPos, reflectView);
+	output.reflectionPos = mul(output.reflectionPos, projection);
     
     return output;
 }

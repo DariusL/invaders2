@@ -8,7 +8,7 @@ void PointSpecularShader::SetShaderParameters(const RenderParams &params, D3DXMA
 
 	Utils::CopyToBuffer(cameraBuffer, params.cameraPos, params.context);
 
-	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
+	params.context->VSSetConstantBuffers(3, 1, cameraBuffer.GetAddressOf());
 }
 
 void PointSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)

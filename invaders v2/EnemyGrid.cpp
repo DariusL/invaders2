@@ -26,12 +26,12 @@ void EnemyGrid::Init(D3DXVECTOR3 center, shared_ptr<Level> level)
 	this->betweenCenters = D3DXVECTOR2(
 		(level->gridWidth - 1) * level->gap.x,
 		(level->gridHeight - 1) * level->gap.y);
-	ResourceManager *rm = App::Get()->GetResourceManager();
+	auto &rm = RM::Get();
 	D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 
 	for(int i = 0; i < level->gridHeight; i++)
 		for(int j = 0; j < level->gridWidth; j++){
-			shared_ptr<DrawableShooter> enemy = rm->GetEnemy(level->enemies[i * level->gridHeight + j]);
+			shared_ptr<DrawableShooter> enemy = rm.GetEnemy(level->enemies[i * level->gridHeight + j]);
 			enemy->MoveTo(topLeft + D3DXVECTOR3(j * level->gap.x, i * -level->gap.y, 0));
 			grid.push_back(enemy);
 			alive++;
@@ -42,8 +42,8 @@ void EnemyGrid::Init(ComPtr<ID3D11Device> device)
 {
 	for (auto &a : grid)
 		a->Init(device);
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(), 100));
+	auto &rm = RM::Get();
+	enemyBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm.GetModel(ResourceManager::Models::MODEL_BULLET), rm.GetShader<ColorInstancedShader>(), 100));
 	enemyBulletGraphics->Init(device);
 }
 

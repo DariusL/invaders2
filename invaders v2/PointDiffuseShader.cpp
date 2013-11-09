@@ -68,18 +68,7 @@ void PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
 	ComPtr<ID3D11DeviceContext> cont = params.context;
-	MatrixType vertexMatrices;
-
-	//vertex shader transformacijos matricos
-	vertexMatrices.view = params.view;
-	vertexMatrices.projection = params.projection;
-	vertexMatrices.world = moveMatrix;
-
-	D3DXMatrixTranspose(&vertexMatrices.view, &vertexMatrices.view);
-	D3DXMatrixTranspose(&vertexMatrices.projection, &vertexMatrices.projection);
-	D3DXMatrixTranspose(&vertexMatrices.world, &vertexMatrices.world);
-
-	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);
+	IPositionShader::SetShaderParameters(params, moveMatrix);
 
 	//pixel shader sviesos duomenys
 	PixelLightBufferType data;
@@ -93,8 +82,7 @@ void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMAT
 	Utils::CopyToBuffer(vertexLightBuffer, lightPos, cont);
 
 	//nustatomi konstantu buferiai
-	cont->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
-	cont->VSSetConstantBuffers(1, 1, vertexLightBuffer.GetAddressOf());
+	cont->VSSetConstantBuffers(2, 1, vertexLightBuffer.GetAddressOf());
 	cont->PSSetConstantBuffers(0, 1, pixelLightBuffer.GetAddressOf());
 
 	cont->IASetInputLayout(layout.Get());

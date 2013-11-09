@@ -16,7 +16,6 @@ class App
 
 	unique_ptr<Scene> world;
 
-	Logger logger;
 	ResourceManager manager;
 
 	HWND wHandle;
@@ -44,8 +43,6 @@ public:
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
 
 	HWND GetWindowHandle(){return wHandle;}
-	Logger *GetLogger(){return &logger;}
-	ResourceManager *GetResourceManager(){return &manager;}
 	IWorld *GetWorld(){return world.get();}
 
 	static App *Get(){return Handle;}

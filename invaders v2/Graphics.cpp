@@ -42,6 +42,7 @@ void Graphics::Render(Scene &world)
 	D3DXMATRIX projectionMatrix;
 	D3DXMATRIX reflectionMatrix;
 	D3DXMATRIX zeroReflect;
+	D3DXVECTOR4 plane;
 	auto context = d3D.GetDeviceContext();
 
 	auto &light = world.GetLight();
@@ -68,6 +69,7 @@ void Graphics::Render(Scene &world)
 			auto &target = mirror.GetRenderTarget();
 			target.SetRenderTarget(context);
 			target.ClearTarget(context);
+			params.clipPlane = mirror.GetMirrorPlane();
 			world.Render(params);
 		}
 		auto &target = remote.GetRenderTarget();
@@ -81,6 +83,7 @@ void Graphics::Render(Scene &world)
 			params.reflecMatrix = remote.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
 			mirror.Render(params);
 		}
+		params.clipPlane = ZeroPlane;
 		world.Render(params);
 	}
 
@@ -93,6 +96,7 @@ void Graphics::Render(Scene &world)
 		auto &target = mirror.GetRenderTarget();
 		target.SetRenderTarget(context);
 		target.ClearTarget(context);
+		params.clipPlane = mirror.GetMirrorPlane();
 		world.Render(params);
 	}
 
@@ -100,8 +104,8 @@ void Graphics::Render(Scene &world)
 	d3D.ClearRenderTarget();
 	D3DXMatrixReflect(&reflectionMatrix, &mirrors[0].GetMirrorPlane());
 	params.view = camera.GetViewMatrix();
-	//params.view = camera.GetReflectedViewMatrix(reflectionMatrix);
 
+	params.clipPlane = ZeroPlane;
 	world.Render(params);
 	for (auto &remote : remotes)
 	{

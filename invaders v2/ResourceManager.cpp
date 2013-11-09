@@ -521,7 +521,7 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind,
 ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device)
 {
 	ComPtr<ID3D11ShaderResourceView> ret;
-	D3DX11CreateShaderResourceViewFromFile(device.Get(), filename.c_str(), NULL, NULL, &ret, NULL);
+	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), filename.c_str(), NULL, NULL, &ret, NULL));
 	return ret;
 }
 
@@ -544,4 +544,5 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"gaben.dds", device));
 	textures.push_back(GetTextureFromFile(L"stage7.dds", device));
 	textures.push_back(GetTextureFromFile(L"wave.dds", device));
+	textures.push_back(GetTextureFromFile(L"freaky_rectangles.dds", device));
 }

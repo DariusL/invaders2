@@ -5,12 +5,17 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
-cbuffer LightBuffer : register(b1)
+cbuffer ClipBuffer : register(b1)
+{
+	float4 clip;
+}
+
+cbuffer LightBuffer : register(b2)
 {
 	float4 lightPos;
 };
 
-cbuffer CameraBuffer : register(b2)
+cbuffer CameraBuffer : register(b3)
 {
 	float3 cameraPos;//kameros pozicija
 	float padding;//papildomi duomenys iki 16B
@@ -38,6 +43,7 @@ struct PixelInputType
 	float3 lightDir : POSITION1;
 };
 
+[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;

@@ -17,5 +17,6 @@ protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
 	
 	ComPtr<ID3D11SamplerState> samplerState;
+	ComPtr<ID3D11ShaderResourceView> nullResource;
 };
 

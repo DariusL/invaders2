@@ -8,8 +8,10 @@
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
-extern D3DXVECTOR3 ZeroVec3;
-extern D3DXVECTOR3 OneVec3;
+extern const D3DXVECTOR3 ZeroVec3;
+extern const D3DXVECTOR4 ZeroVec4;
+extern const D3DXVECTOR3 OneVec3;
+extern const D3DXPLANE ZeroPlane;
 
 struct VertexType
 {
@@ -98,6 +100,7 @@ struct RenderParams
 	D3DXVECTOR2 waterTranslation;
 	float waterScale;
 	D3DXMATRIX reflecMatrix;
+	D3DXPLANE clipPlane;
 };
 
 struct ReflectionType

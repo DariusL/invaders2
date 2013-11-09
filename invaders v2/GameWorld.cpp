@@ -17,14 +17,14 @@ GameWorld::~GameWorld()
 bool GameWorld::Start(shared_ptr<Level> level)
 {
 	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
-	ResourceManager *rm = App::Get()->GetResourceManager();
-	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm->GetModel(ResourceManager::Models::MODEL_PLAYER), rm->GetShader<ColorShader>());
+	auto &rm = RM::Get();
+	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm.GetModel(ResourceManager::Models::MODEL_PLAYER), rm.GetShader<ColorShader>());
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
 	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
 	float wallGap = 10.0f;
 	for(int i = 0; i < WALL_COUNT; i++)
-		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm->GetModel(ResourceManager::Models::MODEL_WALL), rm->GetShader<ColorInstancedShader>()));
+		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm.GetModel(ResourceManager::Models::MODEL_WALL), rm.GetShader<ColorInstancedShader>()));
 	enemiesMovingRight = true;
 	started = true;
 	return true;
@@ -39,12 +39,12 @@ void GameWorld::Stop()
 
 void GameWorld::Init(ComPtr<ID3D11Device> device)
 {
-	ResourceManager *rm = App::Get()->GetResourceManager();
+	auto &rm = RM::Get();
 	player->Init(device);
 	enemies->Init(device);
 	for(int i = 0; i < WALL_COUNT; i++)
 		walls[i]->Init(device);
-	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm->GetModel(ResourceManager::Models::MODEL_BULLET), rm->GetShader<ColorInstancedShader>(), 100));
+	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm.GetModel(ResourceManager::Models::MODEL_BULLET), rm.GetShader<ColorInstancedShader>(), 100));
 	playerBulletGraphics->Init(device);
 }
 
@@ -52,7 +52,7 @@ int GameWorld::OnLoop(int input, float frameLength)
 {
 	CollideBullets();
 	enemies->OnLoop(frameLength);
-	ResourceManager *rm = App::Get()->GetResourceManager();
+	auto &rm = RM::Get();
 	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
 	if(input != 0)
 	{
@@ -71,7 +71,7 @@ int GameWorld::OnLoop(int input, float frameLength)
 		if(input & ControlCodes::FIRE)
 			if(player->Fire())
 			{
-				playerBullets.push_back(InstanceEntity(player->GetPos(), rm->GetModel(ResourceManager::Models::MODEL_BULLET).hitbox, 18.0f));
+				playerBullets.push_back(InstanceEntity(player->GetPos(), rm.GetModel(ResourceManager::Models::MODEL_BULLET).hitbox, 18.0f));
 			}
 
 	}

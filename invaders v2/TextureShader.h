@@ -15,5 +15,6 @@ protected:
 
 	ComPtr<ID3D11SamplerState> samplerState;
 	ComPtr<ID3D11ShaderResourceView> nullResource;
+	unsigned int texturesSet;
 };
 

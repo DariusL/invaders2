@@ -26,8 +26,6 @@ void App::Init()
 
 	graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.1f);
 
-	logger.Init();
-
 	world = unique_ptr<Scene>(new Scene());
 }
 
