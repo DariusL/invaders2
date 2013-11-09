@@ -9,17 +9,16 @@ Scene::Scene(void)
 :gabenizer(DefVec3, DefVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
 	ResourceManager::Get().GetTexture(RM::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),
 
-light(DefVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), ResourceManager::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
+light(DefVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
 
-bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>()),
-
-mirror(D3DXVECTOR3(50.0f, 0.0f, 0.0f), D3DXVECTOR3(1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
-	RM::Get().GetShader<MirrorShader>(), 400, 200, 20.0f, 10.0f)
+bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>())
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
 	cameras.emplace_back(D3DXVECTOR3(0.0f, 0.0f, -50.0f), DefVec3, D3DXVECTOR3(0.0f, -5.0f, 0.0f), DefVec3,
 		ResourceManager::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
+	mirrors.emplace_back(D3DXVECTOR3(50.0f, 0.0f, 0.0f), D3DXVECTOR3(1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
 
 
@@ -87,7 +86,8 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 	ResourceManager *rm = App::Get()->GetResourceManager();
 	light.Init(device);
 	bumpy.Init(device);
-	mirror.Init(device);
+	for (auto &mirror : mirrors)
+		mirror.Init(device);
 	for (auto &camera : cameras)
 		camera.Init(device);
 	gabenizer.Init(device);
@@ -95,7 +95,7 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 
 void Scene::Render(const RenderParams &params)
 {
-	light.Render(params);
-	bumpy.Render(params);
+	//light.Render(params);
+	//bumpy.Render(params);
 	gabenizer.Render(params);
 }

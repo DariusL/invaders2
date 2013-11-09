@@ -53,8 +53,9 @@ struct InstanceType
 
 struct MatrixType
 {
-	D3DXMATRIX transform;
-	D3DXMATRIX move;
+	D3DXMATRIX world;
+	D3DXMATRIX view;
+	D3DXMATRIX projection;
 };
 
 struct ControlCodes
@@ -81,7 +82,8 @@ struct ControlCodes
 struct RenderParams
 {
 	float brightness;
-	D3DXMATRIX transMatrix;
+	D3DXMATRIX view;
+	D3DXMATRIX projection;
 	D3DXVECTOR3 lightPos;
 	D3DXVECTOR4 diffuseColor;
 	D3DXVECTOR3 cameraPos;

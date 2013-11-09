@@ -16,6 +16,18 @@ void Camera::RenderMain()
 	}
 }
 
+D3DXMATRIX Camera::GetReflectedViewMatrix(const D3DXMATRIX &reflect, const D3DXMATRIX &zeroReflect)
+{
+	D3DXVECTOR4 forward, pos, up;
+	D3DXVec3Transform(&up, &this->up, &zeroReflect);
+	D3DXVec3Transform(&forward, &this->forward, &zeroReflect);
+	D3DXVec3Transform(&pos, &this->pos, &reflect);
+	forward += pos;
+	D3DXMATRIX view;
+	D3DXMatrixLookAtLH(&view, (D3DXVECTOR3*)&pos, (D3DXVECTOR3*)&forward, (D3DXVECTOR3*)&up);
+	return view;
+}
+
 void Camera::Yaw(float angle)
 {
 	D3DXMATRIX matrix;

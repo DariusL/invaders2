@@ -79,11 +79,13 @@ void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMAT
 	MatrixType vertexMatrices;
 
 	//vertex shader transformacijos matricos
-	vertexMatrices.transform = moveMatrix * params.transMatrix;
-	vertexMatrices.move = moveMatrix;
+	vertexMatrices.view = params.view;
+	vertexMatrices.projection = params.projection;
+	vertexMatrices.world = moveMatrix;
 
-	D3DXMatrixTranspose(&vertexMatrices.transform, &vertexMatrices.transform);
-	D3DXMatrixTranspose(&vertexMatrices.move, &vertexMatrices.move);
+	D3DXMatrixTranspose(&vertexMatrices.view, &vertexMatrices.view);
+	D3DXMatrixTranspose(&vertexMatrices.projection, &vertexMatrices.projection);
+	D3DXMatrixTranspose(&vertexMatrices.world, &vertexMatrices.world);
 
 	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);
 

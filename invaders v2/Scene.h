@@ -14,8 +14,8 @@ class Scene : public IWorld
 	DrawableBumpyEntity bumpy;
 	Light light;
 	vector<RemoteCamera> cameras;
+	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
-	SimpleMirror mirror;
 public:
 	Scene();
 	~Scene();
@@ -25,8 +25,8 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	Light &GetLight(){ return light; }
-	SimpleMirror &GetMirror(){ return mirror; }
-	vector<RemoteCamera> &GetRemoteCamera(){ return cameras; }
+	vector<SimpleMirror> &GetMirrors(){ return mirrors; }
+	vector<RemoteCamera> &GetRemoteCameras(){ return cameras; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 };

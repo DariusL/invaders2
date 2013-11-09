@@ -46,11 +46,13 @@ void Graphics::Render()
 {
 	D3DXMATRIX projectionMatrix;
 	D3DXMATRIX reflectionMatrix;
+	D3DXMATRIX zeroReflect;
 	auto context = d3D.GetDeviceContext();
 
 	auto &light = world->GetLight();
 	auto &camera = world->GetCamera();
-	auto &remotes = world->GetRemoteCamera();
+	auto &remotes = world->GetRemoteCameras();
+	auto &mirrors = world->GetMirrors();
 	d3D.GetProjectionMatrix(projectionMatrix);
 
 	RenderParams params;
@@ -58,12 +60,42 @@ void Graphics::Render()
 	params.context = context;
 	params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
+	params.projection = projectionMatrix;
 
 	for (auto &remote : remotes)
 	{
 		params.cameraPos = remote.GetPosition();
-		params.transMatrix = remote.GetViewMatrix() * projectionMatrix;
+		for (auto &mirror : mirrors)
+		{
+			D3DXMatrixReflect(&reflectionMatrix, &mirror.GetMirrorPlane());
+			D3DXMatrixReflect(&zeroReflect, &mirror.GetZeroPlane());
+			params.view = remote.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
+			auto &target = mirror.GetRenderTarget();
+			target.SetRenderTarget(context);
+			target.ClearTarget(context);
+			world->Render(params);
+		}
 		auto &target = remote.GetRenderTarget();
+		target.SetRenderTarget(context);
+		target.ClearTarget(context);
+		params.view = remote.GetViewMatrix();
+		for (auto &mirror : mirrors)
+		{
+			D3DXMatrixReflect(&reflectionMatrix, &mirror.GetMirrorPlane());
+			D3DXMatrixReflect(&zeroReflect, &mirror.GetZeroPlane());
+			params.reflecMatrix = remote.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
+			mirror.Render(params);
+		}
+		world->Render(params);
+	}
+
+	params.cameraPos = camera.GetPosition();
+	for (auto &mirror : mirrors)
+	{
+		D3DXMatrixReflect(&reflectionMatrix, &mirror.GetMirrorPlane());
+		D3DXMatrixReflect(&zeroReflect, &mirror.GetZeroPlane());
+		params.view = camera.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
+		auto &target = mirror.GetRenderTarget();
 		target.SetRenderTarget(context);
 		target.ClearTarget(context);
 		world->Render(params);
@@ -71,13 +103,21 @@ void Graphics::Render()
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
-
-	params.transMatrix = camera.GetViewMatrix() * projectionMatrix;
+	D3DXMatrixReflect(&reflectionMatrix, &mirrors[0].GetMirrorPlane());
+	params.view = camera.GetViewMatrix();
+	//params.view = camera.GetReflectedViewMatrix(reflectionMatrix);
 
 	world->Render(params);
 	for (auto &remote : remotes)
 	{
 		remote.Render(params);
+	}
+	for (auto &mirror : mirrors)
+	{
+		D3DXMatrixReflect(&reflectionMatrix, &mirror.GetMirrorPlane());
+		D3DXMatrixReflect(&zeroReflect, &mirror.GetZeroPlane());
+		params.reflecMatrix = camera.GetReflectedViewMatrix(reflectionMatrix ,zeroReflect);
+		mirror.Render(params);
 	}
 
 	d3D.Present();

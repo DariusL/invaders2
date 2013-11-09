@@ -68,13 +68,14 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMA
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	MatrixType vertexMatrices;
 
-	vertexMatrices.transform = moveMatrix * params.transMatrix;
-	vertexMatrices.move = moveMatrix;
+	AssertBool(false, L"not reimplemented");
+	/*vertexMatrices.viewproject = moveMatrix * params.transMatrix;
+	vertexMatrices.world = moveMatrix;
 
-	D3DXMatrixTranspose(&vertexMatrices.transform, &vertexMatrices.transform);
-	D3DXMatrixTranspose(&vertexMatrices.move, &vertexMatrices.move);
+	D3DXMatrixTranspose(&vertexMatrices.viewproject, &vertexMatrices.viewproject);
+	D3DXMatrixTranspose(&vertexMatrices.world, &vertexMatrices.world);
 
-	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);
+	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, cont);*/
 
 	LightBufferType data;
 	data.brightness = params.brightness;

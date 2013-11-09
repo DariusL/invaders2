@@ -47,11 +47,12 @@ void ColorShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 void ColorShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
 {
-	D3DXMATRIX transpose(moveMatrix * params.transMatrix);
+	AssertBool(false, L"not reimplemented");
+	/*D3DXMATRIX transpose(moveMatrix * params.transMatrix);
 
 	D3DXMatrixTranspose(&transpose, &transpose);
 
-	Utils::CopyToBuffer(matrixBuffer, transpose, params.context);
+	Utils::CopyToBuffer(matrixBuffer, transpose, params.context);*/
 
 	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 

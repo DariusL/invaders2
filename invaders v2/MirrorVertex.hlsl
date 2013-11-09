@@ -1,11 +1,13 @@
 cbuffer TransMatrix : register(b0)
 {
-	matrix transform;
+	matrix world;
+	matrix view;
+	matrix projection;
 };
 
 cbuffer ReflectionBuffer : register(b1)
 {
-	matrix reflectionTransform;
+	matrix reflectView;
 };
 
 struct VertexInputType
@@ -24,8 +26,15 @@ struct PixelInputType
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
+	matrix reflectProjectWorld;
 	output.tex = input.tex;
-	output.position = mul(input.position, transform);
-	output.reflectionPos = mul(input.position, reflectionTransform);
+	input.position.w = 1.0f;
+	output.position = mul(input.position, world);
+	output.position = mul(output.position, view);
+	output.position = mul(output.position, projection);
+	output.reflectionPos = input.position;
+	output.reflectionPos = mul(output.reflectionPos, world);
+	output.reflectionPos = mul(output.reflectionPos, reflectView);
+	output.reflectionPos = mul(output.reflectionPos, projection);
 	return output;
 }

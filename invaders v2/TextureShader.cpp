@@ -36,7 +36,7 @@ void TextureShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	matrixBufferDesc.ByteWidth = sizeof(D3DXMATRIX);
+	matrixBufferDesc.ByteWidth = sizeof(MatrixType);
 	matrixBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	matrixBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	matrixBufferDesc.MiscFlags = 0;
@@ -69,11 +69,12 @@ void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 
 void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	D3DXMATRIX transform;
+	MatrixType vertexMatrices;
 
-	transform = moveMatrix * params.transMatrix;
-	D3DXMatrixTranspose(&transform, &transform);
-	Utils::CopyToBuffer(matrixBuffer, transform, params.context);
+	D3DXMatrixTranspose(&vertexMatrices.projection, &params.projection);
+	D3DXMatrixTranspose(&vertexMatrices.view, &params.view);
+	D3DXMatrixTranspose(&vertexMatrices.world, &moveMatrix);
+	Utils::CopyToBuffer(matrixBuffer, vertexMatrices, params.context);
 
 	params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 

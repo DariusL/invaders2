@@ -20,6 +20,7 @@ public:
 	D3DXVECTOR3 GetPosition() const {return pos;}
 
 	const D3DXMATRIX &GetViewMatrix(){ RenderMain(); return viewMatrix; }
+	D3DXMATRIX GetReflectedViewMatrix(const D3DXMATRIX &reflect, const D3DXMATRIX &zeroReflect);
 
 private:
 	void RenderMain();

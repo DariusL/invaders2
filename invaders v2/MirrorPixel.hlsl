@@ -15,5 +15,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	reflectTex.x = input.reflectionPos.x / input.reflectionPos.w / 2.0f + 0.5f;
 	reflectTex.y = -input.reflectionPos.y / input.reflectionPos.w / 2.0f + 0.5f;
 
+	//reflectTex = input.tex;
+
 	return reflectionTexture.Sample(samplerType, reflectTex);
 }

@@ -51,13 +51,13 @@ void WaterShader::SetShaderParametersTextured(const RenderParams &params, D3DXMA
 {
 	ComPtr<ID3D11DeviceContext> con = params.context;
 
-	D3DXMATRIX transform = posMatrix * params.transMatrix;
+	D3DXMATRIX transform = posMatrix * params.view * params.projection;
 	D3DXMatrixTranspose(&transform, &transform);
 	Utils::CopyToBuffer(matrixBuffer, transform, con);
 
 	ReflectionType reflection;
 
-	reflection.refraction = params.transMatrix * posMatrix;
+	reflection.refraction = params.view * params.projection * posMatrix;
 	D3DXMatrixTranspose(&reflection.refraction, &reflection.refraction);
 	D3DXMatrixTranspose(&reflection.reflection, &params.reflecMatrix);
 	Utils::CopyToBuffer(reflectionBuffer, reflection, con);
