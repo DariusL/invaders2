@@ -105,7 +105,7 @@ void App::Run()
 			running = false;
 			break;
 		}
-		graphics.Render();
+		graphics.Render(*world);
 	}
 }
 
@@ -114,7 +114,7 @@ bool App::OnLoop()
 	if(!world->IsStarted())
 	{
 		world->Start(manager.GetLevel(ResourceManager::Levels::L1));
-		graphics.Init(world.get());
+		graphics.Init(*world);
 	}
 	int worldEvents = 0;
 	if(input.IsKeyDown(VK_LEFT))

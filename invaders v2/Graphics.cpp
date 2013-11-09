@@ -9,10 +9,6 @@ Graphics::Graphics(void)
 	vsync = false;
 }
 
-Graphics::~Graphics()
-{
-}
-
 void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
 {
 	this->handle = handle;
@@ -22,7 +18,7 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	this->height = heigth;
 	d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear);
 
-	App::Get()->GetResourceManager()->InitShaders(d3D.GetDevice());
+	RM::Get().InitShaders(d3D.GetDevice());
 	
 	D3DXVECTOR2 viewportSize(width / 4.0f, heigth / 4.0f);
 }
@@ -36,23 +32,22 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-void Graphics::Init(Scene *world)
+void Graphics::Init(Scene &world)
 {
-	this->world = world;
-	world->Init(d3D.GetDevice());
+	world.Init(d3D.GetDevice());
 }
 
-void Graphics::Render()
+void Graphics::Render(Scene &world)
 {
 	D3DXMATRIX projectionMatrix;
 	D3DXMATRIX reflectionMatrix;
 	D3DXMATRIX zeroReflect;
 	auto context = d3D.GetDeviceContext();
 
-	auto &light = world->GetLight();
-	auto &camera = world->GetCamera();
-	auto &remotes = world->GetRemoteCameras();
-	auto &mirrors = world->GetMirrors();
+	auto &light = world.GetLight();
+	auto &camera = world.GetCamera();
+	auto &remotes = world.GetRemoteCameras();
+	auto &mirrors = world.GetMirrors();
 	d3D.GetProjectionMatrix(projectionMatrix);
 
 	RenderParams params;
@@ -73,7 +68,7 @@ void Graphics::Render()
 			auto &target = mirror.GetRenderTarget();
 			target.SetRenderTarget(context);
 			target.ClearTarget(context);
-			world->Render(params);
+			world.Render(params);
 		}
 		auto &target = remote.GetRenderTarget();
 		target.SetRenderTarget(context);
@@ -86,7 +81,7 @@ void Graphics::Render()
 			params.reflecMatrix = remote.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
 			mirror.Render(params);
 		}
-		world->Render(params);
+		world.Render(params);
 	}
 
 	params.cameraPos = camera.GetPosition();
@@ -98,7 +93,7 @@ void Graphics::Render()
 		auto &target = mirror.GetRenderTarget();
 		target.SetRenderTarget(context);
 		target.ClearTarget(context);
-		world->Render(params);
+		world.Render(params);
 	}
 
 	d3D.ResetRenderTarget();
@@ -107,7 +102,7 @@ void Graphics::Render()
 	params.view = camera.GetViewMatrix();
 	//params.view = camera.GetReflectedViewMatrix(reflectionMatrix);
 
-	world->Render(params);
+	world.Render(params);
 	for (auto &remote : remotes)
 	{
 		remote.Render(params);

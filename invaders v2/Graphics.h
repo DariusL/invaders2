@@ -6,8 +6,6 @@ class Graphics
 {
 	Direct3D d3D;
 
-	Scene *world;
-
 	bool fullScreen;
 	bool vsync;
 	float screenDepth;
@@ -17,12 +15,11 @@ class Graphics
 	int height;
 	HWND handle;
 public:
-	Graphics(void);
-	~Graphics(void);
-
+	Graphics();
+	~Graphics(void){}
+	void Init(Scene &world);
 	void Init(int width, int height, HWND handle, bool fullscreen, float brightness);
-	void Init(Scene *world);
-	void Render();
+	void Render(Scene &world);
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
 	void ChangeBrightness(float offset);
