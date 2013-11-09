@@ -8,7 +8,8 @@
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
-extern D3DXVECTOR3 DefVec3;
+extern D3DXVECTOR3 ZeroVec3;
+extern D3DXVECTOR3 OneVec3;
 
 struct VertexType
 {

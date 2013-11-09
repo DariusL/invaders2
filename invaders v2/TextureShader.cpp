@@ -55,7 +55,9 @@ void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DX
 {
 	ITextureShader::SetShaderParametersTextured(params, moveMatrix, textures);
 
-	params.context->PSSetShaderResources(0, 1, textures[0].GetAddressOf());
+	auto count = textures.size();
+	for (int i = 0; i < count; i++)
+		params.context->PSSetShaderResources(i, 1, textures[i].GetAddressOf());
 
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 }

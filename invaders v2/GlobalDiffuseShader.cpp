@@ -64,7 +64,7 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMA
 	LightBufferType data;
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
-	data.lightDir = D3DXVECTOR3(0.0f, 0.0f, 0.0f) - params.lightPos;
+	data.lightDir = ZeroVec3 - params.lightPos;
 	D3DXVec3Normalize(&data.lightDir, &data.lightDir);
 	Utils::CopyToBuffer(lightingBuffer, data, cont);
 

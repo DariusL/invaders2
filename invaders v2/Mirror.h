@@ -25,7 +25,7 @@ Mirror<vt, sh>::Mirror(D3DXVECTOR3 screenPos, D3DXVECTOR3 rot, Model<vt> &screen
 	:Screen(screenPos, rot, screenModel, screenShader, resWidth, resHeight, screenWidth, screenHeight)
 {
 	mirrorPlane = Utils::PlaneFromPointAndRot(screenPos, rot);
-	zeroPlane = Utils::PlaneFromPointAndRot(DefVec3, rot);
+	zeroPlane = Utils::PlaneFromPointAndRot(ZeroVec3, rot);
 }
 
 template<class vt, class sh>
