@@ -13,22 +13,22 @@ public:
 	void Yaw(float angle);
 	void Pitch(float angle);
 	void Roll(float angle);
-	void Move(XMFLOAT3 vec){ Move(vec.x, vec.y, vec.z); }
+	void Move(DirectX::XMFLOAT3 vec){ Move(vec.x, vec.y, vec.z); }
 	void Move(float x, float y, float z);
 
-	XMFLOAT3 GetPosition() const {return pos;}
+	DirectX::XMFLOAT3 GetPosition() const { return pos; }
 
-	const XMMATRIX GetViewMatrix(){ RenderMain(); return XMLoadFloat4x4(&viewMatrix); }
-	XMMATRIX GetReflectedViewMatrix(const XMMATRIX &reflect, const XMMATRIX &zeroReflect);
+	const DirectX::XMMATRIX GetViewMatrix(){ RenderMain(); return XMLoadFloat4x4(&viewMatrix); }
+	DirectX::XMMATRIX GetReflectedViewMatrix(const DirectX::XMMATRIX &reflect, const DirectX::XMMATRIX &zeroReflect);
 
 private:
 	void RenderMain();
 
-	XMFLOAT3 pos;
-	XMFLOAT3 forward;
-	XMFLOAT3 up;
-	XMFLOAT3 right;
+	DirectX::XMFLOAT3 pos;
+	DirectX::XMFLOAT3 forward;
+	DirectX::XMFLOAT3 up;
+	DirectX::XMFLOAT3 right;
 
-	XMFLOAT4X4 viewMatrix;
+	DirectX::XMFLOAT4X4 viewMatrix;
 	bool modified;
 };

@@ -22,11 +22,6 @@
 
 #include "includes.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4005)
-#include <stdint.h>
-#pragma warning(pop)
-
 #if defined(_MSC_VER) && (_MSC_VER<1610) && !defined(_In_reads_)
 #define _In_reads_(exp)
 #define _Out_writes_(exp)

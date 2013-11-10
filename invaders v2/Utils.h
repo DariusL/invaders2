@@ -13,7 +13,7 @@ namespace Utils{
 	float Trunc(float x, float &trunced);
 	std::vector<InstanceEntity> GetGrid(int width, int height, XMFLOAT3 center, XMFLOAT2 gap, ColorModel &model);
 	void ShowMessageBox(wstring text, wstring title);
-	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot);
+	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse = false);
 	XMFLOAT2 GetVec2(float value);
 	XMFLOAT3 GetVec3(float value);
 	XMFLOAT4 GetVec4(float value);

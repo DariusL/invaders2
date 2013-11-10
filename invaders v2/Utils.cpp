@@ -53,13 +53,12 @@ namespace Utils
 		MessageBox(NULL, text.c_str(), title.c_str(), MB_OK);
 	}
 
-	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot)
+	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse)
 	{
-		XMFLOAT3 n(0.0f, 0.0f, -1.0f);
-		XMMATRIX matrix;
+		XMVECTOR normal = XMVectorSet(0.0f, 0.0f, (reverse ? 1.0f : -1.0f), 0.0f);
+		XMMATRIX matrix = XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
 		XMFLOAT3 temp;
-		matrix = XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
-		XMStoreFloat3(&temp, XMVector3Transform(XMLoadFloat3(&n), matrix));
+		XMStoreFloat3(&temp, XMVector3Transform(normal, matrix));
 		return XMFLOAT4(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
 	}
 

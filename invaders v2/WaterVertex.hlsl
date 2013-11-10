@@ -26,6 +26,7 @@ struct PixelInputType
 	float4 position : SV_POSITION;
 	float2 tex : TEXCOORD0;
 	float4 reflectionPos : TEXCOORD1;
+	float4 refractionPos : TEXCOORD2;
 	float3 cameraDir : POSITION0;
 };
 
@@ -55,6 +56,8 @@ PixelInputType main(VertexInputType input)
 	output.reflectionPos = mul(input.position, world);
 	output.reflectionPos = mul(output.reflectionPos, reflectView);
 	output.reflectionPos = mul(output.reflectionPos, projection);
+
+	output.refractionPos = output.position;
     
     return output;
 }

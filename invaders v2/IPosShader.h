@@ -11,7 +11,6 @@ public:
 	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
-
 		
 		XMStoreFloat4x4(&vertexMatrices.projection, XMMatrixTranspose(params.projection));
 		XMStoreFloat4x4(&vertexMatrices.view, XMMatrixTranspose(params.view));

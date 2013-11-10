@@ -9,6 +9,6 @@ struct Level
 	int gridWidth;
 	int gridHeight;
 	vector<int> enemies;
-	XMFLOAT2 gap;
+	DirectX::XMFLOAT2 gap;
 	vector<int> enemyTypes;
 };

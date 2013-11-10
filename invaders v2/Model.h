@@ -9,7 +9,7 @@ struct Model
 {
 	vector<T> vertices;
 	vector<int> indices;
-	XMFLOAT2 hitbox;
+	DirectX::XMFLOAT2 hitbox;
 
 	Model(){}
 	Model(Model &&other);
@@ -28,7 +28,7 @@ template<class T>
 Model<T>::Model(Model &&other)
 	:vertices(move(other.vertices)), indices(move(other.indices))
 {
-	XMFLOAT2 temp(hitbox);
+	DirectX::XMFLOAT2 temp(hitbox);
 	hitbox = other.hitbox;
 	other.hitbox = temp;
 }
@@ -40,7 +40,7 @@ Model<T> &Model<T>::operator=(Model &&other)
 	{
 		vertices = move(other.vertices);
 		indices = move(other.indices);
-		XMFLOAT2 temp(hitbox);
+		DirectX::XMFLOAT2 temp(hitbox);
 		hitbox = other.hitbox;
 		other.hitbox = temp;
 	}

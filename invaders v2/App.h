@@ -7,7 +7,6 @@
 #include "ResourceManager.h"
 #include "Input.h"
 
-
 class Graphics;
 class App
 {

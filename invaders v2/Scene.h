@@ -8,6 +8,7 @@
 #include "WaterPlane.h"
 #include "RemoteCamera.h"
 #include "Mirror.h"
+#include "WaterPlane.h"
 class Scene : public IWorld
 {
 	DrawableBumpyEntity bumpy;
@@ -15,7 +16,7 @@ class Scene : public IWorld
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
-	SimpleTexturedEntity suniaus;
+	SimpleWaterPlane water;
 public:
 	Scene();
 	~Scene();
@@ -27,6 +28,7 @@ public:
 	Light &GetLight(){ return light; }
 	vector<SimpleMirror> &GetMirrors(){ return mirrors; }
 	vector<RemoteCamera> &GetRemoteCameras(){ return cameras; }
+	SimpleWaterPlane &GetWater(){ return water; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 };

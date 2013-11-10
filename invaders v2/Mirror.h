@@ -7,6 +7,7 @@
 template<class vt, class sh>
 class Mirror : public Screen<vt, sh>
 {
+protected:
 	XMFLOAT4 mirrorPlane;
 	XMFLOAT4 zeroPlane;
 public:
