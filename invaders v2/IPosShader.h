@@ -20,12 +20,12 @@ public:
 
 		XMVECTOR clip = XMLoadFloat4(&params.clipPlane);
 
-		/*XMMATRIXInverse(&view, NULL, &params.view);
-		XMMATRIXTranspose(&view, &view);
-		XMMATRIXInverse(&project, NULL, &params.projection);
-		XMMATRIXTranspose(&project, &project);*/
-		clip = XMPlaneTransform(clip, params.view);
-		clip = XMPlaneTransform(clip, params.projection);
+		XMMATRIX view = XMMatrixInverse(NULL, params.view);
+		view = XMMatrixTranspose(view);
+		XMMATRIX project = XMMatrixInverse(NULL, params.projection);
+		project = XMMatrixTranspose(project);
+		clip = XMPlaneTransform(clip, view);
+		clip = XMPlaneTransform(clip, project);
 
 		XMFLOAT4 vec;
 		XMStoreFloat4(&vec, clip);

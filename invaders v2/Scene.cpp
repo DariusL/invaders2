@@ -14,14 +14,14 @@ light(ZeroVec3, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models:
 bumpy(XMFLOAT3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>(),
 RM::Get().GetTexture(RM::Textures::TEXTURE_PAPER_NORMAL_MAP)),
 
-suniaus(XMFLOAT3(55.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+suniaus(XMFLOAT3(55.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, -1.57f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
 RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_FREAKY_RECTANGLES), XMFLOAT3(20.0f, 20.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
 	cameras.emplace_back(XMFLOAT3(0.0f, 0.0f, -50.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3,
 		RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
-	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.57f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
 
