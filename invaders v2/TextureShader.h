@@ -6,7 +6,7 @@ public:
 	TextureShader(wstring vs, wstring ps):ITextureShader(vs, ps){}
 	~TextureShader(void){}
 
-	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures);
+	virtual void SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:

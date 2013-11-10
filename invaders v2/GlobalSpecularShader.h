@@ -6,7 +6,7 @@ public:
 	GlobalSpecularShader(wstring vs, wstring ps) :GlobalDiffuseShader(vs, ps){}
 	~GlobalSpecularShader(void){}
 	
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world);
 
 private:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);

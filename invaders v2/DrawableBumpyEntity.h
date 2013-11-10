@@ -3,13 +3,14 @@
 #include "DrawableEntity.h"
 #include "NormalMappedShader.h"
 #include "Model.h"
+#include "Utils.h"
 
 class DrawableBumpyEntity : public DrawableEntity<NormalMappedVertexType, NormalMappedShader>
 {
 	ComPtr<ID3D11ShaderResourceView> normalMap;
 public:
-	DrawableBumpyEntity(D3DXVECTOR3 pos, NormalMappedModel &model, NormalMappedShader &shader)
-		:DrawableEntity(pos, model, shader){}
+	DrawableBumpyEntity(XMFLOAT3 pos, NormalMappedModel &model, NormalMappedShader &shader, ComPtr<ID3D11ShaderResourceView> map)
+		:DrawableEntity(pos, model, shader), normalMap(map){}
 
 	DrawableBumpyEntity(DrawableBumpyEntity &&other)
 		:DrawableEntity(forward<DrawableBumpyEntity>(other))
@@ -22,14 +23,8 @@ public:
 		if(!Update(renderParams.context))
 			return;
 		SetBuffers(renderParams.context);
-		shader.SetShaderParametersTextured(renderParams, moveMatrix, normalMap);
+		XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
+		shader.SetShaderParametersTextured(renderParams, world, normalMap);
 		shader.RenderShader(renderParams.context, model.indices.size());
-	}
-
-	virtual void Init(ComPtr<ID3D11Device> device)
-	{
-		DrawableEntity::Init(device);
-
-		Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), L"stage7.dds", NULL, NULL, &normalMap, NULL));
 	}
 };

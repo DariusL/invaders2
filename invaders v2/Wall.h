@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 #include "baseinstancer.h"
 #include "InstanceEntity.h"
 #include "ColorInstancedShader.h"
@@ -9,10 +8,10 @@ class Wall : public SimpleBaseInstancer
 	int width;
 	int height;
 
-	D3DXVECTOR3 topLeft;
+	XMFLOAT3 topLeft;
 	bool changed;
 public:
-	Wall(D3DXVECTOR3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader);
+	Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader);
 	~Wall(void);
 	bool Update(ComPtr<ID3D11DeviceContext>);
 

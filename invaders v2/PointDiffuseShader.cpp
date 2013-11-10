@@ -65,21 +65,19 @@ void PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&vertexLightDesc, NULL, &vertexLightBuffer));
 }
 
-void PointDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
+void PointDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {
 	ComPtr<ID3D11DeviceContext> cont = params.context;
-	IPositionShader::SetShaderParameters(params, moveMatrix);
+	IPositionShader::SetShaderParameters(params, world);
 
 	//pixel shader sviesos duomenys
 	PixelLightBufferType data;
-	data.ambient = D3DXVECTOR4(params.brightness, params.brightness, params.brightness, 1.0f);
+	data.ambient = XMFLOAT4(params.brightness, params.brightness, params.brightness, 1.0f);
 	data.diffuseColor = params.diffuseColor;
 	Utils::CopyToBuffer(pixelLightBuffer, data, cont);
 
 	//vertex shader sviesos duomenys
-	D3DXVECTOR4 lightPos = params.lightPos;
-	lightPos.w = 1.0f;
-	Utils::CopyToBuffer(vertexLightBuffer, lightPos, cont);
+	Utils::CopyToBuffer(vertexLightBuffer, params.lightPos, cont);
 
 	//nustatomi konstantu buferiai
 	cont->VSSetConstantBuffers(2, 1, vertexLightBuffer.GetAddressOf());

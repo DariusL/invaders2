@@ -9,7 +9,7 @@ public:
 	~GlobalDiffuseShader(void){}
 
 public:	
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world);
 
 protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
@@ -19,8 +19,8 @@ protected:
 
 	struct LightBufferType
 	{
-		D3DXVECTOR4 diffuseColor;
-		D3DXVECTOR3 lightDir;
+		XMFLOAT4 diffuseColor;
+		XMFLOAT3 lightDir;
 		float brightness;
 	};
 };

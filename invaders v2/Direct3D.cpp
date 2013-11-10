@@ -160,10 +160,10 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
 
-	fieldOfView = (FLOAT) D3DX_PI / 4.0f;
+	fieldOfView = (FLOAT) XM_PI / 4.0f;
 	screenAspect = width / (float)height;
-	D3DXMatrixPerspectiveFovLH(&projectionMatrix, fieldOfView, screenAspect, screennear, screendepth);
-	D3DXMatrixOrthoLH(&orthoMatrix, (FLOAT) width, (FLOAT) height, screennear, screendepth);
+	XMStoreFloat4x4(&projectionMatrix, XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screennear, screendepth));
+	XMStoreFloat4x4(&orthoMatrix, XMMatrixOrthographicLH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
 }
 
 void Direct3D::ClearRenderTarget()

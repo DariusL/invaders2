@@ -9,7 +9,7 @@ void WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	D3D11_BUFFER_DESC cameraDesc, waterDesc;
 
 	cameraDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cameraDesc.ByteWidth = sizeof(D3DXVECTOR4);
+	cameraDesc.ByteWidth = sizeof(XMFLOAT4);
 	cameraDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	cameraDesc.MiscFlags = 0;
 	cameraDesc.StructureByteStride = 0;
@@ -27,9 +27,9 @@ void WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&waterDesc, NULL, &waterBuffer));
 }
 
-void WaterShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
+void WaterShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	MirrorShader::SetShaderParametersTextured(params, posMatrix, textures);
+	MirrorShader::SetShaderParametersTextured(params, world, textures);
 
 	ComPtr<ID3D11DeviceContext> con = params.context;
 

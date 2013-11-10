@@ -7,20 +7,21 @@
 
 Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
-	RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN), D3DXVECTOR3(400.0f, 400.0f, 400.0f)),
+	RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN), XMFLOAT3(400.0f, 400.0f, 400.0f)),
 
-light(ZeroVec3, D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
+light(ZeroVec3, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
 
-bumpy(D3DXVECTOR3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>()),
+bumpy(XMFLOAT3(0.0f, 0.0f, -5.0f), RM::Get().GetNormalMappedModel(), RM::Get().GetShader<NormalMappedShader>(),
+RM::Get().GetTexture(RM::Textures::TEXTURE_PAPER_NORMAL_MAP)),
 
-suniaus(D3DXVECTOR3(55.0f, 0.0f, 0.0f), D3DXVECTOR3(-1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), 
-	RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_FREAKY_RECTANGLES), D3DXVECTOR3(20.0f, 20.0f, 1.0f))
+suniaus(XMFLOAT3(55.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_FREAKY_RECTANGLES), XMFLOAT3(20.0f, 20.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
-	cameras.emplace_back(D3DXVECTOR3(0.0f, 0.0f, -50.0f), ZeroVec3, D3DXVECTOR3(0.0f, -5.0f, 0.0f), ZeroVec3,
+	cameras.emplace_back(XMFLOAT3(0.0f, 0.0f, -50.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3,
 		RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
-	mirrors.emplace_back(D3DXVECTOR3(50.0f, 0.0f, 0.0f), D3DXVECTOR3(1.57f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
 

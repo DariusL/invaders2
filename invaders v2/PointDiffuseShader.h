@@ -7,7 +7,7 @@ public:
 	~PointDiffuseShader(void){}
 
 public:	
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix);
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world);
 
 protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
@@ -18,13 +18,13 @@ protected:
 
 	struct PixelLightBufferType
 	{
-		D3DXVECTOR4 diffuseColor;
-		D3DXVECTOR4 ambient;
+		XMFLOAT4 diffuseColor;
+		XMFLOAT4 ambient;
 	};
 
 	struct VertexLightBufferType
 	{
-		D3DXVECTOR4 lightPos;
+		XMFLOAT4 lightPos;
 	};
 };
 

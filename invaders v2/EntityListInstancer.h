@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 #include "baseinstancer.h"
 #include "InstanceEntity.h"
 #include "ColorInstancedShader.h"

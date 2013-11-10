@@ -51,9 +51,9 @@ void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 }
 
-void TextureShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX moveMatrix, const ComVector<ID3D11ShaderResourceView> &textures)
+void TextureShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	ITextureShader::SetShaderParametersTextured(params, moveMatrix, textures);
+	ITextureShader::SetShaderParametersTextured(params, world, textures);
 
 	texturesSet = textures.size();
 	for (unsigned int i = 0; i < texturesSet; i++)

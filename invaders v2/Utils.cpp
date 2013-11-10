@@ -32,19 +32,19 @@ namespace Utils
 		return frac;
 	}
 
-	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, ColorModel &model)
+	std::vector<InstanceEntity> GetGrid(int width, int height, XMFLOAT3 center, XMFLOAT2 gap, ColorModel &model)
 	{
+		AssertBool(false, L"GetGrid got deimplemented");
 		vector<InstanceEntity> ret;
-		D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
+		/*XMFLOAT2 betweenCenters = XMFLOAT2(
 			(width - 1) * gap.x,
 			(height - 1) * gap.y);
-		D3DXVECTOR3 topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
+		XMFLOAT3 topLeft = XMFLOAT3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 
 		for (int i = 0; i < height; i++)
 		for (int j = 0; j < width; j++){
-			InstanceEntity object = InstanceEntity(topLeft + D3DXVECTOR3(j * gap.x, i * -gap.y, 0), model.hitbox, 0.0f);
-			ret.push_back(object);
-		}
+			ret.emplace_back(topLeft + XMFLOAT3(j * gap.x, i * -gap.y, 0), model.hitbox, 0.0f);
+		}*/
 		return ret;
 	}
 
@@ -53,13 +53,28 @@ namespace Utils
 		MessageBox(NULL, text.c_str(), title.c_str(), MB_OK);
 	}
 
-	D3DXPLANE PlaneFromPointAndRot(D3DXVECTOR3 point, D3DXVECTOR3 rot)
+	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot)
 	{
-		D3DXVECTOR3 normal(0.0f, 0.0f, -1.0f);
-		D3DXMATRIX matrix;
-		D3DXVECTOR4 temp;
-		D3DXMatrixRotationYawPitchRoll(&matrix, rot.x, rot.y, rot.z);
-		D3DXVec3Transform(&temp, &normal, &matrix);
-		return D3DXPLANE(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
+		XMFLOAT3 n(0.0f, 0.0f, -1.0f);
+		XMMATRIX matrix;
+		XMFLOAT3 temp;
+		matrix = XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
+		XMStoreFloat3(&temp, XMVector3Transform(XMLoadFloat3(&n), matrix));
+		return XMFLOAT4(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
+	}
+
+	XMFLOAT2 GetVec2(float value)
+	{
+		return XMFLOAT2(value, value);
+	}
+
+	XMFLOAT3 GetVec3(float value)
+	{
+		return XMFLOAT3(value, value, value);
+	}
+
+	XMFLOAT4 GetVec4(float value)
+	{
+		return XMFLOAT4(value, value, value, value);
 	}
 }

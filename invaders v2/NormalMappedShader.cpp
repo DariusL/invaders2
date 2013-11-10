@@ -22,11 +22,6 @@ void NormalMappedShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 }
 
-void NormalMappedShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
-{
-	PointSpecularShader::InitializeShaderBuffers(device);
-}
-
 vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;
@@ -95,9 +90,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
 	return ret;
 }
 
-void NormalMappedShader::SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, ComPtr<ID3D11ShaderResourceView> texture)
+void NormalMappedShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, ComPtr<ID3D11ShaderResourceView> texture)
 {
-	PointSpecularShader::SetShaderParameters(params, posMatrix);
+	PointSpecularShader::SetShaderParameters(params, world);
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 	params.context->PSSetShaderResources(0, 1, texture.GetAddressOf());
 }

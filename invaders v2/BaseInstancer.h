@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 #include "DrawableEntity.h"
 #include "Model.h"
 #include "ColorInstancedShader.h"
@@ -12,7 +11,7 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos = D3DXVECTOR3());
+	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
 	virtual ~BaseInstancer(void){}
 
 protected:
@@ -36,7 +35,7 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, D3DXVECTOR3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;

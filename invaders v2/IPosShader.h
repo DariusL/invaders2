@@ -8,28 +8,28 @@ public:
 	IPositionShader(wstring vs, wstring ps):IShader(vs, ps){}
 	virtual ~IPositionShader(){}
 
-	virtual void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix)
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
 
-		D3DXMatrixTranspose(&vertexMatrices.projection, &params.projection);
-		D3DXMatrixTranspose(&vertexMatrices.view, &params.view);
-		D3DXMatrixTranspose(&vertexMatrices.world, &posMatrix);
+		
+		XMStoreFloat4x4(&vertexMatrices.projection, XMMatrixTranspose(params.projection));
+		XMStoreFloat4x4(&vertexMatrices.view, XMMatrixTranspose(params.view));
+		XMStoreFloat4x4(&vertexMatrices.world, XMMatrixTranspose(world));
 		Utils::CopyToBuffer(matrixBuffer, vertexMatrices, params.context);
 
-		D3DXPLANE clip = params.clipPlane;
-		if (clip != ZeroPlane)
-		{
-			D3DXMATRIX view, project;
-			D3DXMatrixInverse(&view, NULL, &params.view);
-			D3DXMatrixTranspose(&view, &view);
-			D3DXMatrixInverse(&project, NULL, &params.projection);
-			D3DXMatrixTranspose(&project, &project);
-			D3DXPlaneTransform(&clip, &clip, &view);
-			D3DXPlaneTransform(&clip, &clip, &project);
-		}
+		XMVECTOR clip = XMLoadFloat4(&params.clipPlane);
 
-		Utils::CopyToBuffer(clipBuffer, clip, params.context);
+		/*XMMATRIXInverse(&view, NULL, &params.view);
+		XMMATRIXTranspose(&view, &view);
+		XMMATRIXInverse(&project, NULL, &params.projection);
+		XMMATRIXTranspose(&project, &project);*/
+		clip = XMPlaneTransform(clip, params.view);
+		clip = XMPlaneTransform(clip, params.projection);
+
+		XMFLOAT4 vec;
+		XMStoreFloat4(&vec, clip);
+		Utils::CopyToBuffer(clipBuffer, vec, params.context);
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 		params.context->VSSetConstantBuffers(1, 1, clipBuffer.GetAddressOf());

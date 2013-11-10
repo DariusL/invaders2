@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "ResourceManager.h"
+#include "DDSTextureLoader.h"
 using namespace Microsoft::WRL;
 
 ResourceManager *ResourceManager::handle;
@@ -9,8 +10,8 @@ ResourceManager::ResourceManager(void)
 	normalModel(GetNormalModelFromOBJ("teapot.obj")),
 	models()
 {
-	normalMappedModel.hitbox = D3DXVECTOR2(2.0f, 2.0f);
-	normalModel.hitbox = D3DXVECTOR2(1.5f, 1.5f);
+	normalMappedModel.hitbox = XMFLOAT2(2.0f, 2.0f);
+	normalModel.hitbox = XMFLOAT2(1.5f, 1.5f);
 	handle = this;
 }
 
@@ -38,24 +39,24 @@ void ResourceManager::Init()
 {
 	//player
 	ColorModel temp;
-	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 
 	VertexType vertex;
 	
-	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
-	vertex.color = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // Top left
+	vertex.color = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertex.color = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertex.color = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Top right.
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
 	temp.indices.push_back(1);
@@ -69,22 +70,22 @@ void ResourceManager::Init()
 	models.push_back(move(temp));
 
 	//enemy basic
-	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 	
-	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // Top left
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Top right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
 	temp.indices.push_back(1);
@@ -98,22 +99,22 @@ void ResourceManager::Init()
 	models.push_back(move(temp));
 
 	//bullet
-	temp.hitbox = D3DXVECTOR2(0.2f, 1.5f);
+	temp.hitbox = XMFLOAT2(0.2f, 1.5f);
 	
-	vertex.position = D3DXVECTOR3(-0.1f, -0.75f, 0.0f);  // Bottom left.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(-0.1f, -0.75f, 0.0f);  // Bottom left.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(-0.1f, 0.75f, 0.0f);  // Top left
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(-0.1f, 0.75f, 0.0f);  // Top left
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(0.1f, -0.75f, 0.0f);  // Bottom right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(0.1f, -0.75f, 0.0f);  // Bottom right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(0.1f, 0.75f, 0.0f);  // Top right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
+	vertex.position = XMFLOAT3(0.1f, 0.75f, 0.0f);  // Top right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
 	temp.indices.push_back(1);
@@ -127,22 +128,22 @@ void ResourceManager::Init()
 	models.push_back(move(temp));
 
 	//enemy laptop
-	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 
-	vertex.position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);  // Top left
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // Top left
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);  // Top right.
-	vertex.color = D3DXVECTOR4(1.0f, 0.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Top right.
+	vertex.color = XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
 	temp.indices.push_back(1);
@@ -156,22 +157,22 @@ void ResourceManager::Init()
 	models.push_back(move(temp));
 
 	//wall
-	temp.hitbox = D3DXVECTOR2(1.0f, 1.0f);
+	temp.hitbox = XMFLOAT2(1.0f, 1.0f);
 	
-	vertex.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);  // Top left
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(0.5f, -0.5f, 0.0f);  // Bottom right.
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
-	vertex.position = D3DXVECTOR3(0.5f, 0.5f, 0.0f);  // Top right.
-	vertex.color = D3DXVECTOR4(0.0f, 1.0f, 1.0f, 1.0f);
+	vertex.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
+	vertex.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
 
 	temp.indices.push_back(1);
@@ -185,29 +186,29 @@ void ResourceManager::Init()
 	models.push_back(move(temp));
 
 	temp = GetModelFromOBJ("ball.obj");
-	temp.hitbox = D3DXVECTOR2(2.0f, 2.0f);
+	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 
 	models.push_back(move(temp));
 
 	TexturedModel plane;
-	plane.hitbox = D3DXVECTOR2(20, 20);
+	plane.hitbox = XMFLOAT2(20, 20);
 
 	TextureVertexType tv;
 
-	tv.position = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);  // Bottom left.
-	tv.tex = D3DXVECTOR2(0.0f, 1.0f);
+	tv.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
+	tv.tex = XMFLOAT2(0.0f, 1.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);  // Top left
-	tv.tex = D3DXVECTOR2(0.0f, 0.0f);
+	tv.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
+	tv.tex = XMFLOAT2(0.0f, 0.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(0.5f, -0.5f, 0.0f);  // Bottom right.
-	tv.tex = D3DXVECTOR2(1.0f, 1.0f);
+	tv.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
+	tv.tex = XMFLOAT2(1.0f, 1.0f);
 	plane.vertices.push_back(tv);
 
-	tv.position = D3DXVECTOR3(0.5f, 0.5f, 0.0f);  // Top right.
-	tv.tex = D3DXVECTOR2(1.0f, 0.0f);
+	tv.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
+	tv.tex = XMFLOAT2(1.0f, 0.0f);
 	plane.vertices.push_back(tv);
 
 	plane.indices.push_back(1);
@@ -225,7 +226,7 @@ void ResourceManager::Init()
 
 	level->gridWidth = 11;
 	level->gridHeight = 5;
-	level->gap = D3DXVECTOR2(3.0f, 3.0f);
+	level->gap = XMFLOAT2(3.0f, 3.0f);
 	level->enemyTypes = vector<int>();
 	level->enemyTypes.push_back(Enemies::BASIC);
 
@@ -246,7 +247,7 @@ ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
 	ret.indices = normalModel.indices;
 	for(NormalVertexType normalVertex : normalModel.vertices)
 	{
-		vertex.color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex.color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex.position = normalVertex.position;
 		ret.vertices.push_back(vertex);
 	}
@@ -257,7 +258,7 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
 {
 	NormalModel model;
 	ifstream in(filename, ios::binary);
-	vector<D3DXVECTOR3> normals;
+	vector<XMFLOAT3> normals;
 	string input;
 	float x, y, z;
 
@@ -305,8 +306,8 @@ NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(string filename, 
 {
 	NormalMappedModel model;
 	ifstream in(filename, ios::binary);
-	vector<D3DXVECTOR3> normals;
-	vector<D3DXVECTOR2> tex;
+	vector<XMFLOAT3> normals;
+	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
 
@@ -361,7 +362,7 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(string filename, bool inv
 {
 	TexturedModel model;
 	ifstream in(filename, ios::binary);
-	vector<D3DXVECTOR2> tex;
+	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
 
@@ -410,7 +411,7 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(string filename,
 	TexturedModel model;
 	vector<TextureVertexType> v;
 	ifstream in(filename, ios::binary);
-	vector<D3DXVECTOR2> tex;
+	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
 
@@ -494,34 +495,32 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind,
 	auto &v2 = v[ind[1].vertex];
 	auto &v3 = v[ind[2].vertex];
 
-	D3DXVECTOR2 tu(v2.tex.x - v1.tex.x, v3.tex.x - v1.tex.x);
-	D3DXVECTOR2 tv(v2.tex.y - v1.tex.y, v3.tex.y - v1.tex.y);
+	XMFLOAT2 tu(v2.tex.x - v1.tex.x, v3.tex.x - v1.tex.x);
+	XMFLOAT2 tv(v2.tex.y - v1.tex.y, v3.tex.y - v1.tex.y);
 
-	D3DXVECTOR3 edge1(v2.position - v1.position);
-	D3DXVECTOR3 edge2(v3.position - v1.position);
+	XMVECTOR edge1 = XMLoadFloat3(&v2.position) - XMLoadFloat3(&v1.position);
+	XMVECTOR edge2 = XMLoadFloat3(&v3.position) - XMLoadFloat3(&v1.position);
 
 	float den = 1.0f / (tu.x * tv.y - tu.y * tv.x);
 
-	D3DXVECTOR3 tangent((tv.y * edge1 - tv.x * edge2) * den);
-	D3DXVECTOR3 binormal((tu.x * edge2 - tv.y * edge1) * den);
+	XMVECTOR tangent = XMVector3Normalize((tv.y * edge1 - tv.x * edge2) * den);
+	XMVECTOR binormal = XMVector3Normalize((tu.x * edge2 - tv.y * edge1) * den);
 
-	D3DXVec3Normalize(&tangent, &tangent);
-	D3DXVec3Normalize(&binormal, &binormal);
+	XMStoreFloat3(&v1.binormal, binormal + XMLoadFloat3(&v1.binormal));
+	XMStoreFloat3(&v1.tangent, tangent + XMLoadFloat3(&v1.tangent));
 
-	v1.binormal += binormal;
-	v1.tangent += tangent;
+	XMStoreFloat3(&v2.binormal, binormal + XMLoadFloat3(&v2.binormal));
+	XMStoreFloat3(&v2.tangent, tangent + XMLoadFloat3(&v2.binormal));
 
-	v2.binormal += binormal;
-	v2.tangent += tangent;
-
-	v3.binormal += binormal;
-	v3.tangent += tangent;
+	XMStoreFloat3(&v3.binormal, binormal + XMLoadFloat3(&v3.binormal));
+	XMStoreFloat3(&v3.tangent, tangent + XMLoadFloat3(&v3.tangent));
 }
 
 ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device)
 {
 	ComPtr<ID3D11ShaderResourceView> ret;
-	Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), filename.c_str(), NULL, NULL, &ret, NULL));
+	Assert(CreateDDSTextureFromFile(device.Get(), filename.c_str(), NULL, ret.GetAddressOf()));
+	//Assert(D3DX11CreateShaderResourceViewFromFile(device.Get(), filename.c_str(), NULL, NULL, &ret, NULL));
 	return ret;
 }
 

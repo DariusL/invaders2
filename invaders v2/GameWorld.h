@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 #include "includes.h"
 #include "EntityListInstancer.h"
 #include "EnemyGrid.h"
@@ -26,7 +25,7 @@ class GameWorld : public IWorld
 	float bulletSpeed;
 
 	int lives;
-	D3DXVECTOR3 playerStart;
+	XMFLOAT3 playerStart;
 public:
 	GameWorld();
 	~GameWorld();

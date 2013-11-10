@@ -2,7 +2,6 @@
 
 #include "includes.h"
 
-
 class Camera
 {
 public:
@@ -14,22 +13,22 @@ public:
 	void Yaw(float angle);
 	void Pitch(float angle);
 	void Roll(float angle);
-	void Move(D3DXVECTOR3 vec){ Move(vec.x, vec.y, vec.z); }
+	void Move(XMFLOAT3 vec){ Move(vec.x, vec.y, vec.z); }
 	void Move(float x, float y, float z);
 
-	D3DXVECTOR3 GetPosition() const {return pos;}
+	XMFLOAT3 GetPosition() const {return pos;}
 
-	const D3DXMATRIX &GetViewMatrix(){ RenderMain(); return viewMatrix; }
-	D3DXMATRIX GetReflectedViewMatrix(const D3DXMATRIX &reflect, const D3DXMATRIX &zeroReflect);
+	const XMMATRIX GetViewMatrix(){ RenderMain(); return XMLoadFloat4x4(&viewMatrix); }
+	XMMATRIX GetReflectedViewMatrix(const XMMATRIX &reflect, const XMMATRIX &zeroReflect);
 
 private:
 	void RenderMain();
 
-	D3DXVECTOR3 pos;
-	D3DXVECTOR3 forward;
-	D3DXVECTOR3 up;
-	D3DXVECTOR3 right;
+	XMFLOAT3 pos;
+	XMFLOAT3 forward;
+	XMFLOAT3 up;
+	XMFLOAT3 right;
 
-	D3DXMATRIX viewMatrix;
+	XMFLOAT4X4 viewMatrix;
 	bool modified;
 };

@@ -7,6 +7,7 @@ GameWorld::GameWorld()
 {
 	started = false;
 	lives = 3;
+	AssertBool(false, L"GameWorld got deimlpemented");
 }
 
 GameWorld::~GameWorld()
@@ -16,41 +17,41 @@ GameWorld::~GameWorld()
 
 bool GameWorld::Start(shared_ptr<Level> level)
 {
-	playerStart = D3DXVECTOR3(0.0f, -15.0f, 0.0f);
+	/*playerStart = XMFLOAT3(0.0f, -15.0f, 0.0f);
 	auto &rm = RM::Get();
 	player = make_shared<DrawableShooter>(18.0f, 0.3f, rm.GetModel(ResourceManager::Models::MODEL_PLAYER), rm.GetShader<ColorShader>());
 	player->MoveTo(playerStart);
 	enemies = make_shared<EnemyGrid>();
-	enemies->Init(D3DXVECTOR3(0.0f, 10.0f, 0.0f), level);
+	enemies->Init(XMFLOAT3(0.0f, 10.0f, 0.0f), level);
 	float wallGap = 10.0f;
 	for(int i = 0; i < WALL_COUNT; i++)
-		walls.push_back(make_shared<Wall>(D3DXVECTOR3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm.GetModel(ResourceManager::Models::MODEL_WALL), rm.GetShader<ColorInstancedShader>()));
+		walls.push_back(make_shared<Wall>(XMFLOAT3(wallGap * (WALL_COUNT - 1) / 2 - i * wallGap, -8.0f, 0.0f), 6, 4, rm.GetModel(ResourceManager::Models::MODEL_WALL), rm.GetShader<ColorInstancedShader>()));
 	enemiesMovingRight = true;
-	started = true;
+	started = true;*/
 	return true;
 }
 
 void GameWorld::Stop()
 {
-	playerBullets.clear();
+	/*playerBullets.clear();
 	walls.clear();
-	started = false;
+	started = false;*/
 }
 
 void GameWorld::Init(ComPtr<ID3D11Device> device)
 {
-	auto &rm = RM::Get();
+	/*auto &rm = RM::Get();
 	player->Init(device);
 	enemies->Init(device);
 	for(int i = 0; i < WALL_COUNT; i++)
 		walls[i]->Init(device);
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm.GetModel(ResourceManager::Models::MODEL_BULLET), rm.GetShader<ColorInstancedShader>(), 100));
-	playerBulletGraphics->Init(device);
+	playerBulletGraphics->Init(device);*/
 }
 
 int GameWorld::OnLoop(int input, float frameLength)
 {
-	CollideBullets();
+	/*CollideBullets();
 	enemies->OnLoop(frameLength);
 	auto &rm = RM::Get();
 	playerBullets.remove_if([](const Entity &ent){return ent.IsDead() || ent.GetBottomBorder() > FIELD_HEIGHT / 2.0f;});
@@ -60,12 +61,12 @@ int GameWorld::OnLoop(int input, float frameLength)
 		{
 			if(input & ControlCodes::LEFT && player->GetLeftBorder() > float(FIELD_WIDTH) / -2)
 			{
-				player->MoveBy(D3DXVECTOR3(-1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
+				player->MoveBy(XMFLOAT3(-1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
 			}
 			else 
 				if(input & ControlCodes::RIGHT && player->GetRightBorder() < float(FIELD_WIDTH) / 2)
 				{
-					player->MoveBy(D3DXVECTOR3(1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
+					player->MoveBy(XMFLOAT3(1.0f, 0.0f, 0.0f) * (player->GetSpeed() * frameLength));
 				}
 		}
 		if(input & ControlCodes::FIRE)
@@ -87,7 +88,7 @@ int GameWorld::OnLoop(int input, float frameLength)
 	shared_ptr<DrawableShooter> temp;
 	for(auto &b : playerBullets)
 	{
-		b.MoveBy(D3DXVECTOR3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
+		b.MoveBy(XMFLOAT3(0.0f, 1.0f, 0.0f) * (b.GetSpeed() * frameLength));
 	}
 	enemies->CollideWith(playerBullets);
 	for(int i = 0; i < WALL_COUNT; i++)
@@ -98,28 +99,28 @@ int GameWorld::OnLoop(int input, float frameLength)
 	if(lives <= 0)
 		return Result::GAME_OVER;
 	if(enemies->getAliveCount() <= 0)
-		return Result::NEXT_LEVEL;
+		return Result::NEXT_LEVEL;*/
 	return Result::CONTINUE;
 }
 
 void GameWorld::CollideBullets()
 {
-	list<InstanceEntity> &enemyBullets = enemies->getBullets();
+	/*list<InstanceEntity> &enemyBullets = enemies->getBullets();
 	for(auto &p : playerBullets)
 	{
 		for(auto &e : enemyBullets)
 		{
 			p.CollideWithAndKillBoth(e);
 		}
-	}
+	}*/
 }
 
 void GameWorld::Render(const RenderParams &params)
 {
-	player->Render(params);
+	/*player->Render(params);
 	enemies->Render(params);
 	playerBulletGraphics->SetData(playerBullets);
 	playerBulletGraphics->Render(params);
 	for(auto a : walls)
-		a->Render(params);
+		a->Render(params);*/
 }

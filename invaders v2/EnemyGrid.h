@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
 
 #include "IDrawable.h"
 #include "Level.h"
@@ -20,8 +19,8 @@ class EnemyGrid : public IDrawable
 
 	shared_ptr<Level> level;
 
-	D3DXVECTOR3 center;
-	D3DXVECTOR2 betweenCenters;
+	XMFLOAT3 center;
+	XMFLOAT2 betweenCenters;
 
 	bool movingRight;
 	float speed;
@@ -34,15 +33,15 @@ public:
 	EnemyGrid(void);
 	~EnemyGrid(void);
 
-	void Init(D3DXVECTOR3 center, shared_ptr<Level> level);
+	void Init(XMFLOAT3 center, shared_ptr<Level> level);
 
 	shared_ptr<DrawableShooter> GetEnemy(int i){return grid[i];}
 
-	void MoveBy(D3DXVECTOR3 vec);
+	void MoveBy(XMFLOAT3 vec);
 	void OnLoop(float frameLength);
 	void Fire(float frameLength);
 	void CollideWith(list<InstanceEntity> &bullets);
-	D3DXVECTOR3 GetPos(){return center;}
+	XMFLOAT3 GetPos(){return center;}
 
 	float GetRightBorder(){return center.x + betweenCenters.x / 2;}
 	float GetLeftBorder(){return center.x - betweenCenters.x / 2;}
@@ -51,7 +50,7 @@ public:
 
 	//returns true if there's an enemy at pos and the enemy by &enemy
 	bool GetEnemyAt(Entity bullet, shared_ptr<DrawableShooter> &enemy);
-	bool IsInBounds(D3DXVECTOR3 pos);
+	bool IsInBounds(XMFLOAT3 pos);
 
 	list<InstanceEntity> &getBullets(){return bullets;}
 

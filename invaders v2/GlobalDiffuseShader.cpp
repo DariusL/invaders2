@@ -55,17 +55,20 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
 }
 
-void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, D3DXMATRIX moveMatrix)
+void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {
-	IPositionShader::SetShaderParameters(params, moveMatrix);
+	IPositionShader::SetShaderParameters(params, world);
 
 	ComPtr<ID3D11DeviceContext> cont = params.context;
+	XMVECTOR lightdir;
+
+	lightdir = -XMLoadFloat3(&params.lightPos);
+	XMVector3Normalize(lightdir);
 
 	LightBufferType data;
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
-	data.lightDir = ZeroVec3 - params.lightPos;
-	D3DXVec3Normalize(&data.lightDir, &data.lightDir);
+	XMStoreFloat3(&data.lightDir, lightdir);
 	Utils::CopyToBuffer(lightingBuffer, data, cont);
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());

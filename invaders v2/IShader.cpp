@@ -2,8 +2,6 @@
 #include "IShader.h"
 #include "Utils.h"
 
-#include <memory>
-
 using namespace std;
 
 void IShader::Init(ComPtr<ID3D11Device> device)
@@ -48,7 +46,7 @@ void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
 
 	clipBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	clipBufferDesc.ByteWidth = sizeof(D3DXPLANE);
+	clipBufferDesc.ByteWidth = sizeof(XMFLOAT4);
 	clipBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	clipBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	clipBufferDesc.MiscFlags = 0;

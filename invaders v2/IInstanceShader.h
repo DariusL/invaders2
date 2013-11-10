@@ -15,13 +15,13 @@ public:
 
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){ AssertBool(false, L"RenderShader called on an instanced shader"); }
 
-	void SetShaderParameters(const RenderParams &params, D3DXMATRIX posMatrix){ AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
+	void SetShaderParameters(const RenderParams &params, const XMMATRIX &posMatrix){ AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
 
 	virtual void SetShaderParametersInstanced(const RenderParams &params)
 	{
 		InstancedMatrixType matrices;
-		D3DXMatrixTranspose(&matrices.view, &params.view);
-		D3DXMatrixTranspose(&matrices.projection, &params.projection);
+		XMStoreFloat4x4(&matrices.view, XMMatrixTranspose(params.view));
+		XMStoreFloat4x4(&matrices.projection, XMMatrixTranspose(params.projection));
 		Utils::CopyToBuffer(matrixBuffer, matrices, params.context);
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());

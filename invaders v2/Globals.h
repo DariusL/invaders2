@@ -1,6 +1,8 @@
 #pragma once
 #include "includes.h"
 
+using namespace DirectX;
+
 #ifndef NULL
 	#define NULL 0
 #endif
@@ -8,63 +10,63 @@
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
-extern const D3DXVECTOR3 ZeroVec3;
-extern const D3DXVECTOR4 ZeroVec4;
-extern const D3DXVECTOR3 OneVec3;
-extern const D3DXPLANE ZeroPlane;
+extern const XMFLOAT3 ZeroVec3;
+extern const XMFLOAT4 ZeroVec4;
+extern const XMFLOAT3 OneVec3;
+extern const XMFLOAT2 ZeroVec2;
 
 struct VertexType
 {
-	D3DXVECTOR3 position;
-	D3DXVECTOR4 color;
+	XMFLOAT3 position;
+	XMFLOAT4 color;
 };
 
 struct TextureVertexType
 {
-	D3DXVECTOR3 position;
-	D3DXVECTOR2 tex;
+	XMFLOAT3 position;
+	XMFLOAT2 tex;
 
 	TextureVertexType(){}
-	TextureVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)){}
+	TextureVertexType(float x, float y, float z) :position(XMFLOAT3(x, y, z)){}
 };
 
 struct NormalMappedVertexType
 {
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 normal;
-	D3DXVECTOR4 color;
-	D3DXVECTOR2 tex;
-	D3DXVECTOR3 tangent;
-	D3DXVECTOR3 binormal;
+	XMFLOAT3 position;
+	XMFLOAT3 normal;
+	XMFLOAT4 color;
+	XMFLOAT2 tex;
+	XMFLOAT3 tangent;
+	XMFLOAT3 binormal;
 
-	NormalMappedVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
+	NormalMappedVertexType(float x, float y, float z) :position(XMFLOAT3(x, y, z)), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
 };
 
 struct NormalVertexType
 {
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 normal;
-	D3DXVECTOR4 color;
+	XMFLOAT3 position;
+	XMFLOAT3 normal;
+	XMFLOAT4 color;
 
-	NormalVertexType(float x, float y, float z) :position(D3DXVECTOR3(x, y, z)), color(1.0f, 0.0f, 0.0f, 1.0f){}
+	NormalVertexType(float x, float y, float z) :position(XMFLOAT3(x, y, z)), color(1.0f, 0.0f, 0.0f, 1.0f){}
 };
 
 struct InstanceType
 {
-	D3DXVECTOR3 position;
+	XMFLOAT3 position;
 };
 
 struct MatrixType
 {
-	D3DXMATRIX world;
-	D3DXMATRIX view;
-	D3DXMATRIX projection;
+	XMFLOAT4X4 world;
+	XMFLOAT4X4 view;
+	XMFLOAT4X4 projection;
 };
 
 struct InstancedMatrixType
 {
-	D3DXMATRIX view;
-	D3DXMATRIX projection;
+	XMFLOAT4X4 view;
+	XMFLOAT4X4 projection;
 };
 
 struct ControlCodes
@@ -88,30 +90,30 @@ struct ControlCodes
 	static const int ROLL_RIGHT = 1 << 15;
 };
 
-struct RenderParams
+__declspec(align(16)) struct RenderParams
 {
+	XMMATRIX reflecMatrix;
+	XMMATRIX view;
+	XMMATRIX projection;
+	XMFLOAT3 lightPos;
 	float brightness;
-	D3DXMATRIX view;
-	D3DXMATRIX projection;
-	D3DXVECTOR3 lightPos;
-	D3DXVECTOR4 diffuseColor;
-	D3DXVECTOR3 cameraPos;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
-	D3DXVECTOR2 waterTranslation;
+	XMFLOAT4 diffuseColor;
+	XMFLOAT3 cameraPos;
 	float waterScale;
-	D3DXMATRIX reflecMatrix;
-	D3DXPLANE clipPlane;
+	XMFLOAT4 clipPlane;
+	XMFLOAT2 waterTranslation;
+	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 };
 
 struct ReflectionType
 {
-	D3DXMATRIX reflection;
-	D3DXMATRIX refraction;
+	XMFLOAT4X4 reflection;
+	XMFLOAT4X4 refraction;
 };
 
 struct WaterType
 {
-	D3DXVECTOR2 waterTranslation;
+	XMFLOAT2 waterTranslation;
 	float scale;
 	float padding;
 };

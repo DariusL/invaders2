@@ -2,16 +2,16 @@
 #include "Wall.h"
 
 
-Wall::Wall(D3DXVECTOR3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) : 
+Wall::Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) : 
 	SimpleBaseInstancer(model, shader, width * height, center)
 {
-	SetSize(D3DXVECTOR2(model.hitbox.x * width, model.hitbox.y * height));
+	SetSize(XMFLOAT2(model.hitbox.x * width, model.hitbox.y * height));
 	this->width = width;
 	this->height = height;
-	D3DXVECTOR2 betweenCenters = D3DXVECTOR2(
+	XMFLOAT2 betweenCenters = XMFLOAT2(
 		(width - 1) * model.hitbox.x,
 		(height - 1) * model.hitbox.y);
-	this->topLeft = D3DXVECTOR3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
+	this->topLeft = XMFLOAT3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
 	blocks = Utils::GetGrid(width, height, center, model.hitbox, model);
 	blocks[0].Kill();
 	blocks[width - 1].Kill();

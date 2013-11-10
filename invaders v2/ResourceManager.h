@@ -43,15 +43,12 @@ class ResourceManager
 	static FaceVertex GetVertexFromString(string &vertex);
 	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
 
-	ResourceManager(const ResourceManager&);
-	ResourceManager &operator=(const ResourceManager&);
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager &operator=(const ResourceManager&) = delete;
 	static ResourceManager *handle;
 public:
 	ResourceManager(void);
 	~ResourceManager(void);
-
-	ResourceManager(ResourceManager&&){}
-	ResourceManager &operator=(ResourceManager&&){}
 
 	void Init();
 	void InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);

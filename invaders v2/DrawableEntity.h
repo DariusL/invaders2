@@ -11,14 +11,14 @@ class DrawableEntity : public Entity, public IDrawableObject
 {
 protected:
 	Model<vt> &model;
-	D3DXMATRIX moveMatrix;
+	XMFLOAT4X4 moveMatrix;
 	sh &shader;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
+	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
@@ -33,10 +33,11 @@ protected:
 typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(D3DXVECTOR3 pos, Model<vt> &model, sh &shader, float speed)
+DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)
 : Entity(pos, model.hitbox, speed), model(model), shader(shader)
 {
 }
+
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
 : IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)),
@@ -107,7 +108,8 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader.SetShaderParameters(params, moveMatrix);
+	XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
+	shader.SetShaderParameters(params, world);
 	shader.RenderShader(params.context, model.indices.size());
 }
 
@@ -117,7 +119,7 @@ bool DrawableEntity<vt, sh>::Update(ComPtr<ID3D11DeviceContext> context)
 	if(dead)
 		return false;
 
-	D3DXMatrixTranslation(&moveMatrix, pos.x, pos.y, pos.z);
+	XMStoreFloat4x4(&moveMatrix, XMMatrixTranslation(pos.x, pos.y, pos.z));
 
 	return true;
 }

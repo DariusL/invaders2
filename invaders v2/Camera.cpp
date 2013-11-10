@@ -1,6 +1,6 @@
 #include "includes.h"
 #include "Camera.h"
-
+using namespace DirectX;
 
 Camera::Camera() : up(0.0f, 1.0f, 0.0f), pos(0.0f, 0.0f, 0.0f), forward(0.0f, 0.0f, 1.0f), right(1.0f, 0.0f, 0.0f), modified(true)
 {
@@ -11,77 +11,66 @@ void Camera::RenderMain()
 	if (modified)
 	{
 		modified = false;
-		auto forward = this->forward + pos;
-		D3DXMatrixLookAtLH(&viewMatrix, &pos, &forward, &up);
+		XMStoreFloat4x4(&viewMatrix, XMMatrixLookToLH(XMLoadFloat3(&pos), XMLoadFloat3(&forward), XMLoadFloat3(&up)));
 	}
 }
 
-D3DXMATRIX Camera::GetReflectedViewMatrix(const D3DXMATRIX &reflect, const D3DXMATRIX &zeroReflect)
+XMMATRIX Camera::GetReflectedViewMatrix(const XMMATRIX &reflect, const XMMATRIX &zeroReflect)
 {
-	D3DXVECTOR4 forward, pos, up;
-	D3DXVec3Transform(&up, &this->up, &zeroReflect);
-	D3DXVec3Transform(&forward, &this->forward, &zeroReflect);
-	D3DXVec3Transform(&pos, &this->pos, &reflect);
-	forward += pos;
-	D3DXMATRIX view;
-	D3DXMatrixLookAtLH(&view, (D3DXVECTOR3*)&pos, (D3DXVECTOR3*)&forward, (D3DXVECTOR3*)&up);
-	return view;
+	XMVECTOR up = XMVector3Transform(XMLoadFloat3(&this->up), zeroReflect);
+	XMVECTOR forward = XMVector3Transform(XMLoadFloat3(&this->forward), zeroReflect);
+	XMVECTOR pos = XMVector3Transform(XMLoadFloat3(&this->pos), reflect);
+	return XMMatrixLookToLH(pos, forward, up);
 }
 
 void Camera::Yaw(float angle)
 {
-	D3DXMATRIX matrix;
-	D3DXVECTOR4 temp;
+	XMMATRIX matrix = XMMatrixRotationAxis(XMLoadFloat3(&up), angle);
 
-	D3DXMatrixRotationAxis(&matrix, &up, angle);
-	D3DXVec3Transform(&temp, &right, &matrix);
-	right = D3DXVECTOR3(temp);
-	D3DXVec3Transform(&temp, &forward, &matrix);
-	forward = D3DXVECTOR3(temp);
+	XMStoreFloat3(&right, XMVector3Transform(XMLoadFloat3(&right), matrix));
+	XMStoreFloat3(&forward, XMVector3Transform(XMLoadFloat3(&forward), matrix));
 	modified = true;
 }
 
 void Camera::Pitch(float angle)
 {
-	D3DXMATRIX matrix;
-	D3DXVECTOR4 temp;
+	XMMATRIX matrix = XMMatrixRotationAxis(XMLoadFloat3(&right), angle);
 
-	D3DXMatrixRotationAxis(&matrix, &right, angle);
-	D3DXVec3Transform(&temp, &up, &matrix);
-	up = D3DXVECTOR3(temp);
-	D3DXVec3Transform(&temp, &forward, &matrix);
-	forward = D3DXVECTOR3(temp);
+	XMStoreFloat3(&up, XMVector3Transform(XMLoadFloat3(&up), matrix));
+	XMStoreFloat3(&forward, XMVector3Transform(XMLoadFloat3(&forward), matrix));
 	modified = true;
 }
 
 void Camera::Roll(float angle)
 {
-	D3DXMATRIX matrix;
-	D3DXVECTOR4 temp;
+	XMMATRIX matrix = XMMatrixRotationAxis(XMLoadFloat3(&forward), angle);
 
-	D3DXMatrixRotationAxis(&matrix, &forward, angle);
-	D3DXVec3Transform(&temp, &up, &matrix);
-	up = D3DXVECTOR3(temp);
-	D3DXVec3Transform(&temp, &right, &matrix);
-	right = D3DXVECTOR3(temp);
+	XMStoreFloat3(&right, XMVector3Transform(XMLoadFloat3(&right), matrix));
+	XMStoreFloat3(&up, XMVector3Transform(XMLoadFloat3(&up), matrix));
 	modified = true;
 }
 
 void Camera::Up(float dist)
 {
-	pos += dist * up;
+	XMVECTOR pos = XMLoadFloat3(&this->pos);
+	XMVECTOR up = XMLoadFloat3(&this->up);
+	XMStoreFloat3(&this->pos, pos + dist * up);
 	modified = true;
 }
 
 void Camera::Right(float dist)
 {
-	pos += dist * right;
+	XMVECTOR pos = XMLoadFloat3(&this->pos);
+	XMVECTOR right = XMLoadFloat3(&this->right);
+	XMStoreFloat3(&this->pos, pos + dist * right);
 	modified = true;
 }
 
 void Camera::Forward(float dist)
 {
-	pos += dist * forward;
+	XMVECTOR pos = XMLoadFloat3(&this->pos);
+	XMVECTOR forward = XMLoadFloat3(&this->forward);
+	XMStoreFloat3(&this->pos, pos + dist * forward);
 	modified = true;
 }
 
@@ -90,5 +79,4 @@ void Camera::Move(float x, float y, float z)
 	Forward(z);
 	Right(x);
 	Up(y);
-	modified = true;
 }

@@ -1,9 +1,4 @@
 #pragma once
-#pragma warning(disable : 4005)
-
-#include <memory>
-#include <wrl\client.h>
-#include <list>
 
 #include "IDrawable.h"
 #include "Camera.h"

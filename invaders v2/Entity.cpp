@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "Entity.h"
 
-Entity::Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed)
+Entity::Entity(XMFLOAT3 start, XMFLOAT2 size, float speed)
 {
 	this->pos = start;
 	this->size = size;
@@ -10,12 +10,12 @@ Entity::Entity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed)
 	this->deathTime = 0;
 }
 
-void Entity::MoveBy(D3DXVECTOR3 step)
+void Entity::MoveBy(XMFLOAT3 step)
 {
-	pos += step;
+	XMStoreFloat3(&pos, XMLoadFloat3(&pos) + XMLoadFloat3(&step));
 }
 
-void Entity::MoveTo(D3DXVECTOR3 pos)
+void Entity::MoveTo(XMFLOAT3 pos)
 {
 	this->pos = pos;
 }

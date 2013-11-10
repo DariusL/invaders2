@@ -1,12 +1,6 @@
 #pragma once
-#pragma warning(disable : 4005)
-#pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "d3dx11.lib")
-#pragma comment(lib, "d3dx10.lib")
 
 #include "includes.h"
-
 #include "Utils.h"
 
 using namespace std;
@@ -26,8 +20,8 @@ public:
 	ComPtr<ID3D11Device> GetDevice(){return device;}
 	ComPtr<ID3D11DeviceContext> GetDeviceContext(){return deviceContext;}
 
-	void GetProjectionMatrix(D3DXMATRIX &matrix){matrix = projectionMatrix;}
-	void GetOrthoMatrix(D3DXMATRIX &matrix){matrix = orthoMatrix;}
+	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
+	XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
 
 	void GetVideoCardInfo(char* name, int& memory){strcpy_s(name, 128, videoDesc); memory = videoMem;}
 
@@ -48,7 +42,7 @@ private:
 	ComPtr<ID3D11DepthStencilView> depthStencilView;
 	ComPtr<ID3D11RasterizerState> rasterState;
 	D3D11_VIEWPORT viewport;
-	D3DXMATRIX projectionMatrix;
-	D3DXMATRIX orthoMatrix;
+	XMFLOAT4X4 projectionMatrix;
+	XMFLOAT4X4 orthoMatrix;
 };
 

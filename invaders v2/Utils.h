@@ -11,9 +11,12 @@ namespace Utils{
 	bool ReadFileToArray(wstring file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
-	std::vector<InstanceEntity> GetGrid(int width, int height, D3DXVECTOR3 center, D3DXVECTOR2 gap, ColorModel &model);
+	std::vector<InstanceEntity> GetGrid(int width, int height, XMFLOAT3 center, XMFLOAT2 gap, ColorModel &model);
 	void ShowMessageBox(wstring text, wstring title);
-	D3DXPLANE PlaneFromPointAndRot(D3DXVECTOR3 point, D3DXVECTOR3 rot);
+	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot);
+	XMFLOAT2 GetVec2(float value);
+	XMFLOAT3 GetVec3(float value);
+	XMFLOAT4 GetVec4(float value);
 
 	template<class T>
 	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)
@@ -42,33 +45,37 @@ namespace Utils{
 #define __WFILE__ WIDE1(__FILE__)
 
 #ifndef _DEBUG
-#define Assert(x)   if (x != S_OK) \
-                        { \
-							wstringstream stream; \
-							stream << hex << x; \
-							Utils::ShowMessageBox(L"Error number 0x" + stream.str(), __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
-							exit(-1); \
-                        }
+#define Assert(x) \
+	if (x != S_OK) \
+	{ \
+		wstringstream stream; \
+		stream << hex << x; \
+		Utils::ShowMessageBox(L"Error number 0x" + stream.str(), __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+		exit(-1); \
+	}
 #else
-#define Assert(x)   if (x != S_OK) \
-						{ \
-							wstringstream stream; \
-							stream << hex << x; \
-							Utils::ShowMessageBox(L"Error number 0x" + stream.str(), __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
-							DebugBreak(); \
-						}
+#define Assert(x) \
+	if (x != S_OK) \
+	{ \
+		wstringstream stream; \
+		stream << hex << x; \
+		Utils::ShowMessageBox(L"Error number 0x" + stream.str(), __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+		DebugBreak(); \
+	}
 #endif
 
 #ifndef _DEBUG
-#define AssertBool(x, error)   if (x != true) \
-{ \
-	Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
-	exit(-1); \
-						}
+#define AssertBool(x, error) \
+	if (x != true) \
+	{ \
+		Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+		exit(-1); \
+	}
 #else
-#define AssertBool(x, error)   if (x != true) \
-{ \
-	Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
-	DebugBreak(); \
-						}
+#define AssertBool(x, error) \
+	if (x != true) \
+	{ \
+		Utils::ShowMessageBox(error, __WFILE__ + wstring(L": ") + to_wstring(__LINE__)); \
+		DebugBreak(); \
+	}
 #endif

@@ -10,7 +10,7 @@ class Screen : public IDrawable
 	RenderTarget renderTarget;
 	DrawableTexturedEntity<vt, sh> screen;
 public:
-	Screen(D3DXVECTOR3 screenPos, D3DXVECTOR3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
+	Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Screen(Screen &&other);
 
 	void Init(ComPtr<ID3D11Device> device);
@@ -21,8 +21,8 @@ public:
 typedef Screen<TextureVertexType, TextureShader> SimpleScreen;
 
 template<class vt, class sh>
-Screen<vt, sh>::Screen(D3DXVECTOR3 screenPos, D3DXVECTOR3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
-:renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, D3DXVECTOR3(screenWidth, screenHeight, 1.0f))
+Screen<vt, sh>::Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
+:renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f))
 {
 }
 

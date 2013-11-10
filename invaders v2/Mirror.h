@@ -7,20 +7,20 @@
 template<class vt, class sh>
 class Mirror : public Screen<vt, sh>
 {
-	D3DXPLANE mirrorPlane;
-	D3DXPLANE zeroPlane;
+	XMFLOAT4 mirrorPlane;
+	XMFLOAT4 zeroPlane;
 public:
-	Mirror(D3DXVECTOR3 screenPos, D3DXVECTOR3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
+	Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Mirror(Mirror &&other);
 
-	D3DXPLANE &GetMirrorPlane(){ return mirrorPlane; }
-	D3DXPLANE &GetZeroPlane(){ return zeroPlane; }
+	XMVECTOR GetMirrorPlane(){ return XMLoadFloat4(&mirrorPlane); }
+	XMVECTOR GetZeroPlane(){ return XMLoadFloat4(&zeroPlane); }
 };
 
 typedef Mirror<TextureVertexType, MirrorShader> SimpleMirror;
 
 template<class vt, class sh>
-Mirror<vt, sh>::Mirror(D3DXVECTOR3 screenPos, D3DXVECTOR3 rot, Model<vt> &screenModel, sh &screenShader, 
+Mirror<vt, sh>::Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, 
 	int resWidth, int resHeight, float screenWidth, float screenHeight)
 	:Screen(screenPos, rot, screenModel, screenShader, resWidth, resHeight, screenWidth, screenHeight)
 {

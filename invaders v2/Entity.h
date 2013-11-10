@@ -1,31 +1,33 @@
 #pragma once
-#pragma warning(disable : 4005)
 
 #include "includes.h"
+#include "Globals.h"
+
+using namespace DirectX;
 
 class Entity
 {
 protected:
-	D3DXVECTOR3 pos;
-	D3DXVECTOR2 size;
+	XMFLOAT3 pos;
+	XMFLOAT2 size;
 
 	float speed;
 	float deathTime;
 	bool dead;
 public:
-	Entity(D3DXVECTOR3 start = D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR2 size = D3DXVECTOR2(0.0f, 0.0f), float speed = 0.0f);
+	Entity(XMFLOAT3 start = ZeroVec3, XMFLOAT2 size = XMFLOAT2(0.0f, 0.0f), float speed = 0.0f);
 	virtual ~Entity(void);
 
-	D3DXVECTOR3 GetPos() const {return pos;}
-	void MoveBy(D3DXVECTOR3 step);
-	void MoveTo(D3DXVECTOR3 pos);
+	XMFLOAT3 GetPos() const {return pos;}
+	void MoveBy(XMFLOAT3 step);
+	void MoveTo(XMFLOAT3 pos);
 
 	float GetLeftBorder() const {return pos.x - size.x / 2;}
 	float GetRightBorder() const {return pos.x + size.x / 2;}
 	float GetTopBorder() const {return pos.y + size.y / 2;}
 	float GetBottomBorder() const {return pos.y - size.y / 2;}
 
-	void SetSize(D3DXVECTOR2 size){this->size = size;}
+	void SetSize(XMFLOAT2 size){this->size = size;}
 
 	void SetSpeed(float speed){this->speed = speed;}
 	float GetSpeed() const {return speed;}

@@ -9,10 +9,10 @@ template<class vt, class sh>
 class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 {
 	ComVector<ID3D11ShaderResourceView> texture;
-	D3DXMATRIX scale;
-	D3DXMATRIX rot;
+	XMFLOAT4X4 scale;
+	XMFLOAT4X4 rot;
 public:
-	DrawableTexturedEntity(D3DXVECTOR3 pos, D3DXVECTOR3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, D3DXVECTOR3 scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
 	virtual ~DrawableTexturedEntity(void){}
 
@@ -23,12 +23,12 @@ public:
 typedef DrawableTexturedEntity<TextureVertexType, TextureShader> SimpleTexturedEntity;
 
 template<class vt, class sh>
-DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(D3DXVECTOR3 pos, D3DXVECTOR3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, D3DXVECTOR3 scale)
+DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, XMFLOAT3 scale)
 : DrawableEntity(pos, model, shader)
 {
 	this->texture.push_back(texture);
-	D3DXMatrixScaling(&this->scale, scale.x, scale.y, scale.z);
-	D3DXMatrixRotationYawPitchRoll(&this->rot, rot.x, rot.y, rot.z);
+	XMStoreFloat4x4(&this->scale, XMMatrixScaling(scale.x, scale.y, scale.z));
+	XMStoreFloat4x4(&this->rot, XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z));
 }
 
 template<class vt, class sh>
@@ -43,7 +43,11 @@ void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
 	if (!Update(params.context))
 		return;
 	SetBuffers(params.context);
-	shader.SetShaderParametersTextured(params, scale * rot * moveMatrix, texture);
+	XMMATRIX scale = XMLoadFloat4x4(&this->scale);
+	XMMATRIX pos = XMLoadFloat4x4(&this->moveMatrix);
+	XMMATRIX rot = XMLoadFloat4x4(&this->rot);
+	XMMATRIX world = XMMatrixMultiply(XMMatrixMultiply(scale, rot), pos);
+	shader.SetShaderParametersTextured(params, world, texture);
 	shader.RenderShader(params.context, model.indices.size());
 }
 

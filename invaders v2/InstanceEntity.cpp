@@ -2,7 +2,7 @@
 #include "InstanceEntity.h"
 
 
-InstanceEntity::InstanceEntity(D3DXVECTOR3 start, D3DXVECTOR2 size, float speed): Entity(start, size, speed)
+InstanceEntity::InstanceEntity(XMFLOAT3 start, XMFLOAT2 size, float speed): Entity(start, size, speed)
 {
 }
 

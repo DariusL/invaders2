@@ -6,7 +6,7 @@ public:
 	MirrorShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
 	~MirrorShader(){}
 
-	virtual void SetShaderParametersTextured(const RenderParams &params, D3DXMATRIX posMatrix, const ComVector<ID3D11ShaderResourceView> &textures);
+	virtual void SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 protected:
 	ComPtr<ID3D11Buffer> reflectionBuffer;
 

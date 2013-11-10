@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma warning(disable : 4005)
-
 #include "includes.h"
 
 #include "Utils.h"
