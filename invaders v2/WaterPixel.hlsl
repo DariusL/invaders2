@@ -29,7 +29,7 @@ float4 main(PixelInputType input) : SV_TARGET
     float4 reflectionColor;
     float4 refractionColor;
 
-	//input.tex += waterTranslation;
+	input.tex += waterTranslation;
 
 	reflextTex.x = input.reflectionPos.x / input.reflectionPos.w / 2.0f + 0.5f;
 	reflextTex.y = -input.reflectionPos.y / input.reflectionPos.w / 2.0f + 0.5f;

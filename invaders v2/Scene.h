@@ -17,6 +17,7 @@ class Scene : public IWorld
 	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
 	SimpleWaterPlane water;
+	SimpleTexturedEntity bath;
 public:
 	Scene();
 	~Scene();

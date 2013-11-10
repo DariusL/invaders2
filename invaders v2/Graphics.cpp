@@ -56,8 +56,10 @@ void Graphics::Render(Scene &world)
 	params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
 	params.projection = d3D.GetProjectionMatrix();
-	params.waterScale = 0.2f;
-	params.waterTranslation = XMFLOAT2(0.0f, 0.0f);
+	params.waterScale = 0.1f;
+	long time = clock();
+	time %= 5000;
+	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
 
 	for (auto &remote : remotes)
 	{
