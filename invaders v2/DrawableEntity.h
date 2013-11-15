@@ -9,7 +9,7 @@
 class DrawableEntity : public Entity, public IDrawableObject
 {
 protected:
-	ColorModel &model;
+	NormalModel &model;
 	XMFLOAT4X4 moveMatrix;
 	GlobalDiffuseShader &shader;
 
@@ -17,7 +17,7 @@ protected:
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
+	DrawableEntity(XMFLOAT3 pos, NormalModel &model, GlobalDiffuseShader &shader, float speed = 0.0f);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
@@ -29,7 +29,7 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-DrawableEntity::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)
+DrawableEntity::DrawableEntity(XMFLOAT3 pos, NormalModel &model, GlobalDiffuseShader &shader, float speed)
 : Entity(pos, model.hitbox, speed), model(model), shader(shader)
 {
 }
@@ -50,10 +50,10 @@ void DrawableEntity::InitBuffers(ComPtr<ID3D11Device> device)
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(vt);
+	vertexInfo.stride = sizeof(NormalVertexType);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(vt)* model.vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(NormalVertexType)* model.vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;

@@ -31,7 +31,7 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
+typedef BaseInstancer<VertexType, GlobalDiffuseShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
 BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
