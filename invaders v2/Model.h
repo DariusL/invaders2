@@ -20,9 +20,7 @@ struct Model
 };
 
 typedef Model<VertexType> ColorModel;
-typedef Model<NormalMappedVertexType> NormalMappedModel;
 typedef Model<NormalVertexType> NormalModel;
-typedef Model<TextureVertexType> TexturedModel;
 
 template<class T>
 Model<T>::Model(Model &&other)

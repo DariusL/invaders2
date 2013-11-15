@@ -86,7 +86,6 @@
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
     <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="GlobalSpecularShader.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="includes.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -99,21 +98,9 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="MirrorShader.cpp" />
-    <ClCompile Include="NormalMappedShader.cpp" />
-    <ClCompile Include="PointDiffuseShader.cpp" />
-    <ClCompile Include="PointSpecularShader.cpp" />
-    <ClCompile Include="RemoteCamera.cpp" />
-    <ClCompile Include="RenderBall.cpp" />
-    <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shooter.cpp" />
-    <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
-    <ClCompile Include="WaterShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -123,7 +110,6 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="GlobalSpecularShader.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableObject.h" />
@@ -138,7 +124,6 @@
     <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
-    <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />

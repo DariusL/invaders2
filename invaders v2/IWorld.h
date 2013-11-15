@@ -3,7 +3,6 @@
 #include "IDrawable.h"
 #include "Camera.h"
 #include "Level.h"
-#include "Light.h"
 
 using namespace std;
 using namespace Microsoft::WRL;

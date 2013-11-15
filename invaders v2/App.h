@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Graphics.h"
-#include "GameWorld.h"
 #include "Scene.h"
 #include "Logger.h"
 #include "ResourceManager.h"

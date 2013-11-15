@@ -3,7 +3,6 @@
 #include "App.h"
 #include "ResourceManager.h"
 #include "Model.h"
-#include "WaterShader.h"
 
 Scene::Scene(void)
 {

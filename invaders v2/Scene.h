@@ -1,7 +1,6 @@
 #pragma once
 #include "iworld.h"
 #include "Globals.h"
-#include "Light.h"
 
 class Scene : public IWorld
 {

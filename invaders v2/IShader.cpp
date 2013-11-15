@@ -32,7 +32,7 @@ void IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring 
 
 void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
-	D3D11_BUFFER_DESC matrixBufferDesc, clipBufferDesc;
+	D3D11_BUFFER_DESC matrixBufferDesc;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -44,13 +44,4 @@ void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 	Assert(device->CreateBuffer(&matrixBufferDesc, NULL, &matrixBuffer));
-
-	clipBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	clipBufferDesc.ByteWidth = sizeof(XMFLOAT4);
-	clipBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	clipBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	clipBufferDesc.MiscFlags = 0;
-	clipBufferDesc.StructureByteStride = 0;
-
-	Assert(device->CreateBuffer(&clipBufferDesc, NULL, &clipBuffer));
 }

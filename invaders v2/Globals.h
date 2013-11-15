@@ -20,27 +20,6 @@ struct VertexType
 	DirectX::XMFLOAT4 color;
 };
 
-struct TextureVertexType
-{
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT2 tex;
-
-	TextureVertexType(){}
-	TextureVertexType(float x, float y, float z) :position(x, y, z){}
-};
-
-struct NormalMappedVertexType
-{
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT3 normal;
-	DirectX::XMFLOAT4 color;
-	DirectX::XMFLOAT2 tex;
-	DirectX::XMFLOAT3 tangent;
-	DirectX::XMFLOAT3 binormal;
-
-	NormalMappedVertexType(float x, float y, float z) :position(x, y, z), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
-};
-
 struct NormalVertexType
 {
 	DirectX::XMFLOAT3 position;
@@ -97,24 +76,7 @@ __declspec(align(16)) struct RenderParams
 	DirectX::XMFLOAT3 lightPos;
 	float brightness;
 	DirectX::XMFLOAT4 diffuseColor;
-	float waterScale;
-	DirectX::XMFLOAT4 clipPlane;
-	DirectX::XMFLOAT2 waterTranslation;
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
-	__declspec(align(16)) Camera *camera;
-};
-
-struct ReflectionType
-{
-	DirectX::XMFLOAT4X4 reflection;
-	DirectX::XMFLOAT4X4 refraction;
-};
-
-struct WaterType
-{
-	DirectX::XMFLOAT2 waterTranslation;
-	float scale;
-	float padding;
 };
 
 struct BufferInfo
