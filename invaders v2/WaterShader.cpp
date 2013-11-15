@@ -38,7 +38,7 @@ void WaterShader::SetShaderParametersTextured(const RenderParams &params, const 
 	water.waterTranslation = params.waterTranslation;
 	Utils::CopyToBuffer(waterBuffer, water, con);
 
-	Utils::CopyToBuffer(cameraBuffer, params.cameraPos, params.context);
+	Utils::CopyToBuffer(cameraBuffer, params.camera->GetPosition(), params.context);
 
 	con->VSSetConstantBuffers(3, 1, cameraBuffer.GetAddressOf());
 	con->PSSetConstantBuffers(0, 1, waterBuffer.GetAddressOf());

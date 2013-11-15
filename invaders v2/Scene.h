@@ -18,6 +18,7 @@ class Scene : public IWorld
 	SimpleTexturedEntity gabenizer;
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
+	DrawableEntity<NormalVertexType, PointSpecularShader> thing;
 public:
 	Scene();
 	~Scene();

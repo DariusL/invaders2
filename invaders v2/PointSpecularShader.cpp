@@ -6,7 +6,7 @@ void PointSpecularShader::SetShaderParameters(const RenderParams &params, const 
 {
 	PointDiffuseShader::SetShaderParameters(params, world);
 
-	Utils::CopyToBuffer(cameraBuffer, params.cameraPos, params.context);
+	Utils::CopyToBuffer(cameraBuffer, params.camera->GetPosition(), params.context);
 
 	params.context->VSSetConstantBuffers(3, 1, cameraBuffer.GetAddressOf());
 }

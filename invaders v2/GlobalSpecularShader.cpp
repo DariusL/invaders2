@@ -5,7 +5,7 @@ void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, const
 {
 	GlobalDiffuseShader::SetShaderParameters(params, world);
 
-	Utils::CopyToBuffer(cameraBuffer, &params.cameraPos, params.context);
+	Utils::CopyToBuffer(cameraBuffer, &params.camera->GetPosition(), params.context);
 
 	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
 }

@@ -7,7 +7,7 @@ ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(void)
 :normalMappedModel(GetNormalMappedModelFromOBJ("textured_ball.obj")),
-	normalModel(GetNormalModelFromOBJ("teapot.obj")),
+	normalModel(GetNormalModelFromOBJ("thing.obj")),
 	models()
 {
 	normalMappedModel.hitbox = XMFLOAT2(2.0f, 2.0f);
