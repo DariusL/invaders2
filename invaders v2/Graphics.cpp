@@ -63,7 +63,7 @@ void Graphics::Render(Scene &world)
 
 	for (auto &remote : remotes)
 	{
-		params.cameraPos = remote.GetPosition();
+		params.camera = &remote;
 		for (auto &mirror : mirrors)
 		{
 			reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());
@@ -109,7 +109,7 @@ void Graphics::Render(Scene &world)
 		world.Render(params);
 	}
 
-	params.cameraPos = camera.GetPosition();
+	params.camera = &camera;
 	for (auto &mirror : mirrors)
 	{
 		reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());

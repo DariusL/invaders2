@@ -121,7 +121,8 @@ public:
 
 	enum NormalModels
 	{
-		NORMAL_TEACUP
+		NORMAL_TEACUP,
+		NORMAL_THING
 	};
 
 	enum Textures

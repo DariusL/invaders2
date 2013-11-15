@@ -105,6 +105,7 @@
     <ClCompile Include="PointDiffuseShader.cpp" />
     <ClCompile Include="PointSpecularShader.cpp" />
     <ClCompile Include="RemoteCamera.cpp" />
+    <ClCompile Include="RenderBall.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="PointDiffuseShader.h" />
     <ClInclude Include="PointSpecularShader.h" />
     <ClInclude Include="RemoteCamera.h" />
+    <ClInclude Include="RenderBall.h" />
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />

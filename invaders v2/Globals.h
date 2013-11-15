@@ -1,5 +1,6 @@
 #pragma once
 #include "includes.h"
+#include "Camera.h"
 
 #ifndef NULL
 	#define NULL 0
@@ -96,11 +97,11 @@ __declspec(align(16)) struct RenderParams
 	DirectX::XMFLOAT3 lightPos;
 	float brightness;
 	DirectX::XMFLOAT4 diffuseColor;
-	DirectX::XMFLOAT3 cameraPos;
 	float waterScale;
 	DirectX::XMFLOAT4 clipPlane;
 	DirectX::XMFLOAT2 waterTranslation;
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+	__declspec(align(16)) Camera *camera;
 };
 
 struct ReflectionType
