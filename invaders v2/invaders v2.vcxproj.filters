@@ -117,9 +117,6 @@
     <ClCompile Include="MirrorShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DDSTextureLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RenderBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
     <ClInclude Include="EntityListInstancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameWorld.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -206,49 +200,19 @@
     <ClInclude Include="GlobalSpecularShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointDiffuseShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PointSpecularShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextureShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ITextureShader.h">
       <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalMappedShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WaterShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTarget.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RemoteCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MirrorShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DDSTextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

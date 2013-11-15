@@ -82,7 +82,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
-    <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
@@ -121,7 +120,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
-    <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
@@ -141,24 +139,14 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="MirrorShader.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="NormalMappedShader.h" />
-    <ClInclude Include="PointDiffuseShader.h" />
-    <ClInclude Include="PointSpecularShader.h" />
-    <ClInclude Include="RemoteCamera.h" />
-    <ClInclude Include="RenderBall.h" />
-    <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="GameWorld.h" />
-    <ClInclude Include="WaterShader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorInstancedVertex.hlsl">
