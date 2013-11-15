@@ -1,13 +1,14 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "Model.h"
+#include "ColorInstancedShader.h"
 #include "includes.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
 
 template<class vt, class sh, class it>
-class BaseInstancer : public DrawableEntity
+class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
 	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
@@ -31,7 +32,7 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-typedef BaseInstancer<VertexType, GlobalDiffuseShader, InstanceType> SimpleBaseInstancer;
+typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
 BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)

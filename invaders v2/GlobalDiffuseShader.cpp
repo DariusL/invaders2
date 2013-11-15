@@ -3,7 +3,7 @@
 
 vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 {
-	D3D11_INPUT_ELEMENT_DESC desc;
+		D3D11_INPUT_ELEMENT_DESC desc;
 	vector<D3D11_INPUT_ELEMENT_DESC> ret;
 
 	desc.SemanticName = "POSITION";
@@ -12,16 +12,6 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 	desc.InputSlot = 0;
 	desc.AlignedByteOffset = 0;
 	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	desc.InstanceDataStepRate = 0;
-
-	ret.push_back(desc);
-
-	desc.SemanticName = "POSITION";
-	desc.SemanticIndex = 1;
-	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	desc.InputSlot = 0;
-	desc.AlignedByteOffset = 0;
-	desc.InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
 	desc.InstanceDataStepRate = 0;
 
 	ret.push_back(desc);
@@ -65,9 +55,9 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
 }
 
-void GlobalDiffuseShader::SetShaderParametersInstanced(const RenderParams &params, const XMMATRIX &world)
+void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {
-	IInstanceShader::SetShaderParameters(params, world);
+	IPositionShader::SetShaderParameters(params, world);
 
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	XMVECTOR lightdir;
@@ -82,4 +72,9 @@ void GlobalDiffuseShader::SetShaderParametersInstanced(const RenderParams &param
 	Utils::CopyToBuffer(lightingBuffer, data, cont);
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
+
+	cont->IASetInputLayout(layout.Get());
+
+	cont->PSSetShader(pixelShader.Get(), NULL, 0);
+	cont->VSSetShader(vertexShader.Get(), NULL, 0);
 }

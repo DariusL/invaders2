@@ -1,15 +1,15 @@
 #pragma once
-#include "IInstanceShader.h"
+#include "iposshader.h"
 #include "Utils.h"
 
-class GlobalDiffuseShader : public IInstanceShader
+class GlobalDiffuseShader : public IPositionShader
 {
 public:
-	GlobalDiffuseShader(wstring vs, wstring ps):IInstanceShader(vs, ps){}
+	GlobalDiffuseShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
 	~GlobalDiffuseShader(void){}
 
 public:	
-	virtual void SetShaderParametersInstanced(const RenderParams &params, const XMMATRIX &world);
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world);
 
 protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);

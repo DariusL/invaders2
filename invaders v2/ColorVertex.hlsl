@@ -10,24 +10,22 @@ cbuffer ClipBuffer : register(b1)
 	float4 clip;
 }
 
-struct PixelInputType
-{
-    float4 position : SV_POSITION;
-	float3 normal : NORMAL;
-	float4 color : COLOR;
-};
-
 struct VertexInputType
 {
     float4 position : POSITION;
-	float4 color : COLOR;
-    float3 normal : NORMAL;
+    float4 color : COLOR;
+};
+
+struct PixelInputType
+{
+    float4 position : SV_POSITION;
+    float4 color : COLOR;
 };
 
 [clipplanes(clip)]
-PixelInputType main(VertexInputType input)
+PixelInputType ColorVertexShader(VertexInputType input)
 {
-	PixelInputType output;
+    PixelInputType output;
     
     input.position.w = 1.0f;
 
@@ -36,7 +34,6 @@ PixelInputType main(VertexInputType input)
 	output.position = mul(output.position, projection);
 
     output.color = input.color;
-	output.normal = normalize(input.normal);
     
     return output;
 }

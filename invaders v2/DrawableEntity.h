@@ -1,23 +1,24 @@
 #pragma once
 #include "entity.h"
 #include "IDrawableObject.h"
+#include "ColorShader.h"
 #include "Model.h"
 #include "includes.h"
-#include "GlobalDiffuseShader.h"
 #include "Utils.h"
 
+template<class vt, class sh>
 class DrawableEntity : public Entity, public IDrawableObject
 {
 protected:
-	NormalModel &model;
+	Model<vt> &model;
 	XMFLOAT4X4 moveMatrix;
-	GlobalDiffuseShader &shader;
+	sh &shader;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	BufferInfo vertexInfo;
 	ComPtr<ID3D11Buffer> indexBuffer;
 public:
-	DrawableEntity(XMFLOAT3 pos, NormalModel &model, GlobalDiffuseShader &shader, float speed = 0.0f);
+	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
@@ -29,13 +30,16 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-DrawableEntity::DrawableEntity(XMFLOAT3 pos, NormalModel &model, GlobalDiffuseShader &shader, float speed)
+typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
+
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)
 : Entity(pos, model.hitbox, speed), model(model), shader(shader)
 {
 }
 
- 
-DrawableEntity::DrawableEntity(DrawableEntity &&other)
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
 : IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)),
 model(move(other.model)), shader(move(other.shader)),
 vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)),
@@ -43,17 +47,17 @@ moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
 {
 }
 
-
-void DrawableEntity::InitBuffers(ComPtr<ID3D11Device> device)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 
 	vertexInfo.offset = 0;
-	vertexInfo.stride = sizeof(NormalVertexType);
+	vertexInfo.stride = sizeof(vt);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(NormalVertexType)* model.vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(vt)* model.vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -79,27 +83,27 @@ void DrawableEntity::InitBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&indexBufferDesc, &indexData, &indexBuffer));
 }
 
- 
-DrawableEntity::~DrawableEntity(void)
+template<class vt, class sh>
+DrawableEntity<vt, sh>::~DrawableEntity(void)
 {
 }
 
- 
-void DrawableEntity::Init(ComPtr<ID3D11Device> device)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
 {
 	InitBuffers(device);
 }
 
- 
-void DrawableEntity::SetBuffers(ComPtr<ID3D11DeviceContext> context)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
- 
-void DrawableEntity::Render(const RenderParams &params)
+template<class vt, class sh>
+void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 {
 	if (!Update(params.context))
 		return;
@@ -109,8 +113,8 @@ void DrawableEntity::Render(const RenderParams &params)
 	shader.RenderShader(params.context, model.indices.size());
 }
 
- 
-bool DrawableEntity::Update(ComPtr<ID3D11DeviceContext> context)
+template<class vt, class sh>
+bool DrawableEntity<vt, sh>::Update(ComPtr<ID3D11DeviceContext> context)
 {
 	if (dead)
 		return false;
