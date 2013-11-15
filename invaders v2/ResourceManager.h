@@ -3,8 +3,6 @@
 #include "includes.h"
 #include "Model.h"
 #include "Level.h"
-#include "ColorInstancedShader.h"
-#include "ColorShader.h"
 #include "GlobalDiffuseShader.h"
 
 using namespace std;
@@ -18,7 +16,7 @@ class ResourceManager
 		int vertex;
 	};
 	NormalModel normalModel;
-	vector<unique_ptr<IShader>> shaders;
+	GlobalDiffuseShader shader;
 
 	static NormalModel GetNormalModelFromOBJ(string filename, bool invert = false);
 	static ColorModel GetModelFromOBJ(string filename, bool invert = false);
@@ -37,14 +35,7 @@ public:
 	NormalModel &GetNormalModel(){return normalModel;}
 	static ResourceManager &Get(){ return *handle; }
 
-	template<class sh>
-	sh &GetShader(){}
-	template<>
-	ColorShader &GetShader<ColorShader>(){return static_cast<ColorShader&>(*shaders[Shaders::COLOR]);}
-	template<>
-	ColorInstancedShader &GetShader<ColorInstancedShader>(){return static_cast<ColorInstancedShader&>(*shaders[Shaders::COLOR_INSTANCED]);}
-	template<>
-	GlobalDiffuseShader &GetShader<GlobalDiffuseShader>(){return static_cast<GlobalDiffuseShader&>(*shaders[Shaders::GLOBAL_DIFFUSE]);}
+	GlobalDiffuseShader &GetShader(){ return shader; }
 
 	enum Shaders
 	{

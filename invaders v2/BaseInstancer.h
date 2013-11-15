@@ -1,14 +1,13 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "Model.h"
-#include "ColorInstancedShader.h"
 #include "includes.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
 
 template<class vt, class sh, class it>
-class BaseInstancer : public DrawableEntity<vt, sh>
+class BaseInstancer : public DrawableEntity
 {
 public:
 	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
