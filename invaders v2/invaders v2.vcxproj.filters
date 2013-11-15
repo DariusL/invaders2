@@ -146,9 +146,6 @@
     <ClInclude Include="ColorShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyGrid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -174,15 +171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntityListInstancer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableShooter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shooter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameWorld.h">
@@ -215,9 +203,6 @@
     <ClInclude Include="GlobalDiffuseShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalSpecularShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -248,16 +233,7 @@
     <ClInclude Include="RenderTarget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WaterPlane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableBumpyEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableTexturedEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RemoteCamera.h">
@@ -267,9 +243,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MirrorShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mirror.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DDSTextureLoader.h">
