@@ -2,7 +2,6 @@
 
 #include "IDrawable.h"
 #include "Camera.h"
-#include "Level.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
@@ -15,7 +14,7 @@ protected:
 	
 public:
 
-	virtual bool Start(shared_ptr<Level> level) = 0;
+	virtual bool Start() = 0;
 	virtual void Stop() = 0;
 
 	virtual int OnLoop(int input, float frameLength) = 0;

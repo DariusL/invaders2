@@ -9,7 +9,7 @@ public:
 	Scene();
 	~Scene();
 
-	bool Start(shared_ptr<Level> level);
+	bool Start();
 	void Stop();
 
 	int OnLoop(int input, float frameLength);

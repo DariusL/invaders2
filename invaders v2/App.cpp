@@ -111,7 +111,7 @@ bool App::OnLoop()
 {
 	if(!world->IsStarted())
 	{
-		world->Start(manager.GetLevel(ResourceManager::Levels::L1));
+		world->Start();
 		graphics.Init(*world);
 	}
 	int worldEvents = 0;

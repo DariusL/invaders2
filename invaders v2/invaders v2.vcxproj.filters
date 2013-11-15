@@ -42,9 +42,6 @@
     <ClCompile Include="ColorShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyGrid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,6 +165,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
