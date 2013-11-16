@@ -19,7 +19,6 @@ struct Model
 	Model &operator=(Model&) = delete;
 };
 
-typedef Model<VertexType> ColorModel;
 typedef Model<NormalVertexType> NormalModel;
 
 template<class T>

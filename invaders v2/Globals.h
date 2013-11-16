@@ -14,12 +14,6 @@ extern const DirectX::XMFLOAT4 ZeroVec4;
 extern const DirectX::XMFLOAT3 OneVec3;
 extern const DirectX::XMFLOAT2 ZeroVec2;
 
-struct VertexType
-{
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT4 color;
-};
-
 struct NormalVertexType
 {
 	DirectX::XMFLOAT3 position;
@@ -27,11 +21,6 @@ struct NormalVertexType
 	DirectX::XMFLOAT4 color;
 
 	NormalVertexType(float x, float y, float z) :position(x, y, z), color(1.0f, 0.0f, 0.0f, 1.0f){}
-};
-
-struct InstanceType
-{
-	DirectX::XMFLOAT3 position;
 };
 
 struct MatrixType

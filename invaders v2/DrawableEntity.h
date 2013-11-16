@@ -1,7 +1,7 @@
 #pragma once
 #include "entity.h"
 #include "IDrawableObject.h"
-#include "ColorShader.h"
+#include "GlobalDiffuseShader.h"
 #include "Model.h"
 #include "includes.h"
 #include "Utils.h"
@@ -30,7 +30,7 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
+typedef DrawableEntity<NormalVertexType, GlobalDiffuseShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)

@@ -1,7 +1,7 @@
 #pragma once
 #include "DrawableEntity.h"
 #include "Model.h"
-#include "ColorInstancedShader.h"
+#include "GlobalDiffuseShader.h"
 #include "includes.h"
 
 using namespace std;
@@ -32,7 +32,7 @@ protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
-typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
+typedef BaseInstancer<NormalVertexType, GlobalDiffuseShader, XMFLOAT3> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
 BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)

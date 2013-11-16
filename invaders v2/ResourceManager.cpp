@@ -5,7 +5,8 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(void)
-:normalModel(GetNormalModelFromOBJ("ball.obj"))
+:normalModel(GetNormalModelFromOBJ("ball.obj")),
+shader(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso")
 {
 	normalModel.hitbox = XMFLOAT2(1.5f, 1.5f);
 	handle = this;
@@ -18,22 +19,6 @@ ResourceManager::~ResourceManager(void)
 
 void ResourceManager::Init()
 {
-}
-
-ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
-{
-	auto normalModel = GetNormalModelFromOBJ(filename, invert);
-	ColorModel ret;
-	VertexType vertex;
-	ret.hitbox = normalModel.hitbox;
-	ret.indices = normalModel.indices;
-	for(NormalVertexType normalVertex : normalModel.vertices)
-	{
-		vertex.color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex.position = normalVertex.position;
-		ret.vertices.push_back(vertex);
-	}
-	return ret;
 }
 
 NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
@@ -118,10 +103,5 @@ ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
 
 void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(make_unique<ColorShader>(L"ColorVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_unique<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_unique<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
-	
-	for(auto &shader : shaders)
-		shader->Init(device);
+	shader.Init(device);
 }

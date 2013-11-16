@@ -1,14 +1,8 @@
 cbuffer TransMatrix : register(b0)
 {
-	matrix world;
 	matrix view;
 	matrix projection;
 };
-
-cbuffer ClipBuffer : register(b1)
-{
-	float4 clip;
-}
 
 struct PixelInputType
 {
@@ -19,19 +13,19 @@ struct PixelInputType
 
 struct VertexInputType
 {
-    float4 position : POSITION;
+    float4 position : POSITION0;
 	float4 color : COLOR;
     float3 normal : NORMAL;
+	float4 instancePos : POSITION1;
 };
 
-[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
     
     input.position.w = 1.0f;
 
-	output.position = mul(input.position, world);
+	output.position = input.position + input.instancePos;
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "includes.h"
-#include "InstanceEntity.h"
 #include "Model.h"
 
 typedef unsigned int UINT;
@@ -11,7 +10,6 @@ namespace Utils{
 	bool ReadFileToArray(wstring file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
-	std::vector<InstanceEntity> GetGrid(int width, int height, XMFLOAT3 center, XMFLOAT2 gap, ColorModel &model);
 	void ShowMessageBox(wstring text, wstring title);
 	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse = false);
 	XMFLOAT2 GetVec2(float value);
