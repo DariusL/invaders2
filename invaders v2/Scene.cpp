@@ -5,9 +5,10 @@
 #include "Model.h"
 
 Scene::Scene(void)
+:instancer(1000, 50.0f)
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
-	
+	started = false;
 }
 
 
@@ -72,10 +73,10 @@ int Scene::OnLoop(int input, float frameLength)
 
 void Scene::Init(ComPtr<ID3D11Device> device)
 {
-	
+	instancer.Init(device);
 }
 
 void Scene::Render(const RenderParams &params)
 {
-	
+	instancer.Render(params);
 }

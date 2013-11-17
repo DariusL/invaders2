@@ -1,10 +1,11 @@
 #pragma once
 #include "iworld.h"
 #include "Globals.h"
+#include "Instancer.h"
 
 class Scene : public IWorld
 {
-	
+	Instancer instancer;
 public:
 	Scene();
 	~Scene();

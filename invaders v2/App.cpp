@@ -24,7 +24,7 @@ void App::Init()
 
 	manager.Init();
 
-	graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.1f);
+	graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.2f);
 
 	world = unique_ptr<Scene>(new Scene());
 }

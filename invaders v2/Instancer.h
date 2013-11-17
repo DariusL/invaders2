@@ -4,8 +4,8 @@ class Instancer : public SimpleBaseInstancer
 {
 	vector<Entity> objects;
 public:
-	Instancer(int objectCount);
-	~Instancer();
+	Instancer(int objectCount, float radius);
+	virtual ~Instancer();
 
-	bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };

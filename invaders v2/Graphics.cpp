@@ -46,6 +46,8 @@ void Graphics::Render(Scene &world)
 	params.brightness = brightness;
 	params.context = context;
 	params.projection = d3D.GetProjectionMatrix();
+	params.lightPos = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	params.diffuseColor = OneVec4;
 
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();

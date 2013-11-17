@@ -34,7 +34,7 @@ typedef DrawableEntity<NormalVertexType, GlobalDiffuseShader> SimpleDrawableEnti
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)
-: Entity(pos, model.hitbox, speed), model(model), shader(shader)
+: Entity(pos), model(model), shader(shader)
 {
 }
 
@@ -116,9 +116,6 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 template<class vt, class sh>
 bool DrawableEntity<vt, sh>::Update(ComPtr<ID3D11DeviceContext> context)
 {
-	if (dead)
-		return false;
-
 	XMStoreFloat4x4(&moveMatrix, XMMatrixTranslation(pos.x, pos.y, pos.z));
 
 	return true;

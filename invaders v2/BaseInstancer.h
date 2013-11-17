@@ -39,6 +39,9 @@ BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxOb
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
+	it tmp;
+	for (int i = 0; i < maxObjectCount; i++)
+		instanceData.push_back(tmp);
 }
 
 template<class vt, class sh, class it>

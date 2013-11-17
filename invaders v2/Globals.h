@@ -12,6 +12,7 @@ using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 extern const DirectX::XMFLOAT3 ZeroVec3;
 extern const DirectX::XMFLOAT4 ZeroVec4;
 extern const DirectX::XMFLOAT3 OneVec3;
+extern const DirectX::XMFLOAT4 OneVec4;
 extern const DirectX::XMFLOAT2 ZeroVec2;
 
 struct NormalVertexType
