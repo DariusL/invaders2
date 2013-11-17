@@ -15,6 +15,8 @@ extern const DirectX::XMFLOAT3 OneVec3;
 extern const DirectX::XMFLOAT4 OneVec4;
 extern const DirectX::XMFLOAT2 ZeroVec2;
 
+extern const float G;
+
 struct NormalVertexType
 {
 	DirectX::XMFLOAT3 position;
