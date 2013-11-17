@@ -66,6 +66,9 @@
     <ClCompile Include="Instancer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SomethingConcurent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="IPhysicalInfo.h">
       <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="SomethingConcurent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

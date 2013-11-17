@@ -95,6 +95,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SomethingConcurent.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SomethingConcurent.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />

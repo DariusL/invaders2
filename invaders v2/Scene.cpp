@@ -5,7 +5,7 @@
 #include "Model.h"
 
 Scene::Scene(void)
-:instancer(1000, 50.0f)
+:instancer(1000, 50.0f, 7)
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
