@@ -6,6 +6,7 @@
 typedef unsigned int UINT;
 
 namespace Utils{
+	using namespace DirectX;
 	//returns a new array with the contents of the file
 	bool ReadFileToArray(wstring file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x

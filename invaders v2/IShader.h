@@ -5,6 +5,7 @@
 
 using namespace Microsoft::WRL;
 using namespace std;
+using namespace DirectX;
 
 class IShader
 {

@@ -10,3 +10,8 @@ Instancer::Instancer(int objectCount)
 Instancer::~Instancer()
 {
 }
+
+bool Instancer::Update(ComPtr<ID3D11DeviceContext> context)
+{
+
+}

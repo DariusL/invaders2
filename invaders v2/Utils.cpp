@@ -32,22 +32,6 @@ namespace Utils
 		return frac;
 	}
 
-	std::vector<InstanceEntity> GetGrid(int width, int height, XMFLOAT3 center, XMFLOAT2 gap, ColorModel &model)
-	{
-		AssertBool(false, L"GetGrid got deimplemented");
-		vector<InstanceEntity> ret;
-		/*XMFLOAT2 betweenCenters = XMFLOAT2(
-			(width - 1) * gap.x,
-			(height - 1) * gap.y);
-		XMFLOAT3 topLeft = XMFLOAT3(center.x - betweenCenters.x / 2.0f, center.y + betweenCenters.y / 2.0f, 0);
-
-		for (int i = 0; i < height; i++)
-		for (int j = 0; j < width; j++){
-			ret.emplace_back(topLeft + XMFLOAT3(j * gap.x, i * -gap.y, 0), model.hitbox, 0.0f);
-		}*/
-		return ret;
-	}
-
 	void ShowMessageBox(wstring text, wstring title)
 	{
 		MessageBox(NULL, text.c_str(), title.c_str(), MB_OK);
