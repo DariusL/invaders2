@@ -60,20 +60,17 @@ Entity &Instancer::GetPhysicsTask(bool &valid)
 	unique_lock<mutex> lock(mtx);
 	distributeCondition.wait(lock, [=]{ return !distributingJobs; });
 	distributingJobs = true;
+	int ret = 0;
 	if (currentObject < instanceCount)
 	{
-		Entity &ref = objects[currentObject];
+		ret = currentObject++;
 		valid = true;
-		currentObject++;
-		distributingJobs = false;
-		distributeCondition.notify_one();
-		return ref;
 	}
 	else
 	{
 		valid = false;
-		distributingJobs = false;
-		distributeCondition.notify_one();
-		return objects[0];
 	}
+	distributingJobs = false;
+	distributeCondition.notify_one();
+	return objects[ret];
 }
