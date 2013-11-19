@@ -4,7 +4,7 @@
 
 Instancer::Instancer(size_t objectCount, float radius, int workerCount)
 :BaseInstancer(RM::Get().GetNormalModel(), RM::Get().GetShader(), objectCount),
-workerCount(workerCount), atStart(0), blockStart(true), first(true), stop(false)
+workerCount(workerCount), atStart(0), blockStart(true), stop(false)
 {
 	default_random_engine gen;
 	uniform_real_distribution<float> dist(-10.0f, 10.0f);
@@ -59,15 +59,12 @@ void Instancer::OnLoop(float framelength)
 
 	unique_lock<mutex> lock(mtx);
 	mainWaitCondition.wait(lock, [=]{return atStart == workerCount || stop; });
-	if (!first)
+
+	for (int i = 0; i < instanceCount; i++)
 	{
-		for (int i = 0; i < instanceCount; i++)
-		{
-			auto &obj = objects[i];
-			obj.pos = obj.nextPos;
-		}
+		auto &obj = objects[i];
+		obj.pos = obj.nextPos;
 	}
-	first = false;
 		
 	blockStart = false;
 	currentObject = 0;

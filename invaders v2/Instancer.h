@@ -15,7 +15,6 @@ class Instancer : public SimpleBaseInstancer
 	atomic<int> atStart;
 	volatile bool blockStart;
 
-	bool first;
 	bool stop;
 public:
 
