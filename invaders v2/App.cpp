@@ -119,8 +119,11 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::LEFT;
 	if(input.IsKeyDown(VK_RIGHT))
 		worldEvents |= ControlCodes::RIGHT;
-	if(input.IsKeyDown(VK_ESCAPE))
+	if (input.IsKeyDown(VK_ESCAPE))
+	{
 		Quit();
+		return false;
+	}
 	if(input.IsKeyDown(VK_DOWN))
 		worldEvents |= ControlCodes::DOWN;
 	if(input.IsKeyDown(VK_UP))
@@ -187,10 +190,10 @@ LRESULT CALLBACK App::MessageHandler(HWND whandle, UINT message , WPARAM wparam,
 		Quit();
 		break;
 	case WM_KEYDOWN:
-		input.KeyDown(wparam);
+		input.KeyDown(static_cast<UINT>(wparam));
 		break;
 	case WM_KEYUP:
-		input.KeyUp(wparam);
+		input.KeyUp(static_cast<UINT>(wparam));
 		break;
 	default:
 		return DefWindowProc(whandle, message, wparam, lparam);

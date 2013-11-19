@@ -8,12 +8,12 @@ public:
 	IInstanceShader(wstring vs, wstring ps) :IPositionShader(vs, ps){}
 	virtual ~IInstanceShader(){}
 
-	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext> context, int indexCount, int instanceCount)
+	virtual void RenderShaderInstanced(ComPtr<ID3D11DeviceContext> context, size_t indexCount, size_t instanceCount)
 	{ 
-		context->DrawIndexedInstanced(indexCount, instanceCount, 0, 0, 0);
+		context->DrawIndexedInstanced((UINT)indexCount, (UINT)instanceCount, 0, 0, 0);
 	}
 
-	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount){ AssertBool(false, L"RenderShader called on an instanced shader"); }
+	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, size_t indexCount){ AssertBool(false, L"RenderShader called on an instanced shader"); }
 
 	void SetShaderParameters(const RenderParams &params, const XMMATRIX &posMatrix){ AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
 

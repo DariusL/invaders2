@@ -24,14 +24,10 @@ public:
 	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
 	XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
 
-	void GetVideoCardInfo(char* name, int& memory){strcpy_s(name, 128, videoDesc); memory = videoMem;}
-
 	void ResetRenderTarget();
 	void DoingDepthCheck(bool check);
 private:
 	bool vsync;
-	int videoMem;
-	char videoDesc[128];
 	float clearColor[4];
 	ComPtr<IDXGISwapChain> swapChain;
 	ComPtr<ID3D11Device> device;

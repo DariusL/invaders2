@@ -5,9 +5,9 @@
 #include "Model.h"
 
 Scene::Scene(void)
-:instancer(500, 50.0f, 15)
+:instancer(1000, 50.0f, 8)
 {
-	camera.Move(0.0f, -20.0f, -100.0f);
+	camera.Move(0.0f, 0.0f, -100.0f);
 	started = false;
 }
 
@@ -68,7 +68,8 @@ int Scene::OnLoop(int input, float frameLength)
 	camera.Up(move.y);
 	camera.Right(move.x);
 
-	instancer.OnLoop(frameLength);
+	//instancer.OnLoop(frameLength);
+	instancer.OnLoop(0.01f);
 	
 	return IWorld::Result::CONTINUE;
 }

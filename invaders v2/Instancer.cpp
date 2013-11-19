@@ -2,9 +2,9 @@
 #include "Instancer.h"
 #include "ResourceManager.h"
 
-Instancer::Instancer(int objectCount, float radius, int workerCount)
+Instancer::Instancer(size_t objectCount, float radius, int workerCount)
 :BaseInstancer(RM::Get().GetNormalModel(), RM::Get().GetShader(), objectCount),
-workerCount(workerCount), atStart(0), blockStart(true), superwake(false), first(true)
+workerCount(workerCount), atStart(0), blockStart(true), first(true), stop(false)
 {
 	default_random_engine gen;
 	uniform_real_distribution<float> dist(-10.0f, 10.0f);
@@ -22,9 +22,6 @@ workerCount(workerCount), atStart(0), blockStart(true), superwake(false), first(
 
 Instancer::~Instancer()
 {
-	superwake = true;
-	mainWaitCondition.notify_all();
-	workerWaitCondition.notify_all();
 }
 
 
@@ -34,7 +31,7 @@ float Instancer::FrameStart()
 	int nr = atStart.fetch_add(1);
 	if (nr == workerCount - 1)
 		mainWaitCondition.notify_one();
-	workerWaitCondition.wait(lock, [=]{return !blockStart || superwake; });
+	workerWaitCondition.wait(lock, [=]{return !blockStart || stop; });
 	nr = atStart.fetch_sub(1);
 	if (nr == 1)
 		mainWaitCondition.notify_one();
@@ -44,7 +41,6 @@ float Instancer::FrameStart()
 Entity &Instancer::GetPhysicsTask(bool &valid)
 {
 	int ret = currentObject.fetch_add(1);
-	ret++;
 	if (ret < instanceCount)
 	{
 		valid = true;
@@ -59,16 +55,16 @@ Entity &Instancer::GetPhysicsTask(bool &valid)
 
 void Instancer::OnLoop(float framelength)
 {
-	frame = framelength * 10.0f;
+	frame = framelength * 20.0f;
 
 	unique_lock<mutex> lock(mtx);
-	mainWaitCondition.wait(lock, [=]{return atStart == workerCount || superwake; });
+	mainWaitCondition.wait(lock, [=]{return atStart == workerCount || stop; });
 	if (!first)
 	{
 		for (int i = 0; i < instanceCount; i++)
 		{
 			auto &obj = objects[i];
-			instanceData[i] = obj.pos = obj.nextPos;
+			obj.pos = obj.nextPos;
 		}
 	}
 	first = false;
@@ -76,6 +72,29 @@ void Instancer::OnLoop(float framelength)
 	blockStart = false;
 	currentObject = 0;
 	workerWaitCondition.notify_all();
-	mainWaitCondition.wait(lock, [=]{return atStart == 0 || superwake; });
+	mainWaitCondition.wait(lock, [=]{return atStart == 0 || stop; });
 	blockStart = true;
+}
+
+bool Instancer::Update(ComPtr<ID3D11DeviceContext> context)
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+
+	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+
+	XMFLOAT3 *data = (XMFLOAT3*)mappedResource.pData;
+
+	for (int i = 0; i < instanceCount; i++)
+		data[i] = objects[i].pos;
+
+	context->Unmap(instanceBuffer.Get(), 0);
+
+	return true;
+}
+
+void Instancer::Stop()
+{
+	stop = true;
+	mainWaitCondition.notify_all();
+	workerWaitCondition.notify_all();
 }

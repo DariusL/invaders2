@@ -3,7 +3,7 @@
 class Instancer : public SimpleBaseInstancer
 {
 	vector<Entity> objects;
-	const int workerCount;
+	const size_t workerCount;
 	float frame;
 
 	condition_variable mainWaitCondition;
@@ -15,11 +15,11 @@ class Instancer : public SimpleBaseInstancer
 	atomic<int> atStart;
 	volatile bool blockStart;
 
-	volatile bool superwake;
 	bool first;
+	bool stop;
 public:
 
-	Instancer(int objectCount, float radius, int workerCount);
+	Instancer(size_t objectCount, float radius, int workerCount);
 	virtual ~Instancer();
 
 	Entity &GetPhysicsTask(bool &valid);
@@ -27,4 +27,7 @@ public:
 
 	float FrameStart();
 	void OnLoop(float framelength);
+	bool Update(ComPtr<ID3D11DeviceContext> context);
+
+	void Stop();
 };

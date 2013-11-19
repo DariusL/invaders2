@@ -11,14 +11,12 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
+	BaseInstancer(Model<vt> &model, sh &shader, size_t maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
 	virtual ~BaseInstancer(void){}
 
 protected:
-	int maxInstanceCount;
-	int instanceCount;
-
-	vector<it> instanceData;
+	size_t maxInstanceCount;
+	size_t instanceCount;
 
 	ComPtr<ID3D11Buffer> instanceBuffer;
 	BufferInfo instanceInfo;
@@ -29,19 +27,16 @@ public:
 protected:
 	void InitBuffers(ComPtr<ID3D11Device> device);
 	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
-	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Update(ComPtr<ID3D11DeviceContext> context) = 0;
 };
 
 typedef BaseInstancer<NormalVertexType, GlobalDiffuseShader, XMFLOAT3> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, size_t maxObjectCount, XMFLOAT3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
-	it tmp;
-	for (int i = 0; i < maxObjectCount; i++)
-		instanceData.push_back(tmp);
 }
 
 template<class vt, class sh, class it>
@@ -59,7 +54,7 @@ void BaseInstancer<vt, sh, it>::InitBuffers(ComPtr<ID3D11Device> device)
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(it) * maxInstanceCount;
+	instanceBufferDesc.ByteWidth = static_cast<UINT>(sizeof(it) * maxInstanceCount);
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
@@ -84,21 +79,4 @@ void BaseInstancer<vt, sh, it>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	DrawableEntity::SetBuffers(context);
 	context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), &instanceInfo.stride, &instanceInfo.offset);
-}
-
-template<class vt, class sh, class it>
-bool BaseInstancer<vt, sh, it>::Update(ComPtr<ID3D11DeviceContext> context)
-{
-	if(instanceCount == 0)
-		return false;
-	
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-
-	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	memcpy(mappedResource.pData, instanceData.data(), sizeof(it) * instanceCount);
-
-	context->Unmap(instanceBuffer.Get(), 0);
-
-	return true;
 }

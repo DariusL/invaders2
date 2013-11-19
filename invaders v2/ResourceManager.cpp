@@ -72,7 +72,7 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
 vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line)
 {
 	vector<FaceVertex> ret;
-	int ind1 = 0, ind2 = 0;
+	size_t ind1 = 0, ind2 = 0;
 
 	for(int i = 0; i < 3; i++)
 	{
@@ -87,7 +87,7 @@ ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
 {
 	FaceVertex ret;
 	string temp;
-	int ind1 = 0, ind2 = 0;
+	size_t ind1 = 0, ind2 = 0;
 
 	ind1 = vertex.find('/');
 	temp = vertex.substr(0, ind1);

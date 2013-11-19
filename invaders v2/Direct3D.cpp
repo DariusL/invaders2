@@ -18,9 +18,8 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	ComPtr<IDXGIFactory> factory;
 	ComPtr<IDXGIAdapter> adapter;
 	ComPtr<IDXGIOutput> adapterOutput;
-	unsigned int numModes, numerator, denominator, stringLength;
+	unsigned int numModes, numerator, denominator;
 	unique_ptr<DXGI_MODE_DESC[]> displayModeList;
-	DXGI_ADAPTER_DESC adapterDesc;
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	D3D_FEATURE_LEVEL featureLevel;
 	ComPtr<ID3D11Texture2D> backBufferPtr;
@@ -49,9 +48,6 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 			denominator = displayModeList[i].RefreshRate.Denominator;
 			break;
 		}
-	Assert(adapter->GetDesc(&adapterDesc));
-	videoMem = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
-	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
 
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 	swapChainDesc.BufferCount = 1;

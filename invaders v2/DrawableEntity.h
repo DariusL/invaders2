@@ -57,7 +57,7 @@ void DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 	vertexInfo.stride = sizeof(vt);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(vt)* model.vertices.size();
+	vertexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(vt) * model.vertices.size());
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
@@ -70,7 +70,7 @@ void DrawableEntity<vt, sh>::InitBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer));
 
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = sizeof(int)* model.indices.size();
+	indexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(int)* model.indices.size());
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;

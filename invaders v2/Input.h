@@ -5,10 +5,10 @@ public:
 	Input();
 	~Input();
 
-	void KeyDown(int key);
-	void KeyUp(int key);
+	void KeyDown(UINT key);
+	void KeyUp(UINT key);
 
-	bool IsKeyDown(int key);
+	bool IsKeyDown(UINT key);
 private:
 	bool keys[256];
 };

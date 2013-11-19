@@ -11,17 +11,17 @@ Input::~Input()
 {
 }
 
-bool Input::IsKeyDown(int key)
+bool Input::IsKeyDown(UINT key)
 {
 	return keys[key];
 }
 
-void Input::KeyDown(int key)
+void Input::KeyDown(UINT key)
 {
 	keys[key] = true;
 }
 
-void Input::KeyUp(int key)
+void Input::KeyUp(UINT key)
 {
 	keys[key] = false;
 }
