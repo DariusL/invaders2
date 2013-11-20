@@ -37,6 +37,15 @@ namespace Utils{
 	{
 		reverse(vec.begin(), vec.end());
 	}
+
+	template<unsigned int N>
+	inline float Pow(float a)
+	{
+		float ret = a;
+		for (unsigned int i = 1; i < N; i++)
+			ret *= a;
+		return ret;
+	}
 }
 
 #define WIDE2(x) L##x
