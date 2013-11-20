@@ -14,7 +14,7 @@ public:
 	XMFLOAT3 speed;
 	float mass;
 
-	Entity(XMFLOAT3 start = ZeroVec3, XMFLOAT3 speed = ZeroVec3, float mass = pow(10.0f, 10.0f)) :pos(start), speed(speed), mass(mass), nextPos(start){}
+	Entity(XMFLOAT3 start = ZeroVec3, XMFLOAT3 speed = ZeroVec3, float mass = pow(10.0f, 10.0f)) :pos(start), speed(speed), mass(mass * G), nextPos(start){}
 	virtual ~Entity(void){}
 
 	const XMFLOAT3 &GetPos() const {return pos;}

@@ -55,7 +55,7 @@ Entity &Instancer::GetPhysicsTask(bool &valid)
 
 void Instancer::OnLoop(float framelength)
 {
-	frame = framelength * 20.0f;
+	frame = framelength * 10.0f;
 
 	unique_lock<mutex> lock(mtx);
 	mainWaitCondition.wait(lock, [=]{return atStart == workerCount || stop; });

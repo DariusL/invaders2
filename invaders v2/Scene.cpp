@@ -5,9 +5,9 @@
 #include "Model.h"
 
 Scene::Scene(void)
-:instancer(1000, 50.0f, 8)
+:instancer(2000, 50.0f, thread::hardware_concurrency())
 {
-	camera.Move(0.0f, 0.0f, -100.0f);
+	camera.Move(0.0f, 0.0f, -80.0f);
 	started = false;
 }
 
