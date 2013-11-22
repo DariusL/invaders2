@@ -56,7 +56,6 @@ XMVECTOR XM_CALLCONV SomethingConcurent::Acceleration(XMVECTOR subject, XMVECTOR
 	if (l < 5.0f)
 		return XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 	return temp * (targetMass / Utils::Pow<3>(l));
-	//return temp * (targetMass / (l*l*l));
 }
 
 void SomethingConcurent::OnLoop(float framelength)

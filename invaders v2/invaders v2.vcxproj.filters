@@ -101,9 +101,6 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseInstancer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

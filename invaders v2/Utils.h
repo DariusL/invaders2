@@ -41,10 +41,13 @@ namespace Utils{
 	template<unsigned int N>
 	inline float Pow(float a)
 	{
-		float ret = a;
-		for (unsigned int i = 1; i < N; i++)
-			ret *= a;
-		return ret;
+		return a * Pow<N - 1>(a);
+	}
+
+	template<>
+	inline float Pow<0>(float a)
+	{
+		return 1.0f;
 	}
 }
 

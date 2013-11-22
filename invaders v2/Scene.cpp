@@ -68,7 +68,6 @@ int Scene::OnLoop(int input, float frameLength)
 	camera.Up(move.y);
 	camera.Right(move.x);
 
-	//instancer.OnLoop(frameLength);
 	instancer.OnLoop(0.01f);
 	
 	return IWorld::Result::CONTINUE;
