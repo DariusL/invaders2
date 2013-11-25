@@ -5,6 +5,9 @@
 /release/*
 /invaders v2/release/*
 
+/invaders v2/x64/*
+/x64/*
+
 /ipch/*
 
 #something
