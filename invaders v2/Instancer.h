@@ -2,24 +2,23 @@
 #include "BaseInstancer.h"
 class Instancer : public SimpleBaseInstancer
 {
-	vector<Entity> objects;
-	const size_t workerCount;
-	float frame;
+	vector<Entity> objects;//objektai
+	const size_t workerCount;//giju skaicius
+	float frame;//paskutinio kadro ilgis
 
-	condition_variable mainWaitCondition;
-	condition_variable workerWaitCondition;
+	condition_variable mainWaitCondition;//salgyga pagrindines gijos blokavimui
+	condition_variable workerWaitCondition;//salgyga darbiniu giju blokavimui
 
 	mutex mtx;
-	atomic<int> currentObject;
+	atomic<size_t> currentObject;//indeksas sekancio objekto kuri reikia apdoroti
 
-	atomic<int> atStart;
-	volatile bool blockStart;
+	atomic<int> atStart;//skaicius darbiniu giju esanciu pradzios metode
+	volatile bool blockStart;//ar reikia blokuoti gijas pradzioje
 
-	bool stop;
+	bool stop;//naudojamas baigiant darba
 public:
-
 	Instancer(size_t objectCount, float radius, int workerCount);
-	virtual ~Instancer();
+	virtual ~Instancer(){}
 
 	Entity &GetPhysicsTask(bool &valid);
 	IPhysicalInfo &Get(int i){ return objects[i]; }

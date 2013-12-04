@@ -17,7 +17,7 @@ class ResourceManager
 	NormalModel normalModel;
 	GlobalDiffuseShader shader;
 
-	static NormalModel GetNormalModelFromOBJ(string filename, bool invert = false);
+	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
 	static FaceVertex GetVertexFromString(string &vertex);
 

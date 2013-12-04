@@ -1,13 +1,12 @@
 #include "includes.h"
 #include "SomethingConcurent.h"
 
-bool SomethingConcurent::run = true;
-
 SomethingConcurent::SomethingConcurent(size_t objectCount, float radius, int threadCount)
-:instancer(objectCount, radius, threadCount)
+:instancer(objectCount, radius, threadCount), run(true)
 {
+	//paleidziamos visos darbines gijos
 	for (int i = 0; i < threadCount; i++)
-		workers.emplace_back(&SomethingConcurent::Worker, ref(instancer), objectCount);
+		workers.emplace_back(Worker, ref(instancer), objectCount, ref(run));
 }
 
 
@@ -19,8 +18,9 @@ SomethingConcurent::~SomethingConcurent()
 		t.join();
 }
 
-void SomethingConcurent::Worker(Instancer &instancer, size_t objectCount)
+void SomethingConcurent::Worker(Instancer &instancer, size_t objectCount, bool &run)
 {
+	//vykdoma kol nera pabaigos salygos
 	bool valid;
 	while (run)
 	{
@@ -28,12 +28,14 @@ void SomethingConcurent::Worker(Instancer &instancer, size_t objectCount)
 		while (run)
 		{
 			auto &obj = instancer.GetPhysicsTask(valid);
+			//jei visi objektai apdoroti, griztame i kadro pradzia ir sinchronizuojames su pagrindine gija
 			if (!valid)
 				break;
 
+			//fizika
 			XMVECTOR subjectPos = XMLoadFloat3(&obj.pos);
 			XMVECTOR acceleration = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-			for (int i = 0; i < objectCount; i++)
+			for (size_t i = 0; i < objectCount; i++)
 			{
 				auto &target = instancer.Get(i);
 				XMVECTOR targetPos = XMLoadFloat3(&target.GetPos());
@@ -50,6 +52,7 @@ void SomethingConcurent::Worker(Instancer &instancer, size_t objectCount)
 
 XMVECTOR XM_CALLCONV SomethingConcurent::Acceleration(XMVECTOR subject, XMVECTOR target, float targetMass)
 {
+	//daugiau fizikos
 	XMVECTOR temp = target - subject;
 	float l;
 	XMStoreFloat(&l, XMVector3Length(temp));

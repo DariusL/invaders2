@@ -73,7 +73,7 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	swapChainDesc.Flags = 0;
-	featureLevel = D3D_FEATURE_LEVEL_11_0;
+	featureLevel = D3D_FEATURE_LEVEL_10_0;
 
 	int debug = 0;
 

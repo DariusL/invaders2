@@ -5,7 +5,7 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(void)
-:normalModel(GetNormalModelFromOBJ("ball.obj")),
+:normalModel(GetNormalModelFromOBJ(L"Resources\\ball.obj")),
 shader(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso")
 {
 	normalModel.hitbox = XMFLOAT2(1.5f, 1.5f);
@@ -21,13 +21,15 @@ void ResourceManager::Init()
 {
 }
 
-NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
+NormalModel ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
 {
 	NormalModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT3> normals;
 	string input;
 	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
 	while(!in.eof())
 	{

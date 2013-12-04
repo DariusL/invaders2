@@ -5,6 +5,7 @@ class SomethingConcurent : public IDrawable
 {
 	Instancer instancer;
 	vector<thread> workers;
+	bool run;
 public:
 	SomethingConcurent(size_t objectCount, float radius, int threadCount);
 	~SomethingConcurent();
@@ -13,7 +14,6 @@ public:
 	void Render(const RenderParams& params){ instancer.Render(params); }
 	void OnLoop(float framelength);
 private:
-	static void Worker(Instancer &instancer, size_t objectCount);
+	static void Worker(Instancer &instancer, size_t objectCount, bool &run);
 	static XMVECTOR XM_CALLCONV Acceleration(XMVECTOR subject, XMVECTOR target, float targetMass);
-	static bool run;
 };
