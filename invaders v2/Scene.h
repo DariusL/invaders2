@@ -11,14 +11,12 @@
 #include "WaterPlane.h"
 class Scene : public IWorld
 {
-	DrawableBumpyEntity bumpy;
 	Light light;
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
-	DrawableEntity<NormalVertexType, PointSpecularShader> thing;
 public:
 	Scene();
 	~Scene();

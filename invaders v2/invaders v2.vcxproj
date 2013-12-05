@@ -58,6 +58,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>D3D11.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(OutDir)Shaders"
+move "$(OutDir)*.cso" "$(OutDir)Shaders\"
+xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -76,6 +81,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>D3D11.lib;DXGI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(OutDir)Shaders"
+move "$(OutDir)*.cso" "$(OutDir)Shaders\"
+xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />

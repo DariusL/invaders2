@@ -27,17 +27,15 @@ class ResourceManager
 	};
 	vector<ColorModel> models;
 	vector<TexturedModel> texturedModels;
-	NormalModel normalModel;
-	NormalMappedModel normalMappedModel;
 	vector<shared_ptr<Level>> levels;
 	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
 
-	static NormalModel GetNormalModelFromOBJ(string filename, bool invert = false);
-	static ColorModel GetModelFromOBJ(string filename, bool invert = false);
-	static NormalMappedModel GetNormalMappedModelFromOBJ(string filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJ(string filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJUnindexed(string filename, bool invert = false);
+	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
+	static ColorModel GetModelFromOBJ(wstring filename, bool invert = false);
+	static NormalMappedModel GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJ(wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
 	static FaceVertex GetVertexFromString(string &vertex);
@@ -55,8 +53,6 @@ public:
 	ColorModel &GetModel(int i){return models[i];}
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
-	NormalModel &GetNormalModel(){return normalModel;}
-	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	TexturedModel &GetTexturedModel(int i){ return texturedModels[i]; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(int i){ return textures[i]; }
 	static ResourceManager &Get(){ return *handle; }
@@ -119,18 +115,10 @@ public:
 		MIRROR
 	};
 
-	enum NormalModels
-	{
-		NORMAL_TEACUP,
-		NORMAL_THING
-	};
-
 	enum Textures
 	{
 		TEXTURE_GABEN,
-		TEXTURE_PAPER_NORMAL_MAP,
 		TEXTURE_WATER_NORMAL_MAP,
-		TEXTURE_FREAKY_RECTANGLES,
 		WALL
 	};
 

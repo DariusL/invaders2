@@ -6,12 +6,7 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(void)
-:normalMappedModel(GetNormalMappedModelFromOBJ("textured_ball.obj")),
-	normalModel(GetNormalModelFromOBJ("thing.obj")),
-	models()
 {
-	normalMappedModel.hitbox = XMFLOAT2(2.0f, 2.0f);
-	normalModel.hitbox = XMFLOAT2(1.5f, 1.5f);
 	handle = this;
 }
 
@@ -185,7 +180,7 @@ void ResourceManager::Init()
 
 	models.push_back(move(temp));
 
-	temp = GetModelFromOBJ("ball.obj");
+	temp = GetModelFromOBJ(L"Resources\\ball.obj");
 	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 
 	models.push_back(move(temp));
@@ -220,8 +215,8 @@ void ResourceManager::Init()
 	plane.indices.push_back(2);
 
 	texturedModels.push_back(move(plane));
-	texturedModels.push_back(GetTexturedModelFromOBJUnindexed("box.obj"));
-	texturedModels.push_back(GetTexturedModelFromOBJUnindexed("bath.obj"));
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
 	Level *level = new Level();
 
@@ -239,7 +234,7 @@ void ResourceManager::Init()
 	levels.push_back(shared_ptr<Level>(level));
 }
 
-ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
+ColorModel ResourceManager::GetModelFromOBJ(wstring filename, bool invert)
 {
 	auto normalModel = GetNormalModelFromOBJ(filename, invert);
 	ColorModel ret;
@@ -255,13 +250,15 @@ ColorModel ResourceManager::GetModelFromOBJ(string filename, bool invert)
 	return ret;
 }
 
-NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
+NormalModel ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
 {
 	NormalModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT3> normals;
 	string input;
 	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
 	while(!in.eof())
 	{
@@ -303,7 +300,7 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(string filename, bool invert)
 	return model;
 }
 
-NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(string filename, bool invert)
+NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(wstring filename, bool invert)
 {
 	NormalMappedModel model;
 	ifstream in(filename, ios::binary);
@@ -311,6 +308,8 @@ NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(string filename, 
 	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
 	while(!in.eof())
 	{
@@ -359,13 +358,15 @@ NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(string filename, 
 	return model;
 }
 
-TexturedModel ResourceManager::GetTexturedModelFromOBJ(string filename, bool invert)
+TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool invert)
 {
 	TexturedModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
 	while (!in.eof())
 	{
@@ -407,7 +408,7 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(string filename, bool inv
 	return model;
 }
 
-TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(string filename, bool invert)
+TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(wstring filename, bool invert)
 {
 	TexturedModel model;
 	vector<TextureVertexType> v;
@@ -415,6 +416,8 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(string filename,
 	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
 	while (!in.eof())
 	{
@@ -526,23 +529,21 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 
 void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 {
-	shaders.push_back(make_unique<ColorShader>(L"ColorVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_unique<ColorInstancedShader>(L"ColorInstancedVertex.cso", L"ColorPixel.cso"));
-	shaders.push_back(make_unique<GlobalDiffuseShader>(L"GlobalDiffuseVertex.cso", L"GlobalDiffusePixel.cso"));
-	shaders.push_back(make_unique<GlobalSpecularShader>(L"GlobalSpecularVertex.cso", L"GlobalSpecularPixel.cso"));
-	shaders.push_back(make_unique<PointDiffuseShader>(L"PointDiffuseVertex.cso", L"PointDiffusePixel.cso"));
-	shaders.push_back(make_unique<PointSpecularShader>(L"PointSpecularVertex.cso", L"PointSpecularPixel.cso"));
-	shaders.push_back(make_unique<TextureShader>(L"TextureVertex.cso", L"TexturePixel.cso"));
-	shaders.push_back(make_unique<NormalMappedShader>(L"NormalMapVertex.cso", L"NormalMapPixel.cso"));
-	shaders.push_back(make_unique<WaterShader>(L"WaterVertex.cso", L"WaterPixel.cso"));
-	shaders.push_back(make_unique<MirrorShader>(L"MirrorVertex.cso", L"MirrorPixel.cso"));
+	shaders.push_back(make_unique<ColorShader>(L"Shaders\\ColorVertex.cso", L"Shaders\\ColorPixel.cso"));
+	shaders.push_back(make_unique<ColorInstancedShader>(L"Shaders\\ColorInstancedVertex.cso", L"Shaders\\ColorPixel.cso"));
+	shaders.push_back(make_unique<GlobalDiffuseShader>(L"Shaders\\GlobalDiffuseVertex.cso", L"Shaders\\GlobalDiffusePixel.cso"));
+	shaders.push_back(make_unique<GlobalSpecularShader>(L"Shaders\\GlobalSpecularVertex.cso", L"Shaders\\GlobalSpecularPixel.cso"));
+	shaders.push_back(make_unique<PointDiffuseShader>(L"Shaders\\PointDiffuseVertex.cso", L"Shaders\\PointDiffusePixel.cso"));
+	shaders.push_back(make_unique<PointSpecularShader>(L"Shaders\\PointSpecularVertex.cso", L"Shaders\\PointSpecularPixel.cso"));
+	shaders.push_back(make_unique<TextureShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\TexturePixel.cso"));
+	shaders.push_back(make_unique<NormalMappedShader>(L"Shaders\\NormalMapVertex.cso", L"Shaders\\NormalMapPixel.cso"));
+	shaders.push_back(make_unique<WaterShader>(L"Shaders\\WaterVertex.cso", L"Shaders\\WaterPixel.cso"));
+	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
 	
 	for(auto &shader : shaders)
 		shader->Init(device);
 
-	textures.push_back(GetTextureFromFile(L"gaben.dds", device));
-	textures.push_back(GetTextureFromFile(L"stage7.dds", device));
-	textures.push_back(GetTextureFromFile(L"wave.dds", device));
-	textures.push_back(GetTextureFromFile(L"freaky_rectangles.dds", device));
-	textures.push_back(GetTextureFromFile(L"wall.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
 }
