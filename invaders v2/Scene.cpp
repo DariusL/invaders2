@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "Model.h"
 #include "WaterShader.h"
+#include "InstancedTextureShader.h"
 
 Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
@@ -14,8 +15,10 @@ light(XMFLOAT3(0.0f, 0.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().
 water(XMFLOAT3(0.0f, -15.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), 
 RM::Get().GetShader<WaterShader>(), 400, 400, 40.0f, 40.0f, RM::Get().GetTexture(RM::Textures::TEXTURE_WATER_NORMAL_MAP)),
 
-bath(XMFLOAT3(0.0f, -20.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::BATH), 
-RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::WALL), XMFLOAT3(50.0f, 10.0f, 50.0f))
+bath(XMFLOAT3(0.0f, -20.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::BATH),
+RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
+
+billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
@@ -95,6 +98,7 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 	gabenizer.Init(device);
 	water.Init(device);
 	bath.Init(device);
+	billboard.Init(device);
 }
 
 void Scene::Render(const RenderParams &params)
@@ -102,4 +106,5 @@ void Scene::Render(const RenderParams &params)
 	light.Render(params);
 	gabenizer.Render(params);
 	bath.Render(params);
+	billboard.Render(params);
 }

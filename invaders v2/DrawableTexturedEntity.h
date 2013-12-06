@@ -8,6 +8,7 @@
 template<class vt, class sh>
 class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 {
+protected:
 	ComVector<ID3D11ShaderResourceView> texture;
 	XMFLOAT4X4 scale;
 	XMFLOAT4X4 rot;

@@ -16,7 +16,7 @@ public:
 	void Move(DirectX::XMFLOAT3 vec){ Move(vec.x, vec.y, vec.z); }
 	void Move(float x, float y, float z);
 
-	DirectX::XMFLOAT3 GetPosition() const { return pos; }
+	const DirectX::XMFLOAT3 &GetPosition() const { return pos; }
 
 	const DirectX::XMMATRIX GetViewMatrix(){ RenderMain(); return XMLoadFloat4x4(&viewMatrix); }
 	DirectX::XMMATRIX GetReflectedViewMatrix(const DirectX::XMMATRIX &reflect, const DirectX::XMMATRIX &zeroReflect);

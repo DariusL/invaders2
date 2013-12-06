@@ -1,14 +1,13 @@
 #include "includes.h"
-#include "TextureShader.h"
-#include "Utils.h"
+#include "InstancedTextureShader.h"
 
-void TextureShader::Init(ComPtr<ID3D11Device> device)
+void InstancedTextureShader::Init(ComPtr<ID3D11Device> device)
 {
-	IPositionShader::Init(device); 
+	IInstanceShader::Init(device);
 	InitializeSampler(device);
 }
 
-vector<D3D11_INPUT_ELEMENT_DESC> TextureShader::GetInputLayout()
+vector<D3D11_INPUT_ELEMENT_DESC> InstancedTextureShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;
 	vector<D3D11_INPUT_ELEMENT_DESC> ret;
@@ -33,10 +32,28 @@ vector<D3D11_INPUT_ELEMENT_DESC> TextureShader::GetInputLayout()
 
 	ret.push_back(desc);
 
+	desc.SemanticName = "INSTANCE";
+	desc.SemanticIndex = 0;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.InputSlot = 1;
+	desc.AlignedByteOffset = 0;
+	desc.InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
+	desc.InstanceDataStepRate = 1;
+
+	ret.push_back(desc);
+
+	for (unsigned int i = 1; i < 4; i++)
+	{
+		desc.SemanticIndex = i;
+		desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+
+		ret.push_back(desc);
+	}
+
 	return ret;
 }
 
-void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
+void InstancedTextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
 	D3D11_SAMPLER_DESC samplerDesc;
 
@@ -57,9 +74,9 @@ void TextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 }
 
-void TextureShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
+void InstancedTextureShader::SetShaderParametersInstancedTextured(const RenderParams &params, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	IPositionShader::SetShaderParameters(params, world);
+	IInstanceShader::SetShaderParametersInstanced(params);
 
 	texturesSet = textures.size();
 	for (unsigned int i = 0; i < texturesSet; i++)
@@ -68,9 +85,9 @@ void TextureShader::SetShaderParametersTextured(const RenderParams &params, cons
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());
 }
 
-void TextureShader::RenderShader(ComPtr<ID3D11DeviceContext> deviceContext, int indexCount)
+void InstancedTextureShader::RenderShaderInstanced(ComPtr<ID3D11DeviceContext> context, int indexCount, int instanceCount)
 {
-	deviceContext->DrawIndexed(indexCount, 0, 0);
+	IInstanceShader::RenderShaderInstanced(context, indexCount, instanceCount);
 	for (unsigned int i = 0; i < texturesSet; i++)
-		deviceContext->PSSetShaderResources(i, 1, nullResource.GetAddressOf());
- }
+		context->PSSetShaderResources(i, 1, nullResource.GetAddressOf());
+}

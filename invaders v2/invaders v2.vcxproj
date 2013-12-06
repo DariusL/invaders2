@@ -104,6 +104,7 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InstancedTextureShader.cpp" />
     <ClCompile Include="InstanceEntity.cpp" />
     <ClCompile Include="EntityListInstancer.cpp" />
     <ClCompile Include="IShader.cpp" />
@@ -128,6 +129,7 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
@@ -141,6 +143,7 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GlobalSpecularShader.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="InstancedTextureShader.h" />
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IDrawableObject.h" />
     <ClInclude Include="IInstance.h" />
@@ -150,7 +153,6 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
-    <ClInclude Include="ITextureShader.h" />
     <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
@@ -251,6 +253,10 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="PointSpecularVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="TextureInstancedVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>

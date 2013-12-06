@@ -14,6 +14,7 @@
 #include "NormalMappedShader.h"
 #include "WaterShader.h"
 #include "MirrorShader.h"
+#include "InstancedTextureShader.h"
 
 using namespace std;
 
@@ -79,6 +80,8 @@ public:
 	WaterShader &GetShader<WaterShader>(){return static_cast<WaterShader&>(*shaders[Shaders::WATER]);}
 	template<>
 	MirrorShader &GetShader<MirrorShader>(){ return static_cast<MirrorShader&>(*shaders[Shaders::MIRROR]); }
+	template<>
+	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[Shaders::TEXTURE_INSTANCED]); }
 
 	enum Models
 	{
@@ -112,14 +115,16 @@ public:
 		TEXTURE,
 		NORMAL_MAPPED,
 		WATER,
-		MIRROR
+		MIRROR,
+		TEXTURE_INSTANCED
 	};
 
 	enum Textures
 	{
 		TEXTURE_GABEN,
 		TEXTURE_WATER_NORMAL_MAP,
-		WALL
+		WALL,
+		TREE
 	};
 
 	enum TexturedModels

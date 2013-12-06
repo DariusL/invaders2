@@ -1,7 +1,6 @@
 #pragma once
 #include "PointSpecularShader.h"
 #include "Utils.h"
-#include "ITextureShader.h"
 
 class NormalMappedShader : public PointSpecularShader
 {

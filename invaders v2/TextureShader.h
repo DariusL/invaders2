@@ -1,12 +1,14 @@
 #pragma once
-#include "ITextureShader.h"
-class TextureShader : public ITextureShader
+#include "IPosShader.h"
+class TextureShader : public IPositionShader
 {
 public:
-	TextureShader(wstring vs, wstring ps):ITextureShader(vs, ps){}
+	TextureShader(wstring vs, wstring ps) :IPositionShader(vs, ps){}
 	~TextureShader(void){}
 
+	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
+	void SetShaderParameters(const RenderParams &params, const XMMATRIX &world){ AssertBool(false, L"SetShaderParameters called on a texture shader"); }
 	virtual void RenderShader(ComPtr<ID3D11DeviceContext> context, int indexCount);
 
 protected:

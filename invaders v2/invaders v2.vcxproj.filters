@@ -123,6 +123,9 @@
     <ClCompile Include="RenderBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InstancedTextureShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -236,9 +239,6 @@
     <ClInclude Include="TextureShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ITextureShader.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
     <ClInclude Include="NormalMappedShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -276,6 +276,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RenderBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedTextureShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -335,6 +341,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="MirrorPixel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TextureInstancedVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

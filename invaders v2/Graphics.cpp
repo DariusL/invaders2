@@ -143,7 +143,7 @@ void Graphics::Render(Scene &world)
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
 	params.view = camera.GetViewMatrix();
-
+	params.camera = &camera;
 	params.clipPlane = ZeroVec4;
 	params.reflecMatrix = camera.GetReflectedViewMatrix(DirectX::XMMatrixReflect(water.GetMirrorPlane()), DirectX::XMMatrixReflect(water.GetZeroPlane()));
 	water.Render(params);

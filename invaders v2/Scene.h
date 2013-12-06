@@ -9,6 +9,8 @@
 #include "RemoteCamera.h"
 #include "Mirror.h"
 #include "WaterPlane.h"
+#include "Billboard.h"
+
 class Scene : public IWorld
 {
 	Light light;
@@ -17,6 +19,7 @@ class Scene : public IWorld
 	SimpleTexturedEntity gabenizer;
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
+	Billboard<TextureVertexType, TextureShader> billboard;
 public:
 	Scene();
 	~Scene();

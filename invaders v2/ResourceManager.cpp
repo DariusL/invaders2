@@ -523,7 +523,7 @@ void ResourceManager::CalculateTangentAndBinormal(const vector<FaceVertex> &ind,
 ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device)
 {
 	ComPtr<ID3D11ShaderResourceView> ret;
-	Assert(CreateDDSTextureFromFile(device.Get(), filename.c_str(), NULL, ret.GetAddressOf()));
+	Assert(CreateDDSTextureFromFile(device.Get(), filename.c_str(), NULL, &ret));
 	return ret;
 }
 
@@ -539,6 +539,7 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<NormalMappedShader>(L"Shaders\\NormalMapVertex.cso", L"Shaders\\NormalMapPixel.cso"));
 	shaders.push_back(make_unique<WaterShader>(L"Shaders\\WaterVertex.cso", L"Shaders\\WaterPixel.cso"));
 	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
+	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
 	
 	for(auto &shader : shaders)
 		shader->Init(device);
@@ -546,4 +547,5 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
 }

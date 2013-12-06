@@ -27,7 +27,7 @@ void IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring 
 	// Create the pixel shader from the buffer.
 	Assert(device->CreatePixelShader(pBuffer.get(), pSize, NULL, &pixelShader));
 
-	Assert(device->CreateInputLayout(&inputLayout[0], inputLayout.size(), vBuffer.get(), vSize, &layout));
+	Assert(device->CreateInputLayout(inputLayout.data(), inputLayout.size(), vBuffer.get(), vSize, &layout));
 }
 
 void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
