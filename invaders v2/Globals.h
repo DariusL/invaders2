@@ -29,6 +29,14 @@ struct TextureVertexType
 	TextureVertexType(float x, float y, float z) :position(x, y, z){}
 };
 
+struct NormalTextureVertexType : public TextureVertexType
+{
+	DirectX::XMFLOAT3 normal;
+
+	NormalTextureVertexType(){}
+	NormalTextureVertexType(float x, float y, float z) :TextureVertexType(x, y, z){}
+};
+
 struct NormalMappedVertexType
 {
 	DirectX::XMFLOAT3 position;
@@ -100,6 +108,8 @@ __declspec(align(16)) struct RenderParams
 	float waterScale;
 	DirectX::XMFLOAT4 clipPlane;
 	DirectX::XMFLOAT2 waterTranslation;
+	DirectX::XMMATRIX lightView;
+	DirectX::XMMATRIX lightProject;
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 	__declspec(align(16)) Camera *camera;
 	__declspec(align(16)) bool shadowPass;

@@ -540,6 +540,7 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<WaterShader>(L"Shaders\\WaterVertex.cso", L"Shaders\\WaterPixel.cso"));
 	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
 	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
+	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
 	
 	for(auto &shader : shaders)
 		shader->Init(device);
