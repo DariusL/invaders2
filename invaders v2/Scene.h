@@ -3,7 +3,7 @@
 #include "DrawableShooter.h"
 #include "DrawableTexturedEntity.h"
 #include "Globals.h"
-#include "Light.h"
+#include "ShadowLight.h"
 #include "DrawableBumpyEntity.h"
 #include "WaterPlane.h"
 #include "RemoteCamera.h"
@@ -13,7 +13,7 @@
 
 class Scene : public IWorld
 {
-	Light light;
+	ShadowLight light;
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
 	SimpleTexturedEntity gabenizer;
@@ -28,7 +28,7 @@ public:
 	void Stop();
 
 	int OnLoop(int input, float frameLength);
-	Light &GetLight(){ return light; }
+	ShadowLight &GetLight(){ return light; }
 	vector<SimpleMirror> &GetMirrors(){ return mirrors; }
 	vector<RemoteCamera> &GetRemoteCameras(){ return cameras; }
 	SimpleWaterPlane &GetWater(){ return water; }

@@ -83,8 +83,5 @@ void PointDiffuseShader::SetShaderParameters(const RenderParams &params, const X
 	cont->VSSetConstantBuffers(2, 1, vertexLightBuffer.GetAddressOf());
 	cont->PSSetConstantBuffers(0, 1, pixelLightBuffer.GetAddressOf());
 
-	cont->IASetInputLayout(layout.Get());
-
-	cont->PSSetShader(pixelShader.Get(), NULL, 0);
-	cont->VSSetShader(vertexShader.Get(), NULL, 0);
+	SetShader(params);
 }

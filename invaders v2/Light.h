@@ -9,9 +9,8 @@ class Light : public SimpleDrawableEntity
 	XMFLOAT4 color;
 public:
 	Light(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorShader &shader)
-		:DrawableEntity(pos, model, shader)
+		:DrawableEntity(pos, model, shader), color(color)
 	{
-		this->color = color;
 	}
 	~Light(void){}
 

@@ -55,11 +55,22 @@ void Graphics::Render(Scene &world)
 	params.context = context;
 	params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
-	params.projection = d3D.GetProjectionMatrix();
 	params.waterScale = 0.1f;
 	long time = clock();
 	time %= 5000;
 	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
+
+	params.view = light.GetViewMatrix();
+	params.projection = light.GetProjectionMatrix();
+	params.shadowPass = true;
+	params.clipPlane = ZeroVec4;
+	params.camera = &camera;
+	light.SetRenderTarget(context);
+	light.ClearTarget(context);
+	world.Render(params);
+
+	params.projection = d3D.GetProjectionMatrix();
+	params.shadowPass = false;
 
 	for (auto &remote : remotes)
 	{

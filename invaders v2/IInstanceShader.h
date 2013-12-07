@@ -26,10 +26,7 @@ public:
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 
-		params.context->IASetInputLayout(layout.Get());
-
-		params.context->VSSetShader(vertexShader.Get(), NULL, 0);
-		params.context->PSSetShader(pixelShader.Get(), NULL, 0);
+		SetShader(params);
 	}
 
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device)

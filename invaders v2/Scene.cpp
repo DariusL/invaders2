@@ -10,15 +10,16 @@ Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
 RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN), XMFLOAT3(400.0f, 400.0f, 400.0f)),
 
-light(XMFLOAT3(0.0f, 0.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>()),
+light(XMFLOAT3(0.0f, 0.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 500, 500),
 
 water(XMFLOAT3(0.0f, -15.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), 
-RM::Get().GetShader<WaterShader>(), 400, 400, 40.0f, 40.0f, RM::Get().GetTexture(RM::Textures::TEXTURE_WATER_NORMAL_MAP)),
+RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::Textures::TEXTURE_WATER_NORMAL_MAP)),
 
 bath(XMFLOAT3(0.0f, -20.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::BATH),
 RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
 
-billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN))
+billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 
+RM::Get().GetTexture(RM::Textures::TREE), XMFLOAT3(10.0f, 10.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;

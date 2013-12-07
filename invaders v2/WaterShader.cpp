@@ -27,6 +27,28 @@ void WaterShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&waterDesc, NULL, &waterBuffer));
 }
 
+void WaterShader::InitializeSampler(ComPtr<ID3D11Device> device)
+{
+	TextureShader::InitializeSampler(device);
+	D3D11_SAMPLER_DESC samplerDesc;
+
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MipLODBias = 0;
+
+	Assert(device->CreateSamplerState(&samplerDesc, &waterSamplerState));
+}
+
 void WaterShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	MirrorShader::SetShaderParametersTextured(params, world, textures);
@@ -39,6 +61,8 @@ void WaterShader::SetShaderParametersTextured(const RenderParams &params, const 
 	Utils::CopyToBuffer(waterBuffer, water, con);
 
 	Utils::CopyToBuffer(cameraBuffer, params.camera->GetPosition(), params.context);
+
+	con->PSSetSamplers(1, 1, waterSamplerState.GetAddressOf());
 
 	con->VSSetConstantBuffers(3, 1, cameraBuffer.GetAddressOf());
 	con->PSSetConstantBuffers(0, 1, waterBuffer.GetAddressOf());

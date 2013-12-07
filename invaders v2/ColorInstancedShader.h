@@ -15,7 +15,4 @@ public:
 
 protected:
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
-
-private:
-	ComPtr<ID3D11Buffer> matrixBuffer;
 };

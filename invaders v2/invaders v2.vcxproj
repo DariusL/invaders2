@@ -120,6 +120,7 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShadowLight.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -169,6 +170,7 @@ xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="ShadowLight.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Utils.h" />

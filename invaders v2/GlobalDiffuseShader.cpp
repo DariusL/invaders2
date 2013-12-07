@@ -73,8 +73,5 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const 
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
-	cont->IASetInputLayout(layout.Get());
-
-	cont->PSSetShader(pixelShader.Get(), NULL, 0);
-	cont->VSSetShader(vertexShader.Get(), NULL, 0);
+	SetShader(params);
 }

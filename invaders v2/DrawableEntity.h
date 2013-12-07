@@ -99,7 +99,6 @@ void DrawableEntity<vt, sh>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 template<class vt, class sh>

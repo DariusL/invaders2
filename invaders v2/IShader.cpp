@@ -54,3 +54,14 @@ void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	Assert(device->CreateBuffer(&clipBufferDesc, NULL, &clipBuffer));
 }
+
+void IShader::SetShader(const RenderParams &params)
+{
+	if (!params.shadowPass)
+		params.context->PSSetShader(pixelShader.Get(), NULL, 0);
+	else
+		params.context->PSSetShader(NULL, NULL, 0);
+	params.context->VSSetShader(vertexShader.Get(), NULL, 0);
+	params.context->IASetInputLayout(layout.Get());
+	params.context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+}
