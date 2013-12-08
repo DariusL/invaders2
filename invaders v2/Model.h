@@ -38,6 +38,7 @@ typedef Model<VertexType> ColorModel;
 typedef Model<NormalMappedVertexType> NormalMappedModel;
 typedef Model<NormalVertexType> NormalModel;
 typedef Model<TextureVertexType> TexturedModel;
+typedef Model<NormalTextureVertexType> NormalTexturedModel;
 
 template<class T>
 Model<T>::Model(Model &&other)

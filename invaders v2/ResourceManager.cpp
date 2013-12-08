@@ -19,11 +19,11 @@ shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
 {
 	switch (type)
 	{
-	case Enemies::BASIC:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_BASIC], GetShader<ColorShader>());
+	case ENEMY::ENEMY_BASIC:
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_BASIC], GetShader<ColorShader>());
 		break;
-	case Enemies::LAPTOP:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[Models::MODEL_ENEMY_LAPTOP], GetShader<ColorShader>());
+	case ENEMY::ENEMY_LAPTOP:
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_LAPTOP], GetShader<ColorShader>());
 	default:
 		return NULL;
 		break;
@@ -218,17 +218,19 @@ void ResourceManager::Init()
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+
 	Level *level = new Level();
 
 	level->gridWidth = 11;
 	level->gridHeight = 5;
 	level->gap = XMFLOAT2(3.0f, 3.0f);
 	level->enemyTypes = vector<int>();
-	level->enemyTypes.push_back(Enemies::BASIC);
+	level->enemyTypes.push_back(ENEMY::ENEMY_BASIC);
 
 	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
-		level->enemies.push_back(Enemies::BASIC);
+		level->enemies.push_back(ENEMY::ENEMY_BASIC);
 	}
 
 	levels.push_back(shared_ptr<Level>(level));
@@ -452,6 +454,66 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(wstring filename
 			{
 				TextureVertexType temp = v[vertex.vertex];
 				temp.tex = tex[vertex.tex];
+				model.vertices.push_back(temp);
+				model.indices.push_back(model.vertices.size() - 1);
+			}
+		}
+	}
+
+	return model;
+}
+
+NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert)
+{
+	NormalTexturedModel model;
+	vector<NormalTextureVertexType> v;
+	ifstream in(filename, ios::binary);
+	vector<XMFLOAT2> tex;
+	vector<XMFLOAT3> normals;
+	string input;
+	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
+
+	while (!in.eof())
+	{
+		in >> input;
+
+		if (input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+			in >> x >> y >> z;
+			v.emplace_back(x, y, -z);
+		}
+		else if (input == "vt")
+		{
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
+		}
+		else if (input == "vn")
+		{
+			in >> x >> y >> z;
+			normals.emplace_back(x, y, -z);
+		}
+		else if (input == "f")
+		{
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
+			for (auto &vertex : vertices)
+			{
+				NormalTextureVertexType temp = v[vertex.vertex];
+				temp.tex = tex[vertex.tex];
+				temp.normal = normals[vertex.normal];
 				model.vertices.push_back(temp);
 				model.indices.push_back(model.vertices.size() - 1);
 			}

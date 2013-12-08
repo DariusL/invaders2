@@ -7,25 +7,25 @@
 #include "InstancedTextureShader.h"
 
 Scene::Scene(void)
-:gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::INV_BOX), RM::Get().GetShader<TextureShader>(),
-RM::Get().GetTexture(RM::Textures::TEXTURE_GABEN), XMFLOAT3(400.0f, 400.0f, 400.0f)),
+:gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_INV_BOX), RM::Get().GetShader<TextureShader>(),
+RM::Get().GetTexture(RM::TEXTURE_GABEN), XMFLOAT3(400.0f, 400.0f, 400.0f)),
 
-light(XMFLOAT3(0.0f, 0.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::Models::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 500, 500),
+light(XMFLOAT3(0.0f, 0.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 500, 500),
 
-water(XMFLOAT3(0.0f, -15.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), 
-RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::Textures::TEXTURE_WATER_NORMAL_MAP)),
+water(XMFLOAT3(0.0f, -15.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
+RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::TEXTURE_WATER_NORMAL_MAP)),
 
-bath(XMFLOAT3(0.0f, -20.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TexturedModels::BATH),
-RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::Textures::WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
+bath(XMFLOAT3(0.0f, -20.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_BATH),
+RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
 
-billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 
-RM::Get().GetTexture(RM::Textures::TREE), XMFLOAT3(10.0f, 10.0f, 1.0f))
+billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 
+RM::Get().GetTexture(RM::TEXTURE_TREE), XMFLOAT3(10.0f, 10.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
 	cameras.emplace_back(XMFLOAT3(0.0f, 0.0f, -50.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3,
-		RM::Get().GetTexturedModel(RM::TexturedModels::PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
-	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TexturedModels::PLANE),
+		RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
+	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
 
