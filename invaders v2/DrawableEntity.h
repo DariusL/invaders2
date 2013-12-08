@@ -13,10 +13,6 @@ protected:
 	Model<vt> &model;
 	XMFLOAT4X4 moveMatrix;
 	sh &shader;
-
-	ComPtr<ID3D11Buffer> vertexBuffer;
-	BufferInfo vertexInfo;
-	ComPtr<ID3D11Buffer> indexBuffer;
 public:
 	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
 	DrawableEntity(DrawableEntity &&other);
@@ -39,9 +35,8 @@ DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shade
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
 : IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)),
-model(move(other.model)), shader(move(other.shader)),
-vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)), 
-moveMatrix(move(other.moveMatrix)), vertexInfo(move(other.vertexInfo))
+model(move(other.model)), shader(move(other.shader)), 
+moveMatrix(move(other.moveMatrix))
 {
 }
 

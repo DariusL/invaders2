@@ -113,6 +113,7 @@ __declspec(align(16)) struct RenderParams
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 	__declspec(align(16)) Camera *camera;
 	__declspec(align(16)) bool shadowPass;
+	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shadowMap;
 };
 
 struct ReflectionType

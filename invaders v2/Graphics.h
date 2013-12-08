@@ -14,6 +14,9 @@ class Graphics
 	int width;
 	int height;
 	HWND handle;
+
+	unique_ptr<SimpleTexturedEntity> hud;
+	ComVector<ID3D11ShaderResourceView> tex;
 public:
 	Graphics();
 	~Graphics(void){}

@@ -4,10 +4,11 @@
 
 void ShadowShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
+	TextureShader::InitializeShaderBuffers(device);
 	D3D11_BUFFER_DESC desc;
 
 	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.ByteWidth = sizeof(XMFLOAT4);
+	desc.ByteWidth = sizeof(PixelLightBufferType);
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
@@ -17,12 +18,13 @@ void ShadowShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	desc.ByteWidth = sizeof(ShadowLightBufferType);
 	Assert(device->CreateBuffer(&desc, NULL, &vertexLightBuffer));
 
-	desc.ByteWidth = sizeof(XMFLOAT4);
+	desc.ByteWidth = sizeof(XMFLOAT4X4);
 	Assert(device->CreateBuffer(&desc, NULL, &inverseMatrixBuffer));
 }
 
 void ShadowShader::InitializeSampler(ComPtr<ID3D11Device> device)
 {
+	TextureShader::InitializeSampler(device);
 	D3D11_SAMPLER_DESC desc;
 
 	desc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
@@ -75,15 +77,21 @@ vector<D3D11_INPUT_ELEMENT_DESC> ShadowShader::GetInputLayout()
 
 void ShadowShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
-	TextureShader::SetShaderParametersTextured(params, world, textures);
+	auto tex = ComVector<ID3D11ShaderResourceView>(textures);
+	tex.push_back(params.shadowMap);
+	TextureShader::SetShaderParametersTextured(params, world, tex);
 	auto context = params.context;
 
 	XMFLOAT4X4 inverseWorld;
-	XMStoreFloat4x4(&inverseWorld, XMMatrixTranspose(XMMatrixInverse(NULL, world)));
+	XMStoreFloat4x4(&inverseWorld, XMMatrixInverse(NULL, world));
 
 	Utils::CopyToBuffer(inverseMatrixBuffer, inverseWorld, context);
 
-	Utils::CopyToBuffer(pixelLightBuffer, params.diffuseColor, context);
+	PixelLightBufferType pixelLightData;
+	pixelLightData.diffuseColor = params.diffuseColor;
+	pixelLightData.ambient = XMFLOAT4(params.brightness, params.brightness, params.brightness, params.brightness);
+
+	Utils::CopyToBuffer(pixelLightBuffer, pixelLightData, context);
 
 	ShadowLightBufferType vertexLightData;
 	vertexLightData.lightPos = params.lightPos;

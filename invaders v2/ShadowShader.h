@@ -25,5 +25,11 @@ protected:
 		DirectX::XMFLOAT3 lightPos;
 		float padding;
 	};
+
+	struct PixelLightBufferType
+	{
+		XMFLOAT4 diffuseColor;
+		XMFLOAT4 ambient;
+	};
 };
 

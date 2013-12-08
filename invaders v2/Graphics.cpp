@@ -21,6 +21,10 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	RM::Get().InitShaders(d3D.GetDevice());
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
+	hud = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, 150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
+		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(400.0f, 400.0f, 1.0f));
+	hud->Init(d3D.GetDevice());
+	tex.push_back(NULL);
 }
 
 void Graphics::ChangeBrightness(float offset)
@@ -56,6 +60,8 @@ void Graphics::Render(Scene &world)
 	params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
 	params.waterScale = 0.1f;
+	params.lightView = light.GetViewMatrix();
+	params.lightProject = light.GetProjectionMatrix();
 	long time = clock();
 	time %= 5000;
 	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
@@ -71,6 +77,8 @@ void Graphics::Render(Scene &world)
 
 	params.projection = d3D.GetProjectionMatrix();
 	params.shadowPass = false;
+	d3D.ResetRenderTarget();
+	params.shadowMap = light.GetRenderedTexture();
 
 	for (auto &remote : remotes)
 	{
@@ -170,6 +178,14 @@ void Graphics::Render(Scene &world)
 		params.reflecMatrix = camera.GetReflectedViewMatrix(reflectionMatrix ,zeroReflect);
 		mirror.Render(params);
 	}
+
+	d3D.DoingDepthCheck(false);
+	params.projection = d3D.GetOrthoMatrix();
+	params.view = XMMatrixIdentity();
+	tex[0] = light.GetRenderedTexture();
+	hud->Render(params, tex);
+
+	d3D.DoingDepthCheck(true);
 
 	d3D.Present();
 }

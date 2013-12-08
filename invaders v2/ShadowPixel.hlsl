@@ -7,6 +7,7 @@ Texture2D depthMap : register(t1);
 cbuffer LightBuffer : register(b0)
 {
 	float4 diffuse;
+	float4 ambient;
 }
 
 struct PixelInputType
@@ -24,15 +25,13 @@ float4 main(PixelInputType input) : SV_TARGET
 	float4 color;
 	float2 projectTexCoord;
 
-	color = shaderTexture.Sample(sampleType, input.tex);
-
 	projectTexCoord.x = input.lightViewPosition.x / input.lightViewPosition.w / 2.0f + 0.5f;
 	projectTexCoord.y = -input.lightViewPosition.y / input.lightViewPosition.w / 2.0f + 0.5f;
 
 	float shadow = depthMap.SampleCmp(shadowSampleType, projectTexCoord, input.lightViewPosition.z - bias);
-	float lightIntensity = saturate(dot(input.normal, input.lightDir));
+	float lightIntensity = saturate(dot(normalize(input.normal), input.lightDir));
 
-	color *= saturate(diffuse * lightIntensity * shadow);
+	color = (saturate(diffuse * lightIntensity * shadow) + ambient) * shaderTexture.Sample(sampleType, input.tex);
 
 	return color;
 }

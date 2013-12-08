@@ -616,4 +616,6 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 		model.Init(device);
 	for (auto &model : texturedModels)
 		model.Init(device);
+	for (auto &model : normalTexturedModels)
+		model.Init(device);
 }

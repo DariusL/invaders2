@@ -53,7 +53,7 @@ PixelInputType main(VertexInputType input)
 	output.lightViewPosition = mul(worldPos, lightView);
 	output.lightViewPosition = mul(output.lightViewPosition, lightpProject);
 
-	output.normal = -mul(input.normal, (float3x3)inverseWorld);
+	output.normal = mul(input.normal, (float3x3)inverseWorld);
 	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);
 	output.tex = input.tex;
 	return output;

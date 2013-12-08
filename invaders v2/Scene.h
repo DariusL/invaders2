@@ -10,16 +10,18 @@
 #include "Mirror.h"
 #include "WaterPlane.h"
 #include "Billboard.h"
+#include "ShadowShader.h"
 
 class Scene : public IWorld
 {
 	ShadowLight light;
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
-	SimpleTexturedEntity gabenizer;
+	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> gabenizer;
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
 	Billboard<TextureVertexType, TextureShader> billboard;
+	SimpleDrawableEntity ball;
 public:
 	Scene();
 	~Scene();

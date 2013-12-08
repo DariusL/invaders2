@@ -117,10 +117,10 @@ public:
 	ColorModel &GetModel(MODEL i){return models[i];}
 	NormalTexturedModel &GetNormalTexturedModel(NORMAL_TEXTURED_MODEL i){ return normalTexturedModels[i]; }
 	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
+	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
 
 	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
-	ComPtr < ID3D11ShaderResourceView> GetTexture(int i){ return textures[i]; }
 	static ResourceManager &Get(){ return *handle; }
 
 	template<class sh>
