@@ -549,4 +549,9 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
+
+	for (auto &model : models)
+		model.Init(device);
+	for (auto &model : texturedModels)
+		model.Init(device);
 }

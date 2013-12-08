@@ -16,7 +16,7 @@ class Scene : public IWorld
 	ShadowLight light;
 	vector<RemoteCamera> cameras;
 	vector<SimpleMirror> mirrors;
-	DrawableTexturedEntity< gabenizer;
+	SimpleTexturedEntity gabenizer;
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
 	Billboard<TextureVertexType, TextureShader> billboard;

@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "Entity.h"
 
-Entity::Entity(XMFLOAT3 start, XMFLOAT2 size, float speed)
+Entity::Entity(XMFLOAT3 start, float speed, XMFLOAT2 size)
 {
 	this->pos = start;
 	this->size = size;

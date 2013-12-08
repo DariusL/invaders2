@@ -27,8 +27,6 @@ public:
 	void Render(const RenderParams& params);
 
 protected:
-	void InitBuffers(ComPtr<ID3D11Device> device);
-	void SetBuffers(ComPtr<ID3D11DeviceContext> context);
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
 
@@ -44,19 +42,11 @@ BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxOb
 template<class vt, class sh, class it>
 void BaseInstancer<vt, sh, it>::Init(ComPtr<ID3D11Device> device)
 {
-	InitBuffers(device);
-}
-
-template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::InitBuffers(ComPtr<ID3D11Device> device)
-{
-	DrawableEntity::InitBuffers(device);
-
 	D3D11_BUFFER_DESC instanceBufferDesc;
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
 	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(it) * maxInstanceCount;
+	instanceBufferDesc.ByteWidth = sizeof(it)* maxInstanceCount;
 	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 
@@ -71,16 +61,9 @@ void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;
-	SetBuffers(params.context);
+	model.Set(params.context);
 	shader.SetShaderParametersInstanced(params);
-	shader.RenderShaderInstanced(params.context, model.indices.size(), instanceCount);
-}
-
-template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::SetBuffers(ComPtr<ID3D11DeviceContext> context)
-{
-	DrawableEntity::SetBuffers(context);
-	context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), &instanceInfo.stride, &instanceInfo.offset);
+	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }
 
 template<class vt, class sh, class it>

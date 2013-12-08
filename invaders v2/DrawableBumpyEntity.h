@@ -22,9 +22,9 @@ public:
 	{
 		if(!Update(renderParams.context))
 			return;
-		SetBuffers(renderParams.context);
+		model.Set(renderParams.context);
 		XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
 		shader.SetShaderParametersTextured(renderParams, world, normalMap);
-		shader.RenderShader(renderParams.context, model.indices.size());
+		shader.RenderShader(renderParams.context, model.GetIndexCount());
 	}
 };

@@ -43,13 +43,13 @@ void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
 {
 	if (!Update(params.context))
 		return;
-	SetBuffers(params.context);
+	model.Set(params.context);
 	XMMATRIX scale = XMLoadFloat4x4(&this->scale);
 	XMMATRIX pos = XMLoadFloat4x4(&this->moveMatrix);
 	XMMATRIX rot = XMLoadFloat4x4(&this->rot);
 	XMMATRIX world = XMMatrixMultiply(XMMatrixMultiply(scale, rot), pos);
 	shader.SetShaderParametersTextured(params, world, texture);
-	shader.RenderShader(params.context, model.indices.size());
+	shader.RenderShader(params.context, model.GetIndexCount());
 }
 
 template<class vt, class sh>

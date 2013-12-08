@@ -2,7 +2,7 @@
 #include "InstanceEntity.h"
 
 
-InstanceEntity::InstanceEntity(XMFLOAT3 start, XMFLOAT2 size, float speed): Entity(start, size, speed)
+InstanceEntity::InstanceEntity(XMFLOAT3 start, XMFLOAT2 size, float speed): Entity(start, speed, size)
 {
 }
 

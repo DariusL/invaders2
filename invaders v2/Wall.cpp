@@ -5,7 +5,8 @@
 Wall::Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) : 
 	SimpleBaseInstancer(model, shader, width * height, center)
 {
-	SetSize(XMFLOAT2(model.hitbox.x * width, model.hitbox.y * height));
+	AssertBool(false, L"Wall got deimplemented");
+	/*SetSize(XMFLOAT2(model.hitbox.x * width, model.hitbox.y * height));
 	this->width = width;
 	this->height = height;
 	XMFLOAT2 betweenCenters = XMFLOAT2(
@@ -15,7 +16,7 @@ Wall::Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInsta
 	blocks = Utils::GetGrid(width, height, center, model.hitbox, model);
 	blocks[0].Kill();
 	blocks[width - 1].Kill();
-	changed = true;
+	changed = true;*/
 }
 
 
@@ -51,7 +52,7 @@ void Wall::CollideWith(list<InstanceEntity> &bullets)
 
 void Wall::CollideWith(InstanceEntity &bullet)
 {
-	if(!Entity::CollideWith(bullet))
+	/*if(!Entity::CollideWith(bullet))
 		return;
 	float column;
 	int column2;
@@ -81,7 +82,7 @@ void Wall::CollideWith(InstanceEntity &bullet)
 				changed = true;
 				return;
 			}
-	}
+	}*/
 }
 
 InstanceEntity &Wall::GetBlock(int x, int y)

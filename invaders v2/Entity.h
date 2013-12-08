@@ -15,7 +15,7 @@ protected:
 	float deathTime;
 	bool dead;
 public:
-	Entity(XMFLOAT3 start = ZeroVec3, XMFLOAT2 size = XMFLOAT2(0.0f, 0.0f), float speed = 0.0f);
+	Entity(XMFLOAT3 start = ZeroVec3, float speed = 0.0f, XMFLOAT2 size = XMFLOAT2(0.0f, 0.0f));
 	virtual ~Entity(void);
 
 	XMFLOAT3 GetPos() const {return pos;}
