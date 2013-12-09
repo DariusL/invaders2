@@ -29,6 +29,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	projectTexCoord.y = -input.lightViewPosition.y / input.lightViewPosition.w / 2.0f + 0.5f;
 
 	float shadow = depthMap.SampleCmp(shadowSampleType, projectTexCoord, input.lightViewPosition.z - bias);
+
 	float lightIntensity = saturate(dot(normalize(input.normal), input.lightDir));
 
 	color = (saturate(diffuse * lightIntensity * shadow) + ambient) * shaderTexture.Sample(sampleType, input.tex);

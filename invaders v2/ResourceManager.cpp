@@ -219,6 +219,35 @@ void ResourceManager::Init()
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
 	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+	NormalTexturedModel model;
+	NormalTextureVertexType ntv;
+	ntv.normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
+
+	ntv.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
+	ntv.tex = XMFLOAT2(0.0f, 1.0f);
+	model.vertices.push_back(ntv);
+
+	ntv.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
+	ntv.tex = XMFLOAT2(0.0f, 0.0f);
+	model.vertices.push_back(ntv);
+
+	ntv.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
+	ntv.tex = XMFLOAT2(1.0f, 1.0f);
+	model.vertices.push_back(ntv);
+
+	ntv.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
+	ntv.tex = XMFLOAT2(1.0f, 0.0f);
+	model.vertices.push_back(ntv);
+
+	model.indices.push_back(1);
+	model.indices.push_back(2);
+	model.indices.push_back(0);
+
+	model.indices.push_back(1);
+	model.indices.push_back(3);
+	model.indices.push_back(2);
+
+	normalTexturedModels.push_back(move(model));
 
 	Level *level = new Level();
 

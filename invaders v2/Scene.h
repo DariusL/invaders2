@@ -21,7 +21,7 @@ class Scene : public IWorld
 	SimpleWaterPlane water;
 	SimpleTexturedEntity bath;
 	Billboard<TextureVertexType, TextureShader> billboard;
-	SimpleDrawableEntity ball;
+	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> ground;
 public:
 	Scene();
 	~Scene();

@@ -1,6 +1,7 @@
 #pragma once
 #include "Direct3D.h"
 #include "Scene.h"
+#include "Screen.h"
 
 class Graphics
 {
@@ -17,6 +18,7 @@ class Graphics
 
 	unique_ptr<SimpleTexturedEntity> hud;
 	ComVector<ID3D11ShaderResourceView> tex;
+	unique_ptr<Screen<TextureVertexType, TextureShader>> screen;
 public:
 	Graphics();
 	~Graphics(void){}

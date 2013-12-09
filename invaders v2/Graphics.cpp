@@ -4,7 +4,7 @@
 
 Graphics::Graphics(void)
 {
-	screenDepth = 1000.0f;
+	screenDepth = 10000.0f;
 	screenNear = 0.1f;
 	vsync = false;
 }
@@ -22,9 +22,12 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
 	hud = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, 150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
-		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(400.0f, 400.0f, 1.0f));
+		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
 	hud->Init(d3D.GetDevice());
 	tex.push_back(NULL);
+	screen = make_unique<Screen<TextureVertexType, TextureShader>>(XMFLOAT3(300.0f, -150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<TextureShader>(), 400, 400, 200.0f, 200.0f);
+	screen->Init(d3D.GetDevice());
 }
 
 void Graphics::ChangeBrightness(float offset)
@@ -48,6 +51,8 @@ void Graphics::Render(Scene &world)
 	XMFLOAT4 plane;
 	auto context = d3D.GetDeviceContext();
 
+	d3D.DoingDepthCheck(true);
+
 	auto &light = world.GetLight();
 	auto &camera = world.GetCamera();
 	auto &remotes = world.GetRemoteCameras();
@@ -67,7 +72,6 @@ void Graphics::Render(Scene &world)
 	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
 
 	params.view = light.GetViewMatrix();
-	params.projection = light.GetProjectionMatrix();
 	params.shadowPass = true;
 	params.clipPlane = ZeroVec4;
 	params.camera = &camera;
@@ -77,7 +81,6 @@ void Graphics::Render(Scene &world)
 
 	params.projection = d3D.GetProjectionMatrix();
 	params.shadowPass = false;
-	d3D.ResetRenderTarget();
 	params.shadowMap = light.GetRenderedTexture();
 
 	for (auto &remote : remotes)
@@ -159,9 +162,16 @@ void Graphics::Render(Scene &world)
 		world.Render(params);
 	}
 
+	params.view = light.GetViewMatrix();
+	params.projection = light.GetProjectionMatrix();
+	screen->GetRenderTarget().SetRenderTarget(context);
+	screen->GetRenderTarget().ClearTarget(context);
+	world.Render(params);
+
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
 	params.view = camera.GetViewMatrix();
+	params.projection = d3D.GetProjectionMatrix();
 	params.camera = &camera;
 	params.clipPlane = ZeroVec4;
 	params.reflecMatrix = camera.GetReflectedViewMatrix(DirectX::XMMatrixReflect(water.GetMirrorPlane()), DirectX::XMMatrixReflect(water.GetZeroPlane()));
@@ -184,8 +194,7 @@ void Graphics::Render(Scene &world)
 	params.view = XMMatrixIdentity();
 	tex[0] = light.GetRenderedTexture();
 	hud->Render(params, tex);
-
-	d3D.DoingDepthCheck(true);
+	screen->Render(params);
 
 	d3D.Present();
 }

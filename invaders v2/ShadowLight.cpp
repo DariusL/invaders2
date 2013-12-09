@@ -5,7 +5,7 @@ ShadowLight::ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorS
 :Light(pos, color, model, shader), width(width), height(height)
 {
 	XMStoreFloat4x4(&view, XMMatrixLookToLH(XMLoadFloat3(&pos), XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)));
-	XMStoreFloat4x4(&projection, XMMatrixPerspectiveFovLH(XM_PIDIV4, 1.0f, 0.1f, 1000.0f));
+	XMStoreFloat4x4(&projection, XMMatrixPerspectiveFovLH(XM_PIDIV4, 1.0f, 0.1f, 10000.0f));
 
 	viewport.Width = (float)width;
 	viewport.Height = (float)height;
