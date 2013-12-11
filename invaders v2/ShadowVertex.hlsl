@@ -13,7 +13,7 @@ cbuffer ClipBuffer : register(b1)
 cbuffer LightBuffer : register(b2)
 {
 	matrix lightView;
-	matrix lightpProject;
+	matrix lightProject;
 	float3 lightPos;
 	float padding;
 }
@@ -49,9 +49,14 @@ PixelInputType main(VertexInputType input)
 	float4 worldPos = output.position;
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
+	float4 shadowPos = worldPos;
+	shadowPos = mul(shadowPos, lightView);
+	shadowPos = mul(shadowPos, lightProject);
+	shadowPos.xyz /= shadowPos.w;
+	shadowPos.y = -shadowPos.y;
+	shadowPos.xy = (shadowPos.xy + float2(1.0f, 1.0f)) / 2.0f;
 
-	output.lightViewPosition = mul(worldPos, lightView);
-	output.lightViewPosition = mul(output.lightViewPosition, lightpProject);
+	output.lightViewPosition = shadowPos;
 
 	output.normal = mul(input.normal, (float3x3)inverseWorld);
 	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);

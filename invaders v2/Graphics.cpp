@@ -21,13 +21,13 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	RM::Get().InitShaders(d3D.GetDevice());
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
-	hud = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, 150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
+	hudDepth = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, 150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
 		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
-	hud->Init(d3D.GetDevice());
+	hudDepth->Init(d3D.GetDevice());
+	hudBack = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, -150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
+	hudBack->Init(d3D.GetDevice());
 	tex.push_back(NULL);
-	screen = make_unique<Screen<TextureVertexType, TextureShader>>(XMFLOAT3(300.0f, -150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<TextureShader>(), 400, 400, 200.0f, 200.0f);
-	screen->Init(d3D.GetDevice());
 }
 
 void Graphics::ChangeBrightness(float offset)
@@ -72,7 +72,8 @@ void Graphics::Render(Scene &world)
 	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
 
 	params.view = light.GetViewMatrix();
-	params.shadowPass = true;
+	params.projection = params.lightProject;
+	params.shadowPass = false;
 	params.clipPlane = ZeroVec4;
 	params.camera = &camera;
 	light.SetRenderTarget(context);
@@ -162,12 +163,6 @@ void Graphics::Render(Scene &world)
 		world.Render(params);
 	}
 
-	params.view = light.GetViewMatrix();
-	params.projection = light.GetProjectionMatrix();
-	screen->GetRenderTarget().SetRenderTarget(context);
-	screen->GetRenderTarget().ClearTarget(context);
-	world.Render(params);
-
 	d3D.ResetRenderTarget();
 	d3D.ClearRenderTarget();
 	params.view = camera.GetViewMatrix();
@@ -193,8 +188,9 @@ void Graphics::Render(Scene &world)
 	params.projection = d3D.GetOrthoMatrix();
 	params.view = XMMatrixIdentity();
 	tex[0] = light.GetRenderedTexture();
-	hud->Render(params, tex);
-	screen->Render(params);
+	hudDepth->Render(params, tex);
+	tex[0] = light.GetOtherTexture();
+	hudBack->Render(params, tex);
 
 	d3D.Present();
 }

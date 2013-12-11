@@ -16,9 +16,9 @@ class Graphics
 	int height;
 	HWND handle;
 
-	unique_ptr<SimpleTexturedEntity> hud;
+	unique_ptr<SimpleTexturedEntity> hudDepth;
+	unique_ptr<SimpleTexturedEntity> hudBack;
 	ComVector<ID3D11ShaderResourceView> tex;
-	unique_ptr<Screen<TextureVertexType, TextureShader>> screen;
 public:
 	Graphics();
 	~Graphics(void){}
