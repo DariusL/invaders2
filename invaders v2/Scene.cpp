@@ -10,18 +10,21 @@ Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_MODEL_INV_BOX), RM::Get().GetShader<ShadowShader>(),
 RM::Get().GetTexture(RM::TEXTURE_GABEN), XMFLOAT3(800.0f, 800.0f, 1000.0f)),
 
-light(XMFLOAT3(0.0f, 20.0f, -25.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 500, 500),
+light(XMFLOAT3(0.0f, 20.0f, -50.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 800, 800),
 
 water(XMFLOAT3(0.0f, -45.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
 RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::TEXTURE_WATER_NORMAL_MAP)),
 
-bath(XMFLOAT3(0.0f, -50.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_BATH),
-RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
+bath(XMFLOAT3(0.0f, -50.0f, 0.0f), ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_BATH),
+RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
 
 billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 
 RM::Get().GetTexture(RM::TEXTURE_TREE), XMFLOAT3(10.0f, 10.0f, 1.0f)),
 
 ground(XMFLOAT3(0.0f, -300.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE), 
+RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f)),
+
+wall(XMFLOAT3(0.0f, 0.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE),
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);

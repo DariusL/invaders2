@@ -19,9 +19,10 @@ class Scene : public IWorld
 	vector<SimpleMirror> mirrors;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> gabenizer;
 	SimpleWaterPlane water;
-	SimpleTexturedEntity bath;
+	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> bath;
 	Billboard<TextureVertexType, TextureShader> billboard;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> ground;
+	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> wall;
 public:
 	Scene();
 	~Scene();

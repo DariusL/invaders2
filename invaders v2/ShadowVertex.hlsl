@@ -52,10 +52,6 @@ PixelInputType main(VertexInputType input)
 	float4 shadowPos = worldPos;
 	shadowPos = mul(shadowPos, lightView);
 	shadowPos = mul(shadowPos, lightProject);
-	shadowPos.xyz /= shadowPos.w;
-	shadowPos.y = -shadowPos.y;
-	shadowPos.xy = (shadowPos.xy + float2(1.0f, 1.0f)) / 2.0f;
-
 	output.lightViewPosition = shadowPos;
 
 	output.normal = mul(input.normal, (float3x3)inverseWorld);

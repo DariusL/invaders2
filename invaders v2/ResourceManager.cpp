@@ -248,6 +248,7 @@ void ResourceManager::Init()
 	model.indices.push_back(2);
 
 	normalTexturedModels.push_back(move(model));
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
 	Level *level = new Level();
 

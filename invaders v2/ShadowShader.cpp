@@ -34,9 +34,9 @@ void ShadowShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	desc.MipLODBias = 0.0f;
 	desc.MaxAnisotropy = 0;
 	desc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	desc.BorderColor[0] = 1.0f;
-	desc.BorderColor[1] = 1.0f;
-	desc.BorderColor[2] = 1.0f;
+	desc.BorderColor[0] = 0.0f;
+	desc.BorderColor[1] = 0.0f;
+	desc.BorderColor[2] = 0.0f;
 	desc.BorderColor[3] = 1.0f;
 	desc.MinLOD = 0;
 	desc.MaxLOD = D3D11_FLOAT32_MAX;
