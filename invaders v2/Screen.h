@@ -10,6 +10,7 @@ protected:
 	ComVector<ID3D11ShaderResourceView> textures;
 	RenderTarget renderTarget;
 	DrawableTexturedEntity<vt, sh> screen;
+	int width, height;
 public:
 	Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Screen(Screen &&other);
@@ -17,13 +18,16 @@ public:
 	virtual void Init(ComPtr<ID3D11Device> device);
 	void Render(const RenderParams &params);
 	RenderTarget &GetRenderTarget(){ return renderTarget; }
+	int GetTextureWidth(){ return width; }
+	int GetTextureHeight(){ return height; }
 };
 
 typedef Screen<TextureVertexType, TextureShader> SimpleScreen;
 
 template<class vt, class sh>
 Screen<vt, sh>::Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
-:renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f))
+:renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
+width(resWidth), height(resHeight)
 {
 	textures.push_back(NULL);
 }

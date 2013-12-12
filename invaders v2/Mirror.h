@@ -16,6 +16,7 @@ public:
 
 	XMVECTOR GetMirrorPlane(){ return XMLoadFloat4(&mirrorPlane); }
 	XMVECTOR GetZeroPlane(){ return XMLoadFloat4(&zeroPlane); }
+	PrepareFunction GetMirrorPrepareFunc();
 };
 
 typedef Mirror<TextureVertexType, MirrorShader> SimpleMirror;
@@ -32,4 +33,16 @@ Mirror<vt, sh>::Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel,
 template<class vt, class sh>
 Mirror<vt, sh>::Mirror(Mirror &&other) : Screen(move(other)), mirrorPlane(other.mirrorPlane)
 {
+}
+
+template<class vt, class sh>
+PrepareFunction Mirror<vt, sh>::GetMirrorPrepareFunc()
+{
+	return [this](RenderParams &params, Camera &camera) -> void
+	{
+		XMMATRIX reflectionMatrix = DirectX::XMMatrixReflect(GetMirrorPlane());
+		XMMATRIX zeroReflect = DirectX::XMMatrixReflect(GetZeroPlane());
+		params.view = camera.GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
+		XMStoreFloat4(&params.clipPlane, mirror.GetMirrorPlane());
+	};
 }

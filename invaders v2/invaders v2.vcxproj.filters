@@ -120,9 +120,6 @@
     <ClCompile Include="DDSTextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InstancedTextureShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -294,6 +291,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShadowShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LambdaBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -134,3 +134,5 @@ struct BufferInfo
 	unsigned int offset;
 	unsigned int stride;
 };
+
+typedef std::function<void(RenderParams&, Camera&)> PrepareFunction;
