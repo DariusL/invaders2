@@ -10,7 +10,7 @@ Scene::Scene(void)
 :gabenizer(ZeroVec3, ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_MODEL_INV_BOX), RM::Get().GetShader<ShadowShader>(),
 RM::Get().GetTexture(RM::TEXTURE_GABEN), XMFLOAT3(800.0f, 800.0f, 1000.0f)),
 
-light(XMFLOAT3(0.0f, 20.0f, -50.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 800, 800),
+light(XMFLOAT3(0.0f, 300.0f, -50.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorShader>(), 800, 800),
 
 water(XMFLOAT3(0.0f, -45.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
 RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::TEXTURE_WATER_NORMAL_MAP)),
@@ -109,11 +109,23 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 	ground.Init(device);
 }
 
-void Scene::Render(const RenderParams &params)
+void Scene::Render(RenderParams &params)
 {
 	light.Render(params);
 	gabenizer.Render(params);
 	bath.Render(params);
 	billboard.Render(params);
 	ground.Render(params);
+	for (auto &mirror : mirrors)
+		mirror.Render(params);
+	water.Render(params);
+}
+
+
+void Scene::GetRenderBalls(vector<RenderBall*> &mirrorBalls)
+{
+	for (auto &mirror : mirrors)
+		mirrorBalls.push_back(&mirror.GetRefletionBall());
+	mirrorBalls.push_back(&water.GetRefletionBall());
+	mirrorBalls.push_back(&water.GetRefractionBall());
 }

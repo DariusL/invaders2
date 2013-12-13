@@ -113,6 +113,7 @@
     <ClCompile Include="PointDiffuseShader.cpp" />
     <ClCompile Include="PointSpecularShader.cpp" />
     <ClCompile Include="RemoteCamera.cpp" />
+    <ClCompile Include="RenderBall.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -152,7 +153,7 @@
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="IWorld.h" />
-    <ClInclude Include="LambdaBall.h" />
+    <ClInclude Include="MirrorBall.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="EntityListInstancer.h" />
     <ClInclude Include="DrawableShooter.h" />

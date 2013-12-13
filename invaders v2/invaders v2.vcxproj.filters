@@ -129,6 +129,9 @@
     <ClCompile Include="ShadowShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RenderBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -293,7 +296,7 @@
     <ClInclude Include="ShadowShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LambdaBall.h">
+    <ClInclude Include="MirrorBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

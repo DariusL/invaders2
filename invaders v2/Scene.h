@@ -11,6 +11,7 @@
 #include "WaterPlane.h"
 #include "Billboard.h"
 #include "ShadowShader.h"
+#include "MirrorBall.h"
 
 class Scene : public IWorld
 {
@@ -36,5 +37,6 @@ public:
 	vector<RemoteCamera> &GetRemoteCameras(){ return cameras; }
 	SimpleWaterPlane &GetWater(){ return water; }
 	void Init(ComPtr<ID3D11Device> device);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
+	void GetRenderBalls(vector<RenderBall*> &mirrors);
 };

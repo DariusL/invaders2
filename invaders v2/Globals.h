@@ -135,4 +135,4 @@ struct BufferInfo
 	unsigned int stride;
 };
 
-typedef std::function<void(RenderParams&, Camera&)> PrepareFunction;
+typedef std::function<void(RenderParams&)> MirrorPrepare;

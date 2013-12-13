@@ -14,9 +14,10 @@ protected:
 public:
 	Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Screen(Screen &&other);
+	Screen(Screen&) = delete;
 
 	virtual void Init(ComPtr<ID3D11Device> device);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 	RenderTarget &GetRenderTarget(){ return renderTarget; }
 	int GetTextureWidth(){ return width; }
 	int GetTextureHeight(){ return height; }
@@ -46,7 +47,7 @@ void Screen<vt, sh>::Init(ComPtr<ID3D11Device> device)
 }
 
 template<class vt, class sh>
-void Screen<vt, sh>::Render(const RenderParams &params)
+void Screen<vt, sh>::Render(RenderParams &params)
 {
 	textures[0] = renderTarget.GetRenderedTexture();
 	screen.Render(params, textures);

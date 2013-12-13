@@ -2,12 +2,13 @@
 #include "MirrorShader.h"
 #include "Utils.h"
 
-void MirrorShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
+void MirrorShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	TextureShader::SetShaderParametersTextured(params, world, textures);
 
 	XMFLOAT4X4 matrix;
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(params.reflecMatrix));
+
 
 	Utils::CopyToBuffer(reflectionBuffer, matrix, params.context);
 
