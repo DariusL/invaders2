@@ -15,7 +15,7 @@ protected:
 public:
 	DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
-	virtual ~DrawableTexturedEntity(void){}
+	~DrawableTexturedEntity(void){}
 
 	virtual void Render(RenderParams &renderParams);
 	virtual void Render(RenderParams &renderParams, ComVector<ID3D11ShaderResourceView> texture);
@@ -34,7 +34,7 @@ DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 ro
 
 template<class vt, class sh>
 DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(DrawableTexturedEntity &&other)
-: DrawableEntity(forward<DrawableTexturedEntity>(other)), texture(move(other.texture))
+: DrawableEntity(move(other)), texture(move(other.texture)), scale(move(other.scale)), rot(move(other.rot))
 {
 }
 
@@ -47,7 +47,7 @@ void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params)
 	XMMATRIX scale = XMLoadFloat4x4(&this->scale);
 	XMMATRIX pos = XMLoadFloat4x4(&this->moveMatrix);
 	XMMATRIX rot = XMLoadFloat4x4(&this->rot);
-	XMMATRIX world = XMMatrixMultiply(XMMatrixMultiply(scale, rot), pos);
+	XMMATRIX world = scale * rot * pos;
 	shader.SetShaderParametersTextured(params, world, texture);
 	shader.RenderShader(params.context, model.GetIndexCount());
 }

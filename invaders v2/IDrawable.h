@@ -10,7 +10,6 @@ public:
 	IDrawable(IDrawable&&){}
 
 	IDrawable(IDrawable&) = delete;
-	IDrawable &operator=(IDrawable&) = delete;
 
 	virtual void Init(ComPtr<ID3D11Device>) = 0;
 	virtual void Render(RenderParams&) = 0;

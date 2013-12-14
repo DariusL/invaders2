@@ -20,7 +20,7 @@ RemoteCamera::RemoteCamera(XMFLOAT3 cameraPos, XMFLOAT3 cameraDir, XMFLOAT3 scre
 }
 
 RemoteCamera::RemoteCamera(RemoteCamera &&other)
-:Camera(move(other)), screen(move(other.screen)), cameraBall(move(other.cameraBall))
+:Camera(move(other)), screen(move(other.screen)), cameraBall(move(other.cameraBall)), textures(move(other.textures))
 {
 }
 

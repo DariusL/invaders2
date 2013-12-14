@@ -13,6 +13,12 @@ public:
 	RemoteCamera(XMFLOAT3 cameraPos, XMFLOAT3 cameraDir, XMFLOAT3 screenPos, XMFLOAT3 screenRot, TexturedModel &screenModel,
 		TextureShader &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	RemoteCamera(RemoteCamera &&other);
+	RemoteCamera(RemoteCamera&) = delete;
+	RemoteCamera &operator=(RemoteCamera&) = delete;
+	~RemoteCamera()
+	{ 
+		textures.size(); 
+	}
 
 	void Init(ComPtr<ID3D11Device> context);
 	void Render(RenderParams &params);

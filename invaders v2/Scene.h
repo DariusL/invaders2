@@ -35,5 +35,5 @@ public:
 	ShadowLight &GetLight(){ return light; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
-	void GetRenderBalls(vector<MirrorBall*> &mirrors, vector<RemoteCamera*> &cameras);
+	void GetRenderBalls(vector<MirrorBall*> &mirrors, vector<RemoteCamera*> &cameraBalls);
 };
