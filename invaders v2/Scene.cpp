@@ -122,7 +122,7 @@ void Scene::Render(RenderParams &params)
 }
 
 
-void Scene::GetRenderBalls(vector<RenderBall*> &mirrorBalls)
+void Scene::GetRenderBalls(vector<MirrorBall*> &mirrorBalls)
 {
 	for (auto &mirror : mirrors)
 		mirrorBalls.push_back(&mirror.GetRefletionBall());

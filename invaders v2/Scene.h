@@ -38,5 +38,5 @@ public:
 	SimpleWaterPlane &GetWater(){ return water; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
-	void GetRenderBalls(vector<RenderBall*> &mirrors);
+	void GetRenderBalls(vector<MirrorBall*> &mirrors);
 };

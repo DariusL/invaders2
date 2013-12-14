@@ -2,17 +2,16 @@
 #include "includes.h"
 #include "RenderBall.h"
 
-class MirrorBall : public RenderBall
+class MirrorBall : public RenderBall<MirrorPrepare>
 {
-	MirrorPrepare lambda;
 public:
 	MirrorBall(int width, int height, MirrorPrepare &&lambda)
-	:RenderBall(width, height), lambda(std::forward<MirrorPrepare>(lambda))
+	:RenderBall(width, height, forward<MirrorPrepare>(lambda))
 	{
 	}
 	MirrorBall(MirrorBall&) = delete;
 	MirrorBall(MirrorBall &&other)
-	:RenderBall(move(other)), lambda(move(other.lambda))
+	:RenderBall(move(other))
 	{
 	}
 

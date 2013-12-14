@@ -57,7 +57,7 @@ void Graphics::Render(Scene &world)
 	auto &camera = world.GetCamera();
 	auto &remotes = world.GetRemoteCameras();
 
-	vector<RenderBall*> reflectives;
+	vector<MirrorBall*> reflectives;
 	world.GetRenderBalls(reflectives);
 
 	RenderParams params;
