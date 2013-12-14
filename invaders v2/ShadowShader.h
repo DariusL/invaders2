@@ -6,7 +6,7 @@ public:
 	ShadowShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
 	~ShadowShader(){}
 
-	virtual void SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
+	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 
 protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);

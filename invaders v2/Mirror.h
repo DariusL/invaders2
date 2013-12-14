@@ -40,6 +40,7 @@ Mirror<vt, sh>::Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel,
 		XMMATRIX reflectionMatrix = DirectX::XMMatrixReflect(GetMirrorPlane());
 		XMMATRIX zeroReflect = DirectX::XMMatrixReflect(GetZeroPlane());
 		params.view = params.camera->GetReflectedViewMatrix(reflectionMatrix, zeroReflect);
+		params.pass = PASS_TYPE_REFLECTION;
 		XMStoreFloat4(&params.clipPlane, GetMirrorPlane());
 	}))
 {
@@ -65,6 +66,8 @@ void Mirror<vt, sh>::Init(ComPtr<ID3D11Device> device)
 template<class vt, class sh>
 void Mirror<vt, sh>::Render(RenderParams &params)
 {
+	if (params.pass == PASS_TYPE_REFLECTION)
+		return;
 	textures[0] = reflectionBall.GetCurrentTexture();
 	XMMATRIX reflectionMatrix = DirectX::XMMatrixReflect(GetMirrorPlane());
 	XMMATRIX zeroReflect = DirectX::XMMatrixReflect(GetZeroPlane());

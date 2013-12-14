@@ -47,6 +47,6 @@ float4 main(PixelInputType input) : SV_TARGET
 
 	reflectionColor = reflectionTexture.Sample(waterSampleType, reflextTex);
 	refractionColor = refractionTexture.Sample(waterSampleType, refractTex);
-	
-	return lerp(reflectionColor, refractionColor, 0.6f);
+
+	return lerp(refractionColor, reflectionColor, 0.6f);
 }

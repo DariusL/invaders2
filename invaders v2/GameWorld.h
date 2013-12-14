@@ -43,7 +43,7 @@ public:
 	const list<InstanceEntity> &GetBullets(){return playerBullets;}
 
 	void Init(ComPtr<ID3D11Device>);
-	void Render(const RenderParams&);
+	void Render(RenderParams&);
 
 	static const int FIELD_WIDTH = 50;
 	static const int FIELD_HEIGHT = 30;

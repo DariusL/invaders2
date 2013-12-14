@@ -9,7 +9,7 @@ public:
 	~GlobalDiffuseShader(void){}
 
 public:	
-	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world);
+	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);
 
 protected:
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);

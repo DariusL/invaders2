@@ -56,8 +56,9 @@ void Graphics::Render(Scene &world)
 	auto &light = world.GetLight();
 	auto &camera = world.GetCamera();
 	auto &remotes = world.GetRemoteCameras();
-	auto &mirrors = world.GetMirrors();
-	auto &water = world.GetWater();
+
+	vector<RenderBall*> reflectives;
+	world.GetRenderBalls(reflectives);
 
 	RenderParams params;
 	params.brightness = brightness;
@@ -73,7 +74,7 @@ void Graphics::Render(Scene &world)
 
 	params.view = light.GetViewMatrix();
 	params.projection = params.lightProject;
-	params.shadowPass = false;
+	params.pass = PASS_TYPE_NORMAL;
 	params.clipPlane = ZeroVec4;
 	params.camera = &camera;
 	light.SetRenderTarget(context);
@@ -81,13 +82,13 @@ void Graphics::Render(Scene &world)
 	world.Render(params);
 
 	params.projection = d3D.GetProjectionMatrix();
-	params.shadowPass = false;
+	params.pass = PASS_TYPE_NORMAL;
 	params.shadowMap = light.GetRenderedTexture();
 
 	for (auto &remote : remotes)
 	{
 		params.camera = &remote;
-		for (auto &mirror : mirrors)
+		/*for (auto &mirror : mirrors)
 		{
 			reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());
 			zeroReflect = DirectX::XMMatrixReflect(mirror.GetZeroPlane());
@@ -114,13 +115,20 @@ void Graphics::Render(Scene &world)
 			refract.ClearTarget(context);
 			XMStoreFloat4(&params.clipPlane, water.GetReversePlane());
 			world.Render(params);
+		}*/
+		for (auto &target : reflectives)
+		{
+			target->Prepare(context, params);
+			world.Render(params);
+			target->Swap();
 		}
 		auto &target = remote.GetRenderTarget();
 		target.SetRenderTarget(context);
 		target.ClearTarget(context);
 		params.view = remote.GetViewMatrix();
 		params.clipPlane = ZeroVec4;
-		for (auto &mirror : mirrors)
+		params.pass = PASS_TYPE_NORMAL;
+		/*for (auto &mirror : mirrors)
 		{
 			reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());
 			zeroReflect = DirectX::XMMatrixReflect(mirror.GetZeroPlane());
@@ -128,12 +136,12 @@ void Graphics::Render(Scene &world)
 			mirror.Render(params);
 		}
 		params.reflecMatrix = remote.GetReflectedViewMatrix(DirectX::XMMatrixReflect(water.GetMirrorPlane()), DirectX::XMMatrixReflect(water.GetZeroPlane()));
-		water.Render(params);
+		water.Render(params);*/
 		world.Render(params);
 	}
 
 	params.camera = &camera;
-	for (auto &mirror : mirrors)
+	/*for (auto &mirror : mirrors)
 	{
 		reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());
 		zeroReflect = DirectX::XMMatrixReflect(mirror.GetZeroPlane());
@@ -161,6 +169,13 @@ void Graphics::Render(Scene &world)
 		refract.ClearTarget(context);
 		XMStoreFloat4(&params.clipPlane, water.GetReversePlane());
 		world.Render(params);
+	}*/
+
+	for (auto &target : reflectives)
+	{
+		target->Prepare(context, params);
+		world.Render(params);
+		target->Swap();
 	}
 
 	d3D.ResetRenderTarget();
@@ -169,20 +184,21 @@ void Graphics::Render(Scene &world)
 	params.projection = d3D.GetProjectionMatrix();
 	params.camera = &camera;
 	params.clipPlane = ZeroVec4;
-	params.reflecMatrix = camera.GetReflectedViewMatrix(DirectX::XMMatrixReflect(water.GetMirrorPlane()), DirectX::XMMatrixReflect(water.GetZeroPlane()));
-	water.Render(params);
-	world.Render(params);
+	params.pass = PASS_TYPE_NORMAL;
+	//params.reflecMatrix = camera.GetReflectedViewMatrix(DirectX::XMMatrixReflect(water.GetMirrorPlane()), DirectX::XMMatrixReflect(water.GetZeroPlane()));
+	//water.Render(params);
+	world.Render(params); 
 	for (auto &remote : remotes)
 	{
 		remote.Render(params);
 	}
-	for (auto &mirror : mirrors)
+	/*for (auto &mirror : mirrors)
 	{
 		reflectionMatrix = DirectX::XMMatrixReflect(mirror.GetMirrorPlane());
 		zeroReflect = DirectX::XMMatrixReflect(mirror.GetZeroPlane());
 		params.reflecMatrix = camera.GetReflectedViewMatrix(reflectionMatrix ,zeroReflect);
 		mirror.Render(params);
-	}
+	}*/
 
 	d3D.DoingDepthCheck(false);
 	params.projection = d3D.GetOrthoMatrix();

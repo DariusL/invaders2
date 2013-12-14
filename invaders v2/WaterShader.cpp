@@ -49,7 +49,7 @@ void WaterShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &waterSamplerState));
 }
 
-void WaterShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
+void WaterShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	MirrorShader::SetShaderParametersTextured(params, world, textures);
 

@@ -74,7 +74,7 @@ void InstancedTextureShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 }
 
-void InstancedTextureShader::SetShaderParametersInstancedTextured(const RenderParams &params, const ComVector<ID3D11ShaderResourceView> &textures)
+void InstancedTextureShader::SetShaderParametersInstancedTextured(RenderParams &params, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	IInstanceShader::SetShaderParametersInstanced(params);
 

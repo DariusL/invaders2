@@ -31,7 +31,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	if (input.lightViewPosition.w >= 0.1f)
 		shadow = depthMap.SampleCmp(shadowSampleType, input.lightViewPosition.xy, input.lightViewPosition.z - bias);
 	else
-		shadow = 0.0f;
+		shadow = 1.0f;
 
 	float lightIntensity = saturate(dot(normalize(input.normal), input.lightDir));
 

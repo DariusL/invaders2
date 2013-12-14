@@ -97,6 +97,13 @@ struct ControlCodes
 	static const int ROLL_RIGHT = 1 << 15;
 };
 
+enum PASS_TYPE
+{
+	PASS_TYPE_NORMAL,
+	PASS_TYPE_REFLECTION,
+	PASS_TYPE_SHADOW
+};
+
 __declspec(align(16)) struct RenderParams
 {
 	DirectX::XMMATRIX reflecMatrix;
@@ -112,7 +119,7 @@ __declspec(align(16)) struct RenderParams
 	DirectX::XMMATRIX lightProject;
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 	__declspec(align(16)) Camera *camera;
-	__declspec(align(16)) bool shadowPass;
+	__declspec(align(16)) PASS_TYPE pass;
 	__declspec(align(16)) Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shadowMap;
 };
 

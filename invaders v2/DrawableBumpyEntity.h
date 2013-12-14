@@ -18,7 +18,7 @@ public:
 		normalMap = move(other.normalMap);
 	}
 
-	virtual void Render(const RenderParams &renderParams)
+	virtual void Render(RenderParams &renderParams)
 	{
 		if(!Update(renderParams.context))
 			return;

@@ -55,7 +55,7 @@ public:
 	list<InstanceEntity> &getBullets(){return bullets;}
 
 	void Init(ComPtr<ID3D11Device>);
-	void Render(const RenderParams&);
+	void Render(RenderParams&);
 
 	int getAliveCount(){return alive;}
 };

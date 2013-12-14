@@ -34,7 +34,7 @@ void ShadowShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	desc.MipLODBias = 0.0f;
 	desc.MaxAnisotropy = 0;
 	desc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	desc.BorderColor[0] = 0.0f;
+	desc.BorderColor[0] = 1.0f;
 	desc.BorderColor[1] = 0.0f;
 	desc.BorderColor[2] = 0.0f;
 	desc.BorderColor[3] = 1.0f;
@@ -75,7 +75,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> ShadowShader::GetInputLayout()
 	return ret;
 }
 
-void ShadowShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
+void ShadowShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
 {
 	auto tex = ComVector<ID3D11ShaderResourceView>(textures);
 	tex.push_back(params.shadowMap);

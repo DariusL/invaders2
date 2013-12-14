@@ -55,7 +55,7 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
 }
 
-void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
 {
 	IPositionShader::SetShaderParameters(params, world);
 

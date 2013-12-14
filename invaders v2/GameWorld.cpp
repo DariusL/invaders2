@@ -115,7 +115,7 @@ void GameWorld::CollideBullets()
 	}*/
 }
 
-void GameWorld::Render(const RenderParams &params)
+void GameWorld::Render(RenderParams &params)
 {
 	/*player->Render(params);
 	enemies->Render(params);

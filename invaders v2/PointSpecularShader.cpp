@@ -2,7 +2,7 @@
 #include "PointSpecularShader.h"
 #include "Utils.h"
 	
-void PointSpecularShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+void PointSpecularShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
 {
 	PointDiffuseShader::SetShaderParameters(params, world);
 

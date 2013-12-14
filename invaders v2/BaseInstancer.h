@@ -24,7 +24,7 @@ protected:
 	BufferInfo instanceInfo;
 public:
 	void Init(ComPtr<ID3D11Device> device);
-	void Render(const RenderParams& params);
+	void Render(RenderParams& params);
 
 protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
@@ -57,7 +57,7 @@ void BaseInstancer<vt, sh, it>::Init(ComPtr<ID3D11Device> device)
 }
 
 template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
+void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

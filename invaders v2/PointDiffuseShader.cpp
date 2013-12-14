@@ -65,7 +65,7 @@ void PointDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&vertexLightDesc, NULL, &vertexLightBuffer));
 }
 
-void PointDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+void PointDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
 {
 	ComPtr<ID3D11DeviceContext> cont = params.context;
 	IPositionShader::SetShaderParameters(params, world);

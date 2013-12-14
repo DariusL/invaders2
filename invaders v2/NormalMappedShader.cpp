@@ -90,7 +90,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> NormalMappedShader::GetInputLayout()
 	return ret;
 }
 
-void NormalMappedShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, ComPtr<ID3D11ShaderResourceView> texture)
+void NormalMappedShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, ComPtr<ID3D11ShaderResourceView> texture)
 {
 	PointSpecularShader::SetShaderParameters(params, world);
 	params.context->PSSetSamplers(0, 1, samplerState.GetAddressOf());

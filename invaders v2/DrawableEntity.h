@@ -19,7 +19,7 @@ public:
 	virtual ~DrawableEntity(void);
 
 	virtual void Init(ComPtr<ID3D11Device> device);
-	virtual void Render(const RenderParams &renderParams);
+	virtual void Render(RenderParams &renderParams);
 protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
 };
@@ -51,7 +51,7 @@ void DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
 }
 
 template<class vt, class sh>
-void DrawableEntity<vt, sh>::Render(const RenderParams &params)
+void DrawableEntity<vt, sh>::Render(RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

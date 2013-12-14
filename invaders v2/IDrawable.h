@@ -13,5 +13,5 @@ public:
 	IDrawable &operator=(IDrawable&) = delete;
 
 	virtual void Init(ComPtr<ID3D11Device>) = 0;
-	virtual void Render(const RenderParams&) = 0;
+	virtual void Render(RenderParams&) = 0;
 };

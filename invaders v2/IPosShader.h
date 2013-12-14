@@ -8,7 +8,7 @@ public:
 	IPositionShader(wstring vs, wstring ps):IShader(vs, ps){}
 	virtual ~IPositionShader(){}
 
-	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
 		
