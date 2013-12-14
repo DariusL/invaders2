@@ -17,6 +17,7 @@ public:
 	ComPtr<ID3D11ShaderResourceView> GetOtherTexture(){ return renderTargetTextureView; }
 	XMMATRIX GetViewMatrix(){ return XMLoadFloat4x4(&view); }
 	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projection); }
+	void Prepare(RenderParams &params);
 protected:
 	int width, height;
 	ComPtr<ID3D11DepthStencilView> depthStencilView;

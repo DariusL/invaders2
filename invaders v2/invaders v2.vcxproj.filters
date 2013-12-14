@@ -296,6 +296,9 @@
     <ClInclude Include="MirrorBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CameraBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">

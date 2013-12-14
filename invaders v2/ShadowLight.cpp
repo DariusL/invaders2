@@ -15,6 +15,17 @@ ShadowLight::ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorS
 	viewport.TopLeftY = 0.0f;
 }
 
+void ShadowLight::Prepare(RenderParams &params)
+{
+	params.pass = PASS_TYPE_NORMAL;
+	params.lightView = params.view = GetViewMatrix();
+	params.lightProject = params.projection = GetProjectionMatrix();
+	params.lightPos = GetPos();
+	params.clipPlane = ZeroVec4;
+	SetRenderTarget(params.context);
+	ClearTarget(params.context);
+}
+
 void ShadowLight::Init(ComPtr<ID3D11Device> device)
 {
 	Light::Init(device);

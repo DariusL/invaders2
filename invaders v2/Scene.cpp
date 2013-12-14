@@ -29,7 +29,7 @@ RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMF
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
-	cameras.emplace_back(XMFLOAT3(0.0f, 0.0f, -50.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3,
+	cameras.emplace_back(XMFLOAT3(0.0f, -5.0f, -20.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3,
 		RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
 	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
@@ -119,13 +119,17 @@ void Scene::Render(RenderParams &params)
 	for (auto &mirror : mirrors)
 		mirror.Render(params);
 	water.Render(params);
+	for (auto &remote : cameras)
+		remote.Render(params);
 }
 
 
-void Scene::GetRenderBalls(vector<MirrorBall*> &mirrorBalls)
+void Scene::GetRenderBalls(vector<MirrorBall*> &mirrorBalls, vector<RemoteCamera*> &cameras)
 {
 	for (auto &mirror : mirrors)
 		mirrorBalls.push_back(&mirror.GetRefletionBall());
 	mirrorBalls.push_back(&water.GetRefletionBall());
 	mirrorBalls.push_back(&water.GetRefractionBall());
+	for (auto &camera : this->cameras)
+		cameras.push_back(&camera);
 }

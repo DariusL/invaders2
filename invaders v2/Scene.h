@@ -33,10 +33,7 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	ShadowLight &GetLight(){ return light; }
-	vector<SimpleMirror> &GetMirrors(){ return mirrors; }
-	vector<RemoteCamera> &GetRemoteCameras(){ return cameras; }
-	SimpleWaterPlane &GetWater(){ return water; }
 	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
-	void GetRenderBalls(vector<MirrorBall*> &mirrors);
+	void GetRenderBalls(vector<MirrorBall*> &mirrors, vector<RemoteCamera*> &cameras);
 };
