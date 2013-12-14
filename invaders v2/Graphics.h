@@ -19,6 +19,8 @@ class Graphics
 	unique_ptr<SimpleTexturedEntity> hudDepth;
 	unique_ptr<SimpleTexturedEntity> hudBack;
 	ComVector<ID3D11ShaderResourceView> tex;
+	unique_ptr<SimpleTexturedEntity> harbinger;
+	unique_ptr<RenderTarget> mainTarget;
 public:
 	Graphics();
 	~Graphics(void){}

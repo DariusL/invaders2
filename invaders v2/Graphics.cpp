@@ -27,6 +27,9 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	hudBack = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, -150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
 	hudBack->Init(d3D.GetDevice());
+	harbinger = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::TEXTURE_GABEN), XMFLOAT3((float)width, (float)heigth, 1.0f));
+	harbinger->Init(d3D.GetDevice());
 	tex.push_back(NULL);
 }
 
@@ -60,31 +63,22 @@ void Graphics::Render(Scene &world)
 	RenderParams params;
 	params.brightness = brightness;
 	params.context = context;
-	//params.lightPos = light.GetPos();
 	params.diffuseColor = light.GetColor();
 	params.waterScale = 0.1f;
-	//params.lightView = light.GetViewMatrix();
-	//params.lightProject = light.GetProjectionMatrix();
 	long time = clock();
 	time %= 5000;
 	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
 
-	/*params.view = light.GetViewMatrix();
-	params.projection = params.lightProject;
-	params.pass = PASS_TYPE_NORMAL;
-	params.clipPlane = ZeroVec4;*/
 	params.camera = &camera;
-	//light.SetRenderTarget(context);
-	//light.ClearTarget(context);
 	light.Prepare(params);
 	world.Render(params);
 
 	params.shadowMap = light.GetRenderedTexture();
 
-	for (auto &remote : cameras)
+	for (auto remote : cameras)
 	{
 		params.camera = remote;
-		for (auto &target : reflectives)
+		for (auto target : reflectives)
 		{
 			target->Prepare(context, params);
 			world.Render(params);
@@ -121,6 +115,7 @@ void Graphics::Render(Scene &world)
 	hudDepth->Render(params, tex);
 	tex[0] = light.GetOtherTexture();
 	hudBack->Render(params, tex);
+	//harbinger->Render(params);
 
 	d3D.Present();
 }

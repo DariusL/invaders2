@@ -4,7 +4,7 @@
 RemoteCamera::RemoteCamera(XMFLOAT3 cameraPos, XMFLOAT3 cameraDir, XMFLOAT3 screenPos, XMFLOAT3 screenRot, TexturedModel &screenModel, TextureShader &screenShader,
 	int resWidth, int resHeight, float screenWidth, float screenHeight)
 	:screen(screenPos, screenRot, screenModel, screenShader, nullptr, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
-	cameraBall(resWidth, resHeight, [this](RenderParams &params, Direct3D &direct3D) -> void
+	cameraBall(resWidth, resHeight, [this](RenderParams &params, Direct3D &direct3D)
 {
 	params.view = GetViewMatrix();
 	params.pass = PASS_TYPE_NORMAL;

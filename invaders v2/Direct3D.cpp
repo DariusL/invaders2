@@ -164,6 +164,23 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	screenAspect = width / (float)height;
 	XMStoreFloat4x4(&projectionMatrix, XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screennear, screendepth));
 	XMStoreFloat4x4(&orthoMatrix, XMMatrixOrthographicLH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
+
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(blendDesc));
+	blendDesc.AlphaToCoverageEnable = false;
+
+	blendDesc.RenderTarget[0].BlendEnable = true;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	Assert(device->CreateBlendState(&blendDesc, &blendState));
+	XMFLOAT4 blendFactor(0.0f, 0.0f, 0.0f, 0.0f);
+	deviceContext->OMSetBlendState(blendState.Get(), reinterpret_cast<float*>(&blendFactor), static_cast<UINT>(-1));
 }
 
 void Direct3D::ClearRenderTarget()

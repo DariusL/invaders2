@@ -17,7 +17,7 @@ ShadowLight::ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorS
 
 void ShadowLight::Prepare(RenderParams &params)
 {
-	params.pass = PASS_TYPE_NORMAL;
+	params.pass = PASS_TYPE_SHADOW;
 	params.lightView = params.view = GetViewMatrix();
 	params.lightProject = params.projection = GetProjectionMatrix();
 	params.lightPos = GetPos();

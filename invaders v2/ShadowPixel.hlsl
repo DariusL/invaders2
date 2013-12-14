@@ -36,6 +36,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	float lightIntensity = saturate(dot(normalize(input.normal), input.lightDir));
 
 	color = (saturate(diffuse * lightIntensity * shadow) + ambient) * shaderTexture.Sample(sampleType, input.tex);
+	color.w = 1.0f;
 
 	return color;
 }

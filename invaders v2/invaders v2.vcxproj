@@ -41,9 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -53,6 +55,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>includes.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -62,6 +65,9 @@
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ObjectFileOutput>$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -72,6 +78,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>includes.h</PrecompiledHeaderFile>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -83,10 +90,14 @@
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Resources\*" "$(OutDir)Resources\*" /s /y /h</Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ObjectFileOutput>$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CelShader.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
@@ -130,6 +141,7 @@
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBall.h" />
+    <ClInclude Include="CelShader.h" />
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="DDSTextureLoader.h" />
@@ -184,6 +196,11 @@
     <ClInclude Include="WaterShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="CelPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="ColorInstancedVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

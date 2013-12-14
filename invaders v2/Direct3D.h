@@ -41,6 +41,7 @@ private:
 	ComPtr<ID3D11DepthStencilState> depthStencilState2d;
 	ComPtr<ID3D11DepthStencilView> depthStencilView;
 	ComPtr<ID3D11RasterizerState> rasterState;
+	ComPtr<ID3D11BlendState> blendState;
 	D3D11_VIEWPORT viewport;
 	XMFLOAT4X4 projectionMatrix;
 	XMFLOAT4X4 orthoMatrix;

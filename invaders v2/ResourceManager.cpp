@@ -215,8 +215,35 @@ void ResourceManager::Init()
 	plane.indices.push_back(2);
 
 	texturedModels.push_back(move(plane));
+
+	
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
+
+	tv.position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Bottom left.
+	tv.tex = XMFLOAT2(0.0f, 1.0f);
+	plane.vertices.push_back(tv);
+
+	tv.position = XMFLOAT3(0.0f, 0.0f, 0.0f);  // Top left
+	tv.tex = XMFLOAT2(0.0f, 0.0f);
+	plane.vertices.push_back(tv);
+
+	tv.position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Bottom right.
+	tv.tex = XMFLOAT2(1.0f, 1.0f);
+	plane.vertices.push_back(tv);
+
+	tv.position = XMFLOAT3(1.0f, 0.0f, 0.0f);  // Top right.
+	tv.tex = XMFLOAT2(1.0f, 0.0f);
+	plane.vertices.push_back(tv);
+
+	plane.indices.push_back(1);
+	plane.indices.push_back(2);
+	plane.indices.push_back(0);
+
+	plane.indices.push_back(1);
+	plane.indices.push_back(3);
+	plane.indices.push_back(2);
+	texturedModels.push_back(move(plane));
 
 	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
 	NormalTexturedModel model;
@@ -633,6 +660,7 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
 	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
 	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
+	shaders.push_back(make_unique<CelShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\CelPixel.cso"));
 	
 	for(auto &shader : shaders)
 		shader->Init(device);

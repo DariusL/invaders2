@@ -129,6 +129,9 @@
     <ClCompile Include="ShadowShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CelShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -299,6 +302,9 @@
     <ClInclude Include="CameraBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CelShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -365,6 +371,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="ShadowPixel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="CelPixel.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

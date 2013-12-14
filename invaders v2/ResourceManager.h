@@ -16,6 +16,7 @@
 #include "MirrorShader.h"
 #include "InstancedTextureShader.h"
 #include "ShadowShader.h"
+#include "CelShader.h"
 
 using namespace std;
 
@@ -56,7 +57,8 @@ public:
 		SHADER_WATER,
 		SHADER_MIRROR,
 		SHADER_TEXTURE_INSTANCED,
-		SHADER_SHADOW
+		SHADER_SHADOW,
+		SHADER_CEL
 	};
 
 	enum TEXTURE
@@ -71,7 +73,8 @@ public:
 	{
 		TEXTURED_MODEL_PLANE,
 		TEXTURED_MODEL_INV_BOX,
-		TEXTURED_MODEL_BATH
+		TEXTURED_MODEL_BATH,
+		TEXTURED_MODEL_HARBINGER
 	};
 
 	enum NORMAL_TEXTURED_MODEL
@@ -151,6 +154,8 @@ public:
 	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[SHADER::SHADER_TEXTURE_INSTANCED]); }
 	template<>
 	ShadowShader &GetShader<ShadowShader>(){ return static_cast<ShadowShader&>(*shaders[SHADER::SHADER_SHADOW]); }
+	template<>
+	CelShader &GetShader<CelShader>(){ return static_cast<CelShader&>(*shaders[SHADER::SHADER_CEL]); }
 };
 
 typedef ResourceManager RM;

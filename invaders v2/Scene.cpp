@@ -18,7 +18,7 @@ RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture
 bath(XMFLOAT3(0.0f, -50.0f, 0.0f), ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_BATH),
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
 
-billboard(XMFLOAT3(0.0f, -50.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 
+billboard(XMFLOAT3(0.0f, -40.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(), 
 RM::Get().GetTexture(RM::TEXTURE_TREE), XMFLOAT3(10.0f, 10.0f, 1.0f)),
 
 ground(XMFLOAT3(0.0f, -300.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE), 
@@ -29,14 +29,12 @@ RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMF
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
+	cameras.reserve(2);
 	cameras.emplace_back(XMFLOAT3(0.0f, -5.0f, -20.0f), ZeroVec3, XMFLOAT3(0.0f, -5.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
 		RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
 
-	cameras.emplace_back(XMFLOAT3(-5.0f, 0.0f, -10.0f), ZeroVec3, XMFLOAT3(-20.0f, -5.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
+	cameras.emplace_back(XMFLOAT3(-20.0f, -5.0f, -20.0f), ZeroVec3, XMFLOAT3(-20.0f, -5.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
-
-	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 
 	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
@@ -121,13 +119,13 @@ void Scene::Render(RenderParams &params)
 	light.Render(params);
 	gabenizer.Render(params);
 	bath.Render(params);
-	billboard.Render(params);
 	ground.Render(params);
 	for (auto &mirror : mirrors)
 		mirror.Render(params);
 	water.Render(params);
 	for (auto &remote : cameras)
 		remote.Render(params);
+	billboard.Render(params);
 }
 
 
