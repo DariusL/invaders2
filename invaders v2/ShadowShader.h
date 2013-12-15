@@ -30,6 +30,9 @@ protected:
 	{
 		XMFLOAT4 diffuseColor;
 		XMFLOAT4 ambient;
+		float border;
+		XMFLOAT3 padding;
 	};
+	float border;
 };
 

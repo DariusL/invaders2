@@ -7,6 +7,7 @@ Graphics::Graphics(void)
 	screenDepth = 10000.0f;
 	screenNear = 0.1f;
 	vsync = false;
+	celPass = false;
 }
 
 void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
@@ -95,8 +96,16 @@ void Graphics::Render(Scene &world)
 		target->Swap();
 	}
 
-	mainTarget->SetRenderTarget(context);
-	mainTarget->ClearTarget(context);
+	if (celPass)
+	{
+		mainTarget->SetRenderTarget(context);
+		mainTarget->ClearTarget(context);
+	}
+	else
+	{
+		d3D.ResetRenderTarget();
+		d3D.ClearRenderTarget();
+	}
 	params.view = camera.GetViewMatrix();
 	params.projection = d3D.GetProjectionMatrix();
 	params.camera = &camera;
@@ -108,10 +117,13 @@ void Graphics::Render(Scene &world)
 	params.projection = d3D.GetOrthoMatrix();
 	params.view = XMMatrixIdentity();
 
-	d3D.ResetRenderTarget();
-	d3D.ClearRenderTarget();
-	tex[0] = mainTarget->GetRenderedTexture();
-	harbinger->Render(params, tex);
+	if (celPass)
+	{
+		d3D.ResetRenderTarget();
+		d3D.ClearRenderTarget();
+		tex[0] = mainTarget->GetRenderedTexture();
+		harbinger->Render(params, tex);
+	}
 
 	d3D.Present();
 }

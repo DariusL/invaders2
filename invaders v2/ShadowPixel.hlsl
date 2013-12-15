@@ -8,6 +8,8 @@ cbuffer LightBuffer : register(b0)
 {
 	float4 diffuse;
 	float4 ambient;
+	float border;
+	float3 padding;
 }
 
 struct PixelInputType
@@ -31,7 +33,7 @@ float4 main(PixelInputType input) : SV_TARGET
 	if (input.lightViewPosition.w >= 0.1f)
 		shadow = depthMap.SampleCmp(shadowSampleType, input.lightViewPosition.xy, input.lightViewPosition.z - bias);
 	else
-		shadow = 1.0f;
+		shadow = border;
 
 	float lightIntensity = saturate(dot(normalize(input.normal), input.lightDir));
 

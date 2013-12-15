@@ -21,7 +21,7 @@ protected:
 	vector<Particle> particles;
 	vector<Particle> temp;
 public:
-	Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir = XMFLOAT3(0.0f, 1.0f, 0.0f), float scatter = 0.2f, float speed = 15.0f, int perSecond = 40);
+	Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir = XMFLOAT3(1.0f, 1.0f, 0.0f), float scatter = 0.5f, float speed = 10.0f, int perSecond = 30);
 	Particles(Particles&) = delete;
 
 	void OnLoop(float frame);
@@ -44,7 +44,7 @@ void Particles<vt, sh>::OnLoop(float frame)
 		auto num = bind(dist, gen);
 		for (int i = 0; i < make; i++)
 		{
-			XMVECTOR vec = XMVectorSet(num(), num(), num(), 0.0f);
+			XMVECTOR vec = XMVectorSet(num(), 0.0f, num(), 0.0f);
 			XMVECTOR dir = vec + XMLoadFloat3(&this->dir);
 			dir = XMVector3Normalize(dir) * speed;
 			XMFLOAT3 pspeed;

@@ -4,6 +4,7 @@
 
 void ShadowShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
+	border = 1.0f;
 	TextureShader::InitializeShaderBuffers(device);
 	D3D11_BUFFER_DESC desc;
 
@@ -34,9 +35,9 @@ void ShadowShader::InitializeSampler(ComPtr<ID3D11Device> device)
 	desc.MipLODBias = 0.0f;
 	desc.MaxAnisotropy = 0;
 	desc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	desc.BorderColor[0] = 1.0f;
-	desc.BorderColor[1] = 1.0f;
-	desc.BorderColor[2] = 1.0f;
+	desc.BorderColor[0] = border;
+	desc.BorderColor[1] = border;
+	desc.BorderColor[2] = border;
 	desc.BorderColor[3] = 1.0f;
 	desc.MinLOD = 0;
 	desc.MaxLOD = D3D11_FLOAT32_MAX;
@@ -90,6 +91,7 @@ void ShadowShader::SetShaderParametersTextured(RenderParams &params, const XMMAT
 	PixelLightBufferType pixelLightData;
 	pixelLightData.diffuseColor = params.diffuseColor;
 	pixelLightData.ambient = XMFLOAT4(params.brightness, params.brightness, params.brightness, params.brightness);
+	pixelLightData.border = border;
 
 	Utils::CopyToBuffer(pixelLightBuffer, pixelLightData, context);
 
