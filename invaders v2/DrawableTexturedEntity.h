@@ -15,6 +15,7 @@ protected:
 public:
 	DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
+
 	DrawableTexturedEntity(DrawableTexturedEntity&) = delete;
 	DrawableTexturedEntity &operator=(DrawableTexturedEntity&) = delete;
 

@@ -25,7 +25,9 @@ ground(XMFLOAT3(0.0f, -300.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get()
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f)),
 
 wall(XMFLOAT3(0.0f, 0.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE),
-RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f))
+RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f)),
+
+particles(RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorInstancedShader>(), 1000, XMFLOAT3(0.0f, 30.0f, 0.0f))
 {
 	camera.Move(0.0f, -10.0f, -50.0f);
 	started = false;
@@ -93,6 +95,8 @@ int Scene::OnLoop(int input, float frameLength)
 	if (input & ControlCodes::MOVE_BACK)
 		move.z -= frameLength;
 
+	particles.OnLoop(frameLength);
+
 	camera.Forward(move.z);
 	camera.Up(move.y);
 	camera.Right(move.x);
@@ -112,6 +116,7 @@ void Scene::Init(ComPtr<ID3D11Device> device)
 	bath.Init(device);
 	billboard.Init(device);
 	ground.Init(device);
+	particles.Init(device);
 }
 
 void Scene::Render(RenderParams &params)
@@ -126,6 +131,7 @@ void Scene::Render(RenderParams &params)
 	for (auto &remote : cameras)
 		remote.Render(params);
 	billboard.Render(params);
+	particles.Render(params);
 }
 
 

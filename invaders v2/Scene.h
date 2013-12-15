@@ -12,6 +12,7 @@
 #include "Billboard.h"
 #include "ShadowShader.h"
 #include "MirrorBall.h"
+#include "Particles.h"
 
 class Scene : public IWorld
 {
@@ -24,6 +25,7 @@ class Scene : public IWorld
 	Billboard<TextureVertexType, TextureShader> billboard;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> ground;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> wall;
+	ColoredParticles particles;
 public:
 	Scene();
 	~Scene();

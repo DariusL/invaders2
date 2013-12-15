@@ -22,11 +22,9 @@ PixelInputType ColorInstancedVertexShader(VertexInputType input)
     PixelInputType output;
     
     input.position.w = 1.0f;
-	input.position.x += input.instancePos.x;
-	input.position.y += input.instancePos.y;
-	input.position.z += input.instancePos.z;
 
-	output.position = mul(input.position, view);
+	output.position = input.position + input.instancePos;
+	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
     
     output.color = input.color;

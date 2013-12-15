@@ -62,6 +62,7 @@ void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
 	if(!Update(params.context))
 		return;
 	model.Set(params.context);
+	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), &instanceInfo.stride, &instanceInfo.offset);
 	shader.SetShaderParametersInstanced(params);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }
