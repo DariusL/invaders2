@@ -21,15 +21,11 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	RM::Get().InitShaders(d3D.GetDevice());
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
-	hudDepth = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, 150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), 
-		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
-	hudDepth->Init(d3D.GetDevice());
-	hudBack = make_unique<SimpleTexturedEntity>(XMFLOAT3(300.0f, -150.0f, 1.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<TextureShader>(), nullptr, XMFLOAT3(200.0f, 200.0f, 1.0f));
-	hudBack->Init(d3D.GetDevice());
-	harbinger = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<TextureShader>(), RM::Get().GetTexture(RM::TEXTURE_GABEN), XMFLOAT3((float)width, (float)heigth, 1.0f));
+	harbinger = make_unique<DrawableTexturedEntity<TextureVertexType, CelShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<CelShader>(), nullptr, XMFLOAT3((float)width, (float)heigth, 1.0f));
 	harbinger->Init(d3D.GetDevice());
+	mainTarget = make_unique<RenderTarget>(width, heigth);
+	mainTarget->Init(d3D.GetDevice());
 	tex.push_back(NULL);
 }
 
@@ -99,8 +95,8 @@ void Graphics::Render(Scene &world)
 		target->Swap();
 	}
 
-	d3D.ResetRenderTarget();
-	d3D.ClearRenderTarget();
+	mainTarget->SetRenderTarget(context);
+	mainTarget->ClearTarget(context);
 	params.view = camera.GetViewMatrix();
 	params.projection = d3D.GetProjectionMatrix();
 	params.camera = &camera;
@@ -111,11 +107,11 @@ void Graphics::Render(Scene &world)
 	d3D.DoingDepthCheck(false);
 	params.projection = d3D.GetOrthoMatrix();
 	params.view = XMMatrixIdentity();
-	tex[0] = light.GetRenderedTexture();
-	hudDepth->Render(params, tex);
-	tex[0] = light.GetOtherTexture();
-	hudBack->Render(params, tex);
-	//harbinger->Render(params);
+
+	d3D.ResetRenderTarget();
+	d3D.ClearRenderTarget();
+	tex[0] = mainTarget->GetRenderedTexture();
+	harbinger->Render(params, tex);
 
 	d3D.Present();
 }

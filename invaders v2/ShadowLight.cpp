@@ -63,49 +63,15 @@ void ShadowLight::Init(ComPtr<ID3D11Device> device)
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	Assert(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView));
-
-	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-	
-	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
-	depthBufferDesc.ArraySize = 1;
-	depthBufferDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	depthBufferDesc.CPUAccessFlags = 0;
-	depthBufferDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	depthBufferDesc.Height = (UINT)height;
-	depthBufferDesc.Width = (UINT)width;
-	depthBufferDesc.MipLevels = 1;
-	depthBufferDesc.MiscFlags = 0;
-	depthBufferDesc.SampleDesc.Count = 1;
-	depthBufferDesc.SampleDesc.Quality = 0;
-	depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-
-	Assert(device->CreateTexture2D(&depthBufferDesc, nullptr, &renderTargetTexure));
-
-	ZeroMemory(&shaderResourceViewDesc, sizeof(shaderResourceViewDesc));
-	shaderResourceViewDesc.Format = depthBufferDesc.Format;
-	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
-	shaderResourceViewDesc.Texture2D.MipLevels = 1;
-
-	Assert(device->CreateShaderResourceView(renderTargetTexure.Get(), &shaderResourceViewDesc, &renderTargetTextureView));
-
-	ZeroMemory(&renderTargetViewDesc, sizeof(renderTargetViewDesc));
-	renderTargetViewDesc.Format = depthBufferDesc.Format;
-	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-	renderTargetViewDesc.Texture2D.MipSlice = 0;
-
-	Assert(device->CreateRenderTargetView(renderTargetTexure.Get(), &renderTargetViewDesc, &renderTargetView));
 }
 
 void ShadowLight::SetRenderTarget(ComPtr<ID3D11DeviceContext> context)
 {
-	context->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	context->OMSetRenderTargets(0, renderTargetView.GetAddressOf(), depthStencilView.Get());
 	context->RSSetViewports(1, &viewport);
 }
 
 void ShadowLight::ClearTarget(ComPtr<ID3D11DeviceContext> context)
 {
-	XMFLOAT4 color(0.0f, 0.0f, 0.0f, 1.0f);
-	context->ClearRenderTargetView(renderTargetView.Get(), reinterpret_cast<float*>(&color));
 	context->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }

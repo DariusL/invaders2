@@ -2,6 +2,7 @@
 #include "Direct3D.h"
 #include "Scene.h"
 #include "Screen.h"
+#include "CelShader.h"
 
 class Graphics
 {
@@ -16,10 +17,8 @@ class Graphics
 	int height;
 	HWND handle;
 
-	unique_ptr<SimpleTexturedEntity> hudDepth;
-	unique_ptr<SimpleTexturedEntity> hudBack;
 	ComVector<ID3D11ShaderResourceView> tex;
-	unique_ptr<SimpleTexturedEntity> harbinger;
+	unique_ptr<DrawableTexturedEntity<TextureVertexType, CelShader>> harbinger;
 	unique_ptr<RenderTarget> mainTarget;
 public:
 	Graphics();
