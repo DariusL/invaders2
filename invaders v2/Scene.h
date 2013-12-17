@@ -23,9 +23,11 @@ class Scene : public IWorld
 	SimpleWaterPlane water;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> bath;
 	Billboard<TextureVertexType, TextureShader> billboard;
+	Billboard<TextureVertexType, TextureShader> billboard2;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> ground;
 	DrawableTexturedEntity<NormalTextureVertexType, ShadowShader> wall;
 	ColoredParticles particles;
+	DrawableBumpyEntity thing;
 public:
 	Scene();
 	~Scene();

@@ -3,6 +3,8 @@
 #include "Scene.h"
 #include "Screen.h"
 #include "CelShader.h"
+#include "HorizontalBlurShader.h"
+#include "VerticalBlurShader.h"
 
 class Graphics
 {
@@ -18,10 +20,10 @@ class Graphics
 	HWND handle;
 
 	ComVector<ID3D11ShaderResourceView> tex;
-	unique_ptr<DrawableTexturedEntity<TextureVertexType, CelShader>> harbinger;
-	unique_ptr<RenderTarget> mainTarget;
-	
-	bool celPass;
+	unique_ptr<Screen<TextureVertexType, HorizontalBlurShader>> hBlurTarget;
+	unique_ptr<Screen<TextureVertexType, VerticalBlurShader>> vBlurTarget;
+	unique_ptr<Screen<TextureVertexType, CelShader>> celTarget;
+	POST_PROCESS post;
 public:
 	Graphics();
 	~Graphics(void){}

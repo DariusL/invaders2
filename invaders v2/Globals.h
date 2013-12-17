@@ -97,6 +97,13 @@ struct ControlCodes
 	static const int ROLL_RIGHT = 1 << 15;
 };
 
+enum POST_PROCESS
+{
+	POST_PROCESS_NONE,
+	POST_PROCESS_CEL,
+	POST_PROCESS_BLUR
+};
+
 enum PASS_TYPE
 {
 	PASS_TYPE_NORMAL,

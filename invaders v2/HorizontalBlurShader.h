@@ -12,7 +12,6 @@ protected:
 	ComPtr<ID3D11Buffer> blurBuffer;
 
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
-	virtual void InitializeSampler(ComPtr<ID3D11Device> device);
 
 	struct BlurBuffer
 	{

@@ -6,6 +6,7 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(void)
+:normalMappedModel(GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
 {
 	handle = this;
 }
@@ -661,6 +662,8 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
 	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
 	shaders.push_back(make_unique<CelShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\CelPixel.cso"));
+	shaders.push_back(make_unique<HorizontalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\HorizontalBlurPixel.cso"));
+	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
 	
 	for(auto &shader : shaders)
 		shader->Init(device);
@@ -676,4 +679,5 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 		model.Init(device);
 	for (auto &model : normalTexturedModels)
 		model.Init(device);
+	normalMappedModel.Init(device);
 }

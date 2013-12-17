@@ -1,8 +1,8 @@
 #include "includes.h"
-#include "HorizontalBlurShader.h"
+#include "VerticalBlurShader.h"
 #include "App.h"
 
-void HorizontalBlurShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void VerticalBlurShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 {
 	TextureShader::InitializeShaderBuffers(device);
 
@@ -12,8 +12,8 @@ void HorizontalBlurShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 
 	int width, height;
 	App::Get()->GetScreenDims(width, height);
-	float fwidth = 1.0f / width;
-	data.offset = XMFLOAT4(-fwidth, 0.0f, fwidth, 0.0f);
+	float fheight = 1.0f / height;
+	data.offset = XMFLOAT4(-fheight, 0.0f, fheight, 0.0f);
 
 	data.weight = XMFLOAT4(1.0f, 0.9f, 0.55f, 0.18f);
 
@@ -36,11 +36,4 @@ void HorizontalBlurShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	desc.Usage = D3D11_USAGE_IMMUTABLE;
 
 	Assert(device->CreateBuffer(&desc, &resource, &blurBuffer));
-}
-
-void HorizontalBlurShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures)
-{
-	TextureShader::SetShaderParametersTextured(params, world, textures);
-
-	params.context->PSSetConstantBuffers(0, 1, blurBuffer.GetAddressOf());
 }

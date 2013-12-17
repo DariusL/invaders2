@@ -7,7 +7,7 @@ Graphics::Graphics(void)
 	screenDepth = 10000.0f;
 	screenNear = 0.1f;
 	vsync = false;
-	celPass = false;
+	post = POST_PROCESS_NONE;
 }
 
 void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
@@ -22,11 +22,15 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	RM::Get().InitShaders(d3D.GetDevice());
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
-	harbinger = make_unique<DrawableTexturedEntity<TextureVertexType, CelShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<CelShader>(), nullptr, XMFLOAT3((float)width, (float)heigth, 1.0f));
-	harbinger->Init(d3D.GetDevice());
-	mainTarget = make_unique<RenderTarget>(width, heigth);
-	mainTarget->Init(d3D.GetDevice());
+	celTarget = make_unique<Screen<TextureVertexType, CelShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<CelShader>(), width, height, (float)width, (float)height);
+	celTarget->Init(d3D.GetDevice());
+	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
+	hBlurTarget->Init(d3D.GetDevice());
+	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
+	vBlurTarget->Init(d3D.GetDevice());
 	tex.push_back(NULL);
 }
 
@@ -96,10 +100,20 @@ void Graphics::Render(Scene &world)
 		target->Swap();
 	}
 
-	if (celPass)
+	if (post)
 	{
-		mainTarget->SetRenderTarget(context);
-		mainTarget->ClearTarget(context);
+		if (post == POST_PROCESS_CEL)
+		{
+			auto &target = celTarget->GetRenderTarget();
+			target.SetRenderTarget(context);
+			target.ClearTarget(context);
+		}
+		if (post == POST_PROCESS_BLUR)
+		{
+			auto &target = hBlurTarget->GetRenderTarget();
+			target.SetRenderTarget(context);
+			target.ClearTarget(context);
+		}
 	}
 	else
 	{
@@ -117,12 +131,24 @@ void Graphics::Render(Scene &world)
 	params.projection = d3D.GetOrthoMatrix();
 	params.view = XMMatrixIdentity();
 
-	if (celPass)
+	if (post)
 	{
-		d3D.ResetRenderTarget();
-		d3D.ClearRenderTarget();
-		tex[0] = mainTarget->GetRenderedTexture();
-		harbinger->Render(params, tex);
+		if (post == POST_PROCESS_CEL)
+		{
+			d3D.ResetRenderTarget();
+			d3D.ClearRenderTarget();
+			celTarget->Render(params);
+		}
+		if (post == POST_PROCESS_BLUR)
+		{
+			auto &target = vBlurTarget->GetRenderTarget();
+			target.SetRenderTarget(context);
+			target.ClearTarget(context);
+			hBlurTarget->Render(params);
+			d3D.ResetRenderTarget();
+			d3D.ClearRenderTarget();
+			vBlurTarget->Render(params);
+		}
 	}
 
 	d3D.Present();

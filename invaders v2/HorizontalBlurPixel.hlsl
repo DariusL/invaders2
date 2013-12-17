@@ -24,7 +24,7 @@ float4 main(PixelInputType input) : SV_TARGET
 
 	color += shaderTexture.Sample(samplerType, input.tex + float2(offset.z * 1.0f, 0.0f)) * weight.y;
 	color += shaderTexture.Sample(samplerType, input.tex + float2(offset.z * 2.0f, 0.0f)) * weight.z;
-	color += shaderTexture.Sample(samplerType, input.tex + float2(offset.z * 2.0f, 0.0f)) * weight.w;
+	color += shaderTexture.Sample(samplerType, input.tex + float2(offset.z * 3.0f, 0.0f)) * weight.w;
 
 	color.w = 1.0f;
 	return color;

@@ -17,6 +17,8 @@
 #include "InstancedTextureShader.h"
 #include "ShadowShader.h"
 #include "CelShader.h"
+#include "HorizontalBlurShader.h"
+#include "VerticalBlurShader.h"
 
 using namespace std;
 
@@ -58,7 +60,9 @@ public:
 		SHADER_MIRROR,
 		SHADER_TEXTURE_INSTANCED,
 		SHADER_SHADOW,
-		SHADER_CEL
+		SHADER_CEL,
+		SHADER_HORIZONTAL_BLUR,
+		SHADER_VERTICAL_BLUR
 	};
 
 	enum TEXTURE
@@ -97,6 +101,7 @@ private:
 	vector<shared_ptr<Level>> levels;
 	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
+	NormalMappedModel normalMappedModel;
 
 	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static ColorModel GetModelFromOBJ(wstring filename, bool invert = false);
@@ -122,6 +127,7 @@ public:
 	ColorModel &GetModel(MODEL i){return models[i];}
 	NormalTexturedModel &GetNormalTexturedModel(NORMAL_TEXTURED_MODEL i){ return normalTexturedModels[i]; }
 	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
+	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
 
 	shared_ptr<DrawableShooter> GetEnemy(int type);
@@ -156,6 +162,10 @@ public:
 	ShadowShader &GetShader<ShadowShader>(){ return static_cast<ShadowShader&>(*shaders[SHADER::SHADER_SHADOW]); }
 	template<>
 	CelShader &GetShader<CelShader>(){ return static_cast<CelShader&>(*shaders[SHADER::SHADER_CEL]); }
+	template<>
+	HorizontalBlurShader &GetShader<HorizontalBlurShader>(){ return static_cast<HorizontalBlurShader&>(*shaders[SHADER::SHADER_HORIZONTAL_BLUR]); }
+	template<>
+	VerticalBlurShader &GetShader<VerticalBlurShader>(){ return static_cast<VerticalBlurShader&>(*shaders[SHADER::SHADER_VERTICAL_BLUR]); }
 };
 
 typedef ResourceManager RM;

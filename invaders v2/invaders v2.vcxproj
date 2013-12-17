@@ -133,6 +133,7 @@
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="VerticalBlurShader.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="WaterShader.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="VerticalBlurShader.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="WaterPlane.h" />
@@ -345,6 +347,10 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="VerticalBlurPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="WaterPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

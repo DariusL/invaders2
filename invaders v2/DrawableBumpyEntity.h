@@ -7,10 +7,13 @@
 
 class DrawableBumpyEntity : public DrawableEntity<NormalMappedVertexType, NormalMappedShader>
 {
-	ComPtr<ID3D11ShaderResourceView> normalMap;
+	ComVector<ID3D11ShaderResourceView> normalMap;
 public:
 	DrawableBumpyEntity(XMFLOAT3 pos, NormalMappedModel &model, NormalMappedShader &shader, ComPtr<ID3D11ShaderResourceView> map)
-		:DrawableEntity(pos, model, shader), normalMap(map){}
+		:DrawableEntity(pos, model, shader)
+	{
+		normalMap.push_back(map);
+	}
 
 	DrawableBumpyEntity(DrawableBumpyEntity &&other)
 		:DrawableEntity(forward<DrawableBumpyEntity>(other))
