@@ -21,7 +21,7 @@ protected:
 	vector<Particle> particles;
 	vector<Particle> temp;
 public:
-	Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir = XMFLOAT3(0.0f, 1.0f, 0.0f), float scatter = 0.5f, float speed = 10.0f, int perSecond = 50);
+	Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir = XMFLOAT3(0.0f, 1.0f, 0.0f), float scatter = 0.5f, float speed = 15, int perSecond = 70);
 	Particles(Particles&) = delete;
 
 	void OnLoop(float frame);

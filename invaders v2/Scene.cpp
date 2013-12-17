@@ -43,7 +43,7 @@ thing(XMFLOAT3(0.0f, -130.0f, -10.0f), RM::Get().GetNormalMappedModel(), RM::Get
 	cameras.emplace_back(XMFLOAT3(-20.0f, -5.0f, -20.0f), ZeroVec3, XMFLOAT3(-20.0f, -5.0f, 0.0f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<TextureShader>(), 400, 200, 20.0f, 10.0f);
 
-	mirrors.emplace_back(XMFLOAT3(50.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+	mirrors.emplace_back(XMFLOAT3(30.0f, -130.0f, 0.0f), XMFLOAT3(0.0f, XM_PIDIV2, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<MirrorShader>(), 800, 800, 20.0f, 20.0f);
 }
 
