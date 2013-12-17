@@ -4,7 +4,7 @@ class PointDiffuseShader : public IPositionShader
 {
 public:
 	PointDiffuseShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
-	~PointDiffuseShader(void){}
+	virtual ~PointDiffuseShader(void){}
 
 public:	
 	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);

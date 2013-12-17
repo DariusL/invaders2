@@ -27,7 +27,7 @@ PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
 	output.tex = input.tex;
-
+	input.position.w = 1.0f;
 	output.position = mul(input.position, world);
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);

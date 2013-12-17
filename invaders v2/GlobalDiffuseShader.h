@@ -6,7 +6,7 @@ class GlobalDiffuseShader : public IPositionShader
 {
 public:
 	GlobalDiffuseShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
-	~GlobalDiffuseShader(void){}
+	virtual ~GlobalDiffuseShader(void){}
 
 public:	
 	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);

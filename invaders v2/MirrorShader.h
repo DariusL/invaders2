@@ -4,7 +4,7 @@ class MirrorShader : public TextureShader
 {
 public:
 	MirrorShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
-	~MirrorShader(){}
+	virtual ~MirrorShader(){}
 
 	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 protected:

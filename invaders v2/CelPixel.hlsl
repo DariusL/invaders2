@@ -73,7 +73,5 @@ float4 main(PixelInputType input) : SV_TARGET
 
 	int clipped = round(sobelSum(nearbyPixels) + offset);
 	float result = !clipped;
-	//float result = (sobelSum(nearbyPixels) + offset;
 	return shaderTexture.Sample(samplerType, input.tex) * float4(result.xxx, 1.0f);
-	//return float4(result.xxx, 1.0f);
 }

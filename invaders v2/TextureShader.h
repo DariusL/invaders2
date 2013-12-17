@@ -4,7 +4,7 @@ class TextureShader : public IPositionShader
 {
 public:
 	TextureShader(wstring vs, wstring ps) :IPositionShader(vs, ps){}
-	~TextureShader(void){}
+	virtual ~TextureShader(void){}
 
 	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);

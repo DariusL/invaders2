@@ -4,7 +4,7 @@ class GlobalSpecularShader : public GlobalDiffuseShader
 {
 public:
 	GlobalSpecularShader(wstring vs, wstring ps) :GlobalDiffuseShader(vs, ps){}
-	~GlobalSpecularShader(void){}
+	virtual ~GlobalSpecularShader(void){}
 	
 	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);
 

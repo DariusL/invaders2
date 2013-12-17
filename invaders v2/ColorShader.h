@@ -11,7 +11,7 @@ class ColorShader : public IPositionShader
 {
 public:
 	ColorShader(wstring vs, wstring ps):IPositionShader(vs, ps){}
-	~ColorShader(void){}
+	virtual ~ColorShader(void){}
 
 protected:
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();

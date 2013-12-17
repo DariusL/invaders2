@@ -4,6 +4,7 @@ class CelShader : public TextureShader
 {
 public:
 	CelShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
+	virtual ~CelShader(){}
 	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 
 protected:

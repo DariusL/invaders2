@@ -6,7 +6,7 @@ class WaterShader : public MirrorShader
 {
 public:
 	WaterShader(wstring vs, wstring ps) :MirrorShader(vs, ps){}
-	~WaterShader(void){}
+	virtual ~WaterShader(void){}
 
 public:
 	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);

@@ -20,6 +20,7 @@ class Graphics
 	ComVector<ID3D11ShaderResourceView> tex;
 	unique_ptr<DrawableTexturedEntity<TextureVertexType, CelShader>> harbinger;
 	unique_ptr<RenderTarget> mainTarget;
+	
 	bool celPass;
 public:
 	Graphics();

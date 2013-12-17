@@ -4,7 +4,7 @@ class ShadowShader : public TextureShader
 {
 public:
 	ShadowShader(wstring vs, wstring ps) :TextureShader(vs, ps){}
-	~ShadowShader(){}
+	virtual ~ShadowShader(){}
 
 	virtual void SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const ComVector<ID3D11ShaderResourceView> &textures);
 
