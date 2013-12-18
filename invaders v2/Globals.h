@@ -9,6 +9,8 @@
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
+typedef unsigned int uint;
+
 extern const DirectX::XMFLOAT3 ZeroVec3;
 extern const DirectX::XMFLOAT4 ZeroVec4;
 extern const DirectX::XMFLOAT3 OneVec3;

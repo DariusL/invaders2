@@ -19,6 +19,7 @@
 #include "CelShader.h"
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
+#include "CelComputeShader.h"
 
 using namespace std;
 
@@ -62,7 +63,12 @@ public:
 		SHADER_SHADOW,
 		SHADER_CEL,
 		SHADER_HORIZONTAL_BLUR,
-		SHADER_VERTICAL_BLUR
+		SHADER_VERTICAL_BLUR,
+	};
+
+	enum SHADER_COMPUTE
+	{
+		SHADER_COMPUTE_CEL
 	};
 
 	enum TEXTURE
@@ -99,6 +105,7 @@ private:
 	vector<TexturedModel> texturedModels;
 	vector<NormalTexturedModel> normalTexturedModels;
 	vector<shared_ptr<Level>> levels;
+	vector<unique_ptr<ComputeShader>> computeShaders;
 	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
 	NormalMappedModel normalMappedModel;
@@ -166,6 +173,8 @@ public:
 	HorizontalBlurShader &GetShader<HorizontalBlurShader>(){ return static_cast<HorizontalBlurShader&>(*shaders[SHADER::SHADER_HORIZONTAL_BLUR]); }
 	template<>
 	VerticalBlurShader &GetShader<VerticalBlurShader>(){ return static_cast<VerticalBlurShader&>(*shaders[SHADER::SHADER_VERTICAL_BLUR]); }
+	template<>
+	CelComputeShader &GetShader<CelComputeShader>(){ return static_cast<CelComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_CEL]); }
 };
 
 typedef ResourceManager RM;

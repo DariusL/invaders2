@@ -7,7 +7,7 @@ Graphics::Graphics(void)
 	screenDepth = 10000.0f;
 	screenNear = 0.1f;
 	vsync = false;
-	post = POST_PROCESS_BLUR;
+	post = POST_PROCESS_NONE;
 }
 
 void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)

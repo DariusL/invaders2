@@ -664,8 +664,13 @@ void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<CelShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\CelPixel.cso"));
 	shaders.push_back(make_unique<HorizontalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\HorizontalBlurPixel.cso"));
 	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
+
+	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
 	
 	for(auto &shader : shaders)
+		shader->Init(device);
+
+	for (auto &shader : computeShaders)
 		shader->Init(device);
 
 	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
