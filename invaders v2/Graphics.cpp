@@ -7,7 +7,7 @@ Graphics::Graphics(void)
 	screenDepth = 10000.0f;
 	screenNear = 0.1f;
 	vsync = false;
-	post = POST_PROCESS_NONE;
+	post = POST_PROCESS_CEL;
 }
 
 void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
@@ -135,9 +135,22 @@ void Graphics::Render(Scene &world)
 	{
 		if (post == POST_PROCESS_CEL)
 		{
+			start = chrono::high_resolution_clock::now();
 			d3D.ResetRenderTarget();
 			d3D.ClearRenderTarget();
 			celTarget->Render(params);
+			end = chrono::high_resolution_clock::now();
+			bench.push_back(chrono::duration_cast<chrono::microseconds>(end - start).count());
+			if (bench.size() >= 20)
+			{
+				double time = 0;
+				for (auto &t : bench)
+					time += t;
+				time /= 20.0f;
+				wstring s = to_wstring(time) + L"\r\n";
+				OutputDebugString(s.c_str());
+				bench.clear();
+			}
 		}
 		if (post == POST_PROCESS_BLUR)
 		{
