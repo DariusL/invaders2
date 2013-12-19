@@ -2,42 +2,11 @@
 #include "Graphics.h"
 #include "App.h"
 
-Graphics::Graphics(void)
+Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
+:handle(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
+post(POST_PROCESS_CEL), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
+d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear)
 {
-	screenDepth = 10000.0f;
-	screenNear = 0.1f;
-	vsync = false;
-	post = POST_PROCESS_CEL;
-}
-
-void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float brightness)
-{
-	this->handle = handle;
-	this->fullScreen = fullscreen;
-	this->brightness = brightness;
-	this->width = width;
-	this->height = heigth;
-	d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear);
-
-	RM::Get().InitShaders(d3D.GetDevice());
-
-	auto &rm = RM::Get();
-	auto device = d3D.GetDevice();
-	
-	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
-	celTarget = make_unique<RenderTarget>(width, height);
-	celTarget->Init(d3D.GetDevice());
-	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
-	hBlurTarget->Init(d3D.GetDevice());
-	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
-	vBlurTarget->Init(d3D.GetDevice());
-	celOutput = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, rm.GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		rm.GetShader<TextureShader>(), nullptr, XMFLOAT3((float)width, (float)height, 1.0f));
-	celOutput->Init(device);
-	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
-	celPass->Init(device);
 	tex.push_back(NULL);
 }
 
@@ -52,6 +21,24 @@ void Graphics::ChangeBrightness(float offset)
 
 void Graphics::Init(Scene &world)
 {
+	auto &rm = RM::Get();
+	auto device = d3D.GetDevice();
+
+	XMFLOAT2 viewportSize(width / 4.0f, height / 4.0f);
+	celTarget = make_unique<RenderTarget>(width, height);
+	celTarget->Init(d3D.GetDevice());
+	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
+	hBlurTarget->Init(d3D.GetDevice());
+	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
+	vBlurTarget->Init(d3D.GetDevice());
+	celOutput = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, rm.GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		rm.GetShader<TextureShader>(), nullptr, XMFLOAT3((float)width, (float)height, 1.0f));
+	celOutput->Init(device);
+	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
+	celPass->Init(device);
+
 	world.Init(d3D.GetDevice());
 }
 

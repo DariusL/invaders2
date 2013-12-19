@@ -1,19 +1,7 @@
 #include "includes.h"
 #include "Direct3D.h"
 
-Direct3D::Direct3D(void)
-{
-}
-
-Direct3D::~Direct3D()
-{
-	if(swapChain)
-	{
-		swapChain->SetFullscreenState(false, NULL);
-	}
-}
-
-void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
+Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
 	ComPtr<IDXGIFactory> factory;
 	ComPtr<IDXGIAdapter> adapter;
@@ -42,13 +30,13 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL));
 	displayModeList = unique_ptr<DXGI_MODE_DESC[]>(new DXGI_MODE_DESC[numModes]);
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList.get()));
-	for(unsigned int i = 0; i < numModes; i++)
-		if(displayModeList[i].Height == height && displayModeList[i].Width == width)
-		{
-			numerator = displayModeList[i].RefreshRate.Numerator;
-			denominator = displayModeList[i].RefreshRate.Denominator;
-			break;
-		}
+	for (unsigned int i = 0; i < numModes; i++)
+	if (displayModeList[i].Height == height && displayModeList[i].Width == width)
+	{
+		numerator = displayModeList[i].RefreshRate.Numerator;
+		denominator = displayModeList[i].RefreshRate.Denominator;
+		break;
+	}
 	Assert(adapter->GetDesc(&adapterDesc));
 	videoMem = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
@@ -58,11 +46,11 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	if(vsync)
+	if (vsync)
 	{
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = denominator;
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = numerator;
-	} 
+	}
 	else
 	{
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -152,10 +140,10 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
 	Assert(device->CreateRasterizerState(&rasterDesc, &rasterState))
-	deviceContext->RSSetState(rasterState.Get());
+		deviceContext->RSSetState(rasterState.Get());
 
-	viewport.Width = (FLOAT) width;
-	viewport.Height = (FLOAT) height;
+	viewport.Width = (FLOAT)width;
+	viewport.Height = (FLOAT)height;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
@@ -182,6 +170,12 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 	Assert(device->CreateBlendState(&blendDesc, &blendState));
 	XMFLOAT4 blendFactor(0.0f, 0.0f, 0.0f, 0.0f);
 	deviceContext->OMSetBlendState(blendState.Get(), reinterpret_cast<float*>(&blendFactor), static_cast<UINT>(-1));
+}
+
+Direct3D::~Direct3D()
+{
+	if(swapChain)
+		swapChain->SetFullscreenState(false, NULL);
 }
 
 void Direct3D::ClearRenderTarget()

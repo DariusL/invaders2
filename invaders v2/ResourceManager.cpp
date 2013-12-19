@@ -5,40 +5,17 @@ using namespace Microsoft::WRL;
 
 ResourceManager *ResourceManager::handle;
 
-ResourceManager::ResourceManager(void)
+ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 :normalMappedModel(GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
 {
 	handle = this;
-}
 
-
-ResourceManager::~ResourceManager(void)
-{
-}
-
-shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
-{
-	switch (type)
-	{
-	case ENEMY::ENEMY_BASIC:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_BASIC], GetShader<ColorShader>());
-		break;
-	case ENEMY::ENEMY_LAPTOP:
-		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_LAPTOP], GetShader<ColorShader>());
-	default:
-		return NULL;
-		break;
-	}
-}
-
-void ResourceManager::Init()
-{
 	//player
 	ColorModel temp;
 	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
 
 	VertexType vertex;
-	
+
 	vertex.position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
@@ -67,7 +44,7 @@ void ResourceManager::Init()
 
 	//enemy basic
 	temp.hitbox = XMFLOAT2(2.0f, 2.0f);
-	
+
 	vertex.position = XMFLOAT3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
@@ -96,7 +73,7 @@ void ResourceManager::Init()
 
 	//bullet
 	temp.hitbox = XMFLOAT2(0.2f, 1.5f);
-	
+
 	vertex.position = XMFLOAT3(-0.1f, -0.75f, 0.0f);  // Bottom left.
 	vertex.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	temp.vertices.push_back(vertex);
@@ -154,7 +131,7 @@ void ResourceManager::Init()
 
 	//wall
 	temp.hitbox = XMFLOAT2(1.0f, 1.0f);
-	
+
 	vertex.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
 	vertex.color = XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f);
 	temp.vertices.push_back(vertex);
@@ -217,7 +194,7 @@ void ResourceManager::Init()
 
 	texturedModels.push_back(move(plane));
 
-	
+
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
 	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
@@ -286,12 +263,68 @@ void ResourceManager::Init()
 	level->enemyTypes = vector<int>();
 	level->enemyTypes.push_back(ENEMY::ENEMY_BASIC);
 
-	for(int i = 0; i < level->gridHeight * level->gridWidth; i++)
+	for (int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
 		level->enemies.push_back(ENEMY::ENEMY_BASIC);
 	}
 
 	levels.push_back(shared_ptr<Level>(level));
+
+	shaders.push_back(make_unique<ColorShader>(L"Shaders\\ColorVertex.cso", L"Shaders\\ColorPixel.cso"));
+	shaders.push_back(make_unique<ColorInstancedShader>(L"Shaders\\ColorInstancedVertex.cso", L"Shaders\\ColorPixel.cso"));
+	shaders.push_back(make_unique<GlobalDiffuseShader>(L"Shaders\\GlobalDiffuseVertex.cso", L"Shaders\\GlobalDiffusePixel.cso"));
+	shaders.push_back(make_unique<GlobalSpecularShader>(L"Shaders\\GlobalSpecularVertex.cso", L"Shaders\\GlobalSpecularPixel.cso"));
+	shaders.push_back(make_unique<PointDiffuseShader>(L"Shaders\\PointDiffuseVertex.cso", L"Shaders\\PointDiffusePixel.cso"));
+	shaders.push_back(make_unique<PointSpecularShader>(L"Shaders\\PointSpecularVertex.cso", L"Shaders\\PointSpecularPixel.cso"));
+	shaders.push_back(make_unique<TextureShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\TexturePixel.cso"));
+	shaders.push_back(make_unique<NormalMappedShader>(L"Shaders\\NormalMapVertex.cso", L"Shaders\\NormalMapPixel.cso"));
+	shaders.push_back(make_unique<WaterShader>(L"Shaders\\WaterVertex.cso", L"Shaders\\WaterPixel.cso"));
+	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
+	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
+	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
+	shaders.push_back(make_unique<HorizontalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\HorizontalBlurPixel.cso"));
+	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
+
+	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
+
+	for (auto &shader : shaders)
+		shader->Init(device);
+
+	for (auto &shader : computeShaders)
+		shader->Init(device);
+
+	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
+	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
+
+	for (auto &model : models)
+		model.Init(device);
+	for (auto &model : texturedModels)
+		model.Init(device);
+	for (auto &model : normalTexturedModels)
+		model.Init(device);
+	normalMappedModel.Init(device);
+}
+
+
+ResourceManager::~ResourceManager(void)
+{
+}
+
+shared_ptr<DrawableShooter> ResourceManager::GetEnemy(int type)
+{
+	switch (type)
+	{
+	case ENEMY::ENEMY_BASIC:
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_BASIC], GetShader<ColorShader>());
+		break;
+	case ENEMY::ENEMY_LAPTOP:
+		return make_shared<DrawableShooter>(15.0f, 0.5f, models[MODEL::MODEL_ENEMY_LAPTOP], GetShader<ColorShader>());
+	default:
+		return NULL;
+		break;
+	}
 }
 
 ColorModel ResourceManager::GetModelFromOBJ(wstring filename, bool invert)
@@ -645,44 +678,4 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 	ComPtr<ID3D11ShaderResourceView> ret;
 	Assert(CreateDDSTextureFromFile(device.Get(), filename.c_str(), NULL, &ret));
 	return ret;
-}
-
-void ResourceManager::InitShaders(ComPtr<ID3D11Device> device)
-{
-	shaders.push_back(make_unique<ColorShader>(L"Shaders\\ColorVertex.cso", L"Shaders\\ColorPixel.cso"));
-	shaders.push_back(make_unique<ColorInstancedShader>(L"Shaders\\ColorInstancedVertex.cso", L"Shaders\\ColorPixel.cso"));
-	shaders.push_back(make_unique<GlobalDiffuseShader>(L"Shaders\\GlobalDiffuseVertex.cso", L"Shaders\\GlobalDiffusePixel.cso"));
-	shaders.push_back(make_unique<GlobalSpecularShader>(L"Shaders\\GlobalSpecularVertex.cso", L"Shaders\\GlobalSpecularPixel.cso"));
-	shaders.push_back(make_unique<PointDiffuseShader>(L"Shaders\\PointDiffuseVertex.cso", L"Shaders\\PointDiffusePixel.cso"));
-	shaders.push_back(make_unique<PointSpecularShader>(L"Shaders\\PointSpecularVertex.cso", L"Shaders\\PointSpecularPixel.cso"));
-	shaders.push_back(make_unique<TextureShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\TexturePixel.cso"));
-	shaders.push_back(make_unique<NormalMappedShader>(L"Shaders\\NormalMapVertex.cso", L"Shaders\\NormalMapPixel.cso"));
-	shaders.push_back(make_unique<WaterShader>(L"Shaders\\WaterVertex.cso", L"Shaders\\WaterPixel.cso"));
-	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
-	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
-	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
-	shaders.push_back(make_unique<CelShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\CelPixel.cso"));
-	shaders.push_back(make_unique<HorizontalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\HorizontalBlurPixel.cso"));
-	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
-
-	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
-	
-	for(auto &shader : shaders)
-		shader->Init(device);
-
-	for (auto &shader : computeShaders)
-		shader->Init(device);
-
-	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
-
-	for (auto &model : models)
-		model.Init(device);
-	for (auto &model : texturedModels)
-		model.Init(device);
-	for (auto &model : normalTexturedModels)
-		model.Init(device);
-	normalMappedModel.Init(device);
 }

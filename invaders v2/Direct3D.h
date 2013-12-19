@@ -9,10 +9,8 @@ using namespace Microsoft::WRL;
 class Direct3D
 {
 public:
-	Direct3D(void);
+	Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear);
 	~Direct3D(void);
-
-	void Init(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear);
 
 	void ClearRenderTarget();
 	void Present();

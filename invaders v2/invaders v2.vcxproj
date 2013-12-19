@@ -96,12 +96,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="AppHandle.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="CelPass.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="HorizontalBlurShader.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CelShader.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="AppHandle.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="CelPass.h" />
@@ -152,7 +153,6 @@
     <ClInclude Include="HorizontalBlurShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBall.h" />
-    <ClInclude Include="CelShader.h" />
     <ClInclude Include="ColorInstancedShader.h" />
     <ClInclude Include="ColorShader.h" />
     <ClInclude Include="DDSTextureLoader.h" />

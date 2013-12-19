@@ -11,7 +11,7 @@ void HorizontalBlurShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	BlurBuffer data;
 
 	int width, height;
-	App::Get()->GetScreenDims(width, height);
+	AppHandle::Get().GetScreenDims(width, height);
 	float fwidth = 1.0f / width;
 	data.offset = XMFLOAT4(-fwidth, 0.0f, fwidth, 0.0f);
 

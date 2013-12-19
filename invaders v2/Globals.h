@@ -20,6 +20,9 @@ extern const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 extern const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
 extern const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
 
+extern uint screenWidth;
+extern uint screenHeight;
+
 extern LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l);
 
 struct VertexType

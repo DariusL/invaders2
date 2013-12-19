@@ -7,28 +7,28 @@
 #include "ResourceManager.h"
 #include "Input.h"
 #include "Window.h"
+#include "AppHandle.h"
 
 class Graphics;
 class App
 {
-	Graphics graphics;
-	Input input;
-	Window window;
-
-	unique_ptr<Scene> world;
-
-	ResourceManager manager;
-
-	HWND wHandle;
-	HINSTANCE hInstance;
+	AppHandle handle;
 	wstring appName;
-
+	bool fullscreen;
 	uint screenHeight;
 	uint screenWidth;
 
-	long lastFrame;
+	Input input;
+	Window window;
+	Graphics graphics;
+	ResourceManager manager;
 
-	bool fullscreen;
+	unique_ptr<Scene> world;
+
+	HWND wHandle;
+	HINSTANCE hInstance;
+	
+	long lastFrame;
 	bool running;
 public:
 	App(uint width = 1280, uint height = 720, bool fullscreen = false, wstring name = L"Invaders v2");
@@ -44,11 +44,8 @@ public:
 
 	HWND GetWindowHandle(){return wHandle;}
 	IWorld *GetWorld(){return world.get();}
-
-	static App *Get(){return Handle;}
 private:
 	void InitWindows();
 	void ShutdownWindows();
 	bool OnLoop();
-	static App *Handle;
 };

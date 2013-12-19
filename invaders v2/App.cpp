@@ -1,10 +1,11 @@
 #include "includes.h"
 #include "App.h"
 
-App *App::Handle;
-
 App::App(uint width, uint height, bool fullscreen, wstring name)
-:screenHeight(height), screenWidth(width), fullscreen(fullscreen), window(width, height, fullscreen, name), appName(name), wHandle(window.GetWindowHandle())
+:screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
+window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
+graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this),
+manager(graphics.GetDevice())
 {
 }
 
@@ -14,12 +15,6 @@ App::~App()
 
 void App::Init()
 {
-	Handle = this;
-
-	manager.Init();
-
-	graphics.Init(screenWidth, screenHeight, wHandle, fullscreen, 0.1f);
-
 	world = unique_ptr<Scene>(new Scene());
 }
 

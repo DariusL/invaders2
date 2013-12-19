@@ -16,7 +16,6 @@
 #include "MirrorShader.h"
 #include "InstancedTextureShader.h"
 #include "ShadowShader.h"
-#include "CelShader.h"
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
 #include "CelComputeShader.h"
@@ -61,7 +60,6 @@ public:
 		SHADER_MIRROR,
 		SHADER_TEXTURE_INSTANCED,
 		SHADER_SHADOW,
-		SHADER_CEL,
 		SHADER_HORIZONTAL_BLUR,
 		SHADER_VERTICAL_BLUR,
 	};
@@ -121,15 +119,14 @@ private:
 	static FaceVertex GetVertexFromString(string &vertex);
 	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
 
-	ResourceManager(const ResourceManager&) = delete;
-	ResourceManager &operator=(const ResourceManager&) = delete;
+	
 	static ResourceManager *handle;
 public:
-	ResourceManager(void);
+	ResourceManager(Microsoft::WRL::ComPtr<ID3D11Device> device);
 	~ResourceManager(void);
 
-	void Init();
-	void InitShaders(Microsoft::WRL::ComPtr<ID3D11Device>);
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager &operator=(const ResourceManager&) = delete;
 
 	ColorModel &GetModel(MODEL i){return models[i];}
 	NormalTexturedModel &GetNormalTexturedModel(NORMAL_TEXTURED_MODEL i){ return normalTexturedModels[i]; }
@@ -167,8 +164,6 @@ public:
 	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[SHADER::SHADER_TEXTURE_INSTANCED]); }
 	template<>
 	ShadowShader &GetShader<ShadowShader>(){ return static_cast<ShadowShader&>(*shaders[SHADER::SHADER_SHADOW]); }
-	template<>
-	CelShader &GetShader<CelShader>(){ return static_cast<CelShader&>(*shaders[SHADER::SHADER_CEL]); }
 	template<>
 	HorizontalBlurShader &GetShader<HorizontalBlurShader>(){ return static_cast<HorizontalBlurShader&>(*shaders[SHADER::SHADER_HORIZONTAL_BLUR]); }
 	template<>
