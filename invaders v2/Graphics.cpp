@@ -5,23 +5,9 @@
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 :handle(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
 post(POST_PROCESS_CEL), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
-d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear)
+d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
+rm(d3D.GetDevice())
 {
-	tex.push_back(NULL);
-}
-
-void Graphics::ChangeBrightness(float offset)
-{
-	brightness += offset;
-	if(brightness > 1.0f)
-		brightness = 1.0f;
-	else if(brightness < 0.0f)
-		brightness = 0.0f;
-}
-
-void Graphics::Init(Scene &world)
-{
-	auto &rm = RM::Get();
 	auto device = d3D.GetDevice();
 
 	XMFLOAT2 viewportSize(width / 4.0f, height / 4.0f);
@@ -38,6 +24,21 @@ void Graphics::Init(Scene &world)
 	celOutput->Init(device);
 	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
 	celPass->Init(device);
+	tex.push_back(NULL);
+}
+
+void Graphics::ChangeBrightness(float offset)
+{
+	brightness += offset;
+	if(brightness > 1.0f)
+		brightness = 1.0f;
+	else if(brightness < 0.0f)
+		brightness = 0.0f;
+}
+
+void Graphics::Init(Scene &world)
+{
+	
 
 	world.Init(d3D.GetDevice());
 }

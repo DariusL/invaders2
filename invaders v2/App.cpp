@@ -1,11 +1,11 @@
 #include "includes.h"
 #include "App.h"
+#include "ResourceManager.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
-graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this),
-manager(graphics.GetDevice())
+graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
 }
 
@@ -45,7 +45,7 @@ bool App::OnLoop()
 {
 	if(!world->IsStarted())
 	{
-		world->Start(manager.GetLevel(ResourceManager::LEVEL::L1));
+		world->Start(RM::Get().GetLevel(ResourceManager::LEVEL::L1));
 		graphics.Init(*world);
 	}
 	int worldEvents = 0;

@@ -4,12 +4,10 @@
 #include "GameWorld.h"
 #include "Scene.h"
 #include "Logger.h"
-#include "ResourceManager.h"
 #include "Input.h"
 #include "Window.h"
 #include "AppHandle.h"
 
-class Graphics;
 class App
 {
 	AppHandle handle;
@@ -21,7 +19,6 @@ class App
 	Input input;
 	Window window;
 	Graphics graphics;
-	ResourceManager manager;
 
 	unique_ptr<Scene> world;
 

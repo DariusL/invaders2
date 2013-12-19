@@ -5,6 +5,7 @@
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
 #include "CelPass.h"
+#include "ResourceManager.h"
 
 class Graphics
 {
@@ -18,6 +19,7 @@ class Graphics
 	HWND handle;
 
 	Direct3D d3D;
+	ResourceManager rm;
 
 	ComVector<ID3D11ShaderResourceView> tex;
 	unique_ptr<Screen<TextureVertexType, HorizontalBlurShader>> hBlurTarget;
