@@ -1,5 +1,5 @@
-Texture2D<float4> inputTexture;
-RWTexture2D<float4> outputTexture;
+Texture2D<float4> inputTexture : register(t0);
+RWTexture2D<float4> outputTexture : register(u0);
 
 cbuffer KernelBuffer : register(b0)
 {

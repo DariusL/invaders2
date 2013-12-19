@@ -20,10 +20,12 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	d3D.Init(width, heigth, vsync, handle, fullScreen, screenDepth, screenNear);
 
 	RM::Get().InitShaders(d3D.GetDevice());
+
+	auto &rm = RM::Get();
+	auto device = d3D.GetDevice();
 	
 	XMFLOAT2 viewportSize(width / 4.0f, heigth / 4.0f);
-	celTarget = make_unique<Screen<TextureVertexType, CelShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<CelShader>(), width, height, (float)width, (float)height);
+	celTarget = make_unique<RenderTarget>(width, height);
 	celTarget->Init(d3D.GetDevice());
 	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
@@ -31,6 +33,11 @@ void Graphics::Init(int width, int heigth, HWND handle, bool fullscreen, float b
 	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
 	vBlurTarget->Init(d3D.GetDevice());
+	celOutput = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, rm.GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+		rm.GetShader<TextureShader>(), nullptr, XMFLOAT3((float)width, (float)height, 1.0f));
+	celOutput->Init(device);
+	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
+	celPass->Init(device);
 	tex.push_back(NULL);
 }
 
@@ -104,9 +111,8 @@ void Graphics::Render(Scene &world)
 	{
 		if (post == POST_PROCESS_CEL)
 		{
-			auto &target = celTarget->GetRenderTarget();
-			target.SetRenderTarget(context);
-			target.ClearTarget(context);
+			celTarget->SetRenderTarget(context);
+			celTarget->ClearTarget(context);
 		}
 		if (post == POST_PROCESS_BLUR)
 		{
@@ -138,7 +144,9 @@ void Graphics::Render(Scene &world)
 			start = chrono::high_resolution_clock::now();
 			d3D.ResetRenderTarget();
 			d3D.ClearRenderTarget();
-			celTarget->Render(params);
+			auto t = celPass->Pass(context, celTarget->GetRenderedTexture());
+			tex[0] = t;
+			celOutput->Render(params, tex);
 			end = chrono::high_resolution_clock::now();
 			bench.push_back(chrono::duration_cast<chrono::microseconds>(end - start).count());
 			if (bench.size() >= 20)

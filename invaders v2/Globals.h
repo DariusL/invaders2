@@ -16,6 +16,9 @@ extern const DirectX::XMFLOAT4 ZeroVec4;
 extern const DirectX::XMFLOAT3 OneVec3;
 extern const DirectX::XMFLOAT2 ZeroVec2;
 
+extern const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
+extern const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
+
 struct VertexType
 {
 	DirectX::XMFLOAT3 position;

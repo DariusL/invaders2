@@ -41,9 +41,9 @@ void CelComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&desc, &resource, &offsetBuffer));
 }
 
-void CelComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComVector<ID3D11ShaderResourceView> textures)
+void CelComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
 {
-	ComputeShader::SetShaderParameters(context, textures);
+	ComputeShader::SetShaderParameters(context, input, output);
 
 	context->CSSetConstantBuffers(0, 1, kernelBuffer.GetAddressOf());
 	context->CSSetConstantBuffers(1, 1, offsetBuffer.GetAddressOf());

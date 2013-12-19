@@ -10,16 +10,15 @@ private:
 	wstring cs;
 protected:
 	ComPtr<ID3D11ComputeShader> shader;
-	uint texturesSet;
 public:
-	ComputeShader(wstring cs):cs(cs), texturesSet(0){}
+	ComputeShader(wstring cs):cs(cs){}
 	ComputeShader(ComputeShader&) = delete;
 	ComputeShader &operator=(ComputeShader&) = delete;
 	virtual ~ComputeShader(){}
 
 	void Init(ComPtr<ID3D11Device> device);
 	virtual void Start(ComPtr<ID3D11DeviceContext> context, uint width, uint height);
-	virtual void SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComVector<ID3D11ShaderResourceView> textures);
+	virtual void SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
 protected:
 	void InitializeShader(ComPtr<ID3D11Device> device, wstring cs);
 	void SetShader(ComPtr<ID3D11DeviceContext> context);

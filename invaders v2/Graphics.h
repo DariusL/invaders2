@@ -5,6 +5,7 @@
 #include "CelShader.h"
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
+#include "CelPass.h"
 
 class Graphics
 {
@@ -22,7 +23,9 @@ class Graphics
 	ComVector<ID3D11ShaderResourceView> tex;
 	unique_ptr<Screen<TextureVertexType, HorizontalBlurShader>> hBlurTarget;
 	unique_ptr<Screen<TextureVertexType, VerticalBlurShader>> vBlurTarget;
-	unique_ptr<Screen<TextureVertexType, CelShader>> celTarget;
+	unique_ptr<RenderTarget> celTarget;
+	unique_ptr<SimpleTexturedEntity> celOutput;
+	unique_ptr<CelPass> celPass;
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;
 	POST_PROCESS post;

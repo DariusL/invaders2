@@ -18,7 +18,6 @@ void ComputeShader::InitializeShader(ComPtr<ID3D11Device> device, wstring cs)
 
 	AssertBool(Utils::ReadFileToArray(cs, buffer, size), L"Could not read " + cs);
 
-	// Create the vertex shader from the buffer.
 	Assert(device->CreateComputeShader(buffer.get(), size, NULL, &shader));
 }
 
@@ -27,11 +26,10 @@ void ComputeShader::SetShader(ComPtr<ID3D11DeviceContext> context)
 	context->CSSetShader(shader.Get(), nullptr, 0);
 }
 
-void ComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComVector<ID3D11ShaderResourceView> textures)
+void ComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
 {
-	texturesSet = textures.size();
-	for (uint i = 0; i < texturesSet; i++)
-		context->CSSetShaderResources(i, 1, textures[i].GetAddressOf());
+	context->CSSetShaderResources(0, 1, input.GetAddressOf());
+	context->CSSetUnorderedAccessViews(0, 1, output.GetAddressOf(), 0);
 	SetShader(context);
 }
 
@@ -46,6 +44,7 @@ void ComputeShader::Start(ComPtr<ID3D11DeviceContext> context, uint width, uint 
 		sizeY++;
 
 	context->Dispatch(sizeX, sizeY, 1);
-	for (uint i = 0; i < texturesSet; i++)
-		context->CSSetShaderResources(i, 1, nullptr);
+
+	context->CSSetShaderResources(0, 1, nullResourceView.GetAddressOf());
+	context->CSSetUnorderedAccessViews(0, 1, nullUnorderedView.GetAddressOf(), 0);
 }
