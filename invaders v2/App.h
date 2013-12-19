@@ -6,12 +6,14 @@
 #include "Logger.h"
 #include "ResourceManager.h"
 #include "Input.h"
+#include "Window.h"
 
 class Graphics;
 class App
 {
 	Graphics graphics;
 	Input input;
+	Window window;
 
 	unique_ptr<Scene> world;
 
@@ -19,18 +21,17 @@ class App
 
 	HWND wHandle;
 	HINSTANCE hInstance;
-	LPCWSTR appName;
+	wstring appName;
 
-	int screenHeight;
-	int screenWidth;
-	int frameRateLimit;
+	uint screenHeight;
+	uint screenWidth;
 
 	long lastFrame;
 
 	bool fullscreen;
 	bool running;
 public:
-	App(void);
+	App(uint width = 1280, uint height = 720, bool fullscreen = false, wstring name = L"Invaders v2");
 	~App(void);
 
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
@@ -51,5 +52,3 @@ private:
 	bool OnLoop();
 	static App *Handle;
 };
-
-static LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l){return App::Get()->MessageHandler(h, u, w, l);}
