@@ -18,6 +18,7 @@ extern const DirectX::XMFLOAT2 ZeroVec2;
 
 extern const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 extern const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
+extern const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
 
 struct VertexType
 {

@@ -68,7 +68,7 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
 	}
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_UNORDERED_ACCESS;
 	swapChainDesc.OutputWindow = whandle;
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
@@ -89,6 +89,7 @@ void Direct3D::Init(int width, int height, bool vsync, HWND whandle, bool fullsc
 		&swapChain, &device, NULL, &deviceContext));
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
 	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
+	Assert(device->CreateUnorderedAccessView(backBufferPtr.Get(), nullptr, &backBufferAccess));
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;
@@ -201,6 +202,11 @@ void Direct3D::ResetRenderTarget()
 {
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
 	deviceContext->RSSetViewports(1, &viewport);
+}
+
+void Direct3D::UnsetRenderTarget()
+{
+	deviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 }
 
 void Direct3D::DoingDepthCheck(bool check)

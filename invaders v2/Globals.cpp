@@ -11,3 +11,4 @@ const XMFLOAT2 ZeroVec2 = XMFLOAT2(0.0f, 0.0f);
 
 const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
+const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;

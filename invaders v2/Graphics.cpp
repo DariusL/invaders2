@@ -142,11 +142,9 @@ void Graphics::Render(Scene &world)
 		if (post == POST_PROCESS_CEL)
 		{
 			start = chrono::high_resolution_clock::now();
-			d3D.ResetRenderTarget();
 			d3D.ClearRenderTarget();
-			auto t = celPass->Pass(context, celTarget->GetRenderedTexture());
-			tex[0] = t;
-			celOutput->Render(params, tex);
+			d3D.UnsetRenderTarget();
+			celPass->Pass(context, celTarget->GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
 			end = chrono::high_resolution_clock::now();
 			bench.push_back(chrono::duration_cast<chrono::microseconds>(end - start).count());
 			if (bench.size() >= 20)
