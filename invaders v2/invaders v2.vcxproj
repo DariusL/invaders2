@@ -134,6 +134,7 @@
     <ClCompile Include="ShadowLight.cpp" />
     <ClCompile Include="ShadowShader.cpp" />
     <ClCompile Include="Shooter.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VerticalBlurShader.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="ShadowLight.h" />
     <ClInclude Include="ShadowShader.h" />
     <ClInclude Include="Shooter.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureShader.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
