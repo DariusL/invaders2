@@ -42,7 +42,5 @@ public:
 	HWND GetWindowHandle(){return wHandle;}
 	IWorld *GetWorld(){return world.get();}
 private:
-	void InitWindows();
-	void ShutdownWindows();
 	bool OnLoop();
 };

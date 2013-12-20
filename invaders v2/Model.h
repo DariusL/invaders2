@@ -11,27 +11,24 @@ template<class T>
 class Model
 {
 	friend class ResourceManager;
-
 public:
-	Model(){}
+	Model(ComPtr<ID3D11Device> device, vector<T> &vertices, vector<int> &indices);
 	Model(Model &&other);
 	Model &operator=(Model &&other);
 
 	Model(Model&) = delete;
 	Model &operator=(Model&) = delete;
 
-	void Init(ComPtr<ID3D11Device> device);
 	void Set(ComPtr<ID3D11DeviceContext> context);
 
-	int GetIndexCount(){ return indices.size(); }
+	int GetIndexCount(){ return indexCount; }
 private:
-	vector<T> vertices;
-	vector<int> indices;
 	DirectX::XMFLOAT2 hitbox;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	ComPtr<ID3D11Buffer> indexBuffer;
 	BufferInfo vertexInfo;
+	uint indexCount;
 };
 
 typedef Model<VertexType> ColorModel;
@@ -42,11 +39,12 @@ typedef Model<NormalTextureVertexType> NormalTexturedModel;
 
 template<class T>
 Model<T>::Model(Model &&other)
-	:vertices(move(other.vertices)), indices(move(other.indices))
+:hitbox(move(other.hitbox)),
+vertexInfo(move(other.vertexInfo)),
+vertexBuffer(move(other.vertexBuffer)),
+indexBuffer(move(other.indexBuffer)),
+indexCount(other.indexCount)
 {
-	DirectX::XMFLOAT2 temp(hitbox);
-	hitbox = other.hitbox;
-	other.hitbox = temp;
 }
 
 template<class T>
@@ -54,17 +52,18 @@ Model<T> &Model<T>::operator=(Model &&other)
 {
 	if(this != &other)
 	{
-		vertices = move(other.vertices);
-		indices = move(other.indices);
-		DirectX::XMFLOAT2 temp(hitbox);
 		hitbox = other.hitbox;
-		other.hitbox = temp;
+		vertexInfo = other.vertexInfo;
+		vertexBuffer = other.vertexBuffer;
+		indexBuffer = other.indexBuffer;
+		indexCount = other.indexCount;
 	}
 	return *this;
 }
 
 template<class T>
-void Model<T>::Init(ComPtr<ID3D11Device> device)
+Model<T>::Model(ComPtr<ID3D11Device> device, vector<T> &vertices, vector<int> &indices)
+:indexCount(indices.size())
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -73,7 +72,7 @@ void Model<T>::Init(ComPtr<ID3D11Device> device)
 	vertexInfo.stride = sizeof(T);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(T)* vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(T) * vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;

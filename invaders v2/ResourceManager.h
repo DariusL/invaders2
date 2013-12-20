@@ -27,11 +27,6 @@ class ResourceManager
 public:
 	enum MODEL
 	{
-		MODEL_PLAYER = 0,
-		MODEL_ENEMY_BASIC,
-		MODEL_BULLET,
-		MODEL_ENEMY_LAPTOP,
-		MODEL_WALL,
 		MODEL_BALL
 	};
 
@@ -88,8 +83,8 @@ public:
 	enum NORMAL_TEXTURED_MODEL
 	{
 		NORMAL_TEXTURED_MODEL_INV_BOX,
-		NORMAL_TEXTURED_PLANE,
-		NORMAL_TEXTURED_BATH
+		NORMAL_TEXTURED_MODEL_PLANE,
+		NORMAL_TEXTURED_MODEL_BATH
 	};
 
 private:
@@ -108,12 +103,11 @@ private:
 	ComVector<ID3D11ShaderResourceView> textures;
 	NormalMappedModel normalMappedModel;
 
-	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
-	static ColorModel GetModelFromOBJ(wstring filename, bool invert = false);
-	static NormalMappedModel GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJ(wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
-	static NormalTexturedModel GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
+	static NormalModel GetNormalModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
+	static ColorModel GetModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
+	static NormalMappedModel GetNormalMappedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
+	static NormalTexturedModel GetNormalTexturedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
 	static FaceVertex GetVertexFromString(string &vertex);
@@ -123,7 +117,7 @@ private:
 	static ResourceManager *handle;
 public:
 	ResourceManager(Microsoft::WRL::ComPtr<ID3D11Device> device);
-	~ResourceManager(void);
+	~ResourceManager(void){}
 
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager &operator=(const ResourceManager&) = delete;

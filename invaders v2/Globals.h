@@ -29,6 +29,8 @@ struct VertexType
 {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT4 color;
+
+	VertexType(float x, float y, float z, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)) :position(x, y, z), color(color){}
 };
 
 struct TextureVertexType
@@ -48,25 +50,20 @@ struct NormalTextureVertexType : public TextureVertexType
 	NormalTextureVertexType(float x, float y, float z) :TextureVertexType(x, y, z){}
 };
 
-struct NormalMappedVertexType
+struct NormalMappedVertexType : public NormalTextureVertexType
 {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT3 normal;
 	DirectX::XMFLOAT4 color;
-	DirectX::XMFLOAT2 tex;
 	DirectX::XMFLOAT3 tangent;
 	DirectX::XMFLOAT3 binormal;
 
-	NormalMappedVertexType(float x, float y, float z) :position(x, y, z), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
+	NormalMappedVertexType(float x, float y, float z) :NormalTextureVertexType(x, y, z), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
 };
 
-struct NormalVertexType
+struct NormalVertexType : VertexType
 {
-	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT3 normal;
-	DirectX::XMFLOAT4 color;
 
-	NormalVertexType(float x, float y, float z) :position(x, y, z), color(1.0f, 0.0f, 0.0f, 1.0f){}
+	NormalVertexType(float x, float y, float z) :VertexType(x, y, z){}
 };
 
 struct InstanceType

@@ -24,7 +24,6 @@ public:
 	XMVECTOR GetZeroPlane(){ return XMLoadFloat4(&zeroPlane); }
 	MirrorBall &GetRefletionBall(){ return reflectionBall; }
 
-	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
 };
 

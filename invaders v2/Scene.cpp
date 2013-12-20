@@ -15,7 +15,7 @@ light(device, XMFLOAT3(0.0f, -80.0f, -30.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 
 water(device, XMFLOAT3(0.0f, -145.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 RM::Get().GetShader<WaterShader>(), 300, 300, 30.0f, 30.0f, RM::Get().GetTexture(RM::TEXTURE_WATER_NORMAL_MAP)),
 
-bath(XMFLOAT3(0.0f, -150.0f, 0.0f), ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_BATH),
+bath(XMFLOAT3(0.0f, -150.0f, 0.0f), ZeroVec3, RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_MODEL_BATH),
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(50.0f, 10.0f, 50.0f)),
 
 billboard(XMFLOAT3(0.0f, -300.0f, 200.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(),
@@ -24,10 +24,10 @@ RM::Get().GetTexture(RM::TEXTURE_TREE), XMFLOAT3(10.0f, 10.0f, 1.0f)),
 billboard2(XMFLOAT3(30.0f, -300.0f, 200.0f), RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE), RM::Get().GetShader<TextureShader>(),
 RM::Get().GetTexture(RM::TEXTURE_TREE), XMFLOAT3(10.0f, 10.0f, 1.0f)),
 
-ground(XMFLOAT3(0.0f, -300.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE),
+ground(XMFLOAT3(0.0f, -300.0f, 0.0f), XMFLOAT3(XM_PIDIV2, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_MODEL_PLANE),
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(600.0f, 600.0f, 1.0f)),
 
-wall(XMFLOAT3(0.0f, 0.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_PLANE),
+wall(XMFLOAT3(0.0f, 0.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), RM::Get().GetNormalTexturedModel(RM::NORMAL_TEXTURED_MODEL_PLANE),
 RM::Get().GetShader<ShadowShader>(), RM::Get().GetTexture(RM::TEXTURE_WALL), XMFLOAT3(200.0f, 200.0f, 1.0f)),
 
 particles(device, RM::Get().GetModel(RM::MODEL_BALL), RM::Get().GetShader<ColorInstancedShader>(), 1000, XMFLOAT3(0.0f, -300.0f, -70.0f)),

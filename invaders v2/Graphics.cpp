@@ -23,7 +23,6 @@ rm(d3D.GetDevice())
 		rm.GetShader<TextureShader>(), nullptr, XMFLOAT3((float)width, (float)height, 1.0f));
 
 	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
-	celPass->Init(device);
 	tex.push_back(NULL);
 }
 
