@@ -15,7 +15,8 @@ protected:
 	bool started;
 	
 public:
-
+	IWorld(){}
+	virtual ~IWorld(){}
 	virtual bool Start(shared_ptr<Level> level) = 0;
 	virtual void Stop() = 0;
 

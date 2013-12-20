@@ -11,7 +11,7 @@ class Wall : public SimpleBaseInstancer
 	XMFLOAT3 topLeft;
 	bool changed;
 public:
-	Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader);
+	Wall(ComPtr<ID3D11Device> device, XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader);
 	~Wall(void);
 	bool Update(ComPtr<ID3D11DeviceContext>);
 

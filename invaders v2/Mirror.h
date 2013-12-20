@@ -16,7 +16,7 @@ protected:
 	ComVector<ID3D11ShaderResourceView> textures;
 	DrawableTexturedEntity<vt, sh> screen;
 public:
-	Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
+	Mirror(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Mirror(Mirror&) = delete;
 	Mirror(Mirror&&);
 
@@ -31,9 +31,9 @@ public:
 typedef Mirror<TextureVertexType, MirrorShader> SimpleMirror;
 
 template<class vt, class sh>
-Mirror<vt, sh>::Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader,
+Mirror<vt, sh>::Mirror(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader,
 	int resWidth, int resHeight, float screenWidth, float screenHeight)
-	:screen(screenPos, rot, screenModel, screenShader, nullptr, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
+	:	screen(screenPos, rot, screenModel, screenShader, nullptr, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
 	reflectionBall(resWidth, resHeight,
 	([this](RenderParams &params) -> void
 	{
@@ -47,6 +47,8 @@ Mirror<vt, sh>::Mirror(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel,
 	mirrorPlane = Utils::PlaneFromPointAndRot(screenPos, rot);
 	zeroPlane = Utils::PlaneFromPointAndRot(ZeroVec3, rot);
 	textures.push_back(nullptr);
+
+	reflectionBall.Init(device);
 }
 
 template<class vt, class sh>
@@ -54,13 +56,6 @@ Mirror<vt, sh>::Mirror(Mirror &&other)
 :screen(move(other.screen)), mirrorPlane(move(other.mirrorPlane)), zeroPlane(move(other.zeroPlane)), reflectionBall(move(other.reflectionBall)),
 textures(move(other.textures))
 {
-}
-
-template<class vt, class sh>
-void Mirror<vt, sh>::Init(ComPtr<ID3D11Device> device)
-{
-	reflectionBall.Init(device);
-	screen.Init(device);
 }
 
 template<class vt, class sh>

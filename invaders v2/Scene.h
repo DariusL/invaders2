@@ -29,7 +29,7 @@ class Scene : public IWorld
 	ColoredParticles particles;
 	DrawableBumpyEntity thing;
 public:
-	Scene();
+	Scene(ComPtr<ID3D11Device> device);
 	~Scene();
 
 	bool Start(shared_ptr<Level> level);
@@ -37,7 +37,6 @@ public:
 
 	int OnLoop(int input, float frameLength);
 	ShadowLight &GetLight(){ return light; }
-	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
 	void GetRenderBalls(vector<MirrorBall*> &mirrors, vector<RemoteCamera*> &cameraBalls);
 };

@@ -10,7 +10,7 @@ class RemoteCamera : public Camera, public IDrawable
 	ComVector<ID3D11ShaderResourceView> textures;
 	DrawableTexturedEntity<TextureVertexType, TextureShader> screen;
 public:
-	RemoteCamera(XMFLOAT3 cameraPos, XMFLOAT3 cameraDir, XMFLOAT3 screenPos, XMFLOAT3 screenRot, TexturedModel &screenModel,
+	RemoteCamera(ComPtr<ID3D11Device> device, XMFLOAT3 cameraPos, XMFLOAT3 cameraDir, XMFLOAT3 screenPos, XMFLOAT3 screenRot, TexturedModel &screenModel,
 		TextureShader &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	RemoteCamera(RemoteCamera &&other);
 	RemoteCamera(RemoteCamera&) = delete;

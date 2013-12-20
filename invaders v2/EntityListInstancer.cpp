@@ -2,7 +2,8 @@
 #include "EntityListInstancer.h"
 
 
-EntityListInstancer::EntityListInstancer(ColorModel &model, ColorInstancedShader &shader, int maxInstanceCount): BaseInstancer(model, shader, maxInstanceCount)
+EntityListInstancer::EntityListInstancer(ComPtr<ID3D11Device> device, ColorModel &model, ColorInstancedShader &shader, int maxInstanceCount)
+: BaseInstancer(device, model, shader, maxInstanceCount)
 {
 }
 

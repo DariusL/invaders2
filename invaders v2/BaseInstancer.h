@@ -11,7 +11,7 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
+	BaseInstancer(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
 	virtual ~BaseInstancer(void){}
 
 protected:
@@ -23,7 +23,6 @@ protected:
 	ComPtr<ID3D11Buffer> instanceBuffer;
 	BufferInfo instanceInfo;
 public:
-	void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams& params);
 
 protected:
@@ -33,15 +32,11 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
-}
 
-template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::Init(ComPtr<ID3D11Device> device)
-{
 	D3D11_BUFFER_DESC instanceBufferDesc;
 
 	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));

@@ -18,7 +18,6 @@ public:
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
-	virtual void Init(ComPtr<ID3D11Device> device);
 	virtual void Render(RenderParams &renderParams);
 protected:
 	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
@@ -42,11 +41,6 @@ moveMatrix(move(other.moveMatrix))
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::~DrawableEntity(void)
-{
-}
-
-template<class vt, class sh>
-void DrawableEntity<vt, sh>::Init(ComPtr<ID3D11Device> device)
 {
 }
 

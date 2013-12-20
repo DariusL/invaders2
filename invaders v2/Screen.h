@@ -12,11 +12,10 @@ protected:
 	DrawableTexturedEntity<vt, sh> screen;
 	int width, height;
 public:
-	Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
+	Screen(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight);
 	Screen(Screen &&other);
 	Screen(Screen&) = delete;
 
-	virtual void Init(ComPtr<ID3D11Device> device);
 	void Render(RenderParams &params);
 	RenderTarget &GetRenderTarget(){ return renderTarget; }
 	int GetTextureWidth(){ return width; }
@@ -26,24 +25,18 @@ public:
 typedef Screen<TextureVertexType, TextureShader> SimpleScreen;
 
 template<class vt, class sh>
-Screen<vt, sh>::Screen(XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
+Screen<vt, sh>::Screen(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
 :renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
 width(resWidth), height(resHeight)
 {
 	textures.push_back(NULL);
+	renderTarget.Init(device);
 }
 
 template<class vt, class sh>
 Screen<vt, sh>::Screen(Screen &&other)
 : renderTarget(move(other.renderTarget)), screen(move(other.screen)), textures(move(other.textures))
 {
-}
-
-template<class vt, class sh>
-void Screen<vt, sh>::Init(ComPtr<ID3D11Device> device)
-{
-	renderTarget.Init(device);
-	screen.Init(device);
 }
 
 template<class vt, class sh>

@@ -15,7 +15,7 @@ App::~App()
 
 void App::Init()
 {
-	world = unique_ptr<Scene>(new Scene());
+	world = unique_ptr<Scene>(new Scene(graphics.GetDevice()));
 }
 
 void App::Run()
@@ -46,7 +46,6 @@ bool App::OnLoop()
 	if(!world->IsStarted())
 	{
 		world->Start(RM::Get().GetLevel(ResourceManager::LEVEL::L1));
-		graphics.Init(*world);
 	}
 	int worldEvents = 0;
 	if(input.IsKeyDown(VK_LEFT))

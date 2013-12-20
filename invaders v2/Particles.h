@@ -21,15 +21,17 @@ protected:
 	vector<Particle> particles;
 	vector<Particle> temp;
 public:
-	Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir = XMFLOAT3(0.0f, 1.0f, 0.0f), float scatter = 0.5f, float speed = 15, int perSecond = 70);
+	Particles(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos,
+		XMFLOAT3 dir = XMFLOAT3(0.0f, 1.0f, 0.0f), float scatter = 0.5f, float speed = 15, int perSecond = 70);
 	Particles(Particles&) = delete;
 
 	void OnLoop(float frame);
 };
 
 template<class vt, class sh>
-Particles<vt, sh>::Particles(Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos, XMFLOAT3 dir, float scatter, float speed, int perSecond)
-:BaseInstancer(model, shader, maxObjectCount, pos), dir(dir), perSecond(perSecond), speed(speed), dist(-scatter, scatter), acc(0.0f, -9.8f, 0.0f)
+Particles<vt, sh>::Particles(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos,
+	XMFLOAT3 dir, float scatter, float speed, int perSecond)
+:BaseInstancer(device, model, shader, maxObjectCount, pos), dir(dir), perSecond(perSecond), speed(speed), dist(-scatter, scatter), acc(0.0f, -9.8f, 0.0f)
 {
 }
 

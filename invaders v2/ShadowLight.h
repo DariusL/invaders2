@@ -6,9 +6,7 @@
 class ShadowLight : public Light
 {
 public:
-	ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorShader &shader, int width, int height);
-
-	void Init(ComPtr<ID3D11Device> device);
+	ShadowLight(ComPtr<ID3D11Device> device, XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorShader &shader, int width, int height);
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
 	void ClearTarget(ComPtr<ID3D11DeviceContext> context);
@@ -26,4 +24,6 @@ protected:
 	D3D11_VIEWPORT viewport;
 
 	XMFLOAT4X4 view, projection;
+private:
+	void Init(ComPtr<ID3D11Device> device);
 };

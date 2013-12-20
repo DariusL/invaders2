@@ -2,8 +2,8 @@
 #include "Wall.h"
 
 
-Wall::Wall(XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) : 
-	SimpleBaseInstancer(model, shader, width * height, center)
+Wall::Wall(ComPtr<ID3D11Device> device, XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) :
+	SimpleBaseInstancer(device, model, shader, width * height, center)
 {
 	AssertBool(false, L"Wall got deimplemented");
 	/*SetSize(XMFLOAT2(model.hitbox.x * width, model.hitbox.y * height));

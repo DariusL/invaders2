@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "ShadowLight.h"
 
-ShadowLight::ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorShader &shader, int width, int height)
+ShadowLight::ShadowLight(ComPtr<ID3D11Device> device, XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorShader &shader, int width, int height)
 :Light(pos, color, model, shader), width(width), height(height)
 {
 	XMStoreFloat4x4(&view, XMMatrixLookToLH(XMLoadFloat3(&pos), XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)));
@@ -13,6 +13,8 @@ ShadowLight::ShadowLight(XMFLOAT3 pos, XMFLOAT4 color, ColorModel &model, ColorS
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
+
+	Init(device);
 }
 
 void ShadowLight::Prepare(RenderParams &params)
@@ -28,8 +30,6 @@ void ShadowLight::Prepare(RenderParams &params)
 
 void ShadowLight::Init(ComPtr<ID3D11Device> device)
 {
-	Light::Init(device);
-
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;

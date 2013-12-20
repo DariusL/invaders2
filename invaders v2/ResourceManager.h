@@ -138,6 +138,7 @@ public:
 	shared_ptr<Level> GetLevel(int type){return levels[type];}
 	static ResourceManager &Get(){ return *handle; }
 
+	//because why not
 	template<class sh>
 	sh &GetShader(){}
 	template<>
