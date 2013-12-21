@@ -61,18 +61,6 @@ vector<D3D11_INPUT_ELEMENT_DESC> ShadowShader::GetInputLayout()
 
 	ret.push_back(desc);
 
-	desc.SemanticName = "TEXCOORD";
-	desc.SemanticIndex = 1;
-	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-
-	ret.push_back(desc);
-
-	desc.SemanticName = "TEXCOORD";
-	desc.SemanticIndex = 2;
-	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
-
-	ret.push_back(desc);
-
 	return ret;
 }
 

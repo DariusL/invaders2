@@ -3,7 +3,7 @@
 
 vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 {
-		D3D11_INPUT_ELEMENT_DESC desc;
+	D3D11_INPUT_ELEMENT_DESC desc;
 	vector<D3D11_INPUT_ELEMENT_DESC> ret;
 
 	desc.SemanticName = "POSITION";
@@ -16,9 +16,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 
 	ret.push_back(desc);
 
-	desc.SemanticName = "NORMAL";
+	desc.SemanticName = "COLOR";
 	desc.SemanticIndex = 0;
-	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	desc.InputSlot = 0;
 	desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
@@ -26,9 +26,9 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 
 	ret.push_back(desc);
 
-	desc.SemanticName = "COLOR";
+	desc.SemanticName = "NORMAL";
 	desc.SemanticIndex = 0;
-	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
 	desc.InputSlot = 0;
 	desc.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	desc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;

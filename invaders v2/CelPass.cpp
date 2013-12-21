@@ -12,10 +12,6 @@ CelPass::~CelPass()
 {
 }
 
-void CelPass::Init(ComPtr<ID3D11Device> device)
-{
-}
-
 void CelPass::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
 {
 	shader.SetShaderParameters(context, input, output);
