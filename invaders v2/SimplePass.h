@@ -3,6 +3,8 @@
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
+#include "HorizontalBlurComputeShader.h"
+#include "VerticalBlurComputeShader.h"
 
 template<class sh>
 class SimplePass
@@ -32,3 +34,5 @@ void SimplePass<sh>::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11Shad
 typedef SimplePass<CelComputeShader> CelPass;
 typedef SimplePass<UpSampleComputeShader> UpSamplePass;
 typedef SimplePass<DownSampleComputeShader> DownSamplePass;
+typedef SimplePass<HorizontalBlurComputeShader> HorizontalBlurPass;
+typedef SimplePass<VerticalBlurComputeShader> VerticalBlurPass;

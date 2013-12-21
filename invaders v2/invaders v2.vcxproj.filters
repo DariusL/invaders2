@@ -150,6 +150,12 @@
     <ClCompile Include="AppHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HorizontalBlurComputeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalBlurComputeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -353,6 +359,12 @@
     <ClInclude Include="SimplePass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HorizontalBlurComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalBlurComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -437,6 +449,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="UpSampleCompute.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="BlurCompute.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

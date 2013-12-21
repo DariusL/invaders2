@@ -21,4 +21,7 @@ public:
 	ComPtr<ID3D11ShaderResourceView> GetSRV(){ return shaderResourceView; }
 	ComPtr<ID3D11UnorderedAccessView> GetUAV(){ return unorderedAccessView; }
 	ComPtr<ID3D11RenderTargetView> GetRTV(){ return renderTargetView; }
+
+	uint GetWidth(){ return width; }
+	uint Getheight(){ return height; }
 };

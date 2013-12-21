@@ -21,6 +21,8 @@
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
+#include "HorizontalBlurComputeShader.h"
+#include "VerticalBlurComputeShader.h"
 
 using namespace std;
 
@@ -65,7 +67,9 @@ public:
 	{
 		SHADER_COMPUTE_CEL,
 		SHADER_COMPUTE_UPSAMPLE,
-		SHADER_COMPUTE_DOWNSAMPLE
+		SHADER_COMPUTE_DOWNSAMPLE,
+		SHADER_COMPUTE_HORIZONTAL_BLUR,
+		SHADER_COMPUTE_VERTICAL_BLUR
 	};
 
 	enum TEXTURE
@@ -172,6 +176,10 @@ public:
 	DownSampleComputeShader &GetShader<DownSampleComputeShader>(){ return static_cast<DownSampleComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_DOWNSAMPLE]); }
 	template<>
 	UpSampleComputeShader &GetShader<UpSampleComputeShader>(){ return static_cast<UpSampleComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_UPSAMPLE]); }
+	template<>
+	HorizontalBlurComputeShader &GetShader<HorizontalBlurComputeShader>(){ return static_cast<HorizontalBlurComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_HORIZONTAL_BLUR]); }
+	template<>
+	VerticalBlurComputeShader &GetShader<VerticalBlurComputeShader>(){ return static_cast<VerticalBlurComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_VERTICAL_BLUR]); }
 };
 
 typedef ResourceManager RM;

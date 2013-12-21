@@ -104,6 +104,8 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
 	computeShaders.push_back(make_unique<UpSampleComputeShader>(L"Shaders\\UpSampleCompute.cso"));
 	computeShaders.push_back(make_unique<DownSampleComputeShader>(L"Shaders\\DownSampleCompute.cso"));
+	computeShaders.push_back(make_unique<HorizontalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
+	computeShaders.push_back(make_unique<VerticalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
 
 	for (auto &shader : shaders)
 		shader->Init(device);
