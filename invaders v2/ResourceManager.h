@@ -106,8 +106,7 @@ private:
 	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static ColorModel GetModelFromOBJ(wstring filename, bool invert = false);
 	static NormalMappedModel GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJ(wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 	static NormalTexturedModel GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);

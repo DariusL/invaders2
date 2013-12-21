@@ -44,8 +44,8 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	texturedModels.push_back(move(plane));
 
 
-	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
-	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
+	texturedModels.push_back(GetTexturedModelFromOBJ(L"Resources\\box.obj", true));
+	texturedModels.push_back(GetTexturedModelFromOBJ(L"Resources\\bath.obj", true));
 
 	tv.position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Bottom left.
 	tv.tex = XMFLOAT2(0.0f, 1.0f);
@@ -280,11 +280,12 @@ NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(wstring filename,
 	return model;
 }
 
-TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool invert)
+TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool unindex, bool invert)
 {
 	TexturedModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT2> tex;
+	vector<TextureVertexType> temp;
 	string input;
 	float x, y, z;
 
@@ -303,7 +304,10 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool in
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			model.vertices.emplace_back(x, y, -z);
+			if (unindex)
+				temp.emplace_back(x, y, -z);
+			else
+				model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vt")
 		{
@@ -314,68 +318,28 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool in
 		{
 			string blob;
 			getline(in, blob, '\n');
-			auto vertices = GetVerticesFromFace(blob);
+			auto fvert = GetVerticesFromFace(blob);
 			if (!invert)
 			{
-				Utils::Reverse(vertices);
+				Utils::Reverse(fvert);
 			}
-			for (auto &vertex : vertices)
+			if (unindex)
 			{
-				model.vertices[vertex.vertex].tex = tex[vertex.tex];
-				model.indices.push_back(vertex.vertex);
+				for (auto &vertex : fvert)
+				{
+					TextureVertexType vt = temp[vertex.vertex];
+					vt.tex = tex[vertex.tex];
+					model.vertices.push_back(vt);
+					model.indices.push_back(model.vertices.size() - 1);
+				}
 			}
-		}
-	}
-
-	return model;
-}
-
-TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(wstring filename, bool invert)
-{
-	TexturedModel model;
-	vector<TextureVertexType> v;
-	ifstream in(filename, ios::binary);
-	vector<XMFLOAT2> tex;
-	string input;
-	float x, y, z;
-
-	AssertBool(in.is_open(), L"File " + filename + L" not found");
-
-	while (!in.eof())
-	{
-		in >> input;
-
-		if (input == "#")
-		{
-			in.ignore(200, '\n');
-			continue;
-		}
-
-		if (input == "v")
-		{
-			in >> x >> y >> z;
-			v.emplace_back(x, y, -z);
-		}
-		else if (input == "vt")
-		{
-			in >> x >> y >> z;
-			tex.emplace_back(x, y);
-		}
-		else if (input == "f")
-		{
-			string blob;
-			getline(in, blob, '\n');
-			auto vertices = GetVerticesFromFace(blob);
-			if (!invert)
+			else
 			{
-				Utils::Reverse(vertices);
-			}
-			for (auto &vertex : vertices)
-			{
-				TextureVertexType temp = v[vertex.vertex];
-				temp.tex = tex[vertex.tex];
-				model.vertices.push_back(temp);
-				model.indices.push_back(model.vertices.size() - 1);
+				for (auto &vertex : fvert)
+				{
+					model.vertices[vertex.vertex].tex = tex[vertex.tex];
+					model.indices.push_back(vertex.vertex);
+				}
 			}
 		}
 	}
