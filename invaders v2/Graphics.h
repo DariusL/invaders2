@@ -27,10 +27,14 @@ class Graphics
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;
 	POST_PROCESS post;
+
+	vector<RemoteCamera*> cameras;
+	vector<MirrorBall*> reflectives;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}
 	void Render(Scene &world);
+	void LoadThings(Scene &world);
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
 	void ChangeBrightness(float offset);

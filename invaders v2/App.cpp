@@ -7,15 +7,12 @@ App::App(uint width, uint height, bool fullscreen, wstring name)
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
+	world = unique_ptr<Scene>(new Scene(graphics.GetDevice()));
+	graphics.LoadThings(*world);
 }
 
 App::~App()
 {
-}
-
-void App::Init()
-{
-	world = unique_ptr<Scene>(new Scene(graphics.GetDevice()));
 }
 
 void App::Run()
