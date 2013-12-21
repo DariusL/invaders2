@@ -5,6 +5,7 @@
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
 #include "SimplePass.h"
+#include "BlurPass.h"
 #include "ResourceManager.h"
 
 class Graphics
@@ -21,11 +22,9 @@ class Graphics
 	Direct3D d3D;
 	ResourceManager rm;
 
-	ComVector<ID3D11ShaderResourceView> tex;
-	Screen<TextureVertexType, HorizontalBlurShader> hBlurTarget;
-	Screen<TextureVertexType, VerticalBlurShader> vBlurTarget;
-	RenderTarget celTarget;
+	RenderTarget target;
 	CelPass celPass;
+	BlurPass blurPass;
 
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;
