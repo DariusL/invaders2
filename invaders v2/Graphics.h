@@ -22,10 +22,10 @@ class Graphics
 	ResourceManager rm;
 
 	ComVector<ID3D11ShaderResourceView> tex;
-	unique_ptr<Screen<TextureVertexType, HorizontalBlurShader>> hBlurTarget;
-	unique_ptr<Screen<TextureVertexType, VerticalBlurShader>> vBlurTarget;
-	unique_ptr<RenderTarget> celTarget;
-	unique_ptr<CelPass> celPass;
+	Screen<TextureVertexType, HorizontalBlurShader> hBlurTarget;
+	Screen<TextureVertexType, VerticalBlurShader> vBlurTarget;
+	RenderTarget celTarget;
+	CelPass celPass;
 
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;

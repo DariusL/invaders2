@@ -6,19 +6,17 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 :handle(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
 post(POST_PROCESS_NONE), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
 d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
-rm(d3D.GetDevice())
+rm(d3D.GetDevice()), celPass(rm.GetShader<CelComputeShader>(), width, height),
+vBlurTarget(d3D.GetDevice(), XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height),
+hBlurTarget(d3D.GetDevice(), XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
+RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height),
+celTarget(d3D.GetDevice(), width, height)
 {
 	auto device = d3D.GetDevice();
 
 	XMFLOAT2 viewportSize(width / 4.0f, height / 4.0f);
-	celTarget = make_unique<RenderTarget>(device, width, height);
-	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(device, XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
 
-	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(device, XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
-
-	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
 	tex.push_back(NULL);
 }
 
@@ -87,12 +85,12 @@ void Graphics::Render(Scene &world)
 	{
 		if (post == POST_PROCESS_CEL)
 		{
-			celTarget->SetRenderTarget(context);
-			celTarget->ClearTarget(context);
+			celTarget.SetRenderTarget(context);
+			celTarget.ClearTarget(context);
 		}
 		if (post == POST_PROCESS_BLUR)
 		{
-			auto &target = hBlurTarget->GetRenderTarget();
+			auto &target = hBlurTarget.GetRenderTarget();
 			target.SetRenderTarget(context);
 			target.ClearTarget(context);
 		}
@@ -120,7 +118,7 @@ void Graphics::Render(Scene &world)
 			start = chrono::high_resolution_clock::now();
 			d3D.ClearRenderTarget();
 			d3D.UnsetRenderTarget();
-			celPass->Pass(context, celTarget->GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
+			celPass.Pass(context, celTarget.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
 			end = chrono::high_resolution_clock::now();
 			bench.push_back(chrono::duration_cast<chrono::microseconds>(end - start).count());
 			if (bench.size() >= 20)
@@ -136,13 +134,13 @@ void Graphics::Render(Scene &world)
 		}
 		if (post == POST_PROCESS_BLUR)
 		{
-			auto &target = vBlurTarget->GetRenderTarget();
+			auto &target = vBlurTarget.GetRenderTarget();
 			target.SetRenderTarget(context);
 			target.ClearTarget(context);
-			hBlurTarget->Render(params);
+			hBlurTarget.Render(params);
 			d3D.ResetRenderTarget();
 			d3D.ClearRenderTarget();
-			vBlurTarget->Render(params);
+			vBlurTarget.Render(params);
 		}
 	}
 
