@@ -6,90 +6,103 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
-:normalMappedModel(GetNormalMappedModelFromOBJ(device, L"Resources\\ball.obj"))
+:normalMappedModel(GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
 {
 	handle = this;
 
-	models.push_back(GetModelFromOBJ(device, L"Resources\\ball.obj"));
+	models.push_back(GetModelFromOBJ(L"Resources\\ball.obj"));
 
-	vector<TextureVertexType> vertices;
-	vector < int > indices;
+	TexturedModel plane;
+	plane.hitbox = XMFLOAT2(20, 20);
 
 	TextureVertexType tv;
 
 	tv.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
 	tv.tex = XMFLOAT2(0.0f, 1.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
 	tv.tex = XMFLOAT2(0.0f, 0.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
 	tv.tex = XMFLOAT2(1.0f, 1.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
 	tv.tex = XMFLOAT2(1.0f, 0.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(0);
+	plane.indices.push_back(1);
+	plane.indices.push_back(2);
+	plane.indices.push_back(0);
 
-	indices.push_back(1);
-	indices.push_back(3);
-	indices.push_back(2);
+	plane.indices.push_back(1);
+	plane.indices.push_back(3);
+	plane.indices.push_back(2);
 
-	texturedModels.push_back(TexturedModel(device, vertices, indices));
-	vertices.clear();
-	texturedModels.push_back(GetTexturedModelFromOBJ(device, L"Resources\\box.obj", true));
-	texturedModels.push_back(GetTexturedModelFromOBJ(device, L"Resources\\bath.obj", true));
+	texturedModels.push_back(move(plane));
+
+
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+	texturedModels.push_back(GetTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
 	tv.position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Bottom left.
 	tv.tex = XMFLOAT2(0.0f, 1.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(0.0f, 0.0f, 0.0f);  // Top left
 	tv.tex = XMFLOAT2(0.0f, 0.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(1.0f, 1.0f, 0.0f);  // Bottom right.
 	tv.tex = XMFLOAT2(1.0f, 1.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
 	tv.position = XMFLOAT3(1.0f, 0.0f, 0.0f);  // Top right.
 	tv.tex = XMFLOAT2(1.0f, 0.0f);
-	vertices.push_back(tv);
+	plane.vertices.push_back(tv);
 
-	texturedModels.push_back(TexturedModel(device, vertices, indices));
-	vertices.clear();
+	plane.indices.push_back(1);
+	plane.indices.push_back(2);
+	plane.indices.push_back(0);
 
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(device, L"Resources\\box.obj", true));
+	plane.indices.push_back(1);
+	plane.indices.push_back(3);
+	plane.indices.push_back(2);
+	texturedModels.push_back(move(plane));
 
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+	NormalTexturedModel model;
 	NormalTextureVertexType ntv;
-	vector<NormalTextureVertexType> vert;
 	ntv.normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
 
 	ntv.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
 	ntv.tex = XMFLOAT2(0.0f, 1.0f);
-	vert.push_back(ntv);
+	model.vertices.push_back(ntv);
 
 	ntv.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
 	ntv.tex = XMFLOAT2(0.0f, 0.0f);
-	vert.push_back(ntv);
+	model.vertices.push_back(ntv);
 
 	ntv.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
 	ntv.tex = XMFLOAT2(1.0f, 1.0f);
-	vert.push_back(ntv);
+	model.vertices.push_back(ntv);
 
 	ntv.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
 	ntv.tex = XMFLOAT2(1.0f, 0.0f);
-	vert.push_back(ntv);
+	model.vertices.push_back(ntv);
 
-	normalTexturedModels.push_back(NormalTexturedModel(device, vert, indices));
-	vert.clear();
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(device, L"Resources\\bath.obj", true));
+	model.indices.push_back(1);
+	model.indices.push_back(2);
+	model.indices.push_back(0);
+
+	model.indices.push_back(1);
+	model.indices.push_back(3);
+	model.indices.push_back(2);
+
+	normalTexturedModels.push_back(move(model));
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
 
 	Level *level = new Level();
 
@@ -133,13 +146,37 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
 	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
+
+	for (auto &model : models)
+		model.Init(device);
+	for (auto &model : texturedModels)
+		model.Init(device);
+	for (auto &model : normalTexturedModels)
+		model.Init(device);
+	normalMappedModel.Init(device);
 }
 
-ColorModel ResourceManager::GetModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+ColorModel ResourceManager::GetModelFromOBJ(wstring filename, bool invert)
 {
-	vector<int> indices;
-	vector<VertexType> vertices;
+	auto normalModel = GetNormalModelFromOBJ(filename, invert);
+	ColorModel ret;
+	VertexType vertex;
+	ret.hitbox = normalModel.hitbox;
+	ret.indices = normalModel.indices;
+	for (NormalVertexType normalVertex : normalModel.vertices)
+	{
+		vertex.color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		vertex.position = normalVertex.position;
+		ret.vertices.push_back(vertex);
+	}
+	return ret;
+}
+
+NormalModel ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
+{
+	NormalModel model;
 	ifstream in(filename, ios::binary);
+	vector<XMFLOAT3> normals;
 	string input;
 	float x, y, z;
 
@@ -158,43 +195,49 @@ ColorModel ResourceManager::GetModelFromOBJ(ComPtr<ID3D11Device> device, wstring
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			vertices.emplace_back(x, y, -z);
+			model.vertices.emplace_back(x, y, -z);
+		}
+		else if (input == "vn")
+		{
+			in >> x >> y >> z;
+			normals.emplace_back(x, y, -z);
 		}
 		else if (input == "f")
 		{
 			string blob;
 			getline(in, blob, '\n');
-			auto fvert = GetVerticesFromFace(blob);
+			auto vertices = GetVerticesFromFace(blob);
 			if (!invert)
 			{
 				Utils::Reverse(vertices);
 			}
-			for (auto &vertex : fvert)
+			for (auto &vertex : vertices)
 			{
-				indices.push_back(vertex.vertex);
+				model.vertices[vertex.vertex].normal = normals[vertex.normal];
+				model.indices.push_back(vertex.vertex);
 			}
 		}
 	}
 
-	return ColorModel(device, vertices, indices);
+	return model;
 }
 
-NormalModel ResourceManager::GetNormalModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(wstring filename, bool invert)
 {
-	vector<int> indices;
-	vector<NormalVertexType> vertices;
+	NormalMappedModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT3> normals;
+	vector<XMFLOAT2> tex;
 	string input;
 	float x, y, z;
 
 	AssertBool(in.is_open(), L"File " + filename + L" not found");
 
-	while(!in.eof())
+	while (!in.eof())
 	{
 		in >> input;
 
-		if(input == "#")
+		if (input == "#")
 		{
 			in.ignore(200, '\n');
 			continue;
@@ -203,96 +246,43 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(ComPtr<ID3D11Device> device, 
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			vertices.emplace_back(x, y, -z);
+			model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vn")
 		{
 			in >> x >> y >> z;
 			normals.emplace_back(x, y, -z);
 		}
+		else if (input == "vt")
+		{
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
+		}
 		else if (input == "f")
 		{
 			string blob;
 			getline(in, blob, '\n');
-			auto fvert = GetVerticesFromFace(blob);
+			auto vertices = GetVerticesFromFace(blob);
 			if (!invert)
 			{
 				Utils::Reverse(vertices);
 			}
-			for (auto &vertex : fvert)
+			for (auto &vertex : vertices)
 			{
-				vertices[vertex.vertex].normal = normals[vertex.normal];
-				indices.push_back(vertex.vertex);
+				model.vertices[vertex.vertex].normal = normals[vertex.normal];
+				model.vertices[vertex.vertex].tex = tex[vertex.tex];
+				model.indices.push_back(vertex.vertex);
 			}
+			CalculateTangentAndBinormal(vertices, model.vertices);
 		}
 	}
 
-	return NormalModel(device, vertices, indices);
+	return model;
 }
 
-NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool invert)
 {
-	vector<int> indices;
-	vector<NormalMappedVertexType> vertices;
-	ifstream in(filename, ios::binary);
-	vector<XMFLOAT3> normals;
-	vector<XMFLOAT2> tex;
-	string input;
-	float x, y, z;
-
-	AssertBool(in.is_open(), L"File " + filename + L" not found");
-
-	while(!in.eof())
-	{
-		in >> input;
-
-		if(input == "#")
-		{
-			in.ignore(200, '\n');
-			continue;
-		}
-
-		if (input == "v")
-		{
-			in >> x >> y >> z;
-			vertices.emplace_back(x, y, -z);
-		}
-		else if (input == "vn")
-		{
-			in >> x >> y >> z;
-			normals.emplace_back(x, y, -z);
-		}
-		else if (input == "vt")
-		{
-			in >> x >> y >> z;
-			tex.emplace_back(x, y);
-		}
-		else if (input == "f")
-		{
-			string blob;
-			getline(in, blob, '\n');
-			auto fvert = GetVerticesFromFace(blob);
-			if (!invert)
-			{
-				Utils::Reverse(fvert);
-			}
-			for (auto &vertex : fvert)
-			{
-				vertices[vertex.vertex].normal = normals[vertex.normal];
-				vertices[vertex.vertex].tex = tex[vertex.tex];
-				indices.push_back(vertex.vertex);
-			}
-			CalculateTangentAndBinormal(fvert, vertices);
-		}
-	}
-
-	return NormalMappedModel(device, vertices, indices);
-}
-
-TexturedModel ResourceManager::GetTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex, bool invert)
-{
-	vector<TextureVertexType> vertices, temp;
-	vector<int> indices;
+	TexturedModel model;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT2> tex;
 	string input;
@@ -313,10 +303,7 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(ComPtr<ID3D11Device> devi
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			if (unindex)
-				temp.emplace_back(x, y, -z);
-			else
-				vertices.emplace_back(x, y, -z);
+			model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vt")
 		{
@@ -327,40 +314,79 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(ComPtr<ID3D11Device> devi
 		{
 			string blob;
 			getline(in, blob, '\n');
-			auto fvert = GetVerticesFromFace(blob);
+			auto vertices = GetVerticesFromFace(blob);
 			if (!invert)
 			{
-				Utils::Reverse(fvert);
+				Utils::Reverse(vertices);
 			}
-			if (unindex)
+			for (auto &vertex : vertices)
 			{
-				for (auto &vertex : fvert)
-				{
-					TextureVertexType vt = temp[vertex.vertex];
-					vt.tex = tex[vertex.tex];
-					vertices.push_back(vt);
-					indices.push_back(vertices.size() - 1);
-				}
+				model.vertices[vertex.vertex].tex = tex[vertex.tex];
+				model.indices.push_back(vertex.vertex);
 			}
-			else
-			{
-				for (auto &vertex : fvert)
-				{
-					vertices[vertex.vertex].tex = tex[vertex.tex];
-					indices.push_back(vertex.vertex);
-				}
-			}
-			
 		}
 	}
 
-	return TexturedModel(device, vertices, indices);
+	return model;
 }
 
-NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex, bool invert)
+TexturedModel ResourceManager::GetTexturedModelFromOBJUnindexed(wstring filename, bool invert)
 {
-	vector<NormalTextureVertexType> temp, vertices;
-	vector<int> indices;
+	TexturedModel model;
+	vector<TextureVertexType> v;
+	ifstream in(filename, ios::binary);
+	vector<XMFLOAT2> tex;
+	string input;
+	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
+
+	while (!in.eof())
+	{
+		in >> input;
+
+		if (input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+			in >> x >> y >> z;
+			v.emplace_back(x, y, -z);
+		}
+		else if (input == "vt")
+		{
+			in >> x >> y >> z;
+			tex.emplace_back(x, y);
+		}
+		else if (input == "f")
+		{
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
+			for (auto &vertex : vertices)
+			{
+				TextureVertexType temp = v[vertex.vertex];
+				temp.tex = tex[vertex.tex];
+				model.vertices.push_back(temp);
+				model.indices.push_back(model.vertices.size() - 1);
+			}
+		}
+	}
+
+	return model;
+}
+
+NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert)
+{
+	NormalTexturedModel model;
+	vector<NormalTextureVertexType> v;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT2> tex;
 	vector<XMFLOAT3> normals;
@@ -382,10 +408,7 @@ NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(ComPtr<ID3D11
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			if (unindex)
-				temp.emplace_back(x, y, -z);
-			else
-				vertices.emplace_back(x, y, -z);
+			v.emplace_back(x, y, -z);
 		}
 		else if (input == "vt")
 		{
@@ -401,36 +424,23 @@ NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(ComPtr<ID3D11
 		{
 			string blob;
 			getline(in, blob, '\n');
-			auto fvert = GetVerticesFromFace(blob);
+			auto vertices = GetVerticesFromFace(blob);
 			if (!invert)
 			{
-				Utils::Reverse(fvert);
+				Utils::Reverse(vertices);
 			}
-			
-			if (unindex)
+			for (auto &vertex : vertices)
 			{
-				for (auto &vertex : fvert)
-				{
-					NormalTextureVertexType vt = temp[vertex.vertex];
-					vt.tex = tex[vertex.tex];
-					vt.normal = normals[vertex.normal];
-					vertices.push_back(vt);
-					indices.push_back(vertices.size() - 1);
-				}
-			}
-			else
-			{
-				for (auto &vertex : fvert)
-				{
-					vertices[vertex.vertex].tex = tex[vertex.tex];
-					vertices[vertex.vertex].normal = normals[vertex.normal];
-					indices.push_back(vertex.vertex);
-				}
+				NormalTextureVertexType temp = v[vertex.vertex];
+				temp.tex = tex[vertex.tex];
+				temp.normal = normals[vertex.normal];
+				model.vertices.push_back(temp);
+				model.indices.push_back(model.vertices.size() - 1);
 			}
 		}
 	}
 
-	return NormalTexturedModel(device, vertices, indices);
+	return model;
 }
 
 vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line)
@@ -438,10 +448,10 @@ vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string 
 	vector<FaceVertex> ret;
 	int ind1 = 0, ind2 = 0;
 
-	for(int i = 0; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		ind2 = line.find(' ', ind1+1);
-		ret.push_back(GetVertexFromString(line.substr(ind1, ind2-ind1)));
+		ind2 = line.find(' ', ind1 + 1);
+		ret.push_back(GetVertexFromString(line.substr(ind1, ind2 - ind1)));
 		ind1 = ++ind2;
 	}
 	return ret;
@@ -456,10 +466,10 @@ ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
 	ind1 = vertex.find('/');
 	temp = vertex.substr(0, ind1);
 	ret.vertex = temp.length() > 0 ? stoi(temp) - 1 : -1;
-	ind2 = vertex.find('/', ind1+1);
-	temp = vertex.substr(ind1+1, ind2-ind1-1);
+	ind2 = vertex.find('/', ind1 + 1);
+	temp = vertex.substr(ind1 + 1, ind2 - ind1 - 1);
 	ret.tex = temp.length() > 0 ? stoi(temp) - 1 : -1;
-	temp = vertex.substr(ind2+1);
+	temp = vertex.substr(ind2 + 1);
 	ret.normal = temp.length() > 0 ? stoi(temp) - 1 : -1;
 
 	return ret;

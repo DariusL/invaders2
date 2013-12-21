@@ -27,11 +27,6 @@ class ResourceManager
 public:
 	enum MODEL
 	{
-		MODEL_PLAYER = 0,
-		MODEL_ENEMY_BASIC,
-		MODEL_BULLET,
-		MODEL_ENEMY_LAPTOP,
-		MODEL_WALL,
 		MODEL_BALL
 	};
 
@@ -88,8 +83,8 @@ public:
 	enum NORMAL_TEXTURED_MODEL
 	{
 		NORMAL_TEXTURED_MODEL_INV_BOX,
-		NORMAL_TEXTURED_PLANE,
-		NORMAL_TEXTURED_BATH
+		NORMAL_TEXTURED_MODEL_PLANE,
+		NORMAL_TEXTURED_MODEL_BATH
 	};
 
 private:
@@ -123,7 +118,7 @@ private:
 	static ResourceManager *handle;
 public:
 	ResourceManager(Microsoft::WRL::ComPtr<ID3D11Device> device);
-	~ResourceManager(void);
+	~ResourceManager(void){}
 
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager &operator=(const ResourceManager&) = delete;
@@ -134,7 +129,6 @@ public:
 	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
 
-	shared_ptr<DrawableShooter> GetEnemy(int type);
 	shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }
 
