@@ -20,9 +20,6 @@ extern const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 extern const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
 extern const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
 
-extern uint screenWidth;
-extern uint screenHeight;
-
 extern LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l);
 
 struct VertexType
@@ -42,28 +39,35 @@ struct TextureVertexType
 	TextureVertexType(float x, float y, float z) :position(x, y, z){}
 };
 
-struct NormalTextureVertexType : public TextureVertexType
+struct NormalTextureVertexType
 {
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT2 tex;
 	DirectX::XMFLOAT3 normal;
 
 	NormalTextureVertexType(){}
-	NormalTextureVertexType(float x, float y, float z) :TextureVertexType(x, y, z){}
+	NormalTextureVertexType(float x, float y, float z) :position(x, y, z){}
 };
 
-struct NormalMappedVertexType : public NormalTextureVertexType
+struct NormalMappedVertexType
 {
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT2 tex;
+	DirectX::XMFLOAT3 normal;
 	DirectX::XMFLOAT4 color;
 	DirectX::XMFLOAT3 tangent;
 	DirectX::XMFLOAT3 binormal;
 
-	NormalMappedVertexType(float x, float y, float z) :NormalTextureVertexType(x, y, z), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
+	NormalMappedVertexType(float x, float y, float z) :position(x, y, z), color(0.0f, 1.0f, 1.0f, 1.0f), tangent(0.0f, 0.0f, 0.0f), binormal(0.0f, 0.0f, 0.0f){}
 };
 
-struct NormalVertexType : VertexType
+struct NormalVertexType
 {
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT4 color;
 	DirectX::XMFLOAT3 normal;
 
-	NormalVertexType(float x, float y, float z) :VertexType(x, y, z){}
+	NormalVertexType(float x, float y, float z) :position(x, y, z){}
 };
 
 struct InstanceType

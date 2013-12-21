@@ -14,7 +14,6 @@ const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
 const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
 
 
-
 LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l)
 { 
 	return AppHandle::Get().MessageHandler(h, u, w, l);
