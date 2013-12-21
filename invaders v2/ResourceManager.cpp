@@ -102,6 +102,8 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
 
 	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
+	computeShaders.push_back(make_unique<UpSampleComputeShader>(L"Shaders\\UpSampleCompute.cso"));
+	computeShaders.push_back(make_unique<DownSampleComputeShader>(L"Shaders\\DownSampleCompute.cso"));
 
 	for (auto &shader : shaders)
 		shader->Init(device);

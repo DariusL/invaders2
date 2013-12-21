@@ -4,7 +4,7 @@
 #include "Screen.h"
 #include "HorizontalBlurShader.h"
 #include "VerticalBlurShader.h"
-#include "CelPass.h"
+#include "SimplePass.h"
 #include "ResourceManager.h"
 
 class Graphics
@@ -25,7 +25,6 @@ class Graphics
 	unique_ptr<Screen<TextureVertexType, HorizontalBlurShader>> hBlurTarget;
 	unique_ptr<Screen<TextureVertexType, VerticalBlurShader>> vBlurTarget;
 	unique_ptr<RenderTarget> celTarget;
-	unique_ptr<SimpleTexturedEntity> celOutput;
 	unique_ptr<CelPass> celPass;
 
 	vector<long long> bench;

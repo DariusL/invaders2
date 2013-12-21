@@ -18,9 +18,6 @@ rm(d3D.GetDevice())
 	vBlurTarget = make_unique<Screen<TextureVertexType, VerticalBlurShader>>(device, XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<VerticalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
 
-	celOutput = make_unique<SimpleTexturedEntity>(XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, rm.GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
-		rm.GetShader<TextureShader>(), nullptr, XMFLOAT3((float)width, (float)height, 1.0f));
-
 	celPass = make_unique<CelPass>(rm.GetShader<CelComputeShader>(), width, height);
 	tex.push_back(NULL);
 }
