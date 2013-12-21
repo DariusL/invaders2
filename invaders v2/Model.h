@@ -10,24 +10,19 @@ class ResourceManager;
 template<class T>
 class Model
 {
-	friend class ResourceManager;
-
 public:
-	Model(){}
+	Model(ComPtr<ID3D11Device> device, const vector<T> &vertices, const vector<int> &indices);
 	Model(Model &&other);
 	Model &operator=(Model &&other);
 
 	Model(Model&) = delete;
 	Model &operator=(Model&) = delete;
 
-	void Init(ComPtr<ID3D11Device> device);
 	void Set(ComPtr<ID3D11DeviceContext> context);
 
-	int GetIndexCount(){ return indices.size(); }
+	int GetIndexCount(){ return indexCount; }
 private:
-	vector<T> vertices;
-	vector<int> indices;
-	DirectX::XMFLOAT2 hitbox;
+	uint indexCount;
 
 	ComPtr<ID3D11Buffer> vertexBuffer;
 	ComPtr<ID3D11Buffer> indexBuffer;
@@ -42,11 +37,9 @@ typedef Model<NormalTextureVertexType> NormalTexturedModel;
 
 template<class T>
 Model<T>::Model(Model &&other)
-:vertices(move(other.vertices)), indices(move(other.indices))
+:vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)),
+vertexInfo(other.vertexInfo), indexCount(other.indexCount)
 {
-	DirectX::XMFLOAT2 temp(hitbox);
-	hitbox = other.hitbox;
-	other.hitbox = temp;
 }
 
 template<class T>
@@ -54,17 +47,17 @@ Model<T> &Model<T>::operator=(Model &&other)
 {
 	if (this != &other)
 	{
-		vertices = move(other.vertices);
-		indices = move(other.indices);
-		DirectX::XMFLOAT2 temp(hitbox);
-		hitbox = other.hitbox;
-		other.hitbox = temp;
+		indexCount = other.indexCount;
+		vertexInfo = other.vertexInfo;
+		vertexBuffer = move(other.vertexBuffer);
+		indexBuffer = move(other.indexBuffer);
 	}
 	return *this;
 }
 
 template<class T>
-void Model<T>::Init(ComPtr<ID3D11Device> device)
+Model<T>::Model(ComPtr<ID3D11Device> device, const vector<T> &vertices, const vector<int> &indices)
+:indexCount(indices.size())
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
