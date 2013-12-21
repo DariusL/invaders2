@@ -4,15 +4,17 @@
 #include "Texture.h"
 class BlurPass : IPass
 {
-	/*DownSamplePass downPass;
+	DownSamplePass downPass;
 	UpSamplePass upPass;
 	HorizontalBlurPass hBlurPass;
-	VerticalBlurPass vBlurPass;*/
+	VerticalBlurPass vBlurPass;
 
-	uint width, height, halfWidht, halfHeight;
+	Texture halfTexture1, halfTexture2;
+
+	uint width, height, halfWidth, halfHeight;
 
 public:
-	BlurPass(uint width, uint height);
+	BlurPass(ComPtr<ID3D11Device> device, uint width, uint height);
 	virtual ~BlurPass(){}
 
 	virtual void Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);

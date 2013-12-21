@@ -2,16 +2,19 @@
 #include "Texture.h"
 #include "Utils.h"
 
-void Texture::Init(ComPtr<ID3D11Device> device)
+Texture::Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view)
+:view(view), width(width), height(height)
 {
 	D3D11_TEXTURE2D_DESC texDesc;
 	uint bind = 0;
-	if (hasSRV)
+
+	if (view & TEXTURE_VIEW_SHADER_RESOURCE)
 		bind |= D3D11_BIND_SHADER_RESOURCE;
-	if (hasUAV)
+	if (view & TEXTURE_VIEW_UNORDERED_ACCESS)
 		bind |= D3D11_BIND_UNORDERED_ACCESS;
-	if (hasRTV)
+	if (view & TEXTURE_VIEW_RENDER_TARGET)
 		bind |= D3D11_BIND_RENDER_TARGET;
+
 	texDesc.ArraySize = 1;
 	texDesc.BindFlags = bind;
 	texDesc.CPUAccessFlags = 0;
@@ -26,7 +29,7 @@ void Texture::Init(ComPtr<ID3D11Device> device)
 
 	Assert(device->CreateTexture2D(&texDesc, NULL, &texture));
 
-	if (hasSRV)
+	if (view & TEXTURE_VIEW_SHADER_RESOURCE)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvdesc;
 		srvdesc.Format = texDesc.Format;
@@ -37,7 +40,7 @@ void Texture::Init(ComPtr<ID3D11Device> device)
 		Assert(device->CreateShaderResourceView(texture.Get(), &srvdesc, &shaderResourceView));
 	}
 
-	if (hasUAV)
+	if (view & TEXTURE_VIEW_UNORDERED_ACCESS)
 	{
 		D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
 		uavDesc.Format = texDesc.Format;
@@ -47,7 +50,7 @@ void Texture::Init(ComPtr<ID3D11Device> device)
 		Assert(device->CreateUnorderedAccessView(texture.Get(), &uavDesc, &unorderedAccessView));
 	}
 
-	if (hasRTV)
+	if (view & TEXTURE_VIEW_RENDER_TARGET)
 	{
 		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
 		rtvDesc.Format = texDesc.Format;
