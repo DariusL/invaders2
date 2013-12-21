@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AppHandle.cpp" />
+    <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="HorizontalBlurComputeShader.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="AppHandle.h" />
     <ClInclude Include="Billboard.h" />
+    <ClInclude Include="BlurPass.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
@@ -176,6 +178,7 @@
     <ClInclude Include="includes.h" />
     <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
+    <ClInclude Include="IPass.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="IWorld.h" />

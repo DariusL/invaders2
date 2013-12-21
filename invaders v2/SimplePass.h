@@ -1,5 +1,5 @@
 #pragma once
-
+#include "IPass.h"
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
@@ -7,7 +7,7 @@
 #include "VerticalBlurComputeShader.h"
 
 template<class sh>
-class SimplePass
+class SimplePass : IPass
 {
 	sh &shader;
 	uint width, height;
@@ -15,7 +15,7 @@ public:
 	SimplePass(sh &shader, uint width, uint height);
 	virtual ~SimplePass(){}
 
-	void Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
+	virtual void Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
 };
 
 template<class sh>

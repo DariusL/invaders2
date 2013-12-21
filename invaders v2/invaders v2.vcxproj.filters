@@ -156,6 +156,9 @@
     <ClCompile Include="VerticalBlurComputeShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BlurPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -364,6 +367,12 @@
     </ClInclude>
     <ClInclude Include="VerticalBlurComputeShader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlurPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IPass.h">
+      <Filter>Abstract</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
