@@ -6,8 +6,9 @@ class CameraBall : public RenderBall < std::function < void(RenderParams&, Direc
 {
 public:
 	typedef std::function < void(RenderParams&, Direct3D&)> CameraPrepare;
-	CameraBall(int width, int height, CameraPrepare &&lambda)
-		:RenderBall(width, height, forward<CameraPrepare>(lambda)){}
+
+	CameraBall(ComPtr<ID3D11Device> device, int width, int height, CameraPrepare &&lambda)
+		:RenderBall(device, width, height, forward<CameraPrepare>(lambda)){}
 
 	CameraBall(CameraBall&) = delete;
 	CameraBall(CameraBall &&other)

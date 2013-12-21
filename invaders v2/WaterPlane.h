@@ -26,7 +26,7 @@ template<class vt, class sh>
 WaterPlane<vt, sh>::WaterPlane(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel,
 	sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight, ComPtr<ID3D11ShaderResourceView> normal)
 :Mirror(device, screenPos, rot, screenModel, screenShader, resWidth, resHeight, screenWidth, screenHeight),
-refractionBall(resWidth, resHeight, ([this](RenderParams &params) -> void
+refractionBall(device, resWidth, resHeight, ([this](RenderParams &params) -> void
 {
 	params.view = params.camera->GetViewMatrix();
 	XMStoreFloat4(&params.clipPlane, GetReversePlane());
@@ -35,8 +35,6 @@ reversePlane(Utils::PlaneFromPointAndRot(screenPos, rot, true))
 {
 	textures.push_back(nullptr);
 	textures.push_back(normal);
-
-	refractionBall.Init(device);
 }
 
 template<class vt, class sh>

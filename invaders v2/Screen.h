@@ -26,11 +26,10 @@ typedef Screen<TextureVertexType, TextureShader> SimpleScreen;
 
 template<class vt, class sh>
 Screen<vt, sh>::Screen(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader, int resWidth, int resHeight, float screenWidth, float screenHeight)
-:renderTarget(resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
+:renderTarget(device, resWidth, resHeight), screen(screenPos, rot, screenModel, screenShader, NULL, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
 width(resWidth), height(resHeight)
 {
 	textures.push_back(NULL);
-	renderTarget.Init(device);
 }
 
 template<class vt, class sh>

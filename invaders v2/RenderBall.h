@@ -11,19 +11,18 @@ protected:
 	bool useFirst;
 	L lambda;
 public:
-	RenderBall(int width, int height, L &&lambda);
+	RenderBall(ComPtr<ID3D11Device> device, int width, int height, L &&lambda);
 	RenderBall(RenderBall&) = delete;
 	RenderBall(RenderBall&&);
 
 	ComPtr<ID3D11ShaderResourceView> GetCurrentTexture(){ return useFirst ? secondTarget.GetRenderedTexture() : firstTarget.GetRenderedTexture(); }
 	virtual void Prepare(ComPtr<ID3D11DeviceContext> context, RenderParams &params);
-	void Init(ComPtr<ID3D11Device> device);
 	void Swap(){ useFirst = !useFirst; }
 };
 
 template<class L>
-RenderBall<L>::RenderBall(int width, int height, L &&lambda)
-:firstTarget(width, height), secondTarget(width, height), useFirst(true), lambda(lambda)
+RenderBall<L>::RenderBall(ComPtr<ID3D11Device> device, int width, int height, L &&lambda)
+:firstTarget(device, width, height), secondTarget(device, width, height), useFirst(true), lambda(lambda)
 {
 }
 
@@ -33,13 +32,6 @@ void RenderBall<L>::Prepare(ComPtr<ID3D11DeviceContext> context, RenderParams &p
 	auto &target = useFirst ? firstTarget : secondTarget;
 	target.SetRenderTarget(context);
 	target.ClearTarget(context);
-}
-
-template<class L>
-void RenderBall<L>::Init(ComPtr<ID3D11Device> device)
-{
-	firstTarget.Init(device);
-	secondTarget.Init(device);
 }
 
 template<class L>

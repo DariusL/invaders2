@@ -5,8 +5,8 @@
 class MirrorBall : public RenderBall<MirrorPrepare>
 {
 public:
-	MirrorBall(int width, int height, MirrorPrepare &&lambda)
-	:RenderBall(width, height, forward<MirrorPrepare>(lambda))
+	MirrorBall(ComPtr<ID3D11Device> device, int width, int height, MirrorPrepare &&lambda)
+	:RenderBall(device, width, height, forward<MirrorPrepare>(lambda))
 	{
 	}
 	MirrorBall(MirrorBall&) = delete;

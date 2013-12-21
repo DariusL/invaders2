@@ -33,7 +33,7 @@ template<class vt, class sh>
 Mirror<vt, sh>::Mirror(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3 rot, Model<vt> &screenModel, sh &screenShader,
 	int resWidth, int resHeight, float screenWidth, float screenHeight)
 	:	screen(screenPos, rot, screenModel, screenShader, nullptr, XMFLOAT3(screenWidth, screenHeight, 1.0f)),
-	reflectionBall(resWidth, resHeight,
+	reflectionBall(device, resWidth, resHeight,
 	([this](RenderParams &params) -> void
 	{
 		XMMATRIX reflectionMatrix = DirectX::XMMatrixReflect(GetMirrorPlane());
@@ -46,8 +46,6 @@ Mirror<vt, sh>::Mirror(ComPtr<ID3D11Device> device, XMFLOAT3 screenPos, XMFLOAT3
 	mirrorPlane = Utils::PlaneFromPointAndRot(screenPos, rot);
 	zeroPlane = Utils::PlaneFromPointAndRot(ZeroVec3, rot);
 	textures.push_back(nullptr);
-
-	reflectionBall.Init(device);
 }
 
 template<class vt, class sh>

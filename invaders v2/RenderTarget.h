@@ -15,18 +15,19 @@ class RenderTarget
 	ComPtr<ID3D11ShaderResourceView> shaderResourceView;
 	D3D11_VIEWPORT viewport;
 public:
-	RenderTarget(int width, int height);
+	RenderTarget(ComPtr<ID3D11Device> device, int width, int height);
 	RenderTarget(RenderTarget &&other);
 	~RenderTarget(void);
 
 	RenderTarget(RenderTarget&) = delete;
 	RenderTarget &operator=(RenderTarget&) = delete;
 
-	void Init(ComPtr<ID3D11Device> device);
 
 	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
 	void ClearTarget(ComPtr<ID3D11DeviceContext> context);
 
 	ComPtr<ID3D11ShaderResourceView> GetRenderedTexture(){return shaderResourceView;}
+private:
+	void Init(ComPtr<ID3D11Device> device);
 };
 

@@ -2,7 +2,7 @@
 #include "RenderTarget.h"
 #include "Utils.h"
 
-RenderTarget::RenderTarget(int width, int height)
+RenderTarget::RenderTarget(ComPtr<ID3D11Device> device, int width, int height)
 :width(width), height(height)
 {
 
@@ -17,6 +17,8 @@ RenderTarget::RenderTarget(int width, int height)
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
+
+	Init(device);
 }
 
 RenderTarget::RenderTarget(RenderTarget &&other)

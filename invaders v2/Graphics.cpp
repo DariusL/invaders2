@@ -11,8 +11,7 @@ rm(d3D.GetDevice())
 	auto device = d3D.GetDevice();
 
 	XMFLOAT2 viewportSize(width / 4.0f, height / 4.0f);
-	celTarget = make_unique<RenderTarget>(width, height);
-	celTarget->Init(d3D.GetDevice());
+	celTarget = make_unique<RenderTarget>(device, width, height);
 	hBlurTarget = make_unique<Screen<TextureVertexType, HorizontalBlurShader>>(device, XMFLOAT3(0.0f, 0.0f, 0.2f), ZeroVec3, RM::Get().GetTexturedModel(RM::TEXTURED_MODEL_PLANE),
 		RM::Get().GetShader<HorizontalBlurShader>(), width / 2, height / 2, (float)width, (float)height);
 
