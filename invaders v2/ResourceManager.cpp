@@ -43,7 +43,6 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 
 	texturedModels.push_back(move(plane));
 
-
 	texturedModels.push_back(GetTexturedModelFromOBJ(L"Resources\\box.obj", true));
 	texturedModels.push_back(GetTexturedModelFromOBJ(L"Resources\\bath.obj", true));
 
@@ -72,7 +71,7 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	plane.indices.push_back(2);
 	texturedModels.push_back(move(plane));
 
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\box.obj"));
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(L"Resources\\box.obj", true));
 	NormalTexturedModel model;
 	NormalTextureVertexType ntv;
 	ntv.normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
@@ -102,7 +101,7 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	model.indices.push_back(2);
 
 	normalTexturedModels.push_back(move(model));
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJUnindexed(L"Resources\\bath.obj"));
+	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(L"Resources\\bath.obj", true));
 
 	Level *level = new Level();
 
@@ -347,10 +346,10 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool un
 	return model;
 }
 
-NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert)
+NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(wstring filename, bool unindex, bool invert)
 {
 	NormalTexturedModel model;
-	vector<NormalTextureVertexType> v;
+	vector<NormalTextureVertexType> temp;
 	ifstream in(filename, ios::binary);
 	vector<XMFLOAT2> tex;
 	vector<XMFLOAT3> normals;
@@ -372,7 +371,10 @@ NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJUnindexed(wstr
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			v.emplace_back(x, y, -z);
+			if (unindex)
+				temp.emplace_back(x, y, -z);
+			else
+				model.vertices.emplace_back(x, y, -z);
 		}
 		else if (input == "vt")
 		{
@@ -393,13 +395,25 @@ NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJUnindexed(wstr
 			{
 				Utils::Reverse(vertices);
 			}
-			for (auto &vertex : vertices)
+			if (unindex)
 			{
-				NormalTextureVertexType temp = v[vertex.vertex];
-				temp.tex = tex[vertex.tex];
-				temp.normal = normals[vertex.normal];
-				model.vertices.push_back(temp);
-				model.indices.push_back(model.vertices.size() - 1);
+				for (auto &vertex : vertices)
+				{
+					NormalTextureVertexType vt = temp[vertex.vertex];
+					vt.tex = tex[vertex.tex];
+					vt.normal = normals[vertex.normal];
+					model.vertices.push_back(vt);
+					model.indices.push_back(model.vertices.size() - 1);
+				}
+			}
+			else
+			{
+				for (auto &vertex : vertices)
+				{
+					model.vertices[vertex.vertex].tex = tex[vertex.tex];
+					model.vertices[vertex.vertex].normal = normals[vertex.normal];
+					model.indices.push_back(vertex.vertex);
+				}
 			}
 		}
 	}
