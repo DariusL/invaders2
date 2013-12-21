@@ -16,8 +16,6 @@
 #include "MirrorShader.h"
 #include "InstancedTextureShader.h"
 #include "ShadowShader.h"
-#include "HorizontalBlurShader.h"
-#include "VerticalBlurShader.h"
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
@@ -58,9 +56,7 @@ public:
 		SHADER_WATER,
 		SHADER_MIRROR,
 		SHADER_TEXTURE_INSTANCED,
-		SHADER_SHADOW,
-		SHADER_HORIZONTAL_BLUR,
-		SHADER_VERTICAL_BLUR,
+		SHADER_SHADOW
 	};
 
 	enum SHADER_COMPUTE
@@ -165,10 +161,6 @@ public:
 	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[SHADER::SHADER_TEXTURE_INSTANCED]); }
 	template<>
 	ShadowShader &GetShader<ShadowShader>(){ return static_cast<ShadowShader&>(*shaders[SHADER::SHADER_SHADOW]); }
-	template<>
-	HorizontalBlurShader &GetShader<HorizontalBlurShader>(){ return static_cast<HorizontalBlurShader&>(*shaders[SHADER::SHADER_HORIZONTAL_BLUR]); }
-	template<>
-	VerticalBlurShader &GetShader<VerticalBlurShader>(){ return static_cast<VerticalBlurShader&>(*shaders[SHADER::SHADER_VERTICAL_BLUR]); }
 
 	template<>
 	CelComputeShader &GetShader<CelComputeShader>(){ return static_cast<CelComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_CEL]); }

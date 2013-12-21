@@ -129,12 +129,6 @@
     <ClCompile Include="ShadowShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HorizontalBlurShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VerticalBlurShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ComputeShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -332,12 +326,6 @@
     <ClInclude Include="Particles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalBlurShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VerticalBlurShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ComputeShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -440,15 +428,6 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="ShadowPixel.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="CelPixel.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="HorizontalBlurPixel.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="VerticalBlurPixel.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="CelCompute.hlsl">

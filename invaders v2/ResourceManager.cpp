@@ -98,8 +98,6 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	shaders.push_back(make_unique<MirrorShader>(L"Shaders\\MirrorVertex.cso", L"Shaders\\MirrorPixel.cso"));
 	shaders.push_back(make_unique<InstancedTextureShader>(L"Shaders\\TextureInstancedVertex.cso", L"Shaders\\TexturePixel.cso"));
 	shaders.push_back(make_unique<ShadowShader>(L"Shaders\\ShadowVertex.cso", L"Shaders\\ShadowPixel.cso"));
-	shaders.push_back(make_unique<HorizontalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\HorizontalBlurPixel.cso"));
-	shaders.push_back(make_unique<VerticalBlurShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\VerticalBlurPixel.cso"));
 
 	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
 	computeShaders.push_back(make_unique<UpSampleComputeShader>(L"Shaders\\UpSampleCompute.cso"));

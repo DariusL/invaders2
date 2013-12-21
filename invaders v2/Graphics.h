@@ -2,8 +2,6 @@
 #include "Direct3D.h"
 #include "Scene.h"
 #include "Screen.h"
-#include "HorizontalBlurShader.h"
-#include "VerticalBlurShader.h"
 #include "SimplePass.h"
 #include "BlurPass.h"
 #include "ResourceManager.h"
