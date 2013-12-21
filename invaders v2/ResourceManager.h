@@ -27,6 +27,11 @@ class ResourceManager
 public:
 	enum MODEL
 	{
+		MODEL_PLAYER = 0,
+		MODEL_ENEMY_BASIC,
+		MODEL_BULLET,
+		MODEL_ENEMY_LAPTOP,
+		MODEL_WALL,
 		MODEL_BALL
 	};
 
@@ -83,8 +88,8 @@ public:
 	enum NORMAL_TEXTURED_MODEL
 	{
 		NORMAL_TEXTURED_MODEL_INV_BOX,
-		NORMAL_TEXTURED_MODEL_PLANE,
-		NORMAL_TEXTURED_MODEL_BATH
+		NORMAL_TEXTURED_PLANE,
+		NORMAL_TEXTURED_BATH
 	};
 
 private:
@@ -103,40 +108,41 @@ private:
 	ComVector<ID3D11ShaderResourceView> textures;
 	NormalMappedModel normalMappedModel;
 
-	static NormalModel GetNormalModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static ColorModel GetModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static NormalMappedModel GetNormalMappedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
-	static NormalTexturedModel GetNormalTexturedModelFromOBJ(Microsoft::WRL::ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
+	static NormalModel GetNormalModelFromOBJ(wstring filename, bool invert = false);
+	static ColorModel GetModelFromOBJ(wstring filename, bool invert = false);
+	static NormalMappedModel GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJ(wstring filename, bool invert = false);
+	static TexturedModel GetTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
+	static NormalTexturedModel GetNormalTexturedModelFromOBJUnindexed(wstring filename, bool invert = false);
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
 	static FaceVertex GetVertexFromString(string &vertex);
 	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
 
-	
+
 	static ResourceManager *handle;
 public:
 	ResourceManager(Microsoft::WRL::ComPtr<ID3D11Device> device);
-	~ResourceManager(void){}
+	~ResourceManager(void);
 
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager &operator=(const ResourceManager&) = delete;
 
-	ColorModel &GetModel(MODEL i){return models[i];}
+	ColorModel &GetModel(MODEL i){ return models[i]; }
 	NormalTexturedModel &GetNormalTexturedModel(NORMAL_TEXTURED_MODEL i){ return normalTexturedModels[i]; }
 	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
 	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
 
 	shared_ptr<DrawableShooter> GetEnemy(int type);
-	shared_ptr<Level> GetLevel(int type){return levels[type];}
+	shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }
 
 	//because why not
 	template<class sh>
 	sh &GetShader(){}
 	template<>
-	ColorShader &GetShader<ColorShader>(){return static_cast<ColorShader&>(*shaders[SHADER::SHADER_COLOR]);}
+	ColorShader &GetShader<ColorShader>(){ return static_cast<ColorShader&>(*shaders[SHADER::SHADER_COLOR]); }
 	template<>
 	ColorInstancedShader &GetShader<ColorInstancedShader>(){ return static_cast<ColorInstancedShader&>(*shaders[SHADER::SHADER_COLOR_INSTANCED]); }
 	template<>
