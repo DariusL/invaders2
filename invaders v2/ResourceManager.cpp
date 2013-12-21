@@ -157,18 +157,45 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 
 ColorModel ResourceManager::GetModelFromOBJ(wstring filename, bool invert)
 {
-	auto normalModel = GetNormalModelFromOBJ(filename, invert);
-	ColorModel ret;
-	VertexType vertex;
-	ret.hitbox = normalModel.hitbox;
-	ret.indices = normalModel.indices;
-	for (NormalVertexType normalVertex : normalModel.vertices)
+	ColorModel model;
+	ifstream in(filename, ios::binary);
+	string input;
+	float x, y, z;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
+
+	while (!in.eof())
 	{
-		vertex.color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertex.position = normalVertex.position;
-		ret.vertices.push_back(vertex);
+		in >> input;
+
+		if (input == "#")
+		{
+			in.ignore(200, '\n');
+			continue;
+		}
+
+		if (input == "v")
+		{
+			in >> x >> y >> z;
+			model.vertices.emplace_back(x, y, -z);
+		}
+		else if (input == "f")
+		{
+			string blob;
+			getline(in, blob, '\n');
+			auto vertices = GetVerticesFromFace(blob);
+			if (!invert)
+			{
+				Utils::Reverse(vertices);
+			}
+			for (auto &vertex : vertices)
+			{
+				model.indices.push_back(vertex.vertex);
+			}
+		}
 	}
-	return ret;
+
+	return model;
 }
 
 NormalModel ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
