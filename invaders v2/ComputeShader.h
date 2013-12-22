@@ -21,7 +21,6 @@ public:
 	virtual void SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
 protected:
 	void InitializeShader(ComPtr<ID3D11Device> device, wstring cs);
-	void SetShader(ComPtr<ID3D11DeviceContext> context);
 	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device){}
 public:
 	static const uint groupX;

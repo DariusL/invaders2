@@ -159,6 +159,9 @@
     <ClCompile Include="BloomPass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DoubleInputComputeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -374,6 +377,12 @@
     <ClInclude Include="BloomPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TexelSumComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleInputComputeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -455,6 +464,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="FilterDownSampleCompute.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexelSumCompute.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

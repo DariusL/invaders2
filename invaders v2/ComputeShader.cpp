@@ -21,16 +21,11 @@ void ComputeShader::InitializeShader(ComPtr<ID3D11Device> device, wstring cs)
 	Assert(device->CreateComputeShader(buffer.get(), size, NULL, &shader));
 }
 
-void ComputeShader::SetShader(ComPtr<ID3D11DeviceContext> context)
-{
-	context->CSSetShader(shader.Get(), nullptr, 0);
-}
-
 void ComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
 {
 	context->CSSetShaderResources(0, 1, input.GetAddressOf());
 	context->CSSetUnorderedAccessViews(0, 1, output.GetAddressOf(), 0);
-	SetShader(context);
+	context->CSSetShader(shader.Get(), nullptr, 0);
 }
 
 void ComputeShader::Start(ComPtr<ID3D11DeviceContext> context, uint width, uint height)

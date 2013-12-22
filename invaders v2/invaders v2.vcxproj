@@ -102,6 +102,7 @@
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
+    <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
     <ClCompile Include="HorizontalBlurComputeShader.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
+    <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="HorizontalBlurComputeShader.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="ShadowShader.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="SimplePass.h" />
+    <ClInclude Include="TexelSumComputeShader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureShader.h" />
     <ClInclude Include="UpSampleComputeShader.h" />
@@ -355,6 +358,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="TexelSumCompute.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="TextureInstancedVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

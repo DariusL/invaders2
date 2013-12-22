@@ -7,8 +7,11 @@ class BloomPass : public IPass
 
 	FilterDownSamplePass filterDownPass;
 	UpSamplePass upPass;
+	HorizontalBlurPass hBlurPass;
+	VerticalBlurPass vBlurPass;
 
 	Texture halfTexture1;
+	Texture halfTexture2;
 public:
 	BloomPass(ComPtr<ID3D11Device> device, uint width, uint height);
 	virtual ~BloomPass(){}
