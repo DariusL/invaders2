@@ -156,6 +156,7 @@
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
+    <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="HorizontalBlurComputeShader.h" />

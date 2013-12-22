@@ -1,6 +1,7 @@
 #pragma once
 #include "SimplePass.h"
 #include "Texture.h"
+#include "DoubleInputPass.h"
 class BloomPass : public IPass
 {
 	uint width, height, halfWidth, halfHeight;
@@ -10,8 +11,11 @@ class BloomPass : public IPass
 	HorizontalBlurPass hBlurPass;
 	VerticalBlurPass vBlurPass;
 
+	TexelSumPass sumPass;
+
 	Texture halfTexture1;
 	Texture halfTexture2;
+	Texture texture;
 public:
 	BloomPass(ComPtr<ID3D11Device> device, uint width, uint height);
 	virtual ~BloomPass(){}

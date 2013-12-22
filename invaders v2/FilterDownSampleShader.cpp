@@ -20,7 +20,7 @@ void FilterDownSampleShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> con
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 
-	float threshold = 0.6f;
+	float threshold = 0.8f;
 
 	Utils::CopyToBuffer(filterBuffer, threshold, context);
 

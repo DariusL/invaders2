@@ -9,7 +9,9 @@ halfTexture2(device, halfWidth, halfHeight, TEXTURE_VIEW_SHADER_RESOURCE | TEXTU
 filterDownPass(RM::Get().GetShader<FilterDownSampleShader>(), halfWidth, halfHeight),
 upPass(RM::Get().GetShader<UpSampleComputeShader>(), width, height),
 vBlurPass(RM::Get().GetShader<VerticalBlurComputeShader>(), halfWidth , halfHeight),
-hBlurPass(RM::Get().GetShader<HorizontalBlurComputeShader>(), halfWidth, halfHeight)
+hBlurPass(RM::Get().GetShader<HorizontalBlurComputeShader>(), halfWidth, halfHeight),
+sumPass(RM::Get().GetShader<TexelSumComputeShader>(), width, height),
+texture(device, width, height, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS)
 {
 }
 
@@ -18,5 +20,6 @@ void BloomPass::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderRes
 	filterDownPass.Pass(context, input, halfTexture1.GetUAV());
 	vBlurPass.Pass(context, halfTexture1.GetSRV(), halfTexture2.GetUAV());
 	hBlurPass.Pass(context, halfTexture2.GetSRV(), halfTexture1.GetUAV());
-	upPass.Pass(context, halfTexture1.GetSRV(), output);
+	upPass.Pass(context, halfTexture1.GetSRV(), texture.GetUAV());
+	sumPass.Pass(context, input, texture.GetSRV(), output);
 }
