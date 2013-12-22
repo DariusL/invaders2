@@ -101,6 +101,7 @@
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
+    <ClCompile Include="FilterDownSampleShader.cpp" />
     <ClCompile Include="HorizontalBlurComputeShader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
+    <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="HorizontalBlurComputeShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBall.h" />
@@ -253,6 +255,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0_level_9_3</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="FilterDownSampleCompute.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="GlobalDiffusePixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

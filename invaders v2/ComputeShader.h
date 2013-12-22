@@ -3,7 +3,7 @@
 #include "Globals.h"
 using namespace std;
 using namespace Microsoft::WRL;
-
+using namespace DirectX;
 class ComputeShader
 {
 private:

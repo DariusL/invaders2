@@ -21,6 +21,7 @@
 #include "UpSampleComputeShader.h"
 #include "HorizontalBlurComputeShader.h"
 #include "VerticalBlurComputeShader.h"
+#include "FilterDownSampleShader.h"
 
 using namespace std;
 
@@ -65,7 +66,8 @@ public:
 		SHADER_COMPUTE_UPSAMPLE,
 		SHADER_COMPUTE_DOWNSAMPLE,
 		SHADER_COMPUTE_HORIZONTAL_BLUR,
-		SHADER_COMPUTE_VERTICAL_BLUR
+		SHADER_COMPUTE_VERTICAL_BLUR,
+		SHADER_COMPUTE_FILTER_DOWNSAMPLE
 	};
 
 	enum TEXTURE
@@ -172,6 +174,8 @@ public:
 	HorizontalBlurComputeShader &GetShader<HorizontalBlurComputeShader>(){ return static_cast<HorizontalBlurComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_HORIZONTAL_BLUR]); }
 	template<>
 	VerticalBlurComputeShader &GetShader<VerticalBlurComputeShader>(){ return static_cast<VerticalBlurComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_VERTICAL_BLUR]); }
+	template<>
+	FilterDownSampleShader &GetShader<FilterDownSampleShader>(){ return static_cast<FilterDownSampleShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_FILTER_DOWNSAMPLE]); }
 };
 
 typedef ResourceManager RM;
