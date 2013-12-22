@@ -21,6 +21,8 @@ class Texture
 	uint width, height;
 public:
 	Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view);
+	Texture(Texture&) = delete;
+	Texture(Texture&&);
 	~Texture(){}
 
 	ComPtr<ID3D11ShaderResourceView> GetSRV(){ return shaderResourceView; }

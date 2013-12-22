@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "Texture.h"
 #include "Utils.h"
-
+using namespace std;
 Texture::Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view)
 :view(view), width(width), height(height)
 {
@@ -59,4 +59,11 @@ Texture::Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view
 
 		Assert(device->CreateRenderTargetView(texture.Get(), &rtvDesc, &renderTargetView));
 	}
+}
+
+Texture::Texture(Texture &&other)
+:texture(move(other.texture)), shaderResourceView(move(other.shaderResourceView)),
+renderTargetView(move(other.renderTargetView)), unorderedAccessView(move(other.unorderedAccessView)),
+view(other.view), width(other.width), height(other.height)
+{
 }
