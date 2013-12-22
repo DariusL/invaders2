@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "SimplePass.h"
 #include "BlurPass.h"
+#include "BloomPass.h"
 #include "ResourceManager.h"
 
 class Graphics
@@ -23,6 +24,7 @@ class Graphics
 	RenderTarget target;
 	CelPass celPass;
 	BlurPass blurPass;
+	BloomPass bloomPass;
 
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;

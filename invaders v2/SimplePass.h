@@ -5,6 +5,7 @@
 #include "UpSampleComputeShader.h"
 #include "HorizontalBlurComputeShader.h"
 #include "VerticalBlurComputeShader.h"
+#include "FilterDownSampleShader.h"
 
 template<class sh>
 class SimplePass : IPass
@@ -36,3 +37,4 @@ typedef SimplePass<UpSampleComputeShader> UpSamplePass;
 typedef SimplePass<DownSampleComputeShader> DownSamplePass;
 typedef SimplePass<HorizontalBlurComputeShader> HorizontalBlurPass;
 typedef SimplePass<VerticalBlurComputeShader> VerticalBlurPass;
+typedef SimplePass<FilterDownSampleShader> FilterDownSamplePass;

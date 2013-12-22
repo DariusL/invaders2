@@ -156,6 +156,9 @@
     <ClCompile Include="FilterDownSampleShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BloomPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direct3D.h">
@@ -366,6 +369,9 @@
       <Filter>Abstract</Filter>
     </ClInclude>
     <ClInclude Include="FilterDownSampleShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BloomPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

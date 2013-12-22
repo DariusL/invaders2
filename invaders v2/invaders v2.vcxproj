@@ -98,6 +98,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AppHandle.cpp" />
+    <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="AppHandle.h" />
     <ClInclude Include="Billboard.h" />
+    <ClInclude Include="BloomPass.h" />
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
