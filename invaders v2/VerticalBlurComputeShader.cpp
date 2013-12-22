@@ -19,9 +19,9 @@ void VerticalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> dev
 	data.weight.z /= norm;
 	data.weight.w /= norm;
 
-	data.off1 = XMUINT2(0, 1);
-	data.off2 = XMUINT2(0, 2);
-	data.off3 = XMUINT2(0, 3);
+	data.off1 = XMUINT2(0, 2);
+	data.off2 = XMUINT2(0, 4);
+	data.off3 = XMUINT2(0, 6);
 
 	resource.pSysMem = &data;
 	resource.SysMemPitch = 0;

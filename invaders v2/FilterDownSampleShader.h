@@ -14,8 +14,9 @@ protected:
 
 	struct FilterBuffer
 	{
-		float threshold;
-		XMFLOAT3 padding;
+		float luminance;
+		float middleGray;
+		float whiteCutoff;
+		float padding;
 	};
 };
-
