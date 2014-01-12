@@ -34,7 +34,6 @@ void App::Run()
 			running = false;
 			break;
 		}
-		graphics.Render(*world);
 	}
 }
 
@@ -75,6 +74,14 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::ROLL_LEFT;
 	if (input.IsKeyDown('E'))
 		worldEvents |= ControlCodes::ROLL_RIGHT;
+	if (input.IsKeyDown(VK_F1))
+		worldEvents |= ControlCodes::EFFECT_1;
+	if (input.IsKeyDown(VK_F2))
+		worldEvents |= ControlCodes::EFFECT_2;
+	if (input.IsKeyDown(VK_F3))
+		worldEvents |= ControlCodes::EFFECT_3;
+	if (input.IsKeyDown(VK_F4))
+		worldEvents |= ControlCodes::EFFECT_4;
 
 	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();
@@ -86,6 +93,7 @@ bool App::OnLoop()
 		world->Stop();
 		break;
 	}
+	graphics.Render(*world, worldEvents);
 	return true;
 }
 

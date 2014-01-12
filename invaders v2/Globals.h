@@ -108,6 +108,10 @@ struct ControlCodes
 	static const int MOVE_BACK = 1 << 13;
 	static const int ROLL_LEFT = 1 << 14;
 	static const int ROLL_RIGHT = 1 << 15;
+	static const int EFFECT_1 = 1 << 16;
+	static const int EFFECT_2 = 1 << 17;
+	static const int EFFECT_3 = 1 << 18;
+	static const int EFFECT_4 = 1 << 19;
 };
 
 enum POST_PROCESS

@@ -8,8 +8,8 @@ void FilterDownSampleShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device
 	D3D11_SUBRESOURCE_DATA resource;
 	FilterBuffer data;
 	data.luminance = 0.08f;
-	data.middleGray = 0.18f;
-	data.whiteCutoff = 0.8f;
+	data.middleGray = 0.2f;
+	data.whiteCutoff = 0.7f;
 
 	resource.pSysMem = &data;
 	resource.SysMemPitch = 0;

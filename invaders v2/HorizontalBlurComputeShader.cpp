@@ -19,9 +19,9 @@ void HorizontalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> d
 	data.weight.z /= norm;
 	data.weight.w /= norm;
 
-	data.off1 = XMUINT2(2, 0);
-	data.off2 = XMUINT2(4, 0);
-	data.off3 = XMUINT2(6, 0);
+	data.off1 = XMUINT2(1, 0);
+	data.off2 = XMUINT2(2, 0);
+	data.off3 = XMUINT2(3, 0);
 
 	resource.pSysMem = &data;
 	resource.SysMemPitch = 0;

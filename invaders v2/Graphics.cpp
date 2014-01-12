@@ -32,8 +32,17 @@ void Graphics::LoadThings(Scene &world)
 	world.GetRenderBalls(reflectives, cameras);
 }
 
-void Graphics::Render(Scene &world)
+void Graphics::Render(Scene &world, int input)
 {
+	if (input & ControlCodes::EFFECT_1)
+		post = POST_PROCESS_NONE;
+	if (input & ControlCodes::EFFECT_2)
+		post = POST_PROCESS_CEL;
+	if (input & ControlCodes::EFFECT_3)
+		post = POST_PROCESS_BLUR;
+	if (input & ControlCodes::EFFECT_4)
+		post = POST_PROCESS_BLOOM;
+
 	auto context = d3D.GetDeviceContext();
 
 	d3D.DoingDepthCheck(true);
