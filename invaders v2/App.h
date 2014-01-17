@@ -2,7 +2,6 @@
 
 #include "Graphics.h"
 #include "GameWorld.h"
-#include "Scene.h"
 #include "Logger.h"
 #include "Input.h"
 #include "Window.h"
@@ -20,7 +19,7 @@ class App
 	Window window;
 	Graphics graphics;
 
-	unique_ptr<Scene> world;
+	unique_ptr<IWorld> world;
 
 	HWND wHandle;
 	HINSTANCE hInstance;

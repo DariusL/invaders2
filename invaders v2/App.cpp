@@ -7,7 +7,7 @@ App::App(uint width, uint height, bool fullscreen, wstring name)
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
-	world = unique_ptr<Scene>(new Scene(graphics.GetDevice()));
+	world = unique_ptr<GameWorld>(new GameWorld());
 	graphics.LoadThings(*world);
 }
 

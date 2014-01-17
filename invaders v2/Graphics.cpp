@@ -25,69 +25,24 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-void Graphics::LoadThings(Scene &world)
+void Graphics::LoadThings(IWorld &world)
 {
-	cameras.clear();
-	reflectives.clear();
-	world.GetRenderBalls(reflectives, cameras);
 }
 
-void Graphics::Render(Scene &world, int input)
+void Graphics::Render(IWorld &world, int input)
 {
-	if (input & ControlCodes::EFFECT_1)
-		post = POST_PROCESS_NONE;
-	if (input & ControlCodes::EFFECT_2)
-		post = POST_PROCESS_CEL;
-	if (input & ControlCodes::EFFECT_3)
-		post = POST_PROCESS_BLUR;
-	if (input & ControlCodes::EFFECT_4)
-		post = POST_PROCESS_BLOOM;
-
 	auto context = d3D.GetDeviceContext();
 
 	d3D.DoingDepthCheck(true);
 
-	auto &light = world.GetLight();
 	auto &camera = world.GetCamera();
 
-	RenderParams params;
+	RenderParams params;	
+	params.view = camera.GetViewMatrix();
+	params.projection = d3D.GetProjectionMatrix();
 	params.brightness = brightness;
 	params.context = context;
-	params.diffuseColor = light.GetColor();
-	params.waterScale = 0.1f;
-	long time = clock();
-	time %= 5000;
-	params.waterTranslation = XMFLOAT2(time / 5000.0f, 0.0f);
-
 	params.camera = &camera;
-	light.Prepare(params);
-	world.Render(params);
-
-	params.shadowMap = light.GetRenderedTexture();
-
-	for (auto remote : cameras)
-	{
-		params.camera = remote;
-		for (auto target : reflectives)
-		{
-			target->Prepare(context, params);
-			world.Render(params);
-			target->Swap();
-		}
-		auto &ball = remote->GetCameraBall();
-		ball.Prepare(context, params, d3D);
-		world.Render(params);
-		ball.Swap();
-	}
-
-	params.camera = &camera;
-
-	for (auto &target : reflectives)
-	{
-		target->Prepare(context, params);
-		world.Render(params);
-		target->Swap();
-	}
 
 	start = chrono::high_resolution_clock::now();
 	if (post)
@@ -100,16 +55,8 @@ void Graphics::Render(Scene &world, int input)
 		d3D.ResetRenderTarget();
 		d3D.ClearRenderTarget();
 	}
-	params.view = camera.GetViewMatrix();
-	params.projection = d3D.GetProjectionMatrix();
-	params.camera = &camera;
-	params.clipPlane = ZeroVec4;
-	params.pass = PASS_TYPE_NORMAL;
-	world.Render(params);// <------------------------------------------CIA RENDERINA
 
-	d3D.DoingDepthCheck(false);
-	params.projection = d3D.GetOrthoMatrix();
-	params.view = XMMatrixIdentity();
+	world.Render(params);// <------------------------------------------CIA RENDERINA
 
 	if (post)
 	{

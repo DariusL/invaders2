@@ -1,11 +1,11 @@
 #pragma once
 #include "Direct3D.h"
-#include "Scene.h"
-#include "Screen.h"
 #include "SimplePass.h"
 #include "BlurPass.h"
 #include "BloomPass.h"
 #include "ResourceManager.h"
+#include "RenderTarget.h"
+#include "GameWorld.h"
 
 class Graphics
 {
@@ -29,14 +29,11 @@ class Graphics
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;
 	POST_PROCESS post;
-
-	vector<RemoteCamera*> cameras;
-	vector<MirrorBall*> reflectives;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}
-	void Render(Scene &world, int input);
-	void LoadThings(Scene &world);
+	void Render(IWorld &world, int input);
+	void LoadThings(IWorld &world);
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
 	void ChangeBrightness(float offset);

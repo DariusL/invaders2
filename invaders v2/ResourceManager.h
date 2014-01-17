@@ -8,14 +8,8 @@
 #include "ColorShader.h"
 #include "GlobalDiffuseShader.h"
 #include "GlobalSpecularShader.h"
-#include "PointDiffuseShader.h"
-#include "PointSpecularShader.h"
 #include "TextureShader.h"
-#include "NormalMappedShader.h"
-#include "WaterShader.h"
-#include "MirrorShader.h"
 #include "InstancedTextureShader.h"
-#include "ShadowShader.h"
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
@@ -51,14 +45,8 @@ public:
 		SHADER_COLOR_INSTANCED,
 		SHADER_GLOBAL_DIFFUSE,
 		SHADER_GLOBAL_SPECULAR,
-		SHADER_POINT_DIFFUSE,
-		SHADER_POINT_SPECULAR,
 		SHADER_TEXTURE,
-		SHADER_NORMAL_MAPPED,
-		SHADER_WATER,
-		SHADER_MIRROR,
 		SHADER_TEXTURE_INSTANCED,
-		SHADER_SHADOW
 	};
 
 	enum SHADER_COMPUTE
@@ -150,21 +138,9 @@ public:
 	template<>
 	GlobalSpecularShader &GetShader<GlobalSpecularShader>(){ return static_cast<GlobalSpecularShader&>(*shaders[SHADER::SHADER_GLOBAL_SPECULAR]); }
 	template<>
-	PointDiffuseShader &GetShader<PointDiffuseShader>(){ return static_cast<PointDiffuseShader&>(*shaders[SHADER::SHADER_POINT_DIFFUSE]); }
-	template<>
-	PointSpecularShader &GetShader<PointSpecularShader>(){ return static_cast<PointSpecularShader&>(*shaders[SHADER::SHADER_POINT_SPECULAR]); }
-	template<>
 	TextureShader &GetShader<TextureShader>(){ return static_cast<TextureShader&>(*shaders[SHADER::SHADER_TEXTURE]); }
 	template<>
-	NormalMappedShader &GetShader<NormalMappedShader>(){ return static_cast<NormalMappedShader&>(*shaders[SHADER::SHADER_NORMAL_MAPPED]); }
-	template<>
-	WaterShader &GetShader<WaterShader>(){ return static_cast<WaterShader&>(*shaders[SHADER::SHADER_WATER]); }
-	template<>
-	MirrorShader &GetShader<MirrorShader>(){ return static_cast<MirrorShader&>(*shaders[SHADER::SHADER_MIRROR]); }
-	template<>
 	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[SHADER::SHADER_TEXTURE_INSTANCED]); }
-	template<>
-	ShadowShader &GetShader<ShadowShader>(){ return static_cast<ShadowShader&>(*shaders[SHADER::SHADER_SHADOW]); }
 
 	template<>
 	CelComputeShader &GetShader<CelComputeShader>(){ return static_cast<CelComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_CEL]); }
