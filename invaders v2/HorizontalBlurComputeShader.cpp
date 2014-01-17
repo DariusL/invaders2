@@ -10,8 +10,8 @@ void HorizontalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> d
 	D3D11_SUBRESOURCE_DATA resource;
 	BlurBuffer data;
 
+	//pikseliu svoriai
 	data.weight = XMFLOAT4(1.0f, 0.9f, 0.55f, 0.18f);
-
 	float norm = data.weight.x + 2.0f * (data.weight.y + data.weight.z + data.weight.w);
 
 	data.weight.x /= norm;
@@ -19,6 +19,7 @@ void HorizontalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> d
 	data.weight.z /= norm;
 	data.weight.w /= norm;
 
+	//kurie pikseliai naudojami
 	data.off1 = XMUINT2(1, 0);
 	data.off2 = XMUINT2(2, 0);
 	data.off3 = XMUINT2(3, 0);

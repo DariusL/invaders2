@@ -17,8 +17,8 @@ float sobelSum(float3x3 pixels)
 {
 	float ColorX = 0;
 	float ColorY = 0;
-	// Convolution operation. Matrix elements with same coords are multiplied and added to result
 
+	//spalvos pokytis x ir y kryptimis pagal sobel operator
 	ColorX += kernely._11 * pixels._11;
 	ColorY += kernelx._11 * pixels._11;
 	ColorX += kernely._12 * pixels._12;
@@ -51,6 +51,7 @@ float gray(float4 c)
 [numthreads(32, 32, 1)]
 void main( uint3 tid : SV_DispatchThreadID )
 {
+	//3x3 pixeliu matrica
 	float3x3 nearbyPixels;
 	nearbyPixels._11 = gray(inputTexture[tid.xy + float2(-1.0f, -1.0f)]);
 	nearbyPixels._12 = gray(inputTexture[tid.xy + float2(0.0f, -1.0f)]);
@@ -64,6 +65,7 @@ void main( uint3 tid : SV_DispatchThreadID )
 	nearbyPixels._32 = gray(inputTexture[tid.xy + float2(0.0f, 1.0f)]);
 	nearbyPixels._33 = gray(inputTexture[tid.xy + float2(1.0f, 1.0f)]);
 
+	//result = 0.0f jei cia briauna
 	int clipped = round(sobelSum(nearbyPixels) + offset);
 	float result = !clipped;
 	outputTexture[tid.xy] = inputTexture[tid.xy] * float4(result.xxx, 1.0f);

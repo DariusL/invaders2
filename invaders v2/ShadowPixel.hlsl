@@ -26,10 +26,13 @@ float4 main(PixelInputType input) : SV_TARGET
 	float bias = 0.001f;
 	float4 color;
 
+	//koordinates transformuojamos projektavimui
 	input.lightViewPosition.xyz /= input.lightViewPosition.w;
 	input.lightViewPosition.y = -input.lightViewPosition.y;
 	input.lightViewPosition.xy = (input.lightViewPosition.xy + float2(1.0f, 1.0f)) / 2.0f;
 	float shadow;
+	//uz sviesos daros nesamones su koordinatem
+	//baisu, bet nesugalvojau kaip kitaip padaryt
 	if (input.lightViewPosition.w >= 0.1f)
 		shadow = depthMap.SampleCmp(shadowSampleType, input.lightViewPosition.xy, input.lightViewPosition.z - bias);
 	else

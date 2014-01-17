@@ -49,11 +49,13 @@ PixelInputType main(VertexInputType input)
 	float4 worldPos = output.position;
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
+	//koordinates seselio projektavimui
 	float4 shadowPos = worldPos;
 	shadowPos = mul(shadowPos, lightView);
 	shadowPos = mul(shadowPos, lightProject);
 	output.lightViewPosition = shadowPos;
 
+	//jei naudojamas non-uniform scaling, reikia daryt nesamones su normale
 	output.normal = mul(input.normal, (float3x3)inverseWorld);
 	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);
 	output.tex = input.tex;

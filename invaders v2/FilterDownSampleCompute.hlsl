@@ -9,15 +9,11 @@ cbuffer FilterBuffer : register(b0)
 	float padding;
 }
 
-float gray(float4 c)
-{
-	return dot(c.rgb, (0.33333f).xxx);
-}
-
 float4 filter(float4 color)
 {
 	float3 colorOut = color.xyz;
-
+	//matematika is DirectX SDK, nieko nesuprantu, bet ji veikia
+	//atfiltruoja sviesius pikselius
 	colorOut *= middleGray / (luminance + 0.001f);
 	colorOut *= (1.0f + (colorOut / (whiteCutoff * whiteCutoff)));
 	colorOut -= 5.0f;

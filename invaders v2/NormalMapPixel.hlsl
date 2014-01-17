@@ -23,9 +23,11 @@ float4 main(PixelInputType input) : SV_TARGET
 {
 	float4 specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
+	//normale is normal map
 	float4 bump = normalMap.Sample(SampleType, input.tex);
 	bump = (bump * 2.0f) - 1.0f;
 
+	//galutine normale
 	float3 normal = normalize(input.normal + bump.x * input.tangent + bump.y * input.binormal);
 
 	float intensity = saturate(dot(input.lightDir, normal));//difuzines intensyvumas

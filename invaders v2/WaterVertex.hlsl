@@ -45,16 +45,14 @@ PixelInputType main(VertexInputType input)
     input.position.w = 1.0f;
 	worldPos = mul(input.position, world);
 
-	output.position = mul(input.position, world);
-	output.position = mul(output.position, view);
+	output.position = mul(worldPos, view);
 	output.position = mul(output.position, projection);
 
 	output.tex = input.tex;
 
 	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);
 
-	output.reflectionPos = mul(input.position, world);
-	output.reflectionPos = mul(output.reflectionPos, reflectView);
+	output.reflectionPos = mul(worldPos, reflectView);
 	output.reflectionPos = mul(output.reflectionPos, projection);
 
 	output.refractionPos = output.position;

@@ -14,6 +14,7 @@ cbuffer BlurBuffer : register(b0)
 void main(uint3 tid : SV_DispatchThreadID)
 {
 	float4 color = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	//suliejami reikiami pikseliai pagal offsets
 	color += inputTexture[tid.xy] * weight.x;
 
 	color += inputTexture[tid.xy - off1] * weight.y;

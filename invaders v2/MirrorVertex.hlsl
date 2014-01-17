@@ -10,6 +10,7 @@ cbuffer ClipBuffer : register(b1)
 	float4 clip;
 }
 
+//atspindzio view matrica
 cbuffer ReflectionBuffer : register(b2)
 {
 	matrix reflectView;
@@ -39,6 +40,7 @@ PixelInputType main(VertexInputType input)
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
 
+	//pozicija transformuota pagal atspindzio matricas
 	output.reflectionPos = input.position;
 	output.reflectionPos = mul(output.reflectionPos, world);
 	output.reflectionPos = mul(output.reflectionPos, reflectView);

@@ -5,6 +5,7 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
+//clip plane
 cbuffer ClipBuffer : register(b1)
 {
 	float4 clip;
@@ -17,8 +18,8 @@ cbuffer LightBuffer : register(b2)
 
 cbuffer CameraBuffer : register(b3)
 {
-	float3 cameraPos;//kameros pozicija
-	float padding;//papildomi duomenys iki 16B
+	float3 cameraPos;
+	float padding;
 };
 
 struct VertexInputType
@@ -59,6 +60,7 @@ PixelInputType main(VertexInputType input)
     output.color = input.color;
 	output.tex = input.tex;
 
+	//apskaiciuojamos kameros ir sviesos kryptys
 	output.cameraDir = normalize(cameraPos.xyz - worldPos.xyz);
 	output.lightDir = normalize(lightPos.xyz - worldPos.xyz);
 

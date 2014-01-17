@@ -39,10 +39,13 @@ namespace Utils
 
 	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse)
 	{
+		//pradine normale
 		XMVECTOR normal = XMVectorSet(0.0f, 0.0f, (reverse ? 1.0f : -1.0f), 0.0f);
 		XMMATRIX matrix = XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
 		XMFLOAT3 temp;
+		//normale pasukta, kad butu statmena plokstumai
 		XMStoreFloat3(&temp, XMVector3Transform(normal, matrix));
+		//sudaroma plokstumos lygtis
 		return XMFLOAT4(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
 	}
 
