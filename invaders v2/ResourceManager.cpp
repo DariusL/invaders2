@@ -6,11 +6,11 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
-:normalMappedModel(GetNormalMappedModelFromOBJ(device, L"Resources\\ball.obj"))
+:normalMappedModel(device, GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
 {
 	handle = this;
 
-	models.push_back(GetModelFromOBJ(device, L"Resources\\ball.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\ball.obj"));
 
 	TextureVertexType tv;
 	Geometry<TextureVertexType> temp;
@@ -42,10 +42,10 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	texturedModels.push_back(TexturedModel(device, temp));
 	temp.vertices.clear();
 
-	texturedModels.push_back(GetTexturedModelFromOBJ(device, L"Resources\\box.obj", true));
-	texturedModels.push_back(GetTexturedModelFromOBJ(device, L"Resources\\bath.obj", true));
+	texturedModels.emplace_back(device, GetTexturedModelFromOBJ(L"Resources\\box.obj", true));
+	texturedModels.emplace_back(device, GetTexturedModelFromOBJ(L"Resources\\bath.obj", true));
 
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(device, L"Resources\\box.obj", true));
+	normalTexturedModels.emplace_back(device, GetNormalTexturedModelFromOBJ(L"Resources\\box.obj", true));
 	Geometry<NormalTextureVertexType> vert;
 	NormalTextureVertexType ntv;
 	ntv.normal = XMFLOAT3(0.0f, 0.0f, -1.0f);
@@ -74,9 +74,9 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	vert.indices.push_back(3);
 	vert.indices.push_back(2);
 
-	normalTexturedModels.push_back(NormalTexturedModel(device, vert));
+	normalTexturedModels.emplace_back(device, vert);
 	vert.vertices.clear();
-	normalTexturedModels.push_back(GetNormalTexturedModelFromOBJ(device, L"Resources\\bath.obj", true));
+	normalTexturedModels.emplace_back(device, GetNormalTexturedModelFromOBJ(L"Resources\\bath.obj", true));
 
 	Level *level = new Level();
 
@@ -120,7 +120,7 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
 }
 
-ColorModel ResourceManager::GetModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+Geometry<VertexType> ResourceManager::GetModelFromOBJ(wstring filename, bool invert)
 {
 	ifstream in(filename, ios::binary);
 	Geometry<VertexType> g;
@@ -160,10 +160,10 @@ ColorModel ResourceManager::GetModelFromOBJ(ComPtr<ID3D11Device> device, wstring
 		}
 	}
 
-	return ColorModel(device, g);
+	return g;
 }
 
-NormalModel ResourceManager::GetNormalModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+Geometry<NormalVertexType> ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
 {
 	Geometry<NormalVertexType> g;
 	ifstream in(filename, ios::binary);
@@ -210,10 +210,10 @@ NormalModel ResourceManager::GetNormalModelFromOBJ(ComPtr<ID3D11Device> device, 
 		}
 	}
 
-	return NormalModel(device, g);
+	return g;
 }
 
-NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert)
+Geometry<NormalMappedVertexType> ResourceManager::GetNormalMappedModelFromOBJ(wstring filename, bool invert)
 {
 	Geometry<NormalMappedVertexType> g;
 	ifstream in(filename, ios::binary);
@@ -268,10 +268,10 @@ NormalMappedModel ResourceManager::GetNormalMappedModelFromOBJ(ComPtr<ID3D11Devi
 		}
 	}
 
-	return NormalMappedModel(device, g);
+	return g;
 }
 
-TexturedModel ResourceManager::GetTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex, bool invert)
+Geometry<TextureVertexType> ResourceManager::GetTexturedModelFromOBJ(wstring filename, bool unindex, bool invert)
 {
 	Geometry<TextureVertexType> g;
 	vector<TextureVertexType> temp;
@@ -335,10 +335,10 @@ TexturedModel ResourceManager::GetTexturedModelFromOBJ(ComPtr<ID3D11Device> devi
 		}
 	}
 
-	return TexturedModel(device, g);
+	return g;
 }
 
-NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex, bool invert)
+Geometry<NormalTextureVertexType> ResourceManager::GetNormalTexturedModelFromOBJ(wstring filename, bool unindex, bool invert)
 {
 	Geometry<NormalTextureVertexType> g;
 	vector<NormalTextureVertexType> temp;
@@ -410,7 +410,7 @@ NormalTexturedModel ResourceManager::GetNormalTexturedModelFromOBJ(ComPtr<ID3D11
 		}
 	}
 
-	return NormalTexturedModel(device, g);
+	return g;
 }
 
 vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line)

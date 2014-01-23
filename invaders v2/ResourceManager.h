@@ -98,11 +98,11 @@ private:
 	ComVector<ID3D11ShaderResourceView> textures;
 	NormalMappedModel normalMappedModel;
 
-	static NormalModel GetNormalModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static ColorModel GetModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static NormalMappedModel GetNormalMappedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool invert = false);
-	static TexturedModel GetTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
-	static NormalTexturedModel GetNormalTexturedModelFromOBJ(ComPtr<ID3D11Device> device, wstring filename, bool unindex = false, bool invert = false);
+	static Geometry<NormalVertexType> GetNormalModelFromOBJ(wstring filename, bool invert = false);
+	static Geometry<VertexType> GetModelFromOBJ(wstring filename, bool invert = false);
+	static Geometry<NormalMappedVertexType> GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
+	static Geometry<TextureVertexType> GetTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
+	static Geometry<NormalTextureVertexType> GetNormalTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line);
