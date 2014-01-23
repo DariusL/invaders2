@@ -101,6 +101,7 @@
     <ClCompile Include="AppHandle.cpp" />
     <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
+    <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="AppHandle.h" />
     <ClInclude Include="BloomPass.h" />
     <ClInclude Include="BlurPass.h" />
+    <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
