@@ -4,7 +4,7 @@
 
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 :handle(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
-post(POST_PROCESS_BLOOM), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
+post(POST_PROCESS_NONE), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
 d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
 rm(d3D.GetDevice()), celPass(rm.GetShader<CelComputeShader>(), width, height),
 target(d3D.GetDevice(), width, height),

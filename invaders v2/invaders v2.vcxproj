@@ -151,6 +151,7 @@
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="HorizontalBlurComputeShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorInstancedShader.h" />

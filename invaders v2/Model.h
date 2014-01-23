@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "Utils.h"
+#include "Geometry.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
@@ -11,7 +12,7 @@ template<class T>
 class Model
 {
 public:
-	Model(ComPtr<ID3D11Device> device, const vector<T> &vertices, const vector<int> &indices);
+	Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry);
 	Model(Model &&other);
 	Model &operator=(Model &&other);
 
@@ -56,8 +57,8 @@ Model<T> &Model<T>::operator=(Model &&other)
 }
 
 template<class T>
-Model<T>::Model(ComPtr<ID3D11Device> device, const vector<T> &vertices, const vector<int> &indices)
-:indexCount(indices.size())
+Model<T>::Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry)
+:indexCount(geometry.indices.size())
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -66,26 +67,26 @@ Model<T>::Model(ComPtr<ID3D11Device> device, const vector<T> &vertices, const ve
 	vertexInfo.stride = sizeof(T);
 
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(T)* vertices.size();
+	vertexBufferDesc.ByteWidth = sizeof(T)* geometry.vertices.size();
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
 	vertexBufferDesc.StructureByteStride = 0;
 	vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	vertexData.pSysMem = vertices.data();
+	vertexData.pSysMem = geometry.vertices.data();
 	vertexData.SysMemPitch = 0;
 	vertexData.SysMemSlicePitch = 0;
 
 	Assert(device->CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer));
 
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.ByteWidth = sizeof(int)* indices.size();
+	indexBufferDesc.ByteWidth = sizeof(int)* geometry.indices.size();
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;
 	indexBufferDesc.StructureByteStride = 0;
 	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 
-	indexData.pSysMem = indices.data();
+	indexData.pSysMem = geometry.indices.data();
 	indexData.SysMemPitch = 0;
 	indexData.SysMemSlicePitch = 0;
 

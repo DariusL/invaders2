@@ -315,6 +315,9 @@
     <ClInclude Include="Level.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
