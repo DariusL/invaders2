@@ -1,380 +1,381 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{a6233de0-61d0-49ff-8ae9-178147d31209}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{d825a560-dbba-412a-86b3-88ed28685154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compute">
+      <UniqueIdentifier>{7e4e4162-8692-4dad-8c19-4307ba481f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{6db339e9-f100-47e2-90c0-360538891d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{705aac9e-fe58-4152-a600-af736145ef71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{a6233de0-61d0-49ff-8ae9-178147d31209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Abstract">
-      <UniqueIdentifier>{b8e86ffb-a094-4fe3-9b94-497c780f6a8f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ColorShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyGrid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ColorInstancedShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstanceEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityListInstancer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shooter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameWorld.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalDiffuseShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IShader.cpp">
-      <Filter>Abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalSpecularShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="includes.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Shaders</Filter>
     </ClCompile>
     <ClCompile Include="TextureShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Globals.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DDSTextureLoader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Shaders</Filter>
     </ClCompile>
     <ClCompile Include="InstancedTextureShader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="ComputeShader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GlobalSpecularShader.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="CelComputeShader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GlobalDiffuseShader.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AppHandle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HorizontalBlurComputeShader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ColorInstancedShader.cpp">
+      <Filter>Shaders</Filter>
     </ClCompile>
     <ClCompile Include="VerticalBlurComputeShader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Compute</Filter>
     </ClCompile>
-    <ClCompile Include="BlurPass.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="HorizontalBlurComputeShader.cpp">
+      <Filter>Compute</Filter>
     </ClCompile>
     <ClCompile Include="FilterDownSampleShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BloomPass.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Compute</Filter>
     </ClCompile>
     <ClCompile Include="DoubleInputComputeShader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputeShader.cpp">
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="CelComputeShader.cpp">
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="BlurPass.cpp">
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="BloomPass.cpp">
+      <Filter>Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="includes.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="AppHandle.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="RenderTarget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGrid.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityListInstancer.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceEntity.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooter.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Direct3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyGrid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorInstancedShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="InstanceEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="BaseInstancer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="EntityListInstancer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableShooter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Shooter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameWorld.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IDrawable.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IDrawableObject.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IInstance.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IInstanceShader.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IPosShader.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IShader.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="IWorld.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalDiffuseShader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalSpecularShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureShader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableBumpyEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableTexturedEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DDSTextureLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstancedTextureShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CelComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppHandle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DownSampleComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UpSampleComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimplePass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HorizontalBlurComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VerticalBlurComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BlurPass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IPass.h">
-      <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="FilterDownSampleShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BloomPass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TexelSumComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoubleInputComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoubleInputPass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTarget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="TestScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="IPosShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="IInstanceShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalDiffuseShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalSpecularShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedTextureShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="BloomPass.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="BlurPass.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="CelComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="IPass.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleInputComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleInputPass.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="DownSampleComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="FilterDownSampleShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalBlurComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplePass.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="TexelSumComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="UpSampleComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="VerticalBlurComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawable.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawableObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IInstance.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IWorld.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="AppHandle.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorInstancedShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="ColorVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="ColorInstancedVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="TexturePixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="TextureVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="GlobalDiffusePixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="GlobalDiffuseVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="GlobalSpecularPixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="GlobalSpecularVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="PointDiffusePixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="PointDiffuseVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="PointSpecularPixel.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="PointSpecularVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="TextureInstancedVertex.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="CelCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="DownSampleCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="UpSampleCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="BlurCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="FilterDownSampleCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="TexelSumCompute.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
