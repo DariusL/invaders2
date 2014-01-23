@@ -131,6 +131,7 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shooter.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="SimplePass.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="TexelSumComputeShader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureShader.h" />

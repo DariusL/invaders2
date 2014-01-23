@@ -25,10 +25,6 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-void Graphics::LoadThings(IWorld &world)
-{
-}
-
 void Graphics::Render(IWorld &world, int input)
 {
 	auto context = d3D.GetDeviceContext();

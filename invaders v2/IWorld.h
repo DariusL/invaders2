@@ -12,19 +12,14 @@ class IWorld : public IDrawable
 {
 protected:
 	Camera camera;
-	bool started;
 	
 public:
 	IWorld(){}
 	virtual ~IWorld(){}
-	virtual bool Start(shared_ptr<Level> level) = 0;
-	virtual void Stop() = 0;
 
 	virtual int OnLoop(int input, float frameLength) = 0;
 
 	Camera &GetCamera(){return camera;}
-
-	bool IsStarted(){return started;}
 
 	enum Result
 	{

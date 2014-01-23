@@ -1,14 +1,14 @@
 #include "includes.h"
 #include "App.h"
 #include "ResourceManager.h"
+#include "TestScene.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
-	world = unique_ptr<GameWorld>(new GameWorld());
-	graphics.LoadThings(*world);
+	world = make_unique<TestScene>();
 }
 
 App::~App()
@@ -39,10 +39,6 @@ void App::Run()
 
 bool App::OnLoop()
 {
-	if(!world->IsStarted())
-	{
-		world->Start(RM::Get().GetLevel(ResourceManager::LEVEL::L1));
-	}
 	int worldEvents = 0;
 	if(input.IsKeyDown(VK_LEFT))
 		worldEvents |= ControlCodes::LEFT;
@@ -89,8 +85,6 @@ bool App::OnLoop()
 	{
 	case IWorld::Result::GAME_OVER:
 		return false;
-	case IWorld::Result::NEXT_LEVEL:
-		world->Stop();
 		break;
 	}
 	graphics.Render(*world, worldEvents);

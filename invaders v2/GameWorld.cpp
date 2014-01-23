@@ -5,7 +5,6 @@
 
 GameWorld::GameWorld()
 {
-	started = false;
 	lives = 3;
 	AssertBool(false, L"GameWorld got deimlpemented");
 }

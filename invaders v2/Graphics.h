@@ -33,7 +33,6 @@ public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}
 	void Render(IWorld &world, int input);
-	void LoadThings(IWorld &world);
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
 	void ChangeBrightness(float offset);
