@@ -9,7 +9,6 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 :normalMappedModel(device, GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
 {
 	handle = this;
-
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\ball.obj"));
 
 	VertexType vt;
@@ -194,6 +193,65 @@ Geometry<VertexType> ResourceManager::GetModelFromOBJ(wstring filename, bool inv
 	}
 
 	return g;
+}
+
+unordered_map<string, Geometry<VertexType>> ResourceManager::GetModelsFromOBJ(wstring filename)
+{
+	unordered_map<string, Geometry<VertexType>> ret;
+	ifstream in(filename, ios::binary);
+	Geometry<VertexType> g;
+	string input;
+	float x, y, z;
+	int voff = 1;
+	string name;
+	bool object = false;
+
+	AssertBool(in.is_open(), L"File " + filename + L" not found");
+
+	while (!in.eof())
+	{
+		in >> input;
+
+		if (object)
+		{
+			if (input == "f")
+			{
+				string blob;
+				getline(in, blob, '\n');
+				auto fvert = GetVerticesFromFace(blob, voff);
+				Utils::Reverse(fvert);
+				for (auto &vertex : fvert)
+				{
+					g.indices.push_back(vertex.vertex);
+				}
+			}
+			else
+			{
+				object = false;
+				voff += g.vertices.size();
+				ret.emplace(name, move(g));
+				in.ignore(200, '\n');
+			}
+		}
+		else
+		{
+			if (input == "#" || input == "vt" || input == "vn")
+			{
+				in.ignore(200, '\n');
+			}
+			else if (input == "v")
+			{
+				in >> x >> y >> z;
+				g.Add(x, y, -z);
+			}
+			else if (input == "g")
+			{
+				in >> name;
+				object = true;
+			}
+		}
+	}
+	return ret;
 }
 
 Geometry<NormalVertexType> ResourceManager::GetNormalModelFromOBJ(wstring filename, bool invert)
@@ -446,7 +504,7 @@ Geometry<NormalTextureVertexType> ResourceManager::GetNormalTexturedModelFromOBJ
 	return g;
 }
 
-vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line)
+vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string &line, int voff, int noff, int toff)
 {
 	vector<FaceVertex> ret;
 	int ind1 = 0, ind2 = 0;
@@ -454,13 +512,13 @@ vector<ResourceManager::FaceVertex> ResourceManager::GetVerticesFromFace(string 
 	for (int i = 0; i < 3; i++)
 	{
 		ind2 = line.find(' ', ind1 + 1);
-		ret.push_back(GetVertexFromString(line.substr(ind1, ind2 - ind1)));
+		ret.push_back(GetVertexFromString(line.substr(ind1, ind2 - ind1), voff, noff, toff));
 		ind1 = ++ind2;
 	}
 	return ret;
 }
 
-ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
+ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex, int voff, int noff, int toff)
 {
 	FaceVertex ret;
 	string temp;
@@ -468,12 +526,12 @@ ResourceManager::FaceVertex ResourceManager::GetVertexFromString(string &vertex)
 
 	ind1 = vertex.find('/');
 	temp = vertex.substr(0, ind1);
-	ret.vertex = temp.length() > 0 ? stoi(temp) - 1 : -1;
+	ret.vertex = temp.length() > 0 ? stoi(temp) - voff : -1;
 	ind2 = vertex.find('/', ind1 + 1);
 	temp = vertex.substr(ind1 + 1, ind2 - ind1 - 1);
-	ret.tex = temp.length() > 0 ? stoi(temp) - 1 : -1;
+	ret.tex = temp.length() > 0 ? stoi(temp) - toff : -1;
 	temp = vertex.substr(ind2 + 1);
-	ret.normal = temp.length() > 0 ? stoi(temp) - 1 : -1;
+	ret.normal = temp.length() > 0 ? stoi(temp) - noff : -1;
 
 	return ret;
 }

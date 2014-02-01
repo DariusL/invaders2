@@ -26,7 +26,7 @@ public:
 	enum MODEL
 	{
 		MODEL_BALL,
-		MODEL_PLANE
+		MODEL_PLANE,
 	};
 
 	enum ENEMY
@@ -101,13 +101,14 @@ private:
 
 	static Geometry<NormalVertexType> GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static Geometry<VertexType> GetModelFromOBJ(wstring filename, bool invert = false);
+	static unordered_map<string, Geometry<VertexType>> GetModelsFromOBJ(wstring filename);
 	static Geometry<NormalMappedVertexType> GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
 	static Geometry<TextureVertexType> GetTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 	static Geometry<NormalTextureVertexType> GetNormalTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 
 	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
-	static vector<FaceVertex> GetVerticesFromFace(string &line);
-	static FaceVertex GetVertexFromString(string &vertex);
+	static vector<FaceVertex> GetVerticesFromFace(string &line, int voff = 1, int noff = 1, int toff = 1);
+	static FaceVertex GetVertexFromString(string &vertex, int voff = 1, int noff = 1, int toff = 1);
 	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
 
 	static ResourceManager *handle;

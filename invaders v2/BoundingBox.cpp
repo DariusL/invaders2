@@ -31,3 +31,13 @@ XMFLOAT3 BoundingBox::GetCenter() const
 {
 	return XMFLOAT3((minv.x + maxv.x) / 2.0f, (minv.y + maxv.y) / 2.0f, (minv.z + maxv.z) / 2.0f);
 }
+
+void BoundingBox::Move(XMFLOAT3 offset)
+{
+	maxv.x += offset.x;
+	maxv.y += offset.y;
+	maxv.z += offset.z; 
+	minv.x += offset.x;
+	minv.y += offset.y;
+	minv.z += offset.z;
+}

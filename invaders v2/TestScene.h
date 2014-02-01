@@ -2,7 +2,7 @@
 #include "IWorld.h"
 class TestScene : public IWorld
 {
-	SimpleDrawableEntity thing;
+	vector<unique_ptr<IDrawable>> stuff;
 public:
 	TestScene();
 

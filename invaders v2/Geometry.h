@@ -9,15 +9,34 @@ struct Geometry
 	std::vector<int> indices;
 	BoundingBox box;
 	void Add(const T &vertex);
+	void Add(float x, float y, float z);
 	Geometry &operator+=(const Geometry &other);
+	Geometry(Geometry &&other);
+	Geometry(){}
 	void Center();
 };
+
+template<class T>
+Geometry<T>::Geometry(Geometry &&other)
+:vertices(move(other.vertices)),
+indices(move(other.indices)),
+box(move(other.box))
+{
+	other.box = BoundingBox();
+}
 
 template<class T>
 void Geometry<T>::Add(const T &vertex)
 {
 	vertices.push_back(vertex);
 	box.Add(vertex.position);
+}
+
+template<class T>
+void Geometry<T>::Add(float x, float y, float z)
+{
+	vertices.emplace_back(x, y, z);
+	box.Add(vertices.back().position);
 }
 
 template<class T>
@@ -46,12 +65,14 @@ template<class T>
 void Geometry<T>::Center()
 {
 	auto center = box.GetCenter();
-	box = BoundingBox();
+	center.x = -center.x;
+	center.y = -center.y;
+	center.z = -center.z;
+	box.Move(center);
 	for (auto &vertex : vertices)
 	{
-		vertex.position.x -= center.x;
-		vertex.position.y -= center.y;
-		vertex.position.z -= center.z;
-		box.Add(vertex.position);
+		vertex.position.x += center.x;
+		vertex.position.y += center.y;
+		vertex.position.z += center.z;
 	}
 }

@@ -7,6 +7,7 @@ class IDrawable
 {
 public:
 	IDrawable(){}
+	virtual ~IDrawable(){}
 	IDrawable(IDrawable&&){}
 
 	IDrawable(IDrawable&) = delete;

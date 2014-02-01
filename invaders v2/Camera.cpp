@@ -68,7 +68,7 @@ void Camera::Forward(float dist)
 
 void Camera::Move(float x, float y, float z)
 {
-	Forward(z);
+	Forward(-z);
 	Right(x);
 	Up(y);
 }
