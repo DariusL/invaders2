@@ -25,7 +25,8 @@ class ResourceManager
 public:
 	enum MODEL
 	{
-		MODEL_BALL
+		MODEL_BALL,
+		MODEL_PLANE
 	};
 
 	enum ENEMY

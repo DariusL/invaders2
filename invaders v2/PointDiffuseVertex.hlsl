@@ -5,11 +5,6 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
-cbuffer ClipBuffer : register(b1)
-{
-	float4 clip;
-}
-
 cbuffer LightBuffer : register(b2)
 {
 	float4 lightPos;
@@ -32,7 +27,6 @@ struct VertexInputType
     float3 normal : NORMAL;
 };
 
-[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;

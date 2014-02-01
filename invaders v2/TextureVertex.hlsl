@@ -4,12 +4,6 @@ cbuffer TransMatrix : register(b0)
 	matrix view;
 	matrix projection;
 };
-
-cbuffer ClipBuffer : register(b1)
-{
-	float4 clip;
-}
-
 struct VertexInputType
 {
     float4 position : POSITION;
@@ -22,7 +16,6 @@ struct PixelInputType
     float2 tex : TEXCOORD0;
 };
 
-[clipplanes(clip)]
 PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;

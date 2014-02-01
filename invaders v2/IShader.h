@@ -26,7 +26,6 @@ protected:
 	ComPtr<ID3D11InputLayout> layout;
 
 	ComPtr<ID3D11Buffer> matrixBuffer;
-	ComPtr<ID3D11Buffer> clipBuffer;
 private:
 	wstring vs, ps;
 };

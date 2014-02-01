@@ -2,16 +2,13 @@
 #include "BoundingBox.h"
 
 using namespace DirectX;
-BoundingBox::BoundingBox()
-{
-}
-
 
 void BoundingBox::Add(const XMFLOAT3 &vert)
 {
 	if (empty)
 	{
 		minv = maxv = vert;
+		empty = false;
 	}
 	else
 	{
@@ -25,7 +22,12 @@ void BoundingBox::Add(const XMFLOAT3 &vert)
 	}
 }
 
-XMFLOAT3 BoundingBox::GetSize()
+XMFLOAT3 BoundingBox::GetSize() const
 {
 	return XMFLOAT3(maxv.x - minv.x, maxv.y - minv.y, maxv.z - minv.z);
+}
+
+XMFLOAT3 BoundingBox::GetCenter() const
+{
+	return XMFLOAT3((minv.x + maxv.x) / 2.0f, (minv.y + maxv.y) / 2.0f, (minv.z + maxv.z) / 2.0f);
 }

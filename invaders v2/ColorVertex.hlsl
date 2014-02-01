@@ -5,11 +5,6 @@ cbuffer TransMatrix : register(b0)
 	matrix projection;
 };
 
-cbuffer ClipBuffer : register(b1)
-{
-	float4 clip;
-}
-
 struct VertexInputType
 {
     float4 position : POSITION;
@@ -22,7 +17,6 @@ struct PixelInputType
     float4 color : COLOR;
 };
 
-[clipplanes(clip)]
 PixelInputType ColorVertexShader(VertexInputType input)
 {
     PixelInputType output;
