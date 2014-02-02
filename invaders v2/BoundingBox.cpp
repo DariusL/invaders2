@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "BoundingBox.h"
+#include "Utils.h"
 
 using namespace DirectX;
 
@@ -24,20 +25,16 @@ void BoundingBox::Add(const XMFLOAT3 &vert)
 
 XMFLOAT3 BoundingBox::GetSize() const
 {
-	return XMFLOAT3(maxv.x - minv.x, maxv.y - minv.y, maxv.z - minv.z);
+	return empty ? ZeroVec3 : XMFLOAT3(maxv.x - minv.x, maxv.y - minv.y, maxv.z - minv.z);
 }
 
 XMFLOAT3 BoundingBox::GetCenter() const
 {
-	return XMFLOAT3((minv.x + maxv.x) / 2.0f, (minv.y + maxv.y) / 2.0f, (minv.z + maxv.z) / 2.0f);
+	return empty ? ZeroVec3 : XMFLOAT3((minv.x + maxv.x) / 2.0f, (minv.y + maxv.y) / 2.0f, (minv.z + maxv.z) / 2.0f);
 }
 
 void BoundingBox::Move(XMFLOAT3 offset)
 {
-	maxv.x += offset.x;
-	maxv.y += offset.y;
-	maxv.z += offset.z; 
-	minv.x += offset.x;
-	minv.y += offset.y;
-	minv.z += offset.z;
+	Utils::VectorAdd(maxv, offset);
+	Utils::VectorAdd(minv, offset);
 }

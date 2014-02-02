@@ -10,7 +10,7 @@ rm(d3D.GetDevice()), celPass(rm.GetShader<CelComputeShader>(), width, height),
 target(d3D.GetDevice(), width, height),
 blurPass(d3D.GetDevice(), width, height),
 bloomPass(d3D.GetDevice(), width, height),
-str(ZeroVec3, "RAND", d3D.GetDevice(), RM::Get().GetShader<ColorShader>())
+str(ZeroVec3, "TEXT", d3D.GetDevice(), RM::Get().GetShader<ColorShader>())
 {
 	auto device = d3D.GetDevice();
 

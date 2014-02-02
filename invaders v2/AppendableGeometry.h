@@ -20,11 +20,11 @@ AppendableGeometry<T> &AppendableGeometry<T>::operator+=(const Geometry<T> &othe
 		uint size = vertices.size();
 		uint oisize = other.indices.size();
 		uint ovsize = other.vertices.size();
-		float width = box.GetSize().x;
+		float off = box.GetMax().x - other.box.GetMin().x;
 		for (uint i = 0; i < ovsize; i++)
 		{
 			auto vertex = other.vertices[i];
-			vertex.position.x += width + gap;
+			vertex.position.x += off + gap;
 			Add(vertex);
 		}
 		for (uint i = 0; i < oisize; i++)

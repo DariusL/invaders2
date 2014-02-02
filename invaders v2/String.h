@@ -30,11 +30,12 @@ String<sh>::String(XMFLOAT3 pos, string text, ComPtr<ID3D11Device> device, sh &s
 :pos(pos), shader(shader), IDrawableObject()
 {
 	ResourceManager &rm = RM::Get();
-	AppendableGeometry<VertexType> geometry(0.0f);
+	AppendableGeometry<VertexType> geometry(0.2f);
 	for (auto &c : text)
 	{
 		geometry += rm.GetLetter(c);
 	}
+	geometry.Center();
 	model = ColorModel(device, geometry);
 }
 

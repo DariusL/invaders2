@@ -15,6 +15,7 @@ namespace Utils{
 	XMFLOAT2 GetVec2(float value);
 	XMFLOAT3 GetVec3(float value);
 	XMFLOAT4 GetVec4(float value);
+	void VectorAdd(XMFLOAT3 &target, const XMFLOAT3 &off);
 
 	template<class T>
 	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)

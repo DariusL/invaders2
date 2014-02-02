@@ -63,4 +63,11 @@ namespace Utils
 	{
 		return XMFLOAT4(value, value, value, value);
 	}
+
+	void VectorAdd(XMFLOAT3 &target, const XMFLOAT3 &off)
+	{
+		target.x += off.x;
+		target.y += off.y;
+		target.z += off.z;
+	}
 }

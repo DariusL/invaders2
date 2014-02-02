@@ -1,6 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "BoundingBox.h"
+#include "Utils.h"
 
 template<class T>
 struct Geometry
@@ -48,8 +49,6 @@ void Geometry<T>::Center()
 	box.Move(center);
 	for (auto &vertex : vertices)
 	{
-		vertex.position.x += center.x;
-		vertex.position.y += center.y;
-		vertex.position.z += center.z;
+		Utils::VectorAdd(vertex.position, center);
 	}
 }
