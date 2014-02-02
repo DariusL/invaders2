@@ -142,6 +142,9 @@
     <ClCompile Include="BoundingBox.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="StringPool.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyGrid.h">
@@ -328,7 +331,10 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="String.h">
-      <Filter>Objects</Filter>
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="StringPool.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

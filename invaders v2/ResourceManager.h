@@ -125,7 +125,7 @@ public:
 	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
 	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
-	Geometry<VertexType> GetLetter(char letter){ return letters[letter]; }
+	const Geometry<VertexType> &GetLetter(char letter){ return letters[letter]; }
 
 	shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }

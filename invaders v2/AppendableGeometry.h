@@ -9,7 +9,7 @@ class AppendableGeometry : public Geometry<T>
 public:
 	AppendableGeometry(float gap) :gap(gap){}
 	AppendableGeometry(AppendableGeometry &&other) :gap(other.gap), Geometry(move(other)){}
-	AppendableGeometry &operator+=(const Geometry &other);
+	AppendableGeometry &operator+=(const Geometry<T> &other);
 };
 
 template<class T>

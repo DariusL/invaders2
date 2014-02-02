@@ -3,14 +3,14 @@
 #include "App.h"
 
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
-:handle(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
+:hwnd(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
 post(POST_PROCESS_NONE), vsync(false), screenDepth(10000.0f), screenNear(0.1f),
 d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
 rm(d3D.GetDevice()), celPass(rm.GetShader<CelComputeShader>(), width, height),
 target(d3D.GetDevice(), width, height),
 blurPass(d3D.GetDevice(), width, height),
 bloomPass(d3D.GetDevice(), width, height),
-str(ZeroVec3, "TEXT", d3D.GetDevice(), RM::Get().GetShader<ColorShader>())
+strPool(d3D.GetDevice())
 {
 	auto device = d3D.GetDevice();
 
@@ -53,7 +53,6 @@ void Graphics::Render(IWorld &world, int input)
 		d3D.ClearRenderTarget();
 	}
 
-	str.Render(params);
 	world.Render(params);// <------------------------------------------CIA RENDERINA
 
 	if (post)
