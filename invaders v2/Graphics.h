@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 #include "RenderTarget.h"
 #include "GameWorld.h"
+#include "String.h"
 
 class Graphics
 {
@@ -25,6 +26,8 @@ class Graphics
 	CelPass celPass;
 	BlurPass blurPass;
 	BloomPass bloomPass;
+
+	String<ColorShader> str;
 
 	vector<long long> bench;
 	chrono::time_point<chrono::high_resolution_clock> start, end;

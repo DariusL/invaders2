@@ -14,6 +14,7 @@ class Model
 public:
 	Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry);
 	Model(Model &&other);
+	Model(){}
 	Model &operator=(Model &&other);
 
 	Model(Model&) = delete;

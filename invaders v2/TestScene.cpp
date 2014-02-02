@@ -5,7 +5,7 @@
 TestScene::TestScene()
 {
 	camera.Move(0.0f, 0.0f, -10.0f);
-	stuff.emplace_back(new SimpleDrawableEntity(ZeroVec3, RM::Get().GetModel(RM::MODEL_PLANE), RM::Get().GetShader<ColorShader>()));
+	//stuff.emplace_back(new SimpleDrawableEntity(ZeroVec3, RM::Get().GetModel(RM::MODEL_PLANE), RM::Get().GetShader<ColorShader>()));
 }
 
 int TestScene::OnLoop(int input, float frameLength)

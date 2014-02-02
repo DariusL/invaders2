@@ -98,10 +98,11 @@ private:
 	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
 	NormalMappedModel normalMappedModel;
+	unordered_map<char, Geometry<VertexType>> letters;
 
 	static Geometry<NormalVertexType> GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static Geometry<VertexType> GetModelFromOBJ(wstring filename, bool invert = false);
-	static unordered_map<string, Geometry<VertexType>> GetModelsFromOBJ(wstring filename);
+	static unordered_map<char, Geometry<VertexType>> GetModelsFromOBJ(wstring filename);
 	static Geometry<NormalMappedVertexType> GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
 	static Geometry<TextureVertexType> GetTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 	static Geometry<NormalTextureVertexType> GetNormalTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
@@ -124,6 +125,7 @@ public:
 	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
 	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
 	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
+	Geometry<VertexType> GetLetter(char letter){ return letters[letter]; }
 
 	shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }

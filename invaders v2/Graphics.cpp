@@ -9,7 +9,8 @@ d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
 rm(d3D.GetDevice()), celPass(rm.GetShader<CelComputeShader>(), width, height),
 target(d3D.GetDevice(), width, height),
 blurPass(d3D.GetDevice(), width, height),
-bloomPass(d3D.GetDevice(), width, height)
+bloomPass(d3D.GetDevice(), width, height),
+str(ZeroVec3, "RAND", d3D.GetDevice(), RM::Get().GetShader<ColorShader>())
 {
 	auto device = d3D.GetDevice();
 
@@ -52,6 +53,7 @@ void Graphics::Render(IWorld &world, int input)
 		d3D.ClearRenderTarget();
 	}
 
+	str.Render(params);
 	world.Render(params);// <------------------------------------------CIA RENDERINA
 
 	if (post)

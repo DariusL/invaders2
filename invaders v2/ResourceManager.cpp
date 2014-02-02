@@ -6,7 +6,8 @@ using namespace Microsoft::WRL;
 ResourceManager *ResourceManager::handle;
 
 ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
-:normalMappedModel(device, GetNormalMappedModelFromOBJ(L"Resources\\ball.obj"))
+:normalMappedModel(device, GetNormalMappedModelFromOBJ(L"Resources\\ball.obj")),
+letters(GetModelsFromOBJ(L"Resources\\text.obj"))
 {
 	handle = this;
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\ball.obj"));
@@ -37,10 +38,6 @@ ResourceManager::ResourceManager(ComPtr<ID3D11Device> device)
 	plane.indices.push_back(1);
 	plane.indices.push_back(3);
 	plane.indices.push_back(2);
-
-	plane += plane;
-	plane += plane;
-	plane.Center();
 
 	models.emplace_back(device, plane);
 
@@ -195,9 +192,9 @@ Geometry<VertexType> ResourceManager::GetModelFromOBJ(wstring filename, bool inv
 	return g;
 }
 
-unordered_map<string, Geometry<VertexType>> ResourceManager::GetModelsFromOBJ(wstring filename)
+unordered_map<char, Geometry<VertexType>> ResourceManager::GetModelsFromOBJ(wstring filename)
 {
-	unordered_map<string, Geometry<VertexType>> ret;
+	unordered_map<char, Geometry<VertexType>> ret;
 	ifstream in(filename, ios::binary);
 	Geometry<VertexType> g;
 	string input;
@@ -229,7 +226,8 @@ unordered_map<string, Geometry<VertexType>> ResourceManager::GetModelsFromOBJ(ws
 			{
 				object = false;
 				voff += g.vertices.size();
-				ret.emplace(name, move(g));
+				g.Center();
+				ret.emplace(name[0], move(g));
 				in.ignore(200, '\n');
 			}
 		}

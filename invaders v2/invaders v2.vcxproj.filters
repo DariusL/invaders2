@@ -324,6 +324,12 @@
     <ClInclude Include="BoundingBox.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="AppendableGeometry.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
