@@ -39,7 +39,7 @@ void EnemyGrid::Init(XMFLOAT3 center, shared_ptr<Level> level)
 		}*/
 }
 
-void EnemyGrid::Init(ComPtr<ID3D11Device> device)
+void EnemyGrid::Init(ID3D11Device *device)
 {
 	/*for (auto &a : grid)
 		a->Init(device);

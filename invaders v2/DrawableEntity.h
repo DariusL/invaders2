@@ -20,7 +20,7 @@ public:
 
 	virtual void Render(RenderParams &renderParams);
 protected:
-	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Update(ID3D11DeviceContext *context);
 };
 
 typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
@@ -56,7 +56,7 @@ void DrawableEntity<vt, sh>::Render(RenderParams &params)
 }
 
 template<class vt, class sh>
-bool DrawableEntity<vt, sh>::Update(ComPtr<ID3D11DeviceContext> context)
+bool DrawableEntity<vt, sh>::Update(ID3D11DeviceContext *context)
 {
 	if(dead)
 		return false;

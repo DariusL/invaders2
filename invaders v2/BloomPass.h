@@ -23,9 +23,9 @@ class BloomPass : public IPass
 	Texture texture2;
 
 public:
-	BloomPass(ComPtr<ID3D11Device> device, uint width, uint height);
+	BloomPass(ID3D11Device *device, uint width, uint height);
 	virtual ~BloomPass(){}
 
-	virtual void Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
+	virtual void Pass(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 };
 

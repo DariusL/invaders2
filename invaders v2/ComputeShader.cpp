@@ -5,13 +5,13 @@
 const uint ComputeShader::groupX = 32;
 const uint ComputeShader::groupY = 32;
 
-void ComputeShader::Init(ComPtr<ID3D11Device> device)
+void ComputeShader::Init(ID3D11Device *device)
 {
 	InitializeShader(device, cs);
 	InitializeShaderBuffers(device);
 }
 
-void ComputeShader::InitializeShader(ComPtr<ID3D11Device> device, wstring cs)
+void ComputeShader::InitializeShader(ID3D11Device *device, wstring cs)
 {
 	unique_ptr<char> buffer;
 	UINT size;
@@ -21,14 +21,14 @@ void ComputeShader::InitializeShader(ComPtr<ID3D11Device> device, wstring cs)
 	Assert(device->CreateComputeShader(buffer.get(), size, NULL, &shader));
 }
 
-void ComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void ComputeShader::SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
-	context->CSSetShaderResources(0, 1, input.GetAddressOf());
-	context->CSSetUnorderedAccessViews(0, 1, output.GetAddressOf(), 0);
+	context->CSSetShaderResources(0, 1, &input);
+	context->CSSetUnorderedAccessViews(0, 1, &output, 0);
 	context->CSSetShader(shader.Get(), nullptr, 0);
 }
 
-void ComputeShader::Start(ComPtr<ID3D11DeviceContext> context, uint width, uint height)
+void ComputeShader::Start(ID3D11DeviceContext *context, uint width, uint height)
 {
 	uint sizeX = width / groupX;
 	if (width % groupX != 0)

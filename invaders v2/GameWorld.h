@@ -42,7 +42,6 @@ public:
 
 	const list<InstanceEntity> &GetBullets(){return playerBullets;}
 
-	void Init(ComPtr<ID3D11Device>);
 	void Render(RenderParams&);
 
 	static const int FIELD_WIDTH = 50;

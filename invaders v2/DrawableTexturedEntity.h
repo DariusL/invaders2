@@ -9,24 +9,24 @@ template<class vt, class sh>
 class DrawableTexturedEntity : public DrawableEntity<vt, sh>
 {
 protected:
-	ComVector<ID3D11ShaderResourceView> texture;
+	vector<ID3D11ShaderResourceView*> texture;
 	XMFLOAT4X4 scale;
 	XMFLOAT4X4 rot;
 public:
-	DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture = NULL, XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f));
+	DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ID3D11ShaderResourceView *texture = nullptr, XMFLOAT3 scale = XMFLOAT3(1.0f, 1.0f, 1.0f));
 	DrawableTexturedEntity(DrawableTexturedEntity &&other);
 
 	DrawableTexturedEntity(DrawableTexturedEntity&) = delete;
 	DrawableTexturedEntity &operator=(DrawableTexturedEntity&) = delete;
 
 	virtual void Render(RenderParams &renderParams);
-	virtual void Render(RenderParams &renderParams, ComVector<ID3D11ShaderResourceView> texture);
+	virtual void Render(RenderParams &renderParams, vector<ID3D11ShaderResourceView*> texture);
 };
 
 typedef DrawableTexturedEntity<TextureVertexType, TextureShader> SimpleTexturedEntity;
 
 template<class vt, class sh>
-DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ComPtr<ID3D11ShaderResourceView> texture, XMFLOAT3 scale)
+DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(XMFLOAT3 pos, XMFLOAT3 rot, Model<vt> &model, sh &shader, ID3D11ShaderResourceView *texture, XMFLOAT3 scale)
 : DrawableEntity(pos, model, shader)
 {
 	this->texture.push_back(texture);
@@ -55,7 +55,7 @@ void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params)
 }
 
 template<class vt, class sh>
-void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params, ComVector<ID3D11ShaderResourceView> texture)
+void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params, vector<ID3D11ShaderResourceView*> texture)
 {
 	this->texture = texture;
 	Render(params);

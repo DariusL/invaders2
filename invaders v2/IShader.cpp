@@ -4,13 +4,13 @@
 
 using namespace std;
 
-void IShader::Init(ComPtr<ID3D11Device> device)
+void IShader::Init(ID3D11Device *device)
 {
 	InitializeShader(device, vs, ps, GetInputLayout());
 	InitializeShaderBuffers(device);
 }
 
-void IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout)
+void IShader::InitializeShader(ID3D11Device *device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout)
 {
 	unique_ptr<char> vBuffer;
 	UINT vSize;
@@ -30,7 +30,7 @@ void IShader::InitializeShader(ComPtr<ID3D11Device> device, wstring vs, wstring 
 	Assert(device->CreateInputLayout(inputLayout.data(), inputLayout.size(), vBuffer.get(), vSize, &layout));
 }
 
-void IShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void IShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	D3D11_BUFFER_DESC matrixBufferDesc;
 

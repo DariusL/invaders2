@@ -8,7 +8,7 @@ using namespace std;
 class EntityListInstancer : public SimpleBaseInstancer
 {
 public:
-	EntityListInstancer(ComPtr<ID3D11Device> device, ColorModel &model, ColorInstancedShader &shader, int maxInstanceCount);
+	EntityListInstancer(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxInstanceCount);
 	~EntityListInstancer(void);
 
 	void SetData(list<InstanceEntity> &instances);

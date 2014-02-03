@@ -2,7 +2,7 @@
 #include "RenderTarget.h"
 #include "Utils.h"
 
-RenderTarget::RenderTarget(ComPtr<ID3D11Device> device, int width, int height)
+RenderTarget::RenderTarget(ID3D11Device *device, int width, int height)
 :width(width), height(height), renderTarget(device, width, height, TEXTURE_VIEW_RENDER_TARGET | TEXTURE_VIEW_SHADER_RESOURCE)
 {
 
@@ -33,7 +33,7 @@ RenderTarget::~RenderTarget(void)
 {
 }
 
-void RenderTarget::Init(ComPtr<ID3D11Device> device)
+void RenderTarget::Init(ID3D11Device *device)
 {
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
@@ -82,15 +82,16 @@ void RenderTarget::Init(ComPtr<ID3D11Device> device)
 	Assert(device->CreateDepthStencilView(depthStencilBuffer.Get(), &depthStencilViewDesc, &depthStencilView));
 }
 
-void RenderTarget::SetRenderTarget(ComPtr<ID3D11DeviceContext> context)
+void RenderTarget::SetRenderTarget(ID3D11DeviceContext *context)
 {
 	context->OMSetDepthStencilState(depthStencilState.Get(), 1);
-	context->OMSetRenderTargets(1, renderTarget.GetRTV().GetAddressOf(), depthStencilView.Get());
+	ID3D11RenderTargetView *target = renderTarget.GetRTV();
+	context->OMSetRenderTargets(1, &target, depthStencilView.Get());
 	context->RSSetViewports(1, &viewport);
 }
 
-void RenderTarget::ClearTarget(ComPtr<ID3D11DeviceContext> context)
+void RenderTarget::ClearTarget(ID3D11DeviceContext *context)
 {
-	context->ClearRenderTargetView(renderTarget.GetRTV().Get(), clear);
+	context->ClearRenderTargetView(renderTarget.GetRTV(), clear);
 	context->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }

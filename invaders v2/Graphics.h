@@ -43,6 +43,6 @@ public:
 
 	bool IsFullscreen(){return fullScreen;}
 
-	ComPtr<ID3D11Device> GetDevice(){ return d3D.GetDevice(); }
+	ID3D11Device *GetDevice(){ return d3D.GetDevice(); }
 };
 

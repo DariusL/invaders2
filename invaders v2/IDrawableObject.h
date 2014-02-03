@@ -8,5 +8,5 @@ public:
 	virtual ~IDrawableObject(){}
 	IDrawableObject(IDrawableObject && other):IDrawable(std::move(other)){}
 protected:
-	virtual bool Update(ComPtr<ID3D11DeviceContext>) = 0;
+	virtual bool Update(ID3D11DeviceContext *context) = 0;
 };

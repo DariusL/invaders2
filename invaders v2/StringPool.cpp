@@ -4,7 +4,7 @@
 
 StringPool *StringPool::handle;
 
-StringPool::StringPool(ComPtr<ID3D11Device> device)
+StringPool::StringPool(ID3D11Device *device)
 :device(device)
 {
 	handle = this;

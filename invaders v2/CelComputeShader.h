@@ -21,8 +21,8 @@ public:
 	CelComputeShader(wstring cs) :ComputeShader(cs){}
 	virtual ~CelComputeShader(){}
 
-	virtual void SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
+	virtual void SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 protected:
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ID3D11Device *device);
 };
 

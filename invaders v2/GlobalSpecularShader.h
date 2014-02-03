@@ -9,7 +9,7 @@ public:
 	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);
 
 private:
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ID3D11Device *device);
 
 	ComPtr<ID3D11Buffer> cameraBuffer;
 };

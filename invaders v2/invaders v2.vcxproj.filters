@@ -177,9 +177,6 @@
     <ClInclude Include="DrawableEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableBumpyEntity.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="DrawableTexturedEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>

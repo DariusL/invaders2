@@ -2,7 +2,7 @@
 #include "Wall.h"
 
 
-Wall::Wall(ComPtr<ID3D11Device> device, XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) :
+Wall::Wall(ID3D11Device *device, XMFLOAT3 center, int width, int height, ColorModel &model, ColorInstancedShader &shader) :
 	SimpleBaseInstancer(device, model, shader, width * height, center)
 {
 	AssertBool(false, L"Wall got deimplemented");
@@ -24,7 +24,7 @@ Wall::~Wall(void)
 {
 }
 
-bool Wall::Update(ComPtr<ID3D11DeviceContext> context)
+bool Wall::Update(ID3D11DeviceContext *context)
 {
 	if(changed)
 	{

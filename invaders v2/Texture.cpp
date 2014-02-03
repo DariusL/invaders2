@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "Utils.h"
 using namespace std;
-Texture::Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view)
+Texture::Texture(ID3D11Device *device, uint width, uint height, uint view)
 :view(view), width(width), height(height)
 {
 	D3D11_TEXTURE2D_DESC texDesc;

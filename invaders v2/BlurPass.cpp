@@ -2,7 +2,7 @@
 #include "BlurPass.h"
 #include "ResourceManager.h"
 
-BlurPass::BlurPass(ComPtr<ID3D11Device> device, uint width, uint height)
+BlurPass::BlurPass(ID3D11Device *device, uint width, uint height)
 :width(width), height(height), halfHeight(height / 2), halfWidth(width / 2),
 halfTexture1(device, halfWidth, halfHeight, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS),
 halfTexture2(device, halfWidth, halfHeight, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS),
@@ -13,7 +13,7 @@ vBlurPass(RM::Get().GetShader<VerticalBlurComputeShader>(), halfWidth, halfHeigh
 {
 }
 
-void BlurPass::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void BlurPass::Pass(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	downPass.Pass(context, input, halfTexture1.GetUAV());
 	vBlurPass.Pass(context, halfTexture1.GetSRV(), halfTexture2.GetUAV());

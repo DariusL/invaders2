@@ -3,7 +3,7 @@
 #include "Utils.h"
 
 using namespace DirectX;
-void HorizontalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void HorizontalBlurComputeShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	ComputeShader::InitializeShaderBuffers(device);
 	D3D11_BUFFER_DESC desc;
@@ -38,7 +38,7 @@ void HorizontalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> d
 	Assert(device->CreateBuffer(&desc, &resource, &blurBuffer));
 }
 
-void HorizontalBlurComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void HorizontalBlurComputeShader::SetShaderParameters(ID3D11DeviceContext*context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 

@@ -16,7 +16,7 @@ public:
 	SimplePass(sh &shader, uint width, uint height);
 	virtual ~SimplePass(){}
 
-	virtual void Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
+	virtual void Pass(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 };
 
 template<class sh>
@@ -26,7 +26,7 @@ SimplePass<sh>::SimplePass(sh &shader, uint width, uint height)
 }
 
 template<class sh>
-void SimplePass<sh>::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void SimplePass<sh>::Pass(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	shader.SetShaderParameters(context, input, output);
 	shader.Start(context, width, height);

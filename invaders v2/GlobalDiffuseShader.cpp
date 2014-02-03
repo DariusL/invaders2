@@ -39,7 +39,7 @@ vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 	return ret;
 }
 
-void GlobalDiffuseShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void GlobalDiffuseShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	IPositionShader::InitializeShaderBuffers(device);
 
@@ -59,7 +59,7 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATR
 {
 	IPositionShader::SetShaderParameters(params, world);
 
-	ComPtr<ID3D11DeviceContext> cont = params.context;
+	auto cont = params.context;
 	XMVECTOR lightdir;
 
 	lightdir = -XMLoadFloat3(&params.lightPos);
@@ -69,7 +69,7 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATR
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
 	XMStoreFloat3(&data.lightDir, lightdir);
-	Utils::CopyToBuffer(lightingBuffer, data, cont);
+	Utils::CopyToBuffer(lightingBuffer.Get(), data, cont);
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 

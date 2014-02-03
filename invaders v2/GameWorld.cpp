@@ -37,16 +37,18 @@ void GameWorld::Stop()
 	started = false;*/
 }
 
+/*
 void GameWorld::Init(ComPtr<ID3D11Device> device)
 {
-	/*auto &rm = RM::Get();
+	auto &rm = RM::Get();
 	player->Init(device);
 	enemies->Init(device);
 	for(int i = 0; i < WALL_COUNT; i++)
 		walls[i]->Init(device);
 	playerBulletGraphics = unique_ptr<EntityListInstancer>(new EntityListInstancer(rm.GetModel(ResourceManager::Models::MODEL_BULLET), rm.GetShader<ColorInstancedShader>(), 100));
-	playerBulletGraphics->Init(device);*/
+	playerBulletGraphics->Init(device);
 }
+*/
 
 int GameWorld::OnLoop(int input, float frameLength)
 {

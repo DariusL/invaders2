@@ -14,18 +14,18 @@ class RenderTarget
 	ComPtr<ID3D11Texture2D> depthStencilBuffer;
 	D3D11_VIEWPORT viewport;
 public:
-	RenderTarget(ComPtr<ID3D11Device> device, int width, int height);
+	RenderTarget(ID3D11Device *device, int width, int height);
 	RenderTarget(RenderTarget &&other);
 	~RenderTarget(void);
 
 	RenderTarget(RenderTarget&) = delete;
 	RenderTarget &operator=(RenderTarget&) = delete;
 
-	void SetRenderTarget(ComPtr<ID3D11DeviceContext> context);
-	void ClearTarget(ComPtr<ID3D11DeviceContext> context);
+	void SetRenderTarget(ID3D11DeviceContext *context);
+	void ClearTarget(ID3D11DeviceContext *context);
 
-	ComPtr<ID3D11ShaderResourceView> GetRenderedTexture(){return renderTarget.GetSRV();}
+	ID3D11ShaderResourceView *GetRenderedTexture(){return renderTarget.GetSRV();}
 private:
-	void Init(ComPtr<ID3D11Device> device);
+	void Init(ID3D11Device *device);
 };
 

@@ -91,40 +91,30 @@ private:
 		int vertex;
 	};
 	vector<ColorModel> models;
-	vector<TexturedModel> texturedModels;
-	vector<NormalTexturedModel> normalTexturedModels;
 	vector<shared_ptr<Level>> levels;
 	vector<unique_ptr<ComputeShader>> computeShaders;
 	vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
-	NormalMappedModel normalMappedModel;
 	unordered_map<char, Geometry<VertexType>> letters;
 
 	static Geometry<NormalVertexType> GetNormalModelFromOBJ(wstring filename, bool invert = false);
 	static Geometry<VertexType> GetModelFromOBJ(wstring filename, bool invert = false);
 	static unordered_map<char, Geometry<VertexType>> GetModelsFromOBJ(wstring filename);
-	static Geometry<NormalMappedVertexType> GetNormalMappedModelFromOBJ(wstring filename, bool invert = false);
-	static Geometry<TextureVertexType> GetTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
-	static Geometry<NormalTextureVertexType> GetNormalTexturedModelFromOBJ(wstring filename, bool unindex = false, bool invert = false);
 
-	static void CalculateTangentAndBinormal(const vector<FaceVertex> &ind, vector<NormalMappedVertexType> &v);
 	static vector<FaceVertex> GetVerticesFromFace(string &line, int voff = 1, int noff = 1, int toff = 1);
 	static FaceVertex GetVertexFromString(string &vertex, int voff = 1, int noff = 1, int toff = 1);
-	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ComPtr<ID3D11Device> device);
+	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ID3D11Device *device);
 
 	static ResourceManager *handle;
 public:
-	ResourceManager(Microsoft::WRL::ComPtr<ID3D11Device> device);
+	ResourceManager(ID3D11Device *device);
 	~ResourceManager(void){}
 
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager &operator=(const ResourceManager&) = delete;
 
 	ColorModel &GetModel(MODEL i){ return models[i]; }
-	NormalTexturedModel &GetNormalTexturedModel(NORMAL_TEXTURED_MODEL i){ return normalTexturedModels[i]; }
-	TexturedModel &GetTexturedModel(TEXTURED_MODEL i){ return texturedModels[i]; }
-	NormalMappedModel &GetNormalMappedModel(){ return normalMappedModel; }
-	ComPtr < ID3D11ShaderResourceView> GetTexture(TEXTURE i){ return textures[i]; }
+	ID3D11ShaderResourceView *GetTexture(TEXTURE i){ return textures[i].Get(); }
 	const Geometry<VertexType> &GetLetter(char letter){ return letters[letter]; }
 
 	shared_ptr<Level> GetLevel(int type){ return levels[type]; }

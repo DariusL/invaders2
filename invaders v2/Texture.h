@@ -20,14 +20,14 @@ class Texture
 	uint view;
 	uint width, height;
 public:
-	Texture(ComPtr<ID3D11Device> device, uint width, uint height, uint view);
+	Texture(ID3D11Device *device, uint width, uint height, uint view);
 	Texture(Texture&) = delete;
 	Texture(Texture&&);
 	~Texture(){}
 
-	ComPtr<ID3D11ShaderResourceView> GetSRV(){ return shaderResourceView; }
-	ComPtr<ID3D11UnorderedAccessView> GetUAV(){ return unorderedAccessView; }
-	ComPtr<ID3D11RenderTargetView> GetRTV(){ return renderTargetView; }
+	ID3D11ShaderResourceView *GetSRV(){ return shaderResourceView.Get(); }
+	ID3D11UnorderedAccessView *GetUAV(){ return unorderedAccessView.Get(); }
+	ID3D11RenderTargetView *GetRTV(){ return renderTargetView.Get(); }
 
 	uint GetWidth(){ return width; }
 	uint Getheight(){ return height; }

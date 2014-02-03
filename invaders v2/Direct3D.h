@@ -15,13 +15,13 @@ public:
 	void ClearRenderTarget();
 	void Present();
 
-	ComPtr<ID3D11Device> GetDevice(){return device;}
-	ComPtr<ID3D11DeviceContext> GetDeviceContext(){return deviceContext;}
+	ID3D11Device *GetDevice(){return device.Get();}
+	ID3D11DeviceContext *GetDeviceContext(){return deviceContext.Get();}
 
 	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
 	XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
 
-	ComPtr<ID3D11UnorderedAccessView> GetBackBufferUnorderedAccess(){ return backBufferAccess; }
+	ID3D11UnorderedAccessView *GetBackBufferUnorderedAccess(){ return backBufferAccess.Get(); }
 
 	void GetVideoCardInfo(char* name, int& memory){strcpy_s(name, 128, videoDesc); memory = videoMem;}
 

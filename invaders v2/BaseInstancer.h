@@ -11,7 +11,7 @@ template<class vt, class sh, class it>
 class BaseInstancer : public DrawableEntity<vt, sh>
 {
 public:
-	BaseInstancer(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
+	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
 	virtual ~BaseInstancer(void){}
 
 protected:
@@ -26,13 +26,13 @@ public:
 	void Render(RenderParams& params);
 
 protected:
-	virtual bool Update(ComPtr<ID3D11DeviceContext> context);
+	virtual bool Update(ID3D11DeviceContext *context);
 };
 
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(ComPtr<ID3D11Device> device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
+BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
 	:DrawableEntity(pos, model, shader)
 {
 	this->maxInstanceCount = maxObjectCount;
@@ -63,7 +63,7 @@ void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
 }
 
 template<class vt, class sh, class it>
-bool BaseInstancer<vt, sh, it>::Update(ComPtr<ID3D11DeviceContext> context)
+bool BaseInstancer<vt, sh, it>::Update(ID3D11DeviceContext *context)
 {
 	if(instanceCount == 0)
 		return false;

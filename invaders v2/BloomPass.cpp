@@ -2,7 +2,7 @@
 #include "BloomPass.h"
 #include "ResourceManager.h"
 
-BloomPass::BloomPass(ComPtr<ID3D11Device> device, uint width, uint height)
+BloomPass::BloomPass(ID3D11Device *device, uint width, uint height)
 :width(width), height(height), halfHeight(height / 2), halfWidth(width / 2),
 halfTexture1(device, halfWidth, halfHeight, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS),
 halfTexture2(device, halfWidth, halfHeight, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS),
@@ -18,7 +18,7 @@ texture2(device, width, height, TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNOR
 {
 }
 
-void BloomPass::Pass(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void BloomPass::Pass(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	filterDownPass.Pass(context, input, halfTexture1.GetUAV());
 	secondBlur.Pass(context, halfTexture1.GetSRV(), halfTexture3.GetUAV());

@@ -15,7 +15,7 @@ public:
 		XMStoreFloat4x4(&vertexMatrices.projection, XMMatrixTranspose(params.projection));
 		XMStoreFloat4x4(&vertexMatrices.view, XMMatrixTranspose(params.view));
 		XMStoreFloat4x4(&vertexMatrices.world, XMMatrixTranspose(world));
-		Utils::CopyToBuffer(matrixBuffer, vertexMatrices, params.context);
+		Utils::CopyToBuffer(matrixBuffer.Get(), vertexMatrices, params.context);
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 

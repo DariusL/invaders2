@@ -12,7 +12,7 @@ template<class T>
 class Model
 {
 public:
-	Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry);
+	Model(ID3D11Device *device, const Geometry<T> geometry);
 	Model(Model &&other);
 	Model(){}
 	Model &operator=(Model &&other);
@@ -20,7 +20,7 @@ public:
 	Model(Model&) = delete;
 	Model &operator=(Model&) = delete;
 
-	void Set(ComPtr<ID3D11DeviceContext> context);
+	void Set(ID3D11DeviceContext *context);
 
 	int GetIndexCount(){ return indexCount; }
 private:
@@ -32,10 +32,7 @@ private:
 };
 
 typedef Model<VertexType> ColorModel;
-typedef Model<NormalMappedVertexType> NormalMappedModel;
 typedef Model<NormalVertexType> NormalModel;
-typedef Model<TextureVertexType> TexturedModel;
-typedef Model<NormalTextureVertexType> NormalTexturedModel;
 
 template<class T>
 Model<T>::Model(Model &&other)
@@ -58,7 +55,7 @@ Model<T> &Model<T>::operator=(Model &&other)
 }
 
 template<class T>
-Model<T>::Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry)
+Model<T>::Model(ID3D11Device *device, const Geometry<T> geometry)
 :indexCount(geometry.indices.size())
 {
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
@@ -95,7 +92,7 @@ Model<T>::Model(ComPtr<ID3D11Device> device, const Geometry<T> geometry)
 }
 
 template<class T>
-void Model<T>::Set(ComPtr<ID3D11DeviceContext> context)
+void Model<T>::Set(ID3D11DeviceContext *context)
 {
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &vertexInfo.stride, &vertexInfo.offset);

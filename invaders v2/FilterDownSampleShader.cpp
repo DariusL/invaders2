@@ -2,7 +2,7 @@
 #include "FilterDownSampleShader.h"
 #include "Utils.h"
 
-void FilterDownSampleShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void FilterDownSampleShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	D3D11_BUFFER_DESC desc;
 	D3D11_SUBRESOURCE_DATA resource;
@@ -25,7 +25,7 @@ void FilterDownSampleShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device
 	Assert(device->CreateBuffer(&desc, &resource, &filterBuffer));
 }
 
-void FilterDownSampleShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void FilterDownSampleShader::SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 

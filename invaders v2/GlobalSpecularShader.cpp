@@ -5,12 +5,12 @@ void GlobalSpecularShader::SetShaderParameters(RenderParams &params, const XMMAT
 {
 	GlobalDiffuseShader::SetShaderParameters(params, world);
 
-	Utils::CopyToBuffer(cameraBuffer, &params.camera->GetPosition(), params.context);
+	Utils::CopyToBuffer(cameraBuffer.Get(), &params.camera->GetPosition(), params.context);
 
 	params.context->VSSetConstantBuffers(2, 1, cameraBuffer.GetAddressOf());
 }
 
-void GlobalSpecularShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void GlobalSpecularShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	GlobalDiffuseShader::InitializeShaderBuffers(device);
 

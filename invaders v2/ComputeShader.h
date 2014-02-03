@@ -16,12 +16,12 @@ public:
 	ComputeShader &operator=(ComputeShader&) = delete;
 	virtual ~ComputeShader(){}
 
-	void Init(ComPtr<ID3D11Device> device);
-	virtual void Start(ComPtr<ID3D11DeviceContext> context, uint width, uint height);
-	virtual void SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output);
+	void Init(ID3D11Device *device);
+	virtual void Start(ID3D11DeviceContext *context, uint width, uint height);
+	virtual void SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 protected:
-	void InitializeShader(ComPtr<ID3D11Device> device, wstring cs);
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device){}
+	void InitializeShader(ID3D11Device *device, wstring cs);
+	virtual void InitializeShaderBuffers(ID3D11Device *device){}
 public:
 	static const uint groupX;
 	static const uint groupY;

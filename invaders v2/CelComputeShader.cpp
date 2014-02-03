@@ -4,7 +4,7 @@
 
 using namespace DirectX;
 
-void CelComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void CelComputeShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	D3D11_BUFFER_DESC desc;
 	D3D11_SUBRESOURCE_DATA resource;
@@ -41,7 +41,7 @@ void CelComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
 	Assert(device->CreateBuffer(&desc, &resource, &offsetBuffer));
 }
 
-void CelComputeShader::SetShaderParameters(ComPtr<ID3D11DeviceContext> context, ComPtr<ID3D11ShaderResourceView> input, ComPtr<ID3D11UnorderedAccessView> output)
+void CelComputeShader::SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 

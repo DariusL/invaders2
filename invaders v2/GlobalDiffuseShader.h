@@ -12,7 +12,7 @@ public:
 	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world);
 
 protected:
-	virtual void InitializeShaderBuffers(ComPtr<ID3D11Device> device);
+	virtual void InitializeShaderBuffers(ID3D11Device *device);
 	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();
 
 	ComPtr<ID3D11Buffer> lightingBuffer;

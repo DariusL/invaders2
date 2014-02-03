@@ -3,7 +3,7 @@
 #include "Utils.h"
 
 using namespace DirectX;
-void VerticalBlurComputeShader::InitializeShaderBuffers(ComPtr<ID3D11Device> device)
+void VerticalBlurComputeShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	ComputeShader::InitializeShaderBuffers(device);
 	D3D11_BUFFER_DESC desc;
