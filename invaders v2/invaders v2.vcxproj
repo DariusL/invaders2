@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="AppHandle.h" />
+    <ClInclude Include="ArrayBuffer.h" />
     <ClInclude Include="BloomPass.h" />
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="BoundingBox.h" />

@@ -336,6 +336,9 @@
     <ClInclude Include="Buffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">

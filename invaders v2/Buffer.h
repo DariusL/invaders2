@@ -22,7 +22,7 @@ Buffer<T>::Buffer(ID3D11Device *device, const T *data, bool immutable)
 {
 	if (device == nullptr)
 		return;
-	AssertBool(data != nullptr || !immutable, L"Tried to create an immutable buffer with no initial data");
+	AssertBool(!(data == nullptr && immutable), L"Tried to create an immutable buffer with no initial data");
 	D3D11_BUFFER_DESC desc;
 	D3D11_SUBRESOURCE_DATA resource, *rptr = nullptr;
 
