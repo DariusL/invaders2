@@ -4,6 +4,12 @@
 
 class IPositionShader : public IShader
 {
+	struct MatrixType
+	{
+		DirectX::XMFLOAT4X4 world;
+		DirectX::XMFLOAT4X4 view;
+		DirectX::XMFLOAT4X4 projection;
+	};
 	Buffer<MatrixType> matrixBuffer;
 public:
 	IPositionShader(wstring vs, wstring ps):IShader(vs, ps){}

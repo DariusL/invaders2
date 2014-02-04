@@ -45,19 +45,6 @@ struct InstanceType
 	DirectX::XMFLOAT3 position;
 };
 
-struct MatrixType
-{
-	DirectX::XMFLOAT4X4 world;
-	DirectX::XMFLOAT4X4 view;
-	DirectX::XMFLOAT4X4 projection;
-};
-
-struct InstancedMatrixType
-{
-	DirectX::XMFLOAT4X4 view;
-	DirectX::XMFLOAT4X4 projection;
-};
-
 struct ControlCodes
 {
 	static const int LEFT  = 1 << 0;
@@ -90,6 +77,7 @@ enum POST_PROCESS
 	POST_PROCESS_BLUR,
 	POST_PROCESS_BLOOM
 };
+
 __declspec(align(16)) struct RenderParams
 {
 	DirectX::XMMATRIX reflecMatrix;

@@ -4,6 +4,12 @@
 
 class IInstanceShader : public IPositionShader
 {
+	struct InstancedMatrixType
+	{
+		DirectX::XMFLOAT4X4 view;
+		DirectX::XMFLOAT4X4 projection;
+	};
+
 	Buffer<InstancedMatrixType> matrixBuffer;
 public:
 	IInstanceShader(wstring vs, wstring ps) :IPositionShader(vs, ps){}

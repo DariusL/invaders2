@@ -11,6 +11,6 @@ public:
 private:
 	virtual void InitializeShaderBuffers(ID3D11Device *device);
 
-	ComPtr<ID3D11Buffer> cameraBuffer;
+	Buffer<XMFLOAT4> cameraBuffer;
 };
 

@@ -43,16 +43,7 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ID3D11Device *device)
 {
 	IPositionShader::InitializeShaderBuffers(device);
 
-	D3D11_BUFFER_DESC lightingBufferDesc;
-
-	lightingBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightingBufferDesc.ByteWidth = sizeof(LightBufferType);
-	lightingBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightingBufferDesc.MiscFlags = 0;
-	lightingBufferDesc.StructureByteStride = 0;
-	lightingBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-
-	Assert(device->CreateBuffer(&lightingBufferDesc, NULL, &lightingBuffer));
+	lightingBuffer = Buffer<LightBufferType>(device);
 }
 
 void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
@@ -69,7 +60,7 @@ void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATR
 	data.brightness = params.brightness;
 	data.diffuseColor = params.diffuseColor;
 	XMStoreFloat3(&data.lightDir, lightdir);
-	Utils::CopyToBuffer(lightingBuffer.Get(), data, cont);
+	lightingBuffer.SetData(cont, data);
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
 
