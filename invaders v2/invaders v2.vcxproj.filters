@@ -333,6 +333,9 @@
     <ClInclude Include="StringPool.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">

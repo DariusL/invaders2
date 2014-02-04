@@ -148,6 +148,7 @@
     <ClInclude Include="BloomPass.h" />
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="BoundingBox.h" />
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
