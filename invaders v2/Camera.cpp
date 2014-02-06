@@ -62,7 +62,7 @@ void Camera::Back(float dist)
 {
 	XMVECTOR pos = XMLoadFloat3(&this->pos);
 	XMVECTOR forward = XMLoadFloat3(&this->forward);
-	XMStoreFloat3(&this->pos, pos + dist * forward);
+	XMStoreFloat3(&this->pos, pos - dist * forward);
 	modified = true;
 }
 

@@ -151,8 +151,8 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 
 	fieldOfView = XM_PI / 4.0f;
 	screenAspect = width / (float)height;
-	XMStoreFloat4x4(&projectionMatrix, XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screennear, screendepth));
-	XMStoreFloat4x4(&orthoMatrix, XMMatrixOrthographicLH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
+	XMStoreFloat4x4(&projectionMatrix, XMMatrixPerspectiveFovRH(fieldOfView, screenAspect, screennear, screendepth));
+	XMStoreFloat4x4(&orthoMatrix, XMMatrixOrthographicRH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
 
 	D3D11_BLEND_DESC blendDesc;
 	ZeroMemory(&blendDesc, sizeof(blendDesc));
