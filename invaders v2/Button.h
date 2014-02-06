@@ -8,8 +8,9 @@ class Button : public MenuItem, public SimpleDrawableEntity
 {
 public:
 	typedef e::function<void()> PressFunction;
-	Button(e::XMFLOAT3 pos, e::string text, PressFunction &&callback);
+	Button(e::XMVECTOR pos, e::string text, PressFunction &&callback);
 	bool Loop(int input);
+	void Render(const RenderParams &params){ SimpleDrawableEntity::Render(params); }
 private:
 	PressFunction callback;
 	InputRegister clickRegister;

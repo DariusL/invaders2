@@ -7,4 +7,5 @@ class MenuItem
 public:
 	virtual ~MenuItem(){}
 	virtual bool Loop(int input) = 0;
+	virtual void Render(const RenderParams &params) = 0;
 };
