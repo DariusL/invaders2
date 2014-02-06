@@ -13,7 +13,7 @@ public:
 	void Yaw(float angle);
 	void Pitch(float angle);
 	void Roll(float angle);
-	void Move(DirectX::XMFLOAT3 vec){ Move(vec.x, vec.y, vec.z); }
+	void Move(DirectX::XMVECTOR vec);
 	void Move(float x, float y, float z);
 
 	const DirectX::XMFLOAT3 &GetPosition() const { return pos; }

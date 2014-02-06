@@ -15,6 +15,7 @@ protected:
 	sh &shader;
 public:
 	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader);
+	DrawableEntity(XMVECTOR pos, Model<vt> &model, sh &shader);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
@@ -27,6 +28,12 @@ typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader)
+: Entity(pos, model.GetSize()), model(model), shader(shader)
+{
+}
+
+template<class vt, class sh>
+DrawableEntity<vt, sh>::DrawableEntity(XMVECTOR pos, Model<vt> &model, sh &shader)
 : Entity(pos, model.GetSize()), model(model), shader(shader)
 {
 }

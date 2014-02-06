@@ -11,9 +11,10 @@ callback(callback), clickRegister(ControlCodes::ENTER | ControlCodes::FIRE)
 
 bool Button::Loop(int input)
 {
-	if (clickRegister.Register(input))
+	if (clickRegister.Handles(input))
 	{
-		callback();
+		if (clickRegister.Register(input))
+			callback();
 		return true;
 	}
 	return false;

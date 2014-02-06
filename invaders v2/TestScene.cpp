@@ -4,12 +4,11 @@
 #include "StringPool.h"
 
 TestScene::TestScene()
-:Screen(ZeroVec3)
-
+:Screen(e::XMLoadFloat3(&ZeroVec3))
 {
 	stuff.emplace_back(new SimpleDrawableEntity(ZeroVec3, SP::Get().GetString("TEXT"), RM::Get().GetShader<ColorShader>()));
-	stuff.emplace_back(new SimpleDrawableEntity(XMFLOAT3(0.0f, -2.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
-	stuff.emplace_back(new SimpleDrawableEntity(XMFLOAT3(0.0f, -4.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
+	stuff.emplace_back(new SimpleDrawableEntity(e::XMVectorSet(0.0f, -2.0f, 0.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
+	stuff.emplace_back(new SimpleDrawableEntity(e::XMVectorSet(0.0f, -4.0f, 0.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
 }
 
 int TestScene::Loop(int input, float frameLength)
@@ -34,22 +33,24 @@ int TestScene::Loop(int input, float frameLength)
 	if (roll != 0.0f)
 		camera.Roll(roll);
 
-	auto move = ZeroVec3;
+	float x = 0.0f,
+		y = 0.0f,
+		z = 0.0f;
 	frameLength *= 10;
 	if (input & ControlCodes::MOVE_UP)
-		move.y += frameLength;
+		y += frameLength;
 	if (input & ControlCodes::MOVE_DOWN)
-		move.y -= frameLength;
+		y -= frameLength;
 	if (input & ControlCodes::MOVE_LEFT)
-		move.x -= frameLength;
+		x -= frameLength;
 	if (input & ControlCodes::MOVE_RIGHT)
-		move.x += frameLength;
+		x += frameLength;
 	if (input & ControlCodes::MOVE_FORWARD)
-		move.z += frameLength;
+		z += frameLength;
 	if (input & ControlCodes::MOVE_BACK)
-		move.z -= frameLength;
+		z -= frameLength;
 
-	camera.Move(move);
+	camera.Move(x, y, z);
 
 	return RESULT_CONTINUE;
 }

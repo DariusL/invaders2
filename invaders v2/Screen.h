@@ -8,7 +8,7 @@ protected:
 	Camera camera;
 	e::XMFLOAT3 pos;
 public:
-	Screen(e::XMFLOAT3 pos);
+	Screen(e::XMVECTOR pos);
 	void Render(const RenderParams &params);
 	int Loop(int input, float frame);
 	Camera &GetCamera(){ return camera; }

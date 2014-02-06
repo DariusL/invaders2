@@ -72,3 +72,10 @@ void Camera::Move(float x, float y, float z)
 	Right(x);
 	Up(y);
 }
+
+void Camera::Move(XMVECTOR vec)
+{
+	XMFLOAT3 tmp;
+	XMStoreFloat3(&tmp, vec);
+	Move(tmp.x, tmp.y, tmp.z);
+}

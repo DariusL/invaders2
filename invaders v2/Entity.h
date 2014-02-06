@@ -15,6 +15,7 @@ protected:
 	bool dead;
 public:
 	Entity(XMFLOAT3 start, XMFLOAT2 size, bool dead = false);
+	Entity(XMVECTOR start, XMFLOAT2 size, bool dead = false);
 	virtual ~Entity(void);
 
 	XMFLOAT3 GetPos() const {return pos;}

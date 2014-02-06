@@ -10,7 +10,7 @@ window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
 	//world = make_unique<TestScene>();
-	world = make_unique<MenuScreen>(ZeroVec3, 0);
+	world = unique_ptr<MenuScreen>(new MenuScreen(e::XMLoadFloat3(&ZeroVec3), "MAIN MENU"));
 }
 
 App::~App()

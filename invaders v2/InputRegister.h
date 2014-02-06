@@ -19,4 +19,8 @@ public:
 			return false;
 		}
 	}
+	bool Handles(int input)
+	{
+		return (input & mask) != 0;
+	}
 };
