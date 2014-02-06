@@ -14,11 +14,11 @@ protected:
 	XMFLOAT4X4 moveMatrix;
 	sh &shader;
 public:
-	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed = 0.0f);
+	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
-	virtual void Render(RenderParams &renderParams);
+	virtual void Render(const RenderParams &renderParams);
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
 };
@@ -26,8 +26,8 @@ protected:
 typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float speed)
-: Entity(pos, speed), model(model), shader(shader)
+DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader)
+: Entity(pos, model.GetSize()), model(model), shader(shader)
 {
 }
 
@@ -45,7 +45,7 @@ DrawableEntity<vt, sh>::~DrawableEntity(void)
 }
 
 template<class vt, class sh>
-void DrawableEntity<vt, sh>::Render(RenderParams &params)
+void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

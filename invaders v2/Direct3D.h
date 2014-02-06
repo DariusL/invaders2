@@ -5,6 +5,7 @@
 
 using namespace std;
 using namespace Microsoft::WRL;
+using namespace DirectX;
 
 class Direct3D
 {

@@ -46,7 +46,7 @@ void GlobalDiffuseShader::InitializeShaderBuffers(ID3D11Device *device)
 	lightingBuffer = Buffer<LightBufferType>(device);
 }
 
-void GlobalDiffuseShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
+void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {
 	IPositionShader::SetShaderParameters(params, world);
 

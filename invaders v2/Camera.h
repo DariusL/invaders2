@@ -9,7 +9,7 @@ public:
 
 	void Up(float dist);
 	void Right(float dist);
-	void Forward(float dist);
+	void Back(float dist);
 	void Yaw(float angle);
 	void Pitch(float angle);
 	void Roll(float angle);

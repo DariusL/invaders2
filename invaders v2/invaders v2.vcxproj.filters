@@ -112,28 +112,13 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyGrid.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityListInstancer.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameWorld.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="InstanceEntity.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Shooter.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -145,33 +130,24 @@
     <ClCompile Include="StringPool.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScreen.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnemyGrid.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="InstanceEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="BaseInstancer.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="EntityListInstancer.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawableShooter.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Shooter.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameWorld.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableEntity.h">
@@ -338,6 +314,21 @@
     </ClInclude>
     <ClInclude Include="ArrayBuffer.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScreen.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="InputRegister.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

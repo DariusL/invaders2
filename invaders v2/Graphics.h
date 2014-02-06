@@ -5,9 +5,9 @@
 #include "BloomPass.h"
 #include "ResourceManager.h"
 #include "RenderTarget.h"
-#include "GameWorld.h"
 #include "String.h"
 #include "StringPool.h"
+#include "Screen.h"
 
 class Graphics
 {
@@ -36,7 +36,7 @@ class Graphics
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}
-	void Render(IWorld &world, int input);
+	void Render(Screen &world, int input);
 
 	void SetBrightness(float brightness){this->brightness = brightness;}
 	void ChangeBrightness(float offset);

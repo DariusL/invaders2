@@ -7,6 +7,7 @@
 
 using namespace std;
 using namespace Microsoft::WRL;
+using namespace DirectX;
 class ResourceManager;
 
 template<class T>
@@ -24,9 +25,10 @@ public:
 	void Set(ID3D11DeviceContext *context);
 
 	int GetIndexCount(){ return indexCount; }
+	const XMFLOAT2 &GetSize() const { return size; }
 private:
 	uint indexCount;
-
+	XMFLOAT2 size;
 	ArrayBuffer<T> vertexBuffer;
 	ComPtr<ID3D11Buffer> indexBuffer;
 };
@@ -37,7 +39,7 @@ typedef Model<NormalVertexType> NormalModel;
 template<class T>
 Model<T>::Model(Model &&other)
 :vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)),
-indexCount(other.indexCount)
+indexCount(other.indexCount), size(other.size)
 {
 }
 
@@ -50,6 +52,7 @@ Model<T> &Model<T>::operator=(Model &&other)
 		vertexInfo = other.vertexInfo;
 		vertexBuffer = move(other.vertexBuffer);
 		indexBuffer = move(other.indexBuffer);
+		size = move(other.size);
 	}
 	return *this;
 }
@@ -60,6 +63,9 @@ Model<T>::Model(ID3D11Device *device, const Geometry<T> geometry)
 {
 	D3D11_BUFFER_DESC indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA indexData;
+
+	auto size = geometry.box.GetSize();
+	this->size = XMFLOAT2(size.x, size.y);
 
 	vertexBuffer = ArrayBuffer<T>(device, &geometry.vertices);
 

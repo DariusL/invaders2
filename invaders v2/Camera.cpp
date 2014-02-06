@@ -58,7 +58,7 @@ void Camera::Right(float dist)
 	modified = true;
 }
 
-void Camera::Forward(float dist)
+void Camera::Back(float dist)
 {
 	XMVECTOR pos = XMLoadFloat3(&this->pos);
 	XMVECTOR forward = XMLoadFloat3(&this->forward);
@@ -68,7 +68,7 @@ void Camera::Forward(float dist)
 
 void Camera::Move(float x, float y, float z)
 {
-	Forward(-z);
+	Back(z);
 	Right(x);
 	Up(y);
 }

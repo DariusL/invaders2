@@ -102,6 +102,7 @@
     <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
@@ -112,7 +113,6 @@
     <ClCompile Include="ColorShader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="Direct3D.cpp" />
-    <ClCompile Include="EnemyGrid.cpp" />
     <ClCompile Include="GlobalDiffuseShader.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="GlobalSpecularShader.cpp" />
@@ -123,14 +123,14 @@
     </ClCompile>
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InstancedTextureShader.cpp" />
-    <ClCompile Include="InstanceEntity.cpp" />
-    <ClCompile Include="EntityListInstancer.cpp" />
     <ClCompile Include="IShader.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="StringPool.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -138,8 +138,6 @@
     <ClCompile Include="TextureShader.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VerticalBlurComputeShader.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,11 +148,16 @@
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
+    <ClInclude Include="InputRegister.h" />
+    <ClInclude Include="MenuItem.h" />
+    <ClInclude Include="MenuScreen.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="Geometry.h" />
@@ -167,7 +170,6 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="DrawableTexturedEntity.h" />
-    <ClInclude Include="EnemyGrid.h" />
     <ClInclude Include="GlobalDiffuseShader.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GlobalSpecularShader.h" />
@@ -178,15 +180,12 @@
     <ClInclude Include="IInstance.h" />
     <ClInclude Include="IInstanceShader.h" />
     <ClInclude Include="includes.h" />
-    <ClInclude Include="InstanceEntity.h" />
     <ClInclude Include="BaseInstancer.h" />
     <ClInclude Include="IPass.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="IWorld.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="EntityListInstancer.h" />
-    <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="RenderTarget.h" />
@@ -204,8 +203,6 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="VerticalBlurComputeShader.h" />
-    <ClInclude Include="Wall.h" />
-    <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

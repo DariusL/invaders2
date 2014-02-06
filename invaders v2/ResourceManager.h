@@ -2,7 +2,6 @@
 
 #include "includes.h"
 #include "Model.h"
-#include "DrawableShooter.h"
 #include "Level.h"
 #include "ColorInstancedShader.h"
 #include "ColorShader.h"

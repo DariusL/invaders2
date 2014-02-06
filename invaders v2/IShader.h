@@ -6,6 +6,7 @@
 
 using namespace Microsoft::WRL;
 using namespace std;
+using namespace DirectX;
 
 class IShader
 {
@@ -16,7 +17,7 @@ public:
 	virtual ~IShader(){}
 	virtual void Init(ID3D11Device *device);
 	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
-	virtual void SetShader(RenderParams &params);
+	virtual void SetShader(const RenderParams &params);
 protected:
 	void InitializeShader(ID3D11Device *device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
 	virtual void InitializeShaderBuffers(ID3D11Device *device) = 0;

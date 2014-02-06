@@ -58,7 +58,7 @@ void TextureShader::InitializeSampler(ID3D11Device *device)
 	Assert(device->CreateSamplerState(&samplerDesc, &samplerState));
 }
 
-void TextureShader::SetShaderParametersTextured(RenderParams &params, const XMMATRIX &world, const vector<ID3D11ShaderResourceView*> &textures)
+void TextureShader::SetShaderParametersTextured(const RenderParams &params, const XMMATRIX &world, const vector<ID3D11ShaderResourceView*> &textures)
 {
 	IPositionShader::SetShaderParameters(params, world);
 

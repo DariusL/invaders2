@@ -1,12 +1,14 @@
 #pragma once
-#include "IWorld.h"
-class TestScene : public IWorld
+#include "includes.h"
+#include "Screen.h"
+#include "DrawableEntity.h"
+class TestScene : public Screen
 {
-	vector<unique_ptr<IDrawable>> stuff;
+	vector<e::unique_ptr<IDrawable>> stuff;
 public:
 	TestScene();
 
-	int OnLoop(int input, float frameLength);
-	void Render(RenderParams &params);
+	int Loop(int input, float frameLength);
+	void Render(const RenderParams &params);
 };
 

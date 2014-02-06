@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "Graphics.h"
 #include "App.h"
+#include "Button.h"
 
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 :hwnd(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
@@ -26,7 +27,7 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-void Graphics::Render(IWorld &world, int input)
+void Graphics::Render(Screen &world, int input)
 {
 	auto context = d3D.GetDeviceContext();
 
@@ -53,23 +54,26 @@ void Graphics::Render(IWorld &world, int input)
 		d3D.ClearRenderTarget();
 	}
 
-	world.Render(params);// <------------------------------------------CIA RENDERINA
-
+	world.Render(params);
+	//Button(ZeroVec3, "BUTTON", [=]{}).Render(params);
 	if (post)
 	{
 		d3D.ClearRenderTarget();
 		d3D.UnsetRenderTarget();
-		if (post == POST_PROCESS_CEL)
+		switch (post)
 		{
+		default:
+		case POST_PROCESS_NONE:
+			break;
+		case POST_PROCESS_CEL:
 			celPass.Pass(context, target.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
-		}
-		else if (post == POST_PROCESS_BLUR)
-		{
+			break;
+		case POST_PROCESS_BLUR:
 			blurPass.Pass(context, target.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
-		}
-		else if (post == POST_PROCESS_BLOOM)
-		{
+			break;
+		case POST_PROCESS_BLOOM:
 			bloomPass.Pass(context, target.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
+			break;
 		}
 	}
 

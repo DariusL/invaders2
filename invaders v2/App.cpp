@@ -2,13 +2,15 @@
 #include "App.h"
 #include "ResourceManager.h"
 #include "TestScene.h"
+#include "MenuScreen.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
-	world = make_unique<TestScene>();
+	//world = make_unique<TestScene>();
+	world = make_unique<MenuScreen>(ZeroVec3, 0);
 }
 
 App::~App()
@@ -44,8 +46,8 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::LEFT;
 	if(input.IsKeyDown(VK_RIGHT))
 		worldEvents |= ControlCodes::RIGHT;
-	if(input.IsKeyDown(VK_ESCAPE))
-		Quit();
+	if (input.IsKeyDown(VK_ESCAPE))
+		worldEvents |= ControlCodes::PAUSE;
 	if(input.IsKeyDown(VK_DOWN))
 		worldEvents |= ControlCodes::DOWN;
 	if(input.IsKeyDown(VK_UP))
@@ -79,13 +81,12 @@ bool App::OnLoop()
 	if (input.IsKeyDown(VK_F4))
 		worldEvents |= ControlCodes::EFFECT_4;
 
-	int worldResult = world->OnLoop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
+	int worldResult = world->Loop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();
 	switch (worldResult)
 	{
-	case IWorld::Result::GAME_OVER:
+	case RESULT_CLOSE:
 		return false;
-		break;
 	}
 	graphics.Render(*world, worldEvents);
 	return true;

@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "GlobalSpecularShader.h"
 	
-void GlobalSpecularShader::SetShaderParameters(RenderParams &params, const XMMATRIX &world)
+void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {
 	GlobalDiffuseShader::SetShaderParameters(params, world);
 

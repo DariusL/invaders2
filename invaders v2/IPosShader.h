@@ -20,7 +20,7 @@ public:
 		matrixBuffer = Buffer<MatrixType>(device);
 	}
 
-	virtual void SetShaderParameters(RenderParams &params, const XMMATRIX &world)
+	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
 		

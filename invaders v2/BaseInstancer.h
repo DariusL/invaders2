@@ -23,7 +23,7 @@ protected:
 	ComPtr<ID3D11Buffer> instanceBuffer;
 	BufferInfo instanceInfo;
 public:
-	void Render(RenderParams& params);
+	void Render(const RenderParams& params);
 
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
@@ -52,7 +52,7 @@ BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model,
 }
 
 template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
+void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

@@ -6,6 +6,13 @@
 	#define NULL 0
 #endif
 
+namespace e
+{
+	using namespace std;
+	using namespace Microsoft::WRL;
+	using namespace DirectX;
+}
+
 template <typename T>
 using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
 
@@ -68,6 +75,15 @@ struct ControlCodes
 	static const int EFFECT_2 = 1 << 17;
 	static const int EFFECT_3 = 1 << 18;
 	static const int EFFECT_4 = 1 << 19;
+	static const int ENTER = 1 << 20;
+};
+
+enum RESULT
+{
+	RESULT_CONTINUE,
+	RESULT_CLOSE,
+	RESULT_UNHANDLED,
+	RESULT_QUIT
 };
 
 enum POST_PROCESS
@@ -80,7 +96,6 @@ enum POST_PROCESS
 
 __declspec(align(16)) struct RenderParams
 {
-	DirectX::XMMATRIX reflecMatrix;
 	DirectX::XMMATRIX view;
 	DirectX::XMMATRIX projection;
 	DirectX::XMFLOAT3 lightPos;

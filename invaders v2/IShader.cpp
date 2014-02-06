@@ -30,7 +30,7 @@ void IShader::InitializeShader(ID3D11Device *device, wstring vs, wstring ps, con
 	Assert(device->CreateInputLayout(inputLayout.data(), inputLayout.size(), vBuffer.get(), vSize, &layout));
 }
 
-void IShader::SetShader(RenderParams &params)
+void IShader::SetShader(const RenderParams &params)
 {
 	params.context->PSSetShader(pixelShader.Get(), NULL, 0);
 		

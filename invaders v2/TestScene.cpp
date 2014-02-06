@@ -4,14 +4,15 @@
 #include "StringPool.h"
 
 TestScene::TestScene()
+:Screen(ZeroVec3)
+
 {
-	camera.Move(0.0f, 0.0f, -10.0f);
 	stuff.emplace_back(new SimpleDrawableEntity(ZeroVec3, SP::Get().GetString("TEXT"), RM::Get().GetShader<ColorShader>()));
 	stuff.emplace_back(new SimpleDrawableEntity(XMFLOAT3(0.0f, -2.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
 	stuff.emplace_back(new SimpleDrawableEntity(XMFLOAT3(0.0f, -4.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
 }
 
-int TestScene::OnLoop(int input, float frameLength)
+int TestScene::Loop(int input, float frameLength)
 {
 	float yaw = 0.0f, pitch = 0.0f, roll = 0.0f;
 	if (input & ControlCodes::LEFT)
@@ -50,10 +51,10 @@ int TestScene::OnLoop(int input, float frameLength)
 
 	camera.Move(move);
 
-	return IWorld::Result::CONTINUE;
+	return RESULT_CONTINUE;
 }
 
-void TestScene::Render(RenderParams &params)
+void TestScene::Render(const RenderParams &params)
 {
 	for (auto &o : stuff)
 		o->Render(params);

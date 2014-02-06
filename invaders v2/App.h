@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Graphics.h"
-#include "GameWorld.h"
+#include "Screen.h"
 #include "Logger.h"
 #include "Input.h"
 #include "Window.h"
@@ -19,7 +19,7 @@ class App
 	Window window;
 	Graphics graphics;
 
-	unique_ptr<IWorld> world;
+	unique_ptr<Screen> world;
 
 	HWND wHandle;
 	HINSTANCE hInstance;
@@ -38,7 +38,6 @@ public:
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
 
 	HWND GetWindowHandle(){return wHandle;}
-	IWorld *GetWorld(){return world.get();}
 private:
 	bool OnLoop();
 };
