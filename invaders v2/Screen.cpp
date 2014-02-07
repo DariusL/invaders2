@@ -24,7 +24,10 @@ int Screen::Loop(int input, float frame)
 	if (child != nullptr)
 	{
 		if (child->Loop(input, frame) == RESULT_CLOSE)
+		{
 			child = nullptr;
+			DelayInternal();
+		}
 		return RESULT_CONTINUE;
 	}
 	else

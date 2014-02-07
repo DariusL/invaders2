@@ -139,6 +139,9 @@
     <ClCompile Include="MenuScreen.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="MenuList.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -328,6 +331,9 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="InputRegister.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuList.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>

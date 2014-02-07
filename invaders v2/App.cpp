@@ -80,6 +80,10 @@ bool App::OnLoop()
 		worldEvents |= ControlCodes::EFFECT_3;
 	if (input.IsKeyDown(VK_F4))
 		worldEvents |= ControlCodes::EFFECT_4;
+	if (input.IsKeyDown(VK_SPACE))
+		worldEvents |= ControlCodes::FIRE;
+	if (input.IsKeyDown(VK_RETURN))
+		worldEvents |= ControlCodes::ENTER;
 
 	int worldResult = world->Loop(worldEvents, (clock() - lastFrame) / float(CLOCKS_PER_SEC));
 	lastFrame = clock();

@@ -6,7 +6,7 @@ class InputRegister
 	int mask, time, freq;
 public:
 	InputRegister(int mask = -1, int freq = 125) :mask(mask), time(clock()), freq(freq){}
-	bool Register(int input = -1)
+	inline bool Register(int input = -1)
 	{
 		int now = clock();
 		if ((input & mask) && time + freq < now)
@@ -19,7 +19,7 @@ public:
 			return false;
 		}
 	}
-	bool Handles(int input)
+	inline bool Handles(int input)
 	{
 		return (input & mask) != 0;
 	}

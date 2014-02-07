@@ -1,7 +1,7 @@
 #pragma once
 #include "IDrawable.h"
 
-class IDrawableObject : public IDrawable
+class IDrawableObject : public virtual IDrawable
 {
 public:
 	IDrawableObject() :IDrawable(){}
