@@ -8,7 +8,8 @@ public:
 	void KeyDown(int key);
 	void KeyUp(int key);
 
-	bool IsKeyDown(int key);
+	static bool IsKeyDown(int key);
 private:
 	bool keys[256];
+	static Input *handle;
 };

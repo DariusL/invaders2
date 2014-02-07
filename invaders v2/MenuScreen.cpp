@@ -11,20 +11,22 @@ const e::XMFLOAT3 MenuScreen::FOOTER_POS = e::XMFLOAT3(0.0f, -20.0f, 0.0f);
 MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
 header(pos + e::XMLoadFloat3(&HEADER_POS), SP::Get().GetString(header), RM::Get().GetShader<ColorShader>()),
-backRegister(ControlCodes::PAUSE),
+backRegister(KEYS_ESC),
 items(FIRST_ITEM_POS, ITEM_OFF)
 {
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "MUCH GAME", [=]{this->child = make_unique<MenuScreen>(pos, "MUCH GAME"); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "SUCH SELECT", [=]{this->child = make_unique<MenuScreen>(pos, "WOW"); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "VERY EXCITE", [=]{this->child = make_unique<MenuScreen>(pos, "VERY EXCITE"); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "WOW", [=]{this->child = make_unique<MenuScreen>(pos, "WOW"); }));
+	XMFLOAT3 asdf;
+	XMStoreFloat3(&asdf, pos);
+	items.Add(make_unique<Button>(items.GetNextItemPos(), "MUCH GAME", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "MUCH GAME")); }));
+	items.Add(make_unique<Button>(items.GetNextItemPos(), "SUCH SELECT", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "SUCH SELECT")); }));
+	items.Add(make_unique<Button>(items.GetNextItemPos(), "VERY EXCITE", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "VERY EXCITE")); }));
+	items.Add(make_unique<Button>(items.GetNextItemPos(), "WOW", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "WOW")); }));
 	items.Select(true);
 }
 
 int MenuScreen::LoopInternal(int input, float frame)
 {
-	items.Loop(input);
-	if (backRegister.Register(input))
+	items.Loop();
+	if (backRegister.Register())
 		return RESULT_CLOSE;
 	else
 		return RESULT_CONTINUE;
@@ -39,5 +41,5 @@ void MenuScreen::RenderInternal(const RenderParams &params)
 void MenuScreen::DelayInternal()
 {
 	items.Delay();
-	backRegister.Register();
+	backRegister.Reset();
 }

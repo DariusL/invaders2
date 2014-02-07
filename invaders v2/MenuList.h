@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "MenuItem.h"
-#include "InputRegister.h"
+#include "HoldRegister.h"
 
 class MenuList : public MenuItem
 {
@@ -9,10 +9,10 @@ class MenuList : public MenuItem
 	e::XMFLOAT3 startPos;
 	e::XMFLOAT3 offset;
 	uint selected;
-	InputRegister next, prev;
+	HoldRegister next, prev;
 public:
-	MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextMask = ControlCodes::DOWN, int prevMask = ControlCodes::UP);
-	bool Loop(int input);
+	MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextKey = KEYS_DOWN, int prevKey = KEYS_UP);
+	bool Loop();
 	void Delay();
 	void Render(const RenderParams &params);
 	e::XMVECTOR GetNextItemPos();

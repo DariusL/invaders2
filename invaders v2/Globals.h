@@ -110,3 +110,13 @@ struct BufferInfo
 	unsigned int offset;
 	unsigned int stride;
 };
+
+enum KEYS
+{
+	KEYS_UP = VK_UP,
+	KEYS_DOWN = VK_DOWN,
+	KEYS_LEFT = VK_LEFT,
+	KEYS_FIRE = VK_SPACE,
+	KEYS_ENTER = VK_RETURN,
+	KEYS_ESC = VK_ESCAPE
+};

@@ -5,17 +5,13 @@
 
 Button::Button(e::XMVECTOR pos, e::string text, PressFunction &&callback)
 :SimpleDrawableEntity(pos, SP::Get().GetString(text), RM::Get().GetShader<ColorShader>()),
-callback(callback), clickRegister(ControlCodes::ENTER | ControlCodes::FIRE)
+callback(callback), clickRegister(KEYS_ENTER)
 {
 }
 
-bool Button::Loop(int input)
+bool Button::Loop()
 {
-	if (clickRegister.Handles(input))
-	{
-		if (clickRegister.Register(input))
-			callback();
-		return true;
-	}
-	return false;
+	if (clickRegister.Register())
+		callback();
+	return clickRegister.IsDown();
 }

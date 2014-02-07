@@ -155,10 +155,11 @@
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
-    <ClInclude Include="InputRegister.h" />
+    <ClInclude Include="HoldRegister.h" />
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MenuList.h" />
     <ClInclude Include="MenuScreen.h" />
+    <ClInclude Include="PressRegister.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />

@@ -1,10 +1,13 @@
 #include "includes.h"
 #include "Input.h"
+#include "Globals.h"
+
+Input *Input::handle;
 
 Input::Input(void)
 {
-	for(int i = 0; i < 256; i++)
-		keys[i] = false;
+	handle = this;
+	e::fill(keys, keys + 255, false);
 }
 
 Input::~Input()
@@ -13,7 +16,7 @@ Input::~Input()
 
 bool Input::IsKeyDown(int key)
 {
-	return keys[key];
+	return handle->keys[key];
 }
 
 void Input::KeyDown(int key)

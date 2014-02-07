@@ -2,32 +2,32 @@
 #include "MenuList.h"
 using namespace e;
 
-MenuList::MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextMask, int prevMask)
-:startPos(startPos), offset(offset), selected(0), next(nextMask), prev(prevMask)
+MenuList::MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextKey, int prevKey)
+:startPos(startPos), offset(offset), selected(0), next(nextKey), prev(prevKey)
 {
 }
 
-bool MenuList::Loop(int input)
+bool MenuList::Loop()
 {
 	bool handled = false;
-	try{
-		if (input & ControlCodes::ENTER)
-			if (items.at(this->selected)->Loop(input))
-				handled = true;
+	try
+	{
+		if (items.at(this->selected)->Loop())
+			handled = true;
 	}
 	catch (out_of_range o){}
-	if (selected > 0 && prev.Handles(input) && !handled)
+	if (selected > 0 && prev.IsDown() && !handled)
 	{
 		handled = true;
-		if (prev.Register(input))
+		if (prev.Register())
 		{
 			SetSelection(selected - 1);
 		}
 	}
-	if (selected < items.size() - 1 && next.Handles(input) && !handled)
+	if (selected < items.size() - 1 && next.IsDown() && !handled)
 	{
 		handled = true;
-		if (next.Register(input))
+		if (next.Register())
 		{
 			SetSelection(selected + 1);
 		}
@@ -62,7 +62,8 @@ void MenuList::SetSelection(int selected)
 
 void MenuList::Select(bool selected)
 {
-	try{
+	try
+	{
 		items.at(this->selected)->Select(selected);
 	}
 	catch (out_of_range o){}

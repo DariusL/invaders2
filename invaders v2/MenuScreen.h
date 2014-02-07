@@ -14,7 +14,7 @@ class MenuScreen : public Screen
 
 	MenuList items;
 	SimpleDrawableEntity header;
-	InputRegister backRegister;
+	PressRegister backRegister;
 public:
 	MenuScreen(e::XMVECTOR pos, e::string header);
 protected:

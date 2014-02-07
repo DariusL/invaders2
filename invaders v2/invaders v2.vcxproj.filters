@@ -330,10 +330,13 @@
     <ClInclude Include="Button.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="InputRegister.h">
+    <ClInclude Include="MenuList.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="MenuList.h">
+    <ClInclude Include="HoldRegister.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PressRegister.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
