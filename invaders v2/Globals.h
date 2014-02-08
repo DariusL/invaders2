@@ -32,10 +32,9 @@ extern LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l);
 struct VertexType
 {
 	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT4 color;
 
 	VertexType(){}
-	VertexType(float x, float y, float z, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f)) :position(x, y, z), color(color){}
+	VertexType(float x, float y, float z) :position(x, y, z){}
 };
 
 struct NormalVertexType

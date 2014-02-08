@@ -15,19 +15,15 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	Geometry<VertexType> plane;
 
 	vt.position = XMFLOAT3(-0.5f, -0.5f, 0.0f);  // Bottom left.
-	vt.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	plane.Add(vt);
 
 	vt.position = XMFLOAT3(-0.5f, 0.5f, 0.0f);  // Top left
-	vt.color = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 	plane.Add(vt);
 
 	vt.position = XMFLOAT3(0.5f, -0.5f, 0.0f);  // Bottom right.
-	vt.color = XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 	plane.Add(vt);
 
 	vt.position = XMFLOAT3(0.5f, 0.5f, 0.0f);  // Top right.
-	vt.color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 	plane.Add(vt);
 
 	plane.indices.push_back(1);
