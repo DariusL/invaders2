@@ -28,3 +28,23 @@ vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
 
 	return ret;
 }
+
+void ColorShader::InitializeShaderBuffers(ID3D11Device *device)
+{
+	IPositionShader::InitializeShaderBuffers(device);
+	auto tmp = e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+	colorBuffer = Buffer<e::XMFLOAT4>(device, &tmp);
+}
+
+
+void ColorShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+{
+	IPositionShader::SetShaderParameters(params, world);
+	params.context->PSSetConstantBuffers(0, 1, colorBuffer.GetAddressOf());
+}
+
+void ColorShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world, const e::XMFLOAT4 color)
+{
+	colorBuffer.SetData(params.context, color);
+	SetShaderParameters(params, world);
+}

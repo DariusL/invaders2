@@ -20,6 +20,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Menu">
+      <UniqueIdentifier>{7a4cefd7-6b39-44fe-8850-8ff3c113addf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IShader.cpp">
@@ -85,9 +88,6 @@
     <ClCompile Include="includes.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="DDSTextureLoader.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="AppHandle.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -130,17 +130,23 @@
     <ClCompile Include="StringPool.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="MenuScreen.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Menu</Filter>
     </ClCompile>
     <ClCompile Include="MenuList.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader.cpp">
       <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorDrawableEntity.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,9 +252,6 @@
     <ClInclude Include="AppHandle.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="DDSTextureLoader.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="includes.h">
       <Filter>Framework</Filter>
     </ClInclude>
@@ -318,26 +321,32 @@
     <ClInclude Include="ArrayBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="MenuScreen.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuItem.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuList.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="HoldRegister.h">
-      <Filter>Framework</Filter>
+      <Filter>Menu</Filter>
     </ClInclude>
     <ClInclude Include="PressRegister.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuList.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="HoldRegister.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorDrawableEntity.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

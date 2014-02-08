@@ -16,5 +16,4 @@ protected:
 	virtual void RenderInternal(const RenderParams &params) = 0;
 	virtual int LoopInternal(int input, float frame) = 0;
 	virtual void DelayInternal() = 0;
-	void SetChild(e::unique_ptr<Screen> &&child){ this->child = move(child); }
 };

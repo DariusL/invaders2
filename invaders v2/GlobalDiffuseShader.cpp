@@ -63,6 +63,4 @@ void GlobalDiffuseShader::SetShaderParameters(const RenderParams &params, const 
 	lightingBuffer.SetData(cont, data);
 
 	cont->PSSetConstantBuffers(0, 1, lightingBuffer.GetAddressOf());
-
-	SetShader(params);
 }

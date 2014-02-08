@@ -104,6 +104,7 @@
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
+    <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CelComputeShader.h" />
+    <ClInclude Include="ColorDrawableEntity.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />

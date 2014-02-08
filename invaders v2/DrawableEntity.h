@@ -56,7 +56,7 @@ DrawableEntity<vt, sh>::~DrawableEntity(void)
 template<class vt, class sh>
 void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 {
-	if(!Update(params.context))
+	if (!Update(params.context))
 		return;
 	model.Set(params.context);
 	XMMATRIX scale = XMLoadFloat4x4(&scaleMatrix);

@@ -15,11 +15,6 @@ public:
 	IPositionShader(wstring vs, wstring ps):IShader(vs, ps){}
 	virtual ~IPositionShader(){}
 
-	virtual void InitializeShaderBuffers(ID3D11Device *device)
-	{
-		matrixBuffer = Buffer<MatrixType>(device);
-	}
-
 	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
@@ -32,5 +27,10 @@ public:
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());
 
 		SetShader(params);
+	}
+protected:
+	virtual void InitializeShaderBuffers(ID3D11Device *device)
+	{
+		matrixBuffer = Buffer<MatrixType>(device);
 	}
 };
