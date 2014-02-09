@@ -15,7 +15,9 @@ public:
 
 	int LoopInternal(int input, float frame)
 	{
-		MenuScreen::LoopInternal(input, frame);
-		return result;
+		if (result == RESULT_CONTINUE)
+			return MenuScreen::LoopInternal(input, frame);
+		else
+			return result;
 	}
 };
