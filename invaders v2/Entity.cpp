@@ -26,6 +26,11 @@ void Entity::MoveTo(XMFLOAT3 pos)
 	this->pos = pos;
 }
 
+void Entity::MoveTo(XMVECTOR pos)
+{
+	XMStoreFloat3(&this->pos, pos);
+}
+
 Entity::~Entity(void)
 {
 }

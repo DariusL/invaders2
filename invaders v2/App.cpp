@@ -2,7 +2,7 @@
 #include "App.h"
 #include "ResourceManager.h"
 #include "TestScene.h"
-#include "MenuScreen.h"
+#include "MainMenu.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
@@ -10,7 +10,7 @@ window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
 	//world = make_unique<TestScene>();
-	world = unique_ptr<MenuScreen>(new MenuScreen(e::XMLoadFloat3(&ZeroVec3), "MAIN MENU"));
+	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
 }
 
 App::~App()

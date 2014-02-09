@@ -21,6 +21,7 @@ public:
 	XMFLOAT3 GetPos() const {return pos;}
 	void MoveBy(XMFLOAT3 step);
 	void MoveTo(XMFLOAT3 pos);
+	void MoveTo(XMVECTOR pos);
 
 	void SetSize(XMFLOAT2 size){this->size = size;}
 	XMFLOAT2 GetSize() const { return size; }

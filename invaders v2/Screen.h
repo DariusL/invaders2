@@ -7,6 +7,7 @@ protected:
 	e::unique_ptr<Screen> child;
 	Camera camera;
 	e::XMFLOAT3 pos;
+	int childResult;
 public:
 	Screen(e::XMVECTOR pos);
 	void Render(const RenderParams &params);

@@ -14,17 +14,14 @@ header(pos + e::XMLoadFloat3(&HEADER_POS), SP::Get().GetString(header), RM::Get(
 backRegister(KEYS_ESC),
 items(FIRST_ITEM_POS, ITEM_OFF)
 {
-	XMFLOAT3 asdf;
-	XMStoreFloat3(&asdf, pos);
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "MUCH GAME", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "MUCH GAME")); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "SUCH SELECT", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "SUCH SELECT")); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "VERY EXCITE", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "VERY EXCITE")); }));
-	items.Add(make_unique<Button>(items.GetNextItemPos(), "WOW", [=]{ auto pos = XMLoadFloat3(&asdf); this->child = unique_ptr<MenuScreen>(new MenuScreen(pos, "WOW")); }));
-	items.Select(true);
 }
 
 int MenuScreen::LoopInternal(int input, float frame)
 {
+	if (childResult == RESULT_QUIT_APP || childResult == RESULT_QUIT_TO_MAIN)
+		return childResult;
+	else
+		childResult = RESULT_CONTINUE;
 	items.Loop();
 	if (backRegister.Register())
 		return RESULT_CLOSE;

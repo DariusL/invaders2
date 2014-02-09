@@ -26,4 +26,5 @@ template<class T>
 void MenuList::Add(e::unique_ptr<T> &&item)
 {
 	items.push_back(move(item));
+	SetSelection(this->selected);
 }

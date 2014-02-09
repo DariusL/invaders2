@@ -21,4 +21,11 @@ protected:
 	virtual void RenderInternal(const RenderParams &params);
 	virtual int LoopInternal(int input, float frame);
 	virtual void DelayInternal();
+
+	template<class T>
+	void Add(e::unique_ptr<T> &&item)
+	{
+		item->MoveTo(items.GetNextItemPos());
+		items.Add(move(item));
+	}
 };

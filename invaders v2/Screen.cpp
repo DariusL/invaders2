@@ -2,6 +2,7 @@
 #include "Screen.h"
 
 Screen::Screen(e::XMVECTOR pos)
+:childResult(RESULT_CONTINUE)
 {
 	e::XMStoreFloat3(&this->pos, pos);
 	camera.Move(e::XMVectorAdd(pos, e::XMVectorSet(0.0f, 0.0f, 20.0f, 0.0f)));
@@ -23,7 +24,8 @@ int Screen::Loop(int input, float frame)
 {
 	if (child != nullptr)
 	{
-		if (child->Loop(input, frame) == RESULT_CLOSE)
+		childResult = child->Loop(input, frame);
+		if (childResult != RESULT_CONTINUE)
 		{
 			child = nullptr;
 			DelayInternal();

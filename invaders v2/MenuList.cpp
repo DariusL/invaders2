@@ -24,7 +24,7 @@ bool MenuList::Loop()
 			SetSelection(selected - 1);
 		}
 	}
-	if (selected < items.size() - 1 && next.IsDown() && !handled)
+	if (selected + 1< items.size() && next.IsDown() && !handled)
 	{
 		handled = true;
 		if (next.Register())
