@@ -21,6 +21,11 @@ void Entity::MoveBy(XMFLOAT3 step)
 	XMStoreFloat3(&pos, XMLoadFloat3(&pos) + XMLoadFloat3(&step));
 }
 
+void Entity::MoveBy(XMVECTOR step)
+{
+	XMStoreFloat3(&pos, XMLoadFloat3(&pos) + step);
+}
+
 void Entity::MoveTo(XMFLOAT3 pos)
 {
 	this->pos = pos;

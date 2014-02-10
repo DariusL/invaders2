@@ -1,9 +1,9 @@
 #pragma once
 #include "includes.h"
 #include "Screen.h"
-#include "DrawableEntity.h"
 #include "Button.h"
 #include "MenuList.h"
+#include "ColorDrawableEntity.h"
 
 class MenuScreen : public Screen
 {
@@ -13,7 +13,7 @@ class MenuScreen : public Screen
 	static const e::XMFLOAT3 FOOTER_POS;
 
 	MenuList items;
-	SimpleDrawableEntity header;
+	ColorDrawableEntity header;
 	PressRegister backRegister;
 public:
 	MenuScreen(e::XMVECTOR pos, e::string header);

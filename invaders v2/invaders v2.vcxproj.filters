@@ -151,6 +151,9 @@
     <ClCompile Include="GameScreen.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -359,6 +362,9 @@
     </ClInclude>
     <ClInclude Include="GameScreen.h">
       <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWorld.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

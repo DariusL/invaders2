@@ -20,6 +20,7 @@ public:
 
 	XMFLOAT3 GetPos() const {return pos;}
 	void MoveBy(XMFLOAT3 step);
+	void MoveBy(XMVECTOR step);
 	void MoveTo(XMFLOAT3 pos);
 	void MoveTo(XMVECTOR pos);
 

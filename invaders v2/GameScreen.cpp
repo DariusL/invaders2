@@ -4,7 +4,7 @@
 
 void GameScreen::RenderInternal(const RenderParams &params)
 {
-
+	world.Render(params);
 }
 
 int GameScreen::LoopInternal(int input, float frame)
@@ -13,6 +13,7 @@ int GameScreen::LoopInternal(int input, float frame)
 		return childResult;
 	if (pause.Register())
 		child = e::make_unique<PauseMenu>(e::XMLoadFloat3(&pos));
+	world.Loop(frame);
 	return RESULT_CONTINUE;
 }
 
