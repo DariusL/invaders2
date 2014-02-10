@@ -35,6 +35,7 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	plane.indices.push_back(2);
 
 	models.emplace_back(device, plane);
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\player.obj"));
 
 	Level *level = new Level();
 

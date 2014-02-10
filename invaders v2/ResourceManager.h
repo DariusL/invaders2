@@ -26,6 +26,7 @@ public:
 	{
 		MODEL_BALL,
 		MODEL_PLANE,
+		MODEL_PLAYER
 	};
 
 	enum ENEMY

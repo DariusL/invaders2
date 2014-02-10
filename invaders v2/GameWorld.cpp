@@ -4,7 +4,7 @@
 #include "Input.h"
 
 GameWorld::GameWorld(e::XMVECTOR pos)
-:player(pos, RM::Get().GetModel(RM::MODEL_PLANE), RM::Get().GetShader<ColorShader>(), e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f))
+:player(pos, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorShader>(), e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f))
 {
 
 }
