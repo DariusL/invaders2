@@ -1,10 +1,10 @@
 #include "includes.h"
 #include "MenuItem.h"
-#include "ColorDrawableEntity.h"
+#include "DrawableShooter.h"
 
 class GameWorld : public IDrawable
 {
-	ColorDrawableEntity player;
+	DrawableShooter player;
 public:
 	GameWorld(e::XMVECTOR pos);
 	void Loop(float frame);

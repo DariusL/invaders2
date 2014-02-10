@@ -2,10 +2,11 @@
 #include "Shooter.h"
 
 
-Shooter::Shooter(float fireRate)
+Shooter::Shooter(float fireRate, float speed)
 {
 	this->fireRate = fireRate;
 	this->lastFired = 0;
+	this->speed = speed;
 }
 
 

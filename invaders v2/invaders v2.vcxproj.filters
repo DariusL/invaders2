@@ -366,6 +366,9 @@
     <ClInclude Include="GameWorld.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="DrawableShooter.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">

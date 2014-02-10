@@ -159,6 +159,7 @@
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
+    <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="HoldRegister.h" />

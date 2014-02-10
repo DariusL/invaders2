@@ -6,13 +6,13 @@ class Shooter
 	//per second
 	float fireRate;
 	float lastFired;
-
+	float speed;
 public:
-	Shooter(float fireRate);
+	Shooter(float fireRate, float speed);
 	~Shooter(void);
 
-	void SetFireRate(float fireRate){this->fireRate = fireRate;}
 	float GetFireRate() const {return fireRate;}
+	float GetSpeed() const { return speed; }
 
 	bool Fire();
 	float GetLastFired() const {return lastFired;}
