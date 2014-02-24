@@ -20,10 +20,9 @@ struct PixelInputType
 PixelInputType ColorInstancedVertexShader(VertexInputType input)
 {
     PixelInputType output;
-    
-    input.position.w = 1.0f;
 
 	output.position = input.position + input.instancePos;
+	output.position.w = 1.0f;
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
     
