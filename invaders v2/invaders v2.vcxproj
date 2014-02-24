@@ -107,9 +107,11 @@
     <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
+    <ClCompile Include="EnemyList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HorizontalBlurComputeShader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorInstancedShader.cpp" />
@@ -160,8 +162,11 @@
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="DrawableShooter.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyList.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="HoldRegister.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuItem.h" />
@@ -170,6 +175,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PressRegister.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="ShooterEntity.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="Geometry.h" />
@@ -197,7 +203,6 @@
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="IWorld.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="RenderTarget.h" />

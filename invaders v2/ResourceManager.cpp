@@ -41,13 +41,10 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 
 	level->gridWidth = 11;
 	level->gridHeight = 5;
-	level->gap = XMFLOAT2(3.0f, 3.0f);
-	level->enemyTypes = vector<int>();
-	level->enemyTypes.push_back(ENEMY::ENEMY_BASIC);
 
 	for (int i = 0; i < level->gridHeight * level->gridWidth; i++)
 	{
-		level->enemies.push_back(ENEMY::ENEMY_BASIC);
+		level->enemies.push_back(MODEL::MODEL_PLAYER);
 	}
 
 	levels.push_back(shared_ptr<Level>(level));

@@ -154,6 +154,12 @@
     <ClCompile Include="GameWorld.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyList.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -303,9 +309,6 @@
     <ClInclude Include="ColorInstancedShader.h">
       <Filter>Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -367,6 +370,18 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableShooter.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyList.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

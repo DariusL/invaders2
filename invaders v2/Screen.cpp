@@ -5,7 +5,7 @@ Screen::Screen(e::XMVECTOR pos)
 :childResult(RESULT_CONTINUE)
 {
 	e::XMStoreFloat3(&this->pos, pos);
-	camera.Move(e::XMVectorAdd(pos, e::XMVectorSet(0.0f, 0.0f, 20.0f, 0.0f)));
+	camera.Move(e::XMVectorAdd(pos, e::XMVectorSet(0.0f, 0.0f, 50.0f, 0.0f)));
 }
 
 void Screen::Render(const RenderParams &params)

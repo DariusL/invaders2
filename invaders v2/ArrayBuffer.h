@@ -10,7 +10,7 @@ class ArrayBuffer
 	bool immutable;
 	uint offset, stride;
 public:
-	ArrayBuffer(ID3D11Device *device = nullptr, const vector<T> *data = nullptr, bool immutable = true);
+	ArrayBuffer(ID3D11Device *device = nullptr, const vector<T> *data = nullptr, bool immutable = true, uint count = 0);
 	ArrayBuffer(const ArrayBuffer&) = delete;
 	ArrayBuffer &operator=(ArrayBuffer&&);
 	ArrayBuffer(ArrayBuffer&&);
@@ -18,11 +18,11 @@ public:
 	ID3D11Buffer **GetAddressOf(){ return buffer.GetAddressOf(); }
 	uint *GetOffset(){ return &offset; }
 	uint *GetStride(){ return &stride; }
-	void SetData(ID3D11DeviceContext *context, const vector<T> &data);
+	void SetData(ID3D11DeviceContext *context, const vector<T> &data, uint count = 0);
 };
 
 template<class T>
-ArrayBuffer<T>::ArrayBuffer(ID3D11Device *device, const vector<T> *data, bool immutable)
+ArrayBuffer<T>::ArrayBuffer(ID3D11Device *device, const vector<T> *data, bool immutable, uint count)
 :immutable(immutable)
 {
 	if (device == nullptr)
@@ -34,7 +34,7 @@ ArrayBuffer<T>::ArrayBuffer(ID3D11Device *device, const vector<T> *data, bool im
 	D3D11_SUBRESOURCE_DATA resource, *rptr = nullptr;
 
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	desc.ByteWidth = sizeof(T) * data->size();
+	desc.ByteWidth = sizeof(T) * (count != 0 ? count : data->size());
 	desc.CPUAccessFlags = immutable ? 0 : D3D11_CPU_ACCESS_WRITE;
 	desc.MiscFlags = 0;
 	desc.StructureByteStride = 0;
@@ -74,7 +74,7 @@ stride(move(other.stride))
 }
 
 template<class T>
-void ArrayBuffer<T>::SetData(ID3D11DeviceContext *context, const vector<T> &data)
+void ArrayBuffer<T>::SetData(ID3D11DeviceContext *context, const vector<T> &data, uint count)
 {
-	Utils::CopyToBuffer(Get(), data.data() * sizeof(T), context);
+	Utils::CopyToBuffer(Get(), context, data, count);
 }

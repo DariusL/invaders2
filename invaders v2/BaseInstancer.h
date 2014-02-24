@@ -3,15 +3,17 @@
 #include "Model.h"
 #include "ColorInstancedShader.h"
 #include "includes.h"
+#include "ArrayBuffer.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
 
 template<class vt, class sh, class it>
-class BaseInstancer : public DrawableEntity<vt, sh>
+class BaseInstancer : public IDrawable
 {
 public:
-	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos = XMFLOAT3());
+	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount);
+	BaseInstancer(BaseInstancer&&);
 	virtual ~BaseInstancer(void){}
 
 protected:
@@ -20,8 +22,10 @@ protected:
 
 	vector<it> instanceData;
 
-	ComPtr<ID3D11Buffer> instanceBuffer;
-	BufferInfo instanceInfo;
+	ArrayBuffer<it> instanceBuffer;
+
+	Model<vt> &model;
+	sh &shader;
 public:
 	void Render(const RenderParams& params);
 
@@ -32,23 +36,18 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount, XMFLOAT3 pos)
-	:DrawableEntity(pos, model, shader)
+BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount)
+:model(model), shader(shader), maxInstanceCount(maxObjectCount), instanceBuffer(device, nullptr, false, maxObjectCount)
 {
-	this->maxInstanceCount = maxObjectCount;
+}
 
-	D3D11_BUFFER_DESC instanceBufferDesc;
-
-	ZeroMemory(&instanceBufferDesc, sizeof(instanceBufferDesc));
-	instanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	instanceBufferDesc.ByteWidth = sizeof(it)* maxInstanceCount;
-	instanceBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	instanceBufferDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-
-	Assert(device->CreateBuffer(&instanceBufferDesc, NULL, &instanceBuffer));
-
-	instanceInfo.offset = 0;
-	instanceInfo.stride = sizeof(it);
+template<class vt, class sh, class it>
+BaseInstancer<vt, sh, it>::BaseInstancer(BaseInstancer &&other)
+: maxInstanceCount(other.maxInstanceCount), instanceCount(other.instanceCount),
+model(other.model), shader(other.shader)
+{
+	swap(instanceData, other.instanceData);
+	swap(instanceBuffer, other.instanceBuffer);
 }
 
 template<class vt, class sh, class it>
@@ -57,7 +56,7 @@ void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
 	if(!Update(params.context))
 		return;
 	model.Set(params.context);
-	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), &instanceInfo.stride, &instanceInfo.offset);
+	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
 	shader.SetShaderParametersInstanced(params);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }
@@ -68,13 +67,7 @@ bool BaseInstancer<vt, sh, it>::Update(ID3D11DeviceContext *context)
 	if(instanceCount == 0)
 		return false;
 	
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-
-	context->Map(instanceBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-
-	memcpy(mappedResource.pData, instanceData.data(), sizeof(it) * instanceCount);
-
-	context->Unmap(instanceBuffer.Get(), 0);
+	instanceBuffer.SetData(context, instanceData, instanceCount);
 
 	return true;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "includes.h"
+#include "Globals.h"
 
 typedef unsigned int UINT;
 
@@ -24,11 +25,20 @@ namespace Utils{
 	}
 
 	template<class T>
-	void CopyToBuffer(ID3D11Buffer *buffer, const T &data,ID3D11DeviceContext *context)
+	void CopyToBuffer(ID3D11Buffer *buffer, const T &data, ID3D11DeviceContext *context)
 	{
 		D3D11_MAPPED_SUBRESOURCE resource;
 		context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
 		memcpy(resource.pData, &data, sizeof(T));
+		context->Unmap(buffer, 0);
+	}
+
+	template<class T>
+	void CopyToBuffer(ID3D11Buffer *buffer, ID3D11DeviceContext *context, const e::vector<T> &data, uint count)
+	{
+		D3D11_MAPPED_SUBRESOURCE resource;
+		context->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+		memcpy(resource.pData, data.data(), sizeof(T) * count);
 		context->Unmap(buffer, 0);
 	}
 

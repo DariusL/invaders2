@@ -16,8 +16,8 @@ public:
 	void ClearRenderTarget();
 	void Present();
 
-	ID3D11Device *GetDevice(){return device.Get();}
-	ID3D11DeviceContext *GetDeviceContext(){return deviceContext.Get();}
+	static ID3D11Device *GetDevice(){return staticDevice;}
+	static ID3D11DeviceContext *GetDeviceContext(){return staticContext;}
 
 	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
 	XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
@@ -48,5 +48,8 @@ private:
 	D3D11_VIEWPORT viewport;
 	XMFLOAT4X4 projectionMatrix;
 	XMFLOAT4X4 orthoMatrix;
+
+	static ID3D11Device *staticDevice;
+	static ID3D11DeviceContext *staticContext;
 };
 

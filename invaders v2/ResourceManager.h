@@ -2,7 +2,6 @@
 
 #include "includes.h"
 #include "Model.h"
-#include "Level.h"
 #include "ColorInstancedShader.h"
 #include "ColorShader.h"
 #include "GlobalDiffuseShader.h"
@@ -67,6 +66,13 @@ public:
 		TEXTURE_WATER_NORMAL_MAP,
 		TEXTURE_WALL,
 		TEXTURE_TREE
+	};
+
+	struct Level
+	{
+		int gridWidth;
+		int gridHeight;
+		vector<MODEL> enemies;
 	};
 
 private:

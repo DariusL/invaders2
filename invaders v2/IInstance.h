@@ -1,7 +1,7 @@
 #pragma once
 
-template<class Data>
+template<class it>
 class IInstance
 {
-	virtual Data GetInstanceData() = 0;
+	virtual it GetInstanceData() = 0;
 };

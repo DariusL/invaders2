@@ -1,6 +1,9 @@
 #include "includes.h"
 #include "Direct3D.h"
 
+ID3D11Device *Direct3D::staticDevice = nullptr;
+ID3D11DeviceContext *Direct3D::staticContext = nullptr;
+
 Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
 	ComPtr<IDXGIFactory> factory;
@@ -170,6 +173,9 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	Assert(device->CreateBlendState(&blendDesc, &blendState));
 	XMFLOAT4 blendFactor(0.0f, 0.0f, 0.0f, 0.0f);
 	deviceContext->OMSetBlendState(blendState.Get(), reinterpret_cast<float*>(&blendFactor), static_cast<UINT>(-1));
+
+	staticContext = deviceContext.Get();
+	staticDevice = device.Get();
 }
 
 Direct3D::~Direct3D()

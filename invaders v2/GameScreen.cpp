@@ -1,6 +1,11 @@
 #include "includes.h"
 #include "GameScreen.h"
 #include "PauseMenu.h"
+#include "Direct3D.h"
+
+GameScreen::GameScreen(e::XMVECTOR pos)
+:Screen(pos), pause(KEYS_ESC), world(Direct3D::GetDevice(), pos)
+{}
 
 void GameScreen::RenderInternal(const RenderParams &params)
 {
