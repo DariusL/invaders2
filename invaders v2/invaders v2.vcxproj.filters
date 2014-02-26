@@ -160,6 +160,9 @@
     <ClCompile Include="EnemyList.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Movement.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -382,6 +385,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="ShooterEntity.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

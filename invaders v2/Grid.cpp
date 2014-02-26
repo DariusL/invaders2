@@ -2,7 +2,7 @@
 #include "Grid.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, e::XMFLOAT2 size, const RM::Level &level)
-:Entity(pos, size)
+:Entity(pos, size), speed(10.0f), downOff(0.8f), speedOff(1.0f)
 {
 	int count = level.gridHeight * level.gridWidth;
 	e::XMFLOAT2 off(size.x / level.gridWidth, size.y / level.gridHeight);
@@ -26,4 +26,9 @@ void Grid::Render(const RenderParams &params)
 {
 	for (auto &i : instancers)
 		i.second->Render(params);
+}
+
+void Grid::Loop(float frame)
+{
+
 }

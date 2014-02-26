@@ -6,32 +6,25 @@
 	#define NULL 0
 #endif
 
-namespace e
-{
-	using namespace std;
-	using namespace Microsoft::WRL;
-	using namespace DirectX;
-}
-
 template <typename T>
-using ComVector = std::vector<Microsoft::WRL::ComPtr<T>>;
+using ComVector = e::vector<e::ComPtr<T>>;
 
 typedef unsigned int uint;
 
-extern const DirectX::XMFLOAT3 ZeroVec3;
-extern const DirectX::XMFLOAT4 ZeroVec4;
-extern const DirectX::XMFLOAT3 OneVec3;
-extern const DirectX::XMFLOAT2 ZeroVec2;
+extern const e::XMFLOAT3 ZeroVec3;
+extern const e::XMFLOAT4 ZeroVec4;
+extern const e::XMFLOAT3 OneVec3;
+extern const e::XMFLOAT2 ZeroVec2;
 
-extern const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> nullResourceView;
-extern const Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
-extern const Microsoft::WRL::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
+extern const e::ComPtr<ID3D11ShaderResourceView> nullResourceView;
+extern const e::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
+extern const e::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
 
 extern LRESULT CALLBACK MsgRedirect(HWND h, UINT u, WPARAM w, LPARAM l);
 
 struct VertexType
 {
-	DirectX::XMFLOAT3 position;
+	e::XMFLOAT3 position;
 
 	VertexType(){}
 	VertexType(float x, float y, float z) :position(x, y, z){}
@@ -39,16 +32,16 @@ struct VertexType
 
 struct NormalVertexType
 {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT4 color;
-	DirectX::XMFLOAT3 normal;
+	e::XMFLOAT3 position;
+	e::XMFLOAT4 color;
+	e::XMFLOAT3 normal;
 
 	NormalVertexType(float x, float y, float z) :position(x, y, z){}
 };
 
 struct InstanceType
 {
-	DirectX::XMFLOAT3 position;
+	e::XMFLOAT3 position;
 };
 
 struct ControlCodes
@@ -96,11 +89,11 @@ enum POST_PROCESS
 
 __declspec(align(16)) struct RenderParams
 {
-	DirectX::XMMATRIX view;
-	DirectX::XMMATRIX projection;
-	DirectX::XMFLOAT3 lightPos;
+	e::XMMATRIX view;
+	e::XMMATRIX projection;
+	e::XMFLOAT3 lightPos;
 	float brightness;
-	DirectX::XMFLOAT4 diffuseColor;
+	e::XMFLOAT4 diffuseColor;
 	__declspec(align(16)) ID3D11DeviceContext *context;
 	__declspec(align(16)) Camera *camera;
 };

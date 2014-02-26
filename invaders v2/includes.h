@@ -28,3 +28,11 @@
 #include <functional>
 #include <chrono>
 #include <unordered_map>
+
+
+namespace e
+{
+	using namespace std;
+	using namespace Microsoft::WRL;
+	using namespace DirectX;
+}
