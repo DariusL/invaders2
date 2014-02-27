@@ -37,37 +37,57 @@ namespace Utils
 		MessageBox(NULL, text.c_str(), title.c_str(), MB_OK);
 	}
 
-	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse)
+	e::XMFLOAT4 PlaneFromPointAndRot(e::XMFLOAT3 point, e::XMFLOAT3 rot, bool reverse)
 	{
-		//pradine normale
+		using namespace e;
 		XMVECTOR normal = XMVectorSet(0.0f, 0.0f, (reverse ? 1.0f : -1.0f), 0.0f);
 		XMMATRIX matrix = XMMatrixRotationRollPitchYaw(rot.x, rot.y, rot.z);
-		XMFLOAT3 temp;
+		e::XMFLOAT3 temp;
 		//normale pasukta, kad butu statmena plokstumai
 		XMStoreFloat3(&temp, XMVector3Transform(normal, matrix));
 		//sudaroma plokstumos lygtis
 		return XMFLOAT4(temp.x, temp.y, temp.z, -(temp.x*point.x + temp.y*point.y + temp.z*point.z));
 	}
 
-	XMFLOAT2 GetVec2(float value)
+	e::XMFLOAT2 GetVec2(float value)
 	{
-		return XMFLOAT2(value, value);
+		return e::XMFLOAT2(value, value);
 	}
 
-	XMFLOAT3 GetVec3(float value)
+	e::XMFLOAT3 GetVec3(float value)
 	{
-		return XMFLOAT3(value, value, value);
+		return e::XMFLOAT3(value, value, value);
 	}
 
-	XMFLOAT4 GetVec4(float value)
+	e::XMFLOAT4 GetVec4(float value)
 	{
-		return XMFLOAT4(value, value, value, value);
+		return e::XMFLOAT4(value, value, value, value);
 	}
 
-	void VectorAdd(XMFLOAT3 &target, const XMFLOAT3 &off)
+	void VectorAdd(e::XMFLOAT3 &target, const e::XMFLOAT3 &off)
 	{
 		target.x += off.x;
 		target.y += off.y;
 		target.z += off.z;
+	}
+
+	e::XMVECTOR VectorFill(float f)
+	{
+		return e::XMVectorSet(f, f, f, f);
+	}
+
+	e::XMVECTOR VectorSet(float x)
+	{
+		return e::XMVectorSet(x, 0.0f, 0.0f, 0.0f);
+	}
+
+	e::XMVECTOR VectorSet(float x, float y)
+	{
+		return e::XMVectorSet(x, y, 0.0f, 0.0f);
+	}
+
+	e::XMVECTOR VectorSet(float x, float y, float z)
+	{
+		return e::XMVectorSet(x, y, z, 0.0f);
 	}
 }

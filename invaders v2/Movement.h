@@ -3,12 +3,13 @@
 
 class Movement
 {
-	typedef e::chrono::system_clock Clock;
 	e::XMFLOAT3 start, end, off;
-	e::chrono::time_point<Clock> startTime;
-	e::chrono::milliseconds length;
+	int startTime;
+	int length;
 public:
-	Movement(e::XMFLOAT3 start, e::XMFLOAT3 end, e::chrono::milliseconds length);
+	Movement(e::XMFLOAT3 start, e::XMFLOAT3 end, int length);
+	Movement(e::XMVECTOR start, e::XMVECTOR end, int length);
 	e::XMVECTOR GetPos();
+	e::XMVECTOR GetDir();
 	bool IsOver();
 };

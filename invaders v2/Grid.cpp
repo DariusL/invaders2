@@ -1,25 +1,23 @@
 #include "includes.h"
 #include "Grid.h"
 
-Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, e::XMFLOAT2 size, const RM::Level &level)
-:Entity(pos, size), speed(10.0f), downOff(0.8f), speedOff(1.0f)
+Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
+:Entity(pos, e::XMFLOAT2(width, 0.0f)), time(2000), downOff(0.8f), worldWidth(worldWidth),
+movement(pos, pos + Utils::VectorSet(worldWidth), time / 2), dir(RIGHT), columnCount(columnCount), width(width)
 {
-	int count = level.gridHeight * level.gridWidth;
-	e::XMFLOAT2 off(size.x / level.gridWidth, size.y / level.gridHeight);
-	e::XMVECTOR first = pos - e::XMLoadFloat2(&size) / 2.0f;
-	for (int x = 0; x < level.gridWidth; x++)
+	float off = width / (columnCount - 1);
+	e::XMVECTOR first = pos - Utils::VectorSet(off / 2.0f);
+	for (int i = 0; i < columnCount; i++)
 	{
-		for (int y = 0; y < level.gridHeight; y++)
+		auto type = RM::MODEL_PLAYER;
+		auto currentPos = first + Utils::VectorSet(off * i);
+		if (instancers.find(type) == instancers.end())
 		{
-			auto type = level.enemies[y * level.gridWidth + x];
-			auto pos = first + e::XMVectorSet(off.x * x, off.y * y, 0.0f, 0.0f);
-			if (instancers.find(type) == instancers.end())
-			{
-				instancers.emplace(type, make_unique<EnemyList>(device, RM::Get().GetModel(type), RM::Get().GetShader<ColorInstancedShader>(), count));
-			}
-			instancers[type]->Add(ShooterEntity(pos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
+			instancers.emplace(type, e::make_unique<EnemyList>(device, RM::Get().GetModel(type), RM::Get().GetShader<ColorInstancedShader>(), 50, pos));
 		}
+		instancers[type]->Add(ShooterEntity(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
 	}
+
 }
 
 void Grid::Render(const RenderParams &params)
@@ -30,5 +28,27 @@ void Grid::Render(const RenderParams &params)
 
 void Grid::Loop(float frame)
 {
+	auto pos = movement.GetPos();
+	if (movement.IsOver())
+	{
+		auto initialPos = Utils::VectorSet(0.0f, this->pos.y);
+		if (dir == LEFT)
+		{
+			dir = RIGHT;
+			movement = Movement(pos, e::XMVectorAdd(initialPos, Utils::VectorSet(worldWidth / 2.0f)), this->time);
+		}
+		else
+		{
+			dir = LEFT;
+			movement = Movement(pos, e::XMVectorAdd(initialPos, Utils::VectorSet(worldWidth / -2.0f)), this->time);
+		}
+	}
+	MoveTo(pos);
+}
 
+void Grid::MoveTo(e::XMVECTOR pos)
+{
+	for (auto &instancer : instancers)
+		instancer.second->MoveTo(pos);
+	XMStoreFloat3(&this->pos, pos);
 }

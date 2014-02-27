@@ -6,17 +6,20 @@
 typedef unsigned int UINT;
 
 namespace Utils{
-	using namespace DirectX;
 	//returns a new array with the contents of the file
 	bool ReadFileToArray(std::wstring file, std::unique_ptr<char> &arr, UINT &size);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
 	void ShowMessageBox(std::wstring text, std::wstring title);
-	XMFLOAT4 PlaneFromPointAndRot(XMFLOAT3 point, XMFLOAT3 rot, bool reverse = false);
-	XMFLOAT2 GetVec2(float value);
-	XMFLOAT3 GetVec3(float value);
-	XMFLOAT4 GetVec4(float value);
-	void VectorAdd(XMFLOAT3 &target, const XMFLOAT3 &off);
+	e::XMFLOAT4 PlaneFromPointAndRot(e::XMFLOAT3 point, e::XMFLOAT3 rot, bool reverse = false);
+	e::XMFLOAT2 GetVec2(float value);
+	e::XMFLOAT3 GetVec3(float value);
+	e::XMFLOAT4 GetVec4(float value);
+	void VectorAdd(e::XMFLOAT3 &target, const e::XMFLOAT3 &off);
+	e::XMVECTOR VectorFill(float f);
+	e::XMVECTOR VectorSet(float x);
+	e::XMVECTOR VectorSet(float x, float y);
+	e::XMVECTOR VectorSet(float x, float y, float z);
 
 	template<class T>
 	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)
