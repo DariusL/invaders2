@@ -12,7 +12,7 @@ void GameScreen::RenderInternal(const RenderParams &params)
 	world.Render(params);
 }
 
-int GameScreen::LoopInternal(int input, float frame)
+int GameScreen::LoopInternal(int input, int frame)
 {
 	if (childResult == RESULT_QUIT_APP || childResult == RESULT_QUIT_TO_MAIN)
 		return childResult;

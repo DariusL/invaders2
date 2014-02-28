@@ -11,21 +11,22 @@ TestScene::TestScene()
 	stuff.emplace_back(new SimpleDrawableEntity(e::XMVectorSet(0.0f, -4.0f, 0.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
 }
 
-int TestScene::Loop(int input, float frameLength)
+int TestScene::Loop(int input, int frameLength)
 {
+	float frame = frameLength / 100.0f;
 	float yaw = 0.0f, pitch = 0.0f, roll = 0.0f;
 	if (input & ControlCodes::LEFT)
-		yaw -= frameLength;
+		yaw -= frame;
 	if (input & ControlCodes::RIGHT)
-		yaw += frameLength;
+		yaw += frame;
 	if (input & ControlCodes::DOWN)
-		pitch += frameLength;
+		pitch += frame;
 	if (input & ControlCodes::UP)
-		pitch -= frameLength;
+		pitch -= frame;
 	if (input & ControlCodes::ROLL_LEFT)
-		roll -= frameLength;
+		roll -= frame;
 	if (input & ControlCodes::ROLL_RIGHT)
-		roll += frameLength;
+		roll += frame;
 	if (yaw != 0.0f)
 		camera.Yaw(yaw);
 	if (pitch != 0.0f)
@@ -36,19 +37,18 @@ int TestScene::Loop(int input, float frameLength)
 	float x = 0.0f,
 		y = 0.0f,
 		z = 0.0f;
-	frameLength *= 10;
 	if (input & ControlCodes::MOVE_UP)
-		y += frameLength;
+		y += frame;
 	if (input & ControlCodes::MOVE_DOWN)
-		y -= frameLength;
+		y -= frame;
 	if (input & ControlCodes::MOVE_LEFT)
-		x -= frameLength;
+		x -= frame;
 	if (input & ControlCodes::MOVE_RIGHT)
-		x += frameLength;
+		x += frame;
 	if (input & ControlCodes::MOVE_FORWARD)
-		z += frameLength;
+		z += frame;
 	if (input & ControlCodes::MOVE_BACK)
-		z -= frameLength;
+		z -= frame;
 
 	camera.Move(x, y, z);
 

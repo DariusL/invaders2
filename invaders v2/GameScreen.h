@@ -11,6 +11,6 @@ class GameScreen : public Screen
 public:
 	GameScreen(e::XMVECTOR pos);
 	void RenderInternal(const RenderParams &params);
-	int LoopInternal(int input, float frame);
+	int LoopInternal(int input, int frame);
 	void DelayInternal();
 };

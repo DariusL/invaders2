@@ -8,7 +8,7 @@ class TestScene : public Screen
 public:
 	TestScene();
 
-	int Loop(int input, float frameLength);
+	int Loop(int input, int frameLength);
 	void Render(const RenderParams &params);
 };
 

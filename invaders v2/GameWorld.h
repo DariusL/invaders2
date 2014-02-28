@@ -11,6 +11,6 @@ class GameWorld : public IDrawable
 	Grid enemies;
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
-	void Loop(float frame);
+	void Loop(int frame);
 	void Render(const RenderParams &params);
 };

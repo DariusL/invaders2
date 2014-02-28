@@ -16,7 +16,7 @@ items(FIRST_ITEM_POS, ITEM_OFF)
 {
 }
 
-int MenuScreen::LoopInternal(int input, float frame)
+int MenuScreen::LoopInternal(int input, int frame)
 {
 	if (childResult == RESULT_QUIT_APP || childResult == RESULT_QUIT_TO_MAIN)
 		return childResult;

@@ -26,9 +26,9 @@ void Grid::Render(const RenderParams &params)
 		i.second->Render(params);
 }
 
-void Grid::Loop(float frame)
+void Grid::Loop(int frame)
 {
-	movement.Loop((int)(frame * 1000.0f));
+	movement.Loop(frame);
 	auto pos = movement.GetPos();
 	if (movement.IsOver())
 	{
