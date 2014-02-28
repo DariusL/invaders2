@@ -28,6 +28,7 @@ void Grid::Render(const RenderParams &params)
 
 void Grid::Loop(float frame)
 {
+	movement.Loop((int)(frame * 1000.0f));
 	auto pos = movement.GetPos();
 	if (movement.IsOver())
 	{
