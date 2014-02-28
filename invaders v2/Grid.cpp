@@ -3,7 +3,7 @@
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
 :Entity(pos, e::XMFLOAT2(width, 0.0f)), time(2000), downOff(0.8f), worldWidth(worldWidth),
-movement(pos, pos + Utils::VectorSet(worldWidth / 2.0f), time / 2), dir(RIGHT), columnCount(columnCount), width(width)
+movement(pos, pos + Utils::VectorSet((worldWidth - width) / 2.0f), time / 2), dir(RIGHT), columnCount(columnCount), width(width)
 {
 	float off = width / (columnCount - 1);
 	e::XMVECTOR first = pos - Utils::VectorSet(width / 2.0f);
@@ -34,12 +34,12 @@ void Grid::Loop(float frame)
 		if (dir == LEFT)
 		{
 			dir = RIGHT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f, this->pos.y), this->time);
+			movement = Movement(pos, Utils::VectorSet((worldWidth - width) / 2.0f, this->pos.y), this->time);
 		}
 		else
 		{
 			dir = LEFT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->pos.y), this->time);
+			movement = Movement(pos, Utils::VectorSet((worldWidth - width) / -2.0f, this->pos.y), this->time);
 		}
 	}
 	MoveTo(pos);
