@@ -6,7 +6,7 @@
 #include "ResourceManager.h"
 #include "Movement.h"
 
-class Grid : public IDrawable, public Entity
+class Grid : public IDrawable
 {
 	enum DIR
 	{

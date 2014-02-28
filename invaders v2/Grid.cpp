@@ -3,11 +3,10 @@
 #include "Direct3D.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
-:Entity(pos, e::XMFLOAT2(width, 0.0f)), 
-time(2000), 
+:time(2000), 
 downOff(0.8f), 
 worldWidth(worldWidth),
-movement(pos, pos + Utils::VectorSet((worldWidth - width) / 2.0f), time / 2), 
+movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
 dir(RIGHT), 
 columnCount(columnCount), 
 width(width),
@@ -15,8 +14,9 @@ lastDrop(0),
 dropFreq(500)
 {
 	float off = width / (columnCount - 1);
-	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50, pos));
-	e::XMStoreFloat3(&this->first, pos - Utils::VectorSet(width / 2.0f));
+	auto first = movement.GetPos();
+	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	e::XMStoreFloat3(&this->first, first);
 	AddRow();
 }
 
@@ -41,12 +41,12 @@ void Grid::Loop(int frame)
 		if (dir == LEFT)
 		{
 			dir = RIGHT;
-			movement = Movement(pos, Utils::VectorSet((worldWidth - width) / 2.0f, this->pos.y), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f - width, this->first.y), this->time);
 		}
 		else
 		{
 			dir = LEFT;
-			movement = Movement(pos, Utils::VectorSet((worldWidth - width) / -2.0f, this->pos.y), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->first.y), this->time);
 		}
 	}
 	MoveTo(pos);
@@ -54,9 +54,10 @@ void Grid::Loop(int frame)
 
 void Grid::MoveTo(e::XMVECTOR pos)
 {
+	auto off = pos - e::XMLoadFloat3(&this->first);
 	for (auto &instancer : instancers)
-		instancer.second->MoveTo(pos);
-	XMStoreFloat3(&this->pos, pos);
+		instancer.second->MoveBy(off);
+	XMStoreFloat3(&this->first, pos);
 }
 
 void Grid::AddRow()
@@ -64,15 +65,10 @@ void Grid::AddRow()
 	float off = width / (columnCount - 1);
 	this->first.y += downOff;
 	auto first = e::XMLoadFloat3(&this->first);
-	auto pos = e::XMLoadFloat3(&this->pos);
 	for (int i = 0; i < columnCount; i++)
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		if (instancers.find(type) == instancers.end())
-		{
-			instancers.emplace(type, e::make_unique<EnemyList>(Direct3D::GetDevice(), RM::Get().GetModel(type), RM::Get().GetShader<ColorInstancedShader>(), 400, pos));
-		}
 		instancers[type]->Add(ShooterEntity(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
 	}
 }

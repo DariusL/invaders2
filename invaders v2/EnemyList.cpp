@@ -1,10 +1,9 @@
 #include "includes.h"
 #include "EnemyList.h"
 
-EnemyList::EnemyList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMVECTOR pos)
+EnemyList::EnemyList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount)
 :BaseInstancer(device, model, shader, maxObjectCount)
 {
-	e::XMStoreFloat3(&this->pos, pos);
 }
 
 bool EnemyList::Update(ID3D11DeviceContext *context)
@@ -19,12 +18,12 @@ bool EnemyList::Update(ID3D11DeviceContext *context)
 void EnemyList::Add(ShooterEntity &&enemy)
 {
 	enemies.push_back(e::forward<ShooterEntity>(enemy));
+	if (enemies.size() >= capacity)
+		SetCapacity(capacity * 2);
 }
 
-void EnemyList::MoveTo(e::XMVECTOR pos)
+void EnemyList::MoveBy(e::XMVECTOR pos)
 {
-	auto off = pos - e::XMLoadFloat3(&this->pos);
 	for (auto &enemy : enemies)
-		enemy.MoveBy(off);
-	e::XMStoreFloat3(&this->pos, pos);
+		enemy.MoveBy(pos);
 }

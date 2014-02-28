@@ -4,6 +4,7 @@
 #include "ColorInstancedShader.h"
 #include "includes.h"
 #include "ArrayBuffer.h"
+#include "Direct3D.h"
 
 using namespace std;
 using namespace Microsoft::WRL;
@@ -12,13 +13,13 @@ template<class vt, class sh, class it>
 class BaseInstancer : public IDrawable
 {
 public:
-	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount);
+	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity);
 	BaseInstancer(BaseInstancer&&);
 	virtual ~BaseInstancer(void){}
 
 protected:
-	int maxInstanceCount;
-	int instanceCount;
+	uint capacity;
+	uint instanceCount;
 
 	vector<it> instanceData;
 
@@ -31,19 +32,20 @@ public:
 
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
+	void SetCapacity(int capacity);
 };
 
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, int maxObjectCount)
-:model(model), shader(shader), maxInstanceCount(maxObjectCount), instanceBuffer(device, nullptr, false, maxObjectCount)
+BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity)
+:model(model), shader(shader), capacity(capacity), instanceBuffer(device, nullptr, false, capacity)
 {
 }
 
 template<class vt, class sh, class it>
 BaseInstancer<vt, sh, it>::BaseInstancer(BaseInstancer &&other)
-: maxInstanceCount(other.maxInstanceCount), instanceCount(other.instanceCount),
+: capacity(other.capacity), instanceCount(other.instanceCount),
 model(other.model), shader(other.shader)
 {
 	swap(instanceData, other.instanceData);
@@ -70,4 +72,12 @@ bool BaseInstancer<vt, sh, it>::Update(ID3D11DeviceContext *context)
 	instanceBuffer.SetData(context, instanceData, instanceCount);
 
 	return true;
+}
+
+template<class vt, class sh, class it>
+void BaseInstancer<vt, sh, it>::SetCapacity(int capacity)
+{
+	this->capacity = capacity;
+	this->instanceCount = 0;
+	instanceBuffer = ArrayBuffer<it>(Direct3D::GetDevice(), nullptr, false, capacity);
 }
