@@ -24,6 +24,7 @@ private:
 	int columnCount;
 	DIR dir;
 	Movement movement;
+	e::XMFLOAT3 first;
 
 	void AddRow();
 public:
