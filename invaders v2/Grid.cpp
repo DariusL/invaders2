@@ -3,7 +3,7 @@
 #include "Direct3D.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
-:time(1000), 
+:time(800), 
 downOff(1.2f), 
 worldWidth(worldWidth),
 movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
@@ -11,7 +11,7 @@ dir(RIGHT),
 columnCount(columnCount), 
 width(width),
 lastDrop(0),
-dropFreq(3000)
+dropFreq(2000)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -67,6 +67,8 @@ void Grid::AddRow()
 {
 	float off = width / (columnCount - 1);
 	this->first.y += downOff;
+	//bad me
+	movement.MoveBy(Utils::VectorSet(0.0f, downOff));
 	auto first = e::XMLoadFloat3(&this->first);
 	for (int i = 0; i < columnCount; i++)
 	{

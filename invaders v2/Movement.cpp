@@ -42,3 +42,10 @@ void Movement::Loop(int frame)
 {
 	currentTime += frame;
 }
+
+void Movement::MoveBy(e::XMVECTOR off)
+{
+	using namespace e;
+	XMStoreFloat3(&start, XMLoadFloat3(&start) + off);
+	XMStoreFloat3(&end, XMLoadFloat3(&end) + off);
+}
