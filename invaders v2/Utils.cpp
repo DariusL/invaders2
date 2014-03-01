@@ -76,6 +76,11 @@ namespace Utils
 		return e::XMVectorSet(f, f, f, f);
 	}
 
+	e::XMVECTOR VectorSet()
+	{
+		return e::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	}
+
 	e::XMVECTOR VectorSet(float x)
 	{
 		return e::XMVectorSet(x, 0.0f, 0.0f, 0.0f);

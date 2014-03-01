@@ -3,15 +3,15 @@
 #include "Direct3D.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
-:time(2000), 
-downOff(0.8f), 
+:time(1000), 
+downOff(1.2f), 
 worldWidth(worldWidth),
 movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
 dir(RIGHT), 
 columnCount(columnCount), 
 width(width),
 lastDrop(0),
-dropFreq(500)
+dropFreq(3000)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -29,27 +29,30 @@ void Grid::Render(const RenderParams &params)
 void Grid::Loop(int frame)
 {
 	lastDrop += frame;
-	if (lastDrop >= dropFreq)
-	{
-		lastDrop = 0;
-		AddRow();
-	}
 	movement.Loop(frame);
 	auto pos = movement.GetPos();
+	float drop = 0.0f;
 	if (movement.IsOver())
 	{
+		if (lastDrop >= dropFreq)
+		{
+			drop = downOff;
+			lastDrop = 0;
+		}
 		if (dir == LEFT)
 		{
 			dir = RIGHT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f - width, this->first.y), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f - width, this->first.y - drop), this->time);
 		}
 		else
 		{
 			dir = LEFT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->first.y), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->first.y - drop), this->time);
 		}
 	}
 	MoveTo(pos);
+	if (drop > 0.0f)
+		AddRow();
 }
 
 void Grid::MoveTo(e::XMVECTOR pos)
