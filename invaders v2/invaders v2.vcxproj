@@ -107,7 +107,7 @@
     <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
-    <ClCompile Include="EnemyList.cpp" />
+    <ClCompile Include="GameEntityList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameScreen.cpp" />
@@ -165,7 +165,7 @@
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyList.h" />
+    <ClInclude Include="GameEntityList.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameWorld.h" />

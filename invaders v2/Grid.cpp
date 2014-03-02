@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "Grid.h"
 #include "Direct3D.h"
+#include "ShooterEntity.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
 :time(800), 
@@ -15,7 +16,7 @@ dropFreq(2000)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
-	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<GameEntityList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
 	e::XMStoreFloat3(&this->first, first);
 	AddRow();
 }
@@ -74,6 +75,6 @@ void Grid::AddRow()
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		instancers[type]->Add(ShooterEntity(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
+		instancers[type]->Add(e::make_shared<ShooterEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
 	}
 }

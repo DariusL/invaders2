@@ -157,13 +157,13 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyList.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Movement.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameEntity.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEntityList.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -384,9 +384,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyList.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="ShooterEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -394,6 +391,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameEntity.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEntityList.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
