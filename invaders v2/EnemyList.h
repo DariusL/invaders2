@@ -7,11 +7,14 @@
 
 class EnemyList : public BaseInstancer<VertexType, ColorInstancedShader, e::XMFLOAT3>
 {
-	vector<ShooterEntity> enemies;
+	e::vector<ShooterEntity> enemies;
 public:
 	EnemyList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);
 	EnemyList(EnemyList &&other)
-		:BaseInstancer(move(other)){ swap(enemies, other.enemies); }
+		:BaseInstancer(e::move(other))
+	{
+		e::swap(enemies, other.enemies);
+	}
 
 	bool Update(ID3D11DeviceContext *context);
 

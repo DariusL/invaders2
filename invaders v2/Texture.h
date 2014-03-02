@@ -1,7 +1,6 @@
 #pragma once
 #include "includes.h"
 #include "Globals.h"
-using namespace Microsoft::WRL;
 
 enum TEXTURE_VIEW
 {
@@ -12,10 +11,10 @@ enum TEXTURE_VIEW
 
 class Texture
 {
-	ComPtr<ID3D11Texture2D> texture;
-	ComPtr<ID3D11ShaderResourceView> shaderResourceView;
-	ComPtr<ID3D11UnorderedAccessView> unorderedAccessView;
-	ComPtr<ID3D11RenderTargetView> renderTargetView;
+	e::ComPtr<ID3D11Texture2D> texture;
+	e::ComPtr<ID3D11ShaderResourceView> shaderResourceView;
+	e::ComPtr<ID3D11UnorderedAccessView> unorderedAccessView;
+	e::ComPtr<ID3D11RenderTargetView> renderTargetView;
 
 	uint view;
 	uint width, height;

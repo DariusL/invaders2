@@ -4,14 +4,10 @@
 #include "Utils.h"
 #include "Buffer.h"
 
-using namespace Microsoft::WRL;
-using namespace std;
-using namespace DirectX;
-
 class IShader
 {
 public:
-	IShader(wstring vs, wstring ps){ this->vs = vs; this->ps = ps; }
+	IShader(e::wstring vs, e::wstring ps){ this->vs = vs; this->ps = ps; }
 	IShader(IShader&) = delete;
 	IShader &operator=(IShader&) = delete;
 	virtual ~IShader(){}
@@ -19,13 +15,13 @@ public:
 	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
 	virtual void SetShader(const RenderParams &params);
 protected:
-	void InitializeShader(ID3D11Device *device, wstring vs, wstring ps, const vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
+	void InitializeShader(ID3D11Device *device, e::wstring vs, e::wstring ps, const e::vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
 	virtual void InitializeShaderBuffers(ID3D11Device *device) = 0;
-	virtual vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout() = 0;
+	virtual e::vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout() = 0;
 
-	ComPtr<ID3D11VertexShader> vertexShader;
-	ComPtr<ID3D11PixelShader> pixelShader;
-	ComPtr<ID3D11InputLayout> layout;
+	e::ComPtr<ID3D11VertexShader> vertexShader;
+	e::ComPtr<ID3D11PixelShader> pixelShader;
+	e::ComPtr<ID3D11InputLayout> layout;
 private:
-	wstring vs, ps;
+	e::wstring vs, ps;
 };

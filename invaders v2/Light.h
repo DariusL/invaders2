@@ -2,7 +2,6 @@
 #include "Model.h"
 #include "Globals.h"
 #include "DrawableEntity.h"
-using namespace std;
 
 class Light : public SimpleDrawableEntity
 {

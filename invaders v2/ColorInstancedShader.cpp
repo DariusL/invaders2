@@ -1,10 +1,10 @@
 #include "includes.h"
 #include "ColorInstancedShader.h"
 
-vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
+e::vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;
-	vector<D3D11_INPUT_ELEMENT_DESC> ret;
+	e::vector<D3D11_INPUT_ELEMENT_DESC> ret;
 
 	desc.SemanticName = "POSITION";
 	desc.SemanticIndex = 0;

@@ -1,10 +1,10 @@
 #include "includes.h"
 #include "ColorShader.h"
 
-vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
+e::vector<D3D11_INPUT_ELEMENT_DESC> ColorShader::GetInputLayout()
 {
 	D3D11_INPUT_ELEMENT_DESC desc;
-	vector<D3D11_INPUT_ELEMENT_DESC> ret;
+	e::vector<D3D11_INPUT_ELEMENT_DESC> ret;
 
 	desc.SemanticName = "POSITION";
 	desc.SemanticIndex = 0;
@@ -27,13 +27,13 @@ void ColorShader::InitializeShaderBuffers(ID3D11Device *device)
 }
 
 
-void ColorShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+void ColorShader::SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world)
 {
 	IPositionShader::SetShaderParameters(params, world);
 	params.context->PSSetConstantBuffers(0, 1, colorBuffer.GetAddressOf());
 }
 
-void ColorShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world, const e::XMFLOAT4 color)
+void ColorShader::SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world, const e::XMFLOAT4 color)
 {
 	colorBuffer.SetData(params.context, color);
 	SetShaderParameters(params, world);

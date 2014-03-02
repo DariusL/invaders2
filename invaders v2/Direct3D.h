@@ -3,10 +3,6 @@
 #include "includes.h"
 #include "Utils.h"
 
-using namespace std;
-using namespace Microsoft::WRL;
-using namespace DirectX;
-
 class Direct3D
 {
 public:
@@ -19,8 +15,8 @@ public:
 	static ID3D11Device *GetDevice(){return staticDevice;}
 	static ID3D11DeviceContext *GetDeviceContext(){return staticContext;}
 
-	XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
-	XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
+	e::XMMATRIX GetProjectionMatrix(){ return XMLoadFloat4x4(&projectionMatrix); }
+	e::XMMATRIX GetOrthoMatrix(){ return XMLoadFloat4x4(&orthoMatrix); }
 
 	ID3D11UnorderedAccessView *GetBackBufferUnorderedAccess(){ return backBufferAccess.Get(); }
 
@@ -34,20 +30,20 @@ private:
 	int videoMem;
 	char videoDesc[128];
 	float clearColor[4];
-	ComPtr<IDXGISwapChain> swapChain;
-	ComPtr<ID3D11Device> device;
-	ComPtr<ID3D11DeviceContext> deviceContext;
-	ComPtr<ID3D11RenderTargetView> renderTargetView;
-	ComPtr<ID3D11UnorderedAccessView> backBufferAccess;
-	ComPtr<ID3D11Texture2D> depthStencilBuffer;
-	ComPtr<ID3D11DepthStencilState> depthStencilState;
-	ComPtr<ID3D11DepthStencilState> depthStencilState2d;
-	ComPtr<ID3D11DepthStencilView> depthStencilView;
-	ComPtr<ID3D11RasterizerState> rasterState;
-	ComPtr<ID3D11BlendState> blendState;
+	e::ComPtr<IDXGISwapChain> swapChain;
+	e::ComPtr<ID3D11Device> device;
+	e::ComPtr<ID3D11DeviceContext> deviceContext;
+	e::ComPtr<ID3D11RenderTargetView> renderTargetView;
+	e::ComPtr<ID3D11UnorderedAccessView> backBufferAccess;
+	e::ComPtr<ID3D11Texture2D> depthStencilBuffer;
+	e::ComPtr<ID3D11DepthStencilState> depthStencilState;
+	e::ComPtr<ID3D11DepthStencilState> depthStencilState2d;
+	e::ComPtr<ID3D11DepthStencilView> depthStencilView;
+	e::ComPtr<ID3D11RasterizerState> rasterState;
+	e::ComPtr<ID3D11BlendState> blendState;
 	D3D11_VIEWPORT viewport;
-	XMFLOAT4X4 projectionMatrix;
-	XMFLOAT4X4 orthoMatrix;
+	e::XMFLOAT4X4 projectionMatrix;
+	e::XMFLOAT4X4 orthoMatrix;
 
 	static ID3D11Device *staticDevice;
 	static ID3D11DeviceContext *staticContext;

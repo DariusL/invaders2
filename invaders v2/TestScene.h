@@ -4,7 +4,7 @@
 #include "DrawableEntity.h"
 class TestScene : public Screen
 {
-	vector<e::unique_ptr<IDrawable>> stuff;
+	e::vector<e::unique_ptr<IDrawable>> stuff;
 public:
 	TestScene();
 

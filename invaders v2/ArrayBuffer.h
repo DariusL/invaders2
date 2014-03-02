@@ -1,16 +1,15 @@
 #pragma once
 #include "includes.h"
 #include "Utils.h"
-using namespace Microsoft::WRL;
-using namespace std;
+
 template<class T>
 class ArrayBuffer
 {
-	ComPtr<ID3D11Buffer> buffer;
+	e::ComPtr<ID3D11Buffer> buffer;
 	bool immutable;
 	uint offset, stride;
 public:
-	ArrayBuffer(ID3D11Device *device = nullptr, const vector<T> *data = nullptr, bool immutable = true, uint count = 0);
+	ArrayBuffer(ID3D11Device *device = nullptr, const e::vector<T> *data = nullptr, bool immutable = true, uint count = 0);
 	ArrayBuffer(const ArrayBuffer&) = delete;
 	ArrayBuffer &operator=(ArrayBuffer&&);
 	ArrayBuffer(ArrayBuffer&&);
@@ -18,18 +17,19 @@ public:
 	ID3D11Buffer **GetAddressOf(){ return buffer.GetAddressOf(); }
 	uint *GetOffset(){ return &offset; }
 	uint *GetStride(){ return &stride; }
-	void SetData(ID3D11DeviceContext *context, const vector<T> &data, uint count = 0);
+	void SetData(ID3D11DeviceContext *context, const e::vector<T> &data, uint count = 0);
 };
 
 template<class T>
-ArrayBuffer<T>::ArrayBuffer(ID3D11Device *device, const vector<T> *data, bool immutable, uint count)
+ArrayBuffer<T>::ArrayBuffer(ID3D11Device *device, const e::vector<T> *data, bool immutable, uint count)
 :immutable(immutable)
 {
+	using namespace e;
 	if (device == nullptr)
 		return;
 	offset = 0;
 	stride = sizeof(T);
-	AssertBool(!(data == nullptr && immutable), L"Tried to create an immutable buffer with no initial data");
+	AssertBool(!(data == nullptr && immutable), e::wstring(L"Tried to create an immutable buffer with no initial data"));
 	D3D11_BUFFER_DESC desc;
 	D3D11_SUBRESOURCE_DATA resource, *rptr = nullptr;
 
@@ -56,25 +56,25 @@ ArrayBuffer<T> &ArrayBuffer<T>::operator=(ArrayBuffer<T> &&other)
 {
 	if (this != &other)
 	{
-		swap(immutable, other.immutable);
-		swap(buffer, other.buffer);
-		swap(stride, other.stride);
-		swap(offset, other.offset);
+		e::swap(immutable, other.immutable);
+		e::swap(buffer, other.buffer);
+		e::swap(stride, other.stride);
+		e::swap(offset, other.offset);
 	}
 	return *this;
 }
 
 template<class T>
 ArrayBuffer<T>::ArrayBuffer(ArrayBuffer &&other)
-:buffer(move(other.buffer)),
-immutable(move(other.immutable)),
-offset(move(other.offset)),
-stride(move(other.stride))
+:buffer(e::move(other.buffer)),
+immutable(e::move(other.immutable)),
+offset(e::move(other.offset)),
+stride(e::move(other.stride))
 {
 }
 
 template<class T>
-void ArrayBuffer<T>::SetData(ID3D11DeviceContext *context, const vector<T> &data, uint count)
+void ArrayBuffer<T>::SetData(ID3D11DeviceContext *context, const e::vector<T> &data, uint count)
 {
 	Utils::CopyToBuffer(Get(), context, data, count);
 }

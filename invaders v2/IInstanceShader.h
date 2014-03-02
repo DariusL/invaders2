@@ -6,13 +6,13 @@ class IInstanceShader : public IPositionShader
 {
 	struct InstancedMatrixType
 	{
-		DirectX::XMFLOAT4X4 view;
-		DirectX::XMFLOAT4X4 projection;
+		e::XMFLOAT4X4 view;
+		e::XMFLOAT4X4 projection;
 	};
 
 	Buffer<InstancedMatrixType> matrixBuffer;
 public:
-	IInstanceShader(wstring vs, wstring ps) :IPositionShader(vs, ps){}
+	IInstanceShader(e::wstring vs, e::wstring ps) :IPositionShader(vs, ps){}
 	virtual ~IInstanceShader(){}
 
 	virtual void RenderShaderInstanced(ID3D11DeviceContext *context, int indexCount, int instanceCount)
@@ -20,15 +20,15 @@ public:
 		context->DrawIndexedInstanced(indexCount, instanceCount, 0, 0, 0);
 	}
 
-	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){ AssertBool(false, L"RenderShader called on an instanced shader"); }
+	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){ using namespace e;  AssertBool(false, L"RenderShader called on an instanced shader"); }
 
-	void SetShaderParameters(const RenderParams &params, const XMMATRIX &posMatrix){ AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
+	void SetShaderParameters(const RenderParams &params, const e::XMMATRIX &posMatrix){ using namespace e; AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
 
 	virtual void SetShaderParametersInstanced(const RenderParams &params)
 	{
 		InstancedMatrixType matrices;
-		XMStoreFloat4x4(&matrices.view, XMMatrixTranspose(params.view));
-		XMStoreFloat4x4(&matrices.projection, XMMatrixTranspose(params.projection));
+		e::XMStoreFloat4x4(&matrices.view, XMMatrixTranspose(params.view));
+		e::XMStoreFloat4x4(&matrices.projection, XMMatrixTranspose(params.projection));
 		Utils::CopyToBuffer(matrixBuffer.Get(), matrices, params.context);
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());

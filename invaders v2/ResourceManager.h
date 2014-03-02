@@ -16,8 +16,6 @@
 #include "FilterDownSampleShader.h"
 #include "TexelSumComputeShader.h"
 
-using namespace std;
-
 class ResourceManager
 {
 public:
@@ -82,20 +80,20 @@ private:
 		int tex;
 		int vertex;
 	};
-	vector<ColorModel> models;
-	vector<shared_ptr<Level>> levels;
-	vector<unique_ptr<ComputeShader>> computeShaders;
-	vector<unique_ptr<IShader>> shaders;
+	e::vector<ColorModel> models;
+	e::vector<shared_ptr<Level>> levels;
+	e::vector<unique_ptr<ComputeShader>> computeShaders;
+	e::vector<unique_ptr<IShader>> shaders;
 	ComVector<ID3D11ShaderResourceView> textures;
-	unordered_map<char, Geometry<VertexType>> letters;
+	e::unordered_map<char, Geometry<VertexType>> letters;
 
-	static Geometry<NormalVertexType> GetNormalModelFromOBJ(wstring filename, bool invert = false);
-	static Geometry<VertexType> GetModelFromOBJ(wstring filename, bool invert = false);
-	static unordered_map<char, Geometry<VertexType>> GetModelsFromOBJ(wstring filename);
+	static Geometry<NormalVertexType> GetNormalModelFromOBJ(e::wstring filename, bool invert = false);
+	static Geometry<VertexType> GetModelFromOBJ(e::wstring filename, bool invert = false);
+	static e::unordered_map<char, Geometry<VertexType>> GetModelsFromOBJ(e::wstring filename);
 
-	static vector<FaceVertex> GetVerticesFromFace(string &line, int voff = 1, int noff = 1, int toff = 1);
-	static FaceVertex GetVertexFromString(string &vertex, int voff = 1, int noff = 1, int toff = 1);
-	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(wstring filename, ID3D11Device *device);
+	static e::vector<FaceVertex> GetVerticesFromFace(e::string &line, int voff = 1, int noff = 1, int toff = 1);
+	static FaceVertex GetVertexFromString(e::string &vertex, int voff = 1, int noff = 1, int toff = 1);
+	static ComPtr<ID3D11ShaderResourceView> GetTextureFromFile(e::wstring filename, ID3D11Device *device);
 
 	static ResourceManager *handle;
 public:
@@ -109,7 +107,7 @@ public:
 	ID3D11ShaderResourceView *GetTexture(TEXTURE i){ return textures[i].Get(); }
 	const Geometry<VertexType> &GetLetter(char letter){ return letters[letter]; }
 
-	shared_ptr<Level> GetLevel(int type){ return levels[type]; }
+	e::shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }
 
 	//because why not

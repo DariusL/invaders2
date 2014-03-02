@@ -5,9 +5,6 @@
 #include "Geometry.h"
 #include "ArrayBuffer.h"
 
-using namespace std;
-using namespace Microsoft::WRL;
-using namespace DirectX;
 class ResourceManager;
 
 template<class T>
@@ -25,12 +22,12 @@ public:
 	void Set(ID3D11DeviceContext *context);
 
 	int GetIndexCount(){ return indexCount; }
-	const XMFLOAT2 &GetSize() const { return size; }
+	const e::XMFLOAT2 &GetSize() const { return size; }
 private:
 	uint indexCount;
-	XMFLOAT2 size;
+	e::XMFLOAT2 size;
 	ArrayBuffer<T> vertexBuffer;
-	ComPtr<ID3D11Buffer> indexBuffer;
+	e::ComPtr<ID3D11Buffer> indexBuffer;
 };
 
 typedef Model<VertexType> ColorModel;

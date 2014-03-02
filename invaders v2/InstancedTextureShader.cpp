@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "InstancedTextureShader.h"
 #include "Globals.h"
+using namespace e;
 
 void InstancedTextureShader::Init(ID3D11Device *device)
 {

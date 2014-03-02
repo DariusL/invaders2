@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "GlobalSpecularShader.h"
+using namespace e;
 	
 void GlobalSpecularShader::SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
 {

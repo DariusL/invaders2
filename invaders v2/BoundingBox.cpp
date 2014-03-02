@@ -1,8 +1,7 @@
 #include "includes.h"
 #include "BoundingBox.h"
 #include "Utils.h"
-
-using namespace DirectX;
+using namespace e;
 
 void BoundingBox::Add(const XMFLOAT3 &vert)
 {

@@ -2,6 +2,7 @@
 #include "TextureShader.h"
 #include "Utils.h"
 #include "Globals.h"
+using namespace e;
 
 void TextureShader::Init(ID3D11Device *device)
 {

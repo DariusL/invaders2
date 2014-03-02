@@ -3,29 +3,27 @@
 #include "includes.h"
 #include "Globals.h"
 
-using namespace DirectX;
-
 class Entity
 {
 protected:
-	XMFLOAT3 pos;
-	XMFLOAT2 size;
+	e::XMFLOAT3 pos;
+	e::XMFLOAT2 size;
 
 	float deathTime;
 	bool dead;
 public:
-	Entity(XMFLOAT3 start, XMFLOAT2 size, bool dead = false);
-	Entity(XMVECTOR start, XMFLOAT2 size, bool dead = false);
+	Entity(e::XMFLOAT3 start, e::XMFLOAT2 size, bool dead = false);
+	Entity(e::XMVECTOR start, e::XMFLOAT2 size, bool dead = false);
 	virtual ~Entity(void);
 
-	XMFLOAT3 GetPos() const {return pos;}
-	void MoveBy(XMFLOAT3 step);
-	void MoveBy(XMVECTOR step);
-	void MoveTo(XMFLOAT3 pos);
-	void MoveTo(XMVECTOR pos);
+	e::XMFLOAT3 GetPos() const { return pos; }
+	void MoveBy(e::XMFLOAT3 step);
+	void MoveBy(e::XMVECTOR step);
+	void MoveTo(e::XMFLOAT3 pos);
+	void MoveTo(e::XMVECTOR pos);
 
-	void SetSize(XMFLOAT2 size){this->size = size;}
-	XMFLOAT2 GetSize() const { return size; }
+	void SetSize(e::XMFLOAT2 size){ this->size = size; }
+	e::XMFLOAT2 GetSize() const { return size; }
 
 	float GetDeathTime() const {return deathTime;}
 

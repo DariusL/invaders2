@@ -1,8 +1,6 @@
 #pragma once
 #include "Globals.h"
 
-using namespace Microsoft::WRL;
-
 class IDrawable
 {
 public:

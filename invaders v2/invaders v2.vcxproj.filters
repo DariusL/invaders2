@@ -390,6 +390,9 @@
     <ClInclude Include="Movement.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="GameEntity.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">

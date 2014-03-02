@@ -6,16 +6,16 @@ class IPositionShader : public IShader
 {
 	struct MatrixType
 	{
-		DirectX::XMFLOAT4X4 world;
-		DirectX::XMFLOAT4X4 view;
-		DirectX::XMFLOAT4X4 projection;
+		e::XMFLOAT4X4 world;
+		e::XMFLOAT4X4 view;
+		e::XMFLOAT4X4 projection;
 	};
 	Buffer<MatrixType> matrixBuffer;
 public:
-	IPositionShader(wstring vs, wstring ps):IShader(vs, ps){}
+	IPositionShader(e::wstring vs, e::wstring ps) :IShader(vs, ps){}
 	virtual ~IPositionShader(){}
 
-	virtual void SetShaderParameters(const RenderParams &params, const XMMATRIX &world)
+	virtual void SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
 		

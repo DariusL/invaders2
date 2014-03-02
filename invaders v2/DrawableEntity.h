@@ -11,12 +11,12 @@ class DrawableEntity : public Entity, public IDrawableObject
 {
 protected:
 	Model<vt> &model;
-	XMFLOAT4X4 moveMatrix, scaleMatrix;
+	e::XMFLOAT4X4 moveMatrix, scaleMatrix;
 	float scale;
 	sh &shader;
 public:
-	DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float scale = 1.0f);
-	DrawableEntity(XMVECTOR pos, Model<vt> &model, sh &shader, float scale = 1.0f);
+	DrawableEntity(e::XMFLOAT3 pos, Model<vt> &model, sh &shader, float scale = 1.0f);
+	DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, float scale = 1.0f);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
@@ -29,21 +29,21 @@ protected:
 typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(XMFLOAT3 pos, Model<vt> &model, sh &shader, float scale)
+DrawableEntity<vt, sh>::DrawableEntity(e::XMFLOAT3 pos, Model<vt> &model, sh &shader, float scale)
 : Entity(pos, model.GetSize()), model(model), shader(shader), scale(scale)
 {
 }
 
 template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(XMVECTOR pos, Model<vt> &model, sh &shader, float scale)
+DrawableEntity<vt, sh>::DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, float scale)
 : Entity(pos, model.GetSize()), model(model), shader(shader), scale(scale)
 {
 }
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
-: IDrawableObject(forward<DrawableEntity>(other)), Entity(forward<DrawableEntity>(other)),
-model(move(other.model)), shader(move(other.shader)), 
+: IDrawableObject(e::forward<DrawableEntity>(other)), Entity(e::forward<DrawableEntity>(other)),
+model(e::move(other.model)), shader(e::move(other.shader)),
 scale(other.scale)
 {
 }
@@ -59,8 +59,8 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 	if (!Update(params.context))
 		return;
 	model.Set(params.context);
-	XMMATRIX scale = XMLoadFloat4x4(&scaleMatrix);
-	XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
+	e::XMMATRIX scale = XMLoadFloat4x4(&scaleMatrix);
+	e::XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
 	shader.SetShaderParameters(params, scale * world);
 	shader.RenderShader(params.context, model.GetIndexCount());
 }

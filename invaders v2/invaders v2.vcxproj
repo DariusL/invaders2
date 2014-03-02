@@ -165,6 +165,7 @@
     <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyList.h" />
+    <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Grid.h" />

@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "Entity.h"
+using namespace e;
 
 Entity::Entity(XMFLOAT3 start, XMFLOAT2 size, bool dead)
 :pos(start), size(size), dead(dead), deathTime(0.0f)

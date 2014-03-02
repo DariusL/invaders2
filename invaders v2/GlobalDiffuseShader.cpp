@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "GlobalDiffuseShader.h"
+using namespace e;
 
 vector<D3D11_INPUT_ELEMENT_DESC> GlobalDiffuseShader::GetInputLayout()
 {

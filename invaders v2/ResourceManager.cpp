@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "ResourceManager.h"
 #include "DDSTextureLoader.h"
-using namespace Microsoft::WRL;
+using namespace e;
 
 ResourceManager *ResourceManager::handle;
 

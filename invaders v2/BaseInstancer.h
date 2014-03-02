@@ -6,9 +6,6 @@
 #include "ArrayBuffer.h"
 #include "Direct3D.h"
 
-using namespace std;
-using namespace Microsoft::WRL;
-
 template<class vt, class sh, class it>
 class BaseInstancer : public IDrawable
 {
@@ -21,7 +18,7 @@ protected:
 	uint capacity;
 	uint instanceCount;
 
-	vector<it> instanceData;
+	e::vector<it> instanceData;
 
 	ArrayBuffer<it> instanceBuffer;
 
@@ -48,8 +45,8 @@ BaseInstancer<vt, sh, it>::BaseInstancer(BaseInstancer &&other)
 : capacity(other.capacity), instanceCount(other.instanceCount),
 model(other.model), shader(other.shader)
 {
-	swap(instanceData, other.instanceData);
-	swap(instanceBuffer, other.instanceBuffer);
+	e::swap(instanceData, other.instanceData);
+	e::swap(instanceBuffer, other.instanceBuffer);
 }
 
 template<class vt, class sh, class it>

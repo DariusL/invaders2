@@ -6,15 +6,15 @@ ID3D11DeviceContext *Direct3D::staticContext = nullptr;
 
 Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
-	ComPtr<IDXGIFactory> factory;
-	ComPtr<IDXGIAdapter> adapter;
-	ComPtr<IDXGIOutput> adapterOutput;
+	e::ComPtr<IDXGIFactory> factory;
+	e::ComPtr<IDXGIAdapter> adapter;
+	e::ComPtr<IDXGIOutput> adapterOutput;
 	unsigned int numModes, numerator, denominator, stringLength;
-	unique_ptr<DXGI_MODE_DESC[]> displayModeList;
+	e::unique_ptr<DXGI_MODE_DESC[]> displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	D3D_FEATURE_LEVEL featureLevel;
-	ComPtr<ID3D11Texture2D> backBufferPtr;
+	e::ComPtr<ID3D11Texture2D> backBufferPtr;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
@@ -31,7 +31,7 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	Assert(factory->EnumAdapters(0, &adapter));
 	Assert(adapter->EnumOutputs(0, &adapterOutput));
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, NULL));
-	displayModeList = unique_ptr<DXGI_MODE_DESC[]>(new DXGI_MODE_DESC[numModes]);
+	displayModeList = e::unique_ptr<DXGI_MODE_DESC[]>(new DXGI_MODE_DESC[numModes]);
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList.get()));
 	for (unsigned int i = 0; i < numModes; i++)
 	if (displayModeList[i].Height == height && displayModeList[i].Width == width)
@@ -152,10 +152,10 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
 
-	fieldOfView = XM_PI / 4.0f;
+	fieldOfView = e::XM_PI / 4.0f;
 	screenAspect = width / (float)height;
-	XMStoreFloat4x4(&projectionMatrix, XMMatrixPerspectiveFovRH(fieldOfView, screenAspect, screennear, screendepth));
-	XMStoreFloat4x4(&orthoMatrix, XMMatrixOrthographicRH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
+	XMStoreFloat4x4(&projectionMatrix, e::XMMatrixPerspectiveFovRH(fieldOfView, screenAspect, screennear, screendepth));
+	XMStoreFloat4x4(&orthoMatrix, e::XMMatrixOrthographicRH(static_cast<float>(width), static_cast<float>(height), screennear, screendepth));
 
 	D3D11_BLEND_DESC blendDesc;
 	ZeroMemory(&blendDesc, sizeof(blendDesc));
@@ -171,7 +171,7 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	Assert(device->CreateBlendState(&blendDesc, &blendState));
-	XMFLOAT4 blendFactor(0.0f, 0.0f, 0.0f, 0.0f);
+	e::XMFLOAT4 blendFactor(0.0f, 0.0f, 0.0f, 0.0f);
 	deviceContext->OMSetBlendState(blendState.Get(), reinterpret_cast<float*>(&blendFactor), static_cast<UINT>(-1));
 
 	staticContext = deviceContext.Get();

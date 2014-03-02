@@ -1,11 +1,10 @@
 #pragma once
 #include "includes.h"
 #include "Utils.h"
-using namespace Microsoft::WRL;
 template<class T>
 class Buffer
 {
-	ComPtr<ID3D11Buffer> buffer;
+	e::ComPtr<ID3D11Buffer> buffer;
 	bool immutable;
 public:
 	Buffer(ID3D11Device *device = nullptr, const T *data = nullptr, bool immutable = false);
@@ -20,6 +19,7 @@ template<class T>
 Buffer<T>::Buffer(ID3D11Device *device, const T *data, bool immutable)
 :immutable(immutable)
 {
+	using namespace e;
 	if (device == nullptr)
 		return;
 	AssertBool(!(data == nullptr && immutable), L"Tried to create an immutable buffer with no initial data");
@@ -49,8 +49,8 @@ Buffer<T> &Buffer<T>::operator=(Buffer<T> &&other)
 {
 	if (this != &other)
 	{
-		swap(immutable, other.immutable);
-		swap(buffer, other.buffer);
+		e::swap(immutable, other.immutable);
+		e::swap(buffer, other.buffer);
 	}
 	return *this;
 }
