@@ -30,13 +30,13 @@ typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(e::XMFLOAT3 pos, Model<vt> &model, sh &shader, float scale)
-: Entity(pos, model.GetSize()), model(model), shader(shader), scale(scale)
+: Entity(pos), model(model), shader(shader), scale(scale)
 {
 }
 
 template<class vt, class sh>
 DrawableEntity<vt, sh>::DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, float scale)
-: Entity(pos, model.GetSize()), model(model), shader(shader), scale(scale)
+: Entity(pos), model(model), shader(shader), scale(scale)
 {
 }
 
@@ -68,9 +68,6 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 template<class vt, class sh>
 bool DrawableEntity<vt, sh>::Update(ID3D11DeviceContext *context)
 {
-	if(dead)
-		return false;
-
 	XMStoreFloat4x4(&moveMatrix, XMMatrixTranslation(pos.x, pos.y, pos.z));
 	XMStoreFloat4x4(&scaleMatrix, XMMatrixScaling(scale, scale, scale));
 

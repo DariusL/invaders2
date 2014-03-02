@@ -2,19 +2,14 @@
 #include "Entity.h"
 using namespace e;
 
-Entity::Entity(XMFLOAT3 start, XMFLOAT2 size, bool dead)
-:pos(start), size(size), dead(dead), deathTime(0.0f)
+Entity::Entity(XMFLOAT3 start)
+:pos(start)
 {
-	if (dead)
-		Kill();
 }
 
-Entity::Entity(XMVECTOR start, XMFLOAT2 size, bool dead)
-:size(size), dead(dead), deathTime(0.0f)
+Entity::Entity(XMVECTOR start)
 {
 	XMStoreFloat3(&pos, start);
-	if (dead)
-		Kill();
 }
 
 void Entity::MoveBy(XMFLOAT3 step)
@@ -35,14 +30,4 @@ void Entity::MoveTo(XMFLOAT3 pos)
 void Entity::MoveTo(XMVECTOR pos)
 {
 	XMStoreFloat3(&this->pos, pos);
-}
-
-Entity::~Entity(void)
-{
-}
-
-void Entity::Kill()
-{
-	dead = true;
-	deathTime = clock() / (float)CLOCKS_PER_SEC;
 }

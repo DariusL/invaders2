@@ -109,6 +109,7 @@
     <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="EnemyList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
+    <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Grid.cpp" />

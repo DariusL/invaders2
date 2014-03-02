@@ -163,6 +163,9 @@
     <ClCompile Include="Movement.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GameEntity.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
