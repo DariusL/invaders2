@@ -7,6 +7,7 @@
 
 class GameEntityList : public BaseInstancer<VertexType, ColorInstancedShader, e::XMFLOAT3>
 {
+protected:
 	e::vector<e::shared_ptr<GameEntity>> enemies;
 public:
 	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);

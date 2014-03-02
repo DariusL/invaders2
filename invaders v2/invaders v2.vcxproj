@@ -102,6 +102,7 @@
     <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
+    <ClCompile Include="BulletList.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
     <ClCompile Include="ColorDrawableEntity.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="BulletList.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CelComputeShader.h" />
     <ClInclude Include="ColorDrawableEntity.h" />

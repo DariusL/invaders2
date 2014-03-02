@@ -166,6 +166,9 @@
     <ClCompile Include="GameEntityList.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="BulletList.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -394,6 +397,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="GameEntityList.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletList.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

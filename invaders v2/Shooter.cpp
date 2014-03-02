@@ -16,7 +16,11 @@ Shooter::~Shooter(void)
 
 bool Shooter::Fire()
 {
-	float now = clock() / (float)CLOCKS_PER_SEC;
-	lastFired = now;
-	return true;
+	auto now = (float) clock() / (float)CLOCKS_PER_SEC;
+	if (lastFired + fireRate <= now)
+	{
+		lastFired = now;
+		return true;
+	}
+	return false;
 }

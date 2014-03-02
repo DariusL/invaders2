@@ -17,6 +17,7 @@ namespace Utils{
 	e::XMFLOAT4 GetVec4(float value);
 	void VectorAdd(e::XMFLOAT3 &target, const e::XMFLOAT3 &off);
 	e::XMVECTOR VectorFill(float f);
+
 	e::XMVECTOR VectorSet();
 	e::XMVECTOR VectorSet(float x);
 	e::XMVECTOR VectorSet(float x, float y);
