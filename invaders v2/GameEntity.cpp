@@ -1,12 +1,12 @@
 #include "includes.h"
 #include "GameEntity.h"
 
-GameEntity::GameEntity(e::XMFLOAT3 pos, e::XMFLOAT2 size, uint health)
+GameEntity::GameEntity(e::XMFLOAT3 pos, e::XMFLOAT2 size, int health)
 :Entity(pos), size(size), health(health), maxHealth(health)
 {
 }
 
-GameEntity::GameEntity(e::XMVECTOR pos, e::XMFLOAT2 size, uint health)
+GameEntity::GameEntity(e::XMVECTOR pos, e::XMFLOAT2 size, int health)
 :Entity(pos), size(size), health(health), maxHealth(health)
 {
 }

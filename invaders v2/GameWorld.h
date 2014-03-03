@@ -3,6 +3,7 @@
 #include "DrawableShooter.h"
 #include "Grid.h"
 #include "BulletList.h"
+#include "Quadtree.h"
 
 class GameWorld : public IDrawable
 {
@@ -11,6 +12,7 @@ class GameWorld : public IDrawable
 	BulletList playerBullets;
 	XMFLOAT3 pos;
 	Grid enemies;
+
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(int frame);
