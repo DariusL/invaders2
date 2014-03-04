@@ -105,6 +105,7 @@
     <ClCompile Include="BulletList.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CelComputeShader.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="BulletList.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CelComputeShader.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="ColorDrawableEntity.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />

@@ -172,6 +172,9 @@
     <ClCompile Include="Quadtree.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -406,6 +409,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Quadtree.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>

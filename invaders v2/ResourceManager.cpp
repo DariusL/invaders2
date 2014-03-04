@@ -98,7 +98,7 @@ Geometry<VertexType> ResourceManager::GetModelFromOBJ(wstring filename, bool inv
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			g.vertices.emplace_back(x, y, -z);
+			g.Add(x, y, -z);
 		}
 		else if (input == "f")
 		{
@@ -202,7 +202,7 @@ Geometry<NormalVertexType> ResourceManager::GetNormalModelFromOBJ(wstring filena
 		if (input == "v")
 		{
 			in >> x >> y >> z;
-			g.vertices.emplace_back(x, y, -z);
+			g.Add(x, y, -z);
 		}
 		else if (input == "vn")
 		{
