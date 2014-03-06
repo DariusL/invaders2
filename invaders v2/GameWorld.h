@@ -4,6 +4,7 @@
 #include "Grid.h"
 #include "BulletList.h"
 #include "Quadtree.h"
+#include "Collider.h"
 
 class GameWorld : public IDrawable
 {
@@ -11,8 +12,9 @@ class GameWorld : public IDrawable
 	DrawableShooter player;
 	BulletList playerBullets;
 	XMFLOAT3 pos;
+	Collider collider;
 	Grid enemies;
-	Quadtree quadtree;
+	//Quadtree quadtree;
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(int frame);

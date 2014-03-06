@@ -6,9 +6,10 @@ using namespace e;
 
 GameWorld::GameWorld(ID3D11Device *device, e::XMVECTOR pos)
 :player(pos - e::XMVectorSet(0.0f, size.y / 2.0f, 0.0f, 0.0f), RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorShader>(), 0.5f, 0.01f, e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f)),
-enemies(device, pos, 10.0f, size.x, 8),
 playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f)),
-quadtree(pos, size.x, size.y, nullptr)
+//quadtree(pos, size.x, size.y, nullptr)
+collider(),
+enemies(device, pos, 10.0f, size.x, 8, collider)
 {
 	XMStoreFloat3(&this->pos, pos);
 }
@@ -24,11 +25,11 @@ void GameWorld::Loop(int frame)
 		if (player.Fire())
 		{
 			auto pos = player.GetPos();
-			auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) + Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1);
+			auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) + Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1, 10);
 			playerBullets.Add(bullet);
-			quadtree.Insert(bullet);
+			collider.Insert(bullet);
 		}
-	quadtree.Update();
+	collider.Update();
 	playerBullets.Loop(frame);
 	player.MoveBy(off);
 	enemies.Loop(frame);

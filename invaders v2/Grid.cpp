@@ -3,7 +3,7 @@
 #include "Direct3D.h"
 #include "ShooterEntity.h"
 
-Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
+Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount, Collider &collider)
 :time(800), 
 downOff(1.2f), 
 worldWidth(worldWidth),
@@ -12,7 +12,8 @@ dir(RIGHT),
 columnCount(columnCount), 
 width(width),
 lastDrop(0),
-dropFreq(2000)
+dropFreq(2000),
+collider(collider)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -75,6 +76,8 @@ void Grid::AddRow()
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		instancers[type]->Add(e::make_shared<ShooterEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f));
+		auto enemy = e::make_shared<ShooterEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f);
+		instancers[type]->Add(enemy);
+		collider.Insert(enemy);
 	}
 }
