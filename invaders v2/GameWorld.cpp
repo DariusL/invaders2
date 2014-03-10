@@ -27,7 +27,7 @@ void GameWorld::Loop(int frame)
 			auto pos = player.GetPos();
 			auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) + Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1, 10);
 			playerBullets.Add(bullet);
-			collider.Insert(bullet);
+			collider.InsertFirst(bullet);
 		}
 	collider.Update();
 	playerBullets.Loop(frame);

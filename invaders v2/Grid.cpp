@@ -78,6 +78,6 @@ void Grid::AddRow()
 		auto currentPos = first + Utils::VectorSet(off * i);
 		auto enemy = e::make_shared<ShooterEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f);
 		instancers[type]->Add(enemy);
-		collider.Insert(enemy);
+		collider.InsertSecond(enemy);
 	}
 }

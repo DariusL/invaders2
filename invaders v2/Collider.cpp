@@ -1,20 +1,30 @@
 #include "includes.h"
 #include "Collider.h"
+#include "Utils.h"
 
-void Collider::Insert(e::shared_ptr<GameEntity> entity)
+void Collider::InsertFirst(e::shared_ptr<GameEntity> entity)
 {
-	entities.push_back(entity);
+	first.push_back(entity);
+}
+
+void Collider::InsertSecond(e::shared_ptr<GameEntity> entity)
+{
+	second.push_back(entity);
 }
 
 void Collider::Update()
 {
-	auto end = e::remove_if(entities.begin(), entities.end(), [](const e::shared_ptr<GameEntity> ent){ return ent->IsDead(); });
-	entities.resize(end - entities.begin());
+	Utils::RemoveIf(first, [](const e::shared_ptr<GameEntity> ent){ return ent->IsDead(); });
+	Utils::RemoveIf(second, [](const e::shared_ptr<GameEntity> ent){ return ent->IsDead(); });
 
-	auto vecEnd = &entities.back();
-	for (auto first = entities.data(); first <= vecEnd; first++)
-		for (auto second = entities.data(); second <= vecEnd; second++)
-			Collide(first->get(), second->get());
+	if (first.size() == 0 || second.size() == 0)
+		return;
+
+	auto firstEnd = &first.back();
+	auto secondEnd = &second.back();
+	for (auto fp = first.data(); fp <= firstEnd; fp++)
+		for (auto sp = second.data(); sp <= secondEnd; sp++)
+			Collide(fp->get(), sp->get());
 }
 
 void Collider::Collide(GameEntity *first, GameEntity *second)

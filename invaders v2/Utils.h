@@ -52,6 +52,13 @@ namespace Utils{
 	{
 		reverse(vec.begin(), vec.end());
 	}
+
+	template<class T, class F>
+	void RemoveIf(e::vector<T> &vec, F &&cond)
+	{
+		auto end = e::remove_if(vec.begin(), vec.end(), e::forward<F>(cond));
+		vec.resize(end - vec.begin());
+	}
 }
 
 #define WIDE2(x) L##x
