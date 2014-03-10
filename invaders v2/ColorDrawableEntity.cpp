@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "ColorDrawableEntity.h"
 using namespace e;
-ColorDrawableEntity::ColorDrawableEntity(XMVECTOR pos, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
-:DrawableEntity(pos, model, shader, scale), color(color)
+ColorDrawableEntity::ColorDrawableEntity(Entity &&entity, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
+:DrawableEntity(e::forward<Entity>(entity), model, shader, scale), color(color)
 {
 }
 

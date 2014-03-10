@@ -6,7 +6,7 @@
 #include "Model.h"
 
 template<class vt, class sh>
-class DrawableTexturedEntity : public DrawableEntity<vt, sh>
+class DrawableTexturedEntity : public DrawableEntity<vt, sh, Entity>
 {
 protected:
 	vector<ID3D11ShaderResourceView*> texture;
