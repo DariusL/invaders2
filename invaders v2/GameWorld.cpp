@@ -17,21 +17,21 @@ enemies(device, pos, 10.0f, size.x, 8, collider)
 void GameWorld::Loop(int frame)
 {
 	auto off = e::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-	if (Input::IsKeyDown(KEYS_LEFT) && player.GetEntity().GetPos().x > pos.x - size.x / 2.0f)
+	if (Input::IsKeyDown(KEYS_LEFT) && player.GetPos().x > pos.x - size.x / 2.0f)
 		off += e::XMVectorSet(player.GetSpeed() * -frame, 0.0f, 0.0f, 0.0f);
-	if (Input::IsKeyDown(KEYS_RIGHT) && player.GetEntity().GetPos().x < pos.x + size.x / 2.0f)
+	if (Input::IsKeyDown(KEYS_RIGHT) && player.GetPos().x < pos.x + size.x / 2.0f)
 		off += e::XMVectorSet(player.GetSpeed() * frame, 0.0f, 0.0f, 0.0f);
 	if (Input::IsKeyDown(KEYS_FIRE))
 		if (player.Fire())
 		{
-			auto pos = player.GetEntity().GetPos();
+			auto pos = player.GetPos();
 			auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) + Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1, 10);
 			playerBullets.Add(bullet);
 			collider.InsertFirst(bullet);
 		}
 	collider.Update();
 	playerBullets.Loop(frame);
-	player.GetEntity().MoveBy(off);
+	player.MoveBy(off);
 	enemies.Loop(frame);
 }
 

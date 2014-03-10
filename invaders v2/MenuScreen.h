@@ -25,7 +25,7 @@ protected:
 	template<class T>
 	void Add(e::unique_ptr<T> &&item)
 	{
-		item->GetEntity().MoveTo(items.GetNextItemPos());
+		item->MoveTo(items.GetNextItemPos());
 		items.Add(move(item));
 	}
 };
