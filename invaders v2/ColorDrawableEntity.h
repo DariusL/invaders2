@@ -2,7 +2,7 @@
 #include "includes.h"
 #include "DrawableEntity.h"
 
-class ColorDrawableEntity : public DrawableEntity<VertexType, ColorShader>
+class ColorDrawableEntity : public DrawableEntity<VertexType, ColorShader, Entity>
 {
 	e::XMFLOAT4 color;
 public:
