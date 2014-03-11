@@ -2,7 +2,7 @@
 #include "includes.h"
 #include "IDrawable.h"
 #include "GameEntityList.h"
-#include "Entity.h"
+#include "GameEntity.h"
 #include "ResourceManager.h"
 #include "Movement.h"
 #include "Collider.h"

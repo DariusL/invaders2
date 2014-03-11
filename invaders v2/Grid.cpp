@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "Grid.h"
 #include "Direct3D.h"
-#include "ShooterEntity.h"
+#include "GameEntity.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount, Collider &collider)
 :time(800), 
@@ -76,7 +76,7 @@ void Grid::AddRow()
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<ShooterEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 0.0f, 0.0f);
+		auto enemy = e::make_shared<GameEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 10, 100, 10);
 		instancers[type]->Add(enemy);
 		collider.InsertSecond(enemy);
 	}

@@ -1,13 +1,21 @@
 #include "includes.h"
 #include "ColorDrawableEntity.h"
-using namespace e;
-ColorDrawableEntity::ColorDrawableEntity(XMVECTOR pos, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
+
+
+ColorDrawableEntity::ColorDrawableEntity(e::XMVECTOR pos, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
 :DrawableEntity(pos, model, shader, scale), color(color)
 {
 }
 
+ColorDrawableEntity::ColorDrawableEntity(e::XMVECTOR pos, int fireRate, float speed, int health, int damage, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
+: DrawableEntity(pos, model, shader, fireRate, speed, health, damage, scale), color(color)
+{
+
+}
+
 void ColorDrawableEntity::Render(const RenderParams &params)
 {
+	using namespace e;
 	if (!Update(params.context))
 		return;
 	model.Set(params.context);

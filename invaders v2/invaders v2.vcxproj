@@ -134,7 +134,6 @@
     <ClCompile Include="IShader.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="Movement.cpp" />
@@ -142,7 +141,6 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Screen.cpp" />
-    <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="StringPool.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -168,7 +166,6 @@
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
-    <ClInclude Include="DrawableShooter.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameEntityList.h" />
     <ClInclude Include="GameEntity.h" />
@@ -185,7 +182,6 @@
     <ClInclude Include="PressRegister.h" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="ShooterEntity.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="Geometry.h" />
@@ -216,7 +212,6 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="RenderTarget.h" />
-    <ClInclude Include="Shooter.h" />
     <ClInclude Include="SimplePass.h" />
     <ClInclude Include="StringPool.h" />
     <ClInclude Include="TestScene.h" />
@@ -227,7 +222,6 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Logger.h" />
-    <ClInclude Include="Entity.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="VerticalBlurComputeShader.h" />
     <ClInclude Include="Window.h" />

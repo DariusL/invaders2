@@ -112,12 +112,6 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Shooter.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -144,9 +138,6 @@
     </ClCompile>
     <ClCompile Include="DDSTextureLoader.cpp">
       <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="ColorDrawableEntity.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="GameScreen.cpp">
       <Filter>Menu</Filter>
@@ -175,15 +166,12 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="ColorDrawableEntity.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Entity.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="BaseInstancer.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Shooter.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="DrawableEntity.h">
@@ -384,16 +372,10 @@
     <ClInclude Include="GameWorld.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableShooter.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="ShooterEntity.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Movement.h">
