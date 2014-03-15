@@ -12,7 +12,7 @@ template<class vt>
 class String : public AppendableGeometry<vt>
 {
 public:
-	String(string text, float gap = 0.2f);
+	String(string text, float gap = 0.1f);
 	String(String &&other);
 	virtual ~String(){}
 };
@@ -27,7 +27,7 @@ String<vt>::String(string text, float gap)
 		if (c == ' ')
 		{
 			XMFLOAT3 p = box.GetMax();
-			p.x += gap * 4.0f;
+			p.x += 0.8f;
 			box.Add(p);
 		}
 		else

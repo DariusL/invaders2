@@ -151,6 +151,8 @@ unordered_map<char, Geometry<VertexType>> ResourceManager::GetModelsFromOBJ(wstr
 			}
 			else
 			{
+				if (name == "_")
+					name.length();
 				object = false;
 				voff += g.vertices.size();
 				g.Center();
