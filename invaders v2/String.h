@@ -27,7 +27,7 @@ String<vt>::String(string text, float gap)
 		if (c == ' ')
 		{
 			XMFLOAT3 p = box.GetMax();
-			p.x += 0.8f;
+			p.x += 0.6f;
 			box.Add(p);
 		}
 		else
