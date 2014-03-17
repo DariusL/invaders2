@@ -9,7 +9,6 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 :letters(GetModelsFromOBJ(L"Resources\\text.obj"))
 {
 	handle = this;
-	models.emplace_back(device, GetModelFromOBJ(L"Resources\\ball.obj"));
 
 	VertexType vt;
 	Geometry<VertexType> plane;
@@ -69,11 +68,6 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 
 	for (auto &shader : computeShaders)
 		shader->Init(device);
-
-	textures.push_back(GetTextureFromFile(L"Resources\\gaben.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\wave.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\concrete.dds", device));
-	textures.push_back(GetTextureFromFile(L"Resources\\tree.dds", device));
 }
 
 Geometry<VertexType> ResourceManager::GetModelFromOBJ(wstring filename, bool invert)

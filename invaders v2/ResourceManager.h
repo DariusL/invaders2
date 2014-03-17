@@ -21,7 +21,6 @@ class ResourceManager
 public:
 	enum MODEL
 	{
-		MODEL_BALL,
 		MODEL_PLANE,
 		MODEL_PLAYER
 	};
@@ -60,10 +59,6 @@ public:
 
 	enum TEXTURE
 	{
-		TEXTURE_GABEN,
-		TEXTURE_WATER_NORMAL_MAP,
-		TEXTURE_WALL,
-		TEXTURE_TREE
 	};
 
 	struct Level
