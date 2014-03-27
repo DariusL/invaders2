@@ -17,7 +17,7 @@ collider(collider)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
-	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<GameEntityList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
 	e::XMStoreFloat3(&this->first, first);
 	AddRow();
 }

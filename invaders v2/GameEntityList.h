@@ -21,4 +21,6 @@ public:
 
 	void Add(e::shared_ptr<GameEntity> enemy);
 	void MoveBy(e::XMVECTOR pos);
+protected:
+	virtual void OnRemove(const e::shared_ptr<GameEntity> entity){}
 };

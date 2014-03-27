@@ -169,6 +169,9 @@
     <ClCompile Include="ColorDrawableEntity.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Observers.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -394,6 +397,12 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyList.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Observers.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>

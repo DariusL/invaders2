@@ -8,8 +8,18 @@ GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorIns
 
 bool GameEntityList::Update(ID3D11DeviceContext *context)
 {
-	auto end = e::remove_if(enemies.begin(), enemies.end(), [](const e::shared_ptr<GameEntity> ent){ return ent->IsDead(); });
-	enemies.resize(end - enemies.begin());
+	Utils::RemoveIf(enemies, [this](const e::shared_ptr<GameEntity> ent)
+	{ 
+		if (ent->IsDead())
+		{
+			OnRemove(ent);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	});
 	instanceCount = enemies.size();
 	instanceData.clear();
 	for (auto &enemy : enemies)

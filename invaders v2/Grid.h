@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "IDrawable.h"
-#include "GameEntityList.h"
+#include "EnemyList.h"
 #include "GameEntity.h"
 #include "ResourceManager.h"
 #include "Movement.h"
@@ -15,7 +15,7 @@ private:
 		LEFT,
 		RIGHT
 	};
-	e::unordered_map<int, e::unique_ptr<GameEntityList>> instancers;
+	e::unordered_map<int, e::unique_ptr<EnemyList>> instancers;
 	int time;
 	int lastDrop;
 	int dropFreq;

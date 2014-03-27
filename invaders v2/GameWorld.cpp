@@ -12,6 +12,7 @@ enemies(device, pos, 10.0f, size.x, 8, collider)
 {
 	XMStoreFloat3(&this->pos, pos);
 	collider.InsertFirst(player);
+	Observers::Register(Observers::EVENT_ENEMY_DEATH, e::bind(&GameWorld::OnEnemyDeath, this, e::placeholders::_1));
 }
 
 void GameWorld::Loop(int frame)
@@ -40,4 +41,10 @@ void GameWorld::Render(const RenderParams &params)
 	player->Render(params);
 	enemies.Render(params);
 	playerBullets.Render(params);
+}
+
+
+void GameWorld::OnEnemyDeath(const e::shared_ptr<GameEntity> enemy)
+{
+	
 }

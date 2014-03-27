@@ -5,6 +5,7 @@
 #include "Quadtree.h"
 #include "Collider.h"
 #include "ColorDrawableEntity.h"
+#include "Observers.h"
 
 class GameWorld : public IDrawable
 {
@@ -19,4 +20,6 @@ public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(int frame);
 	void Render(const RenderParams &params);
+private:
+	void OnEnemyDeath(const e::shared_ptr<GameEntity> enemy);
 };
