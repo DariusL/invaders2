@@ -172,6 +172,9 @@
     <ClCompile Include="Observers.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Attribute.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -404,6 +407,9 @@
     </ClInclude>
     <ClInclude Include="Observers.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Attribute.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

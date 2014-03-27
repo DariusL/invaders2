@@ -23,6 +23,8 @@ namespace Utils{
 	e::XMVECTOR VectorSet(float x, float y);
 	e::XMVECTOR VectorSet(float x, float y, float z);
 
+	e::XMFLOAT3 FromVector3(e::XMVECTOR vec);
+
 	template<class T>
 	void VectorAppend(std::vector<T> &dest, const std::vector<T> &source)
 	{

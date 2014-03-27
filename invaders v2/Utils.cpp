@@ -95,4 +95,11 @@ namespace Utils
 	{
 		return e::XMVectorSet(x, y, z, 0.0f);
 	}
+
+	e::XMFLOAT3 FromVector3(e::XMVECTOR vec)
+	{
+		e::XMFLOAT3 ret;
+		e::XMStoreFloat3(&ret, vec);
+		return ret;
+	}
 }
