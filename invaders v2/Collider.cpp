@@ -1,6 +1,13 @@
 #include "includes.h"
 #include "Collider.h"
 #include "Utils.h"
+#include "Observers.h"
+
+Collider::Collider()
+{
+	Observers::Register(Observers::EVENT_ENEMY_CREATE, e::bind(&Collider::InsertSecond, this, e::placeholders::_1));
+	Observers::Register(Observers::EVENT_PLAYER_CREATE, e::bind(&Collider::InsertFirst, this, e::placeholders::_1));
+}
 
 void Collider::InsertFirst(e::shared_ptr<GameEntity> entity)
 {

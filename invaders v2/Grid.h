@@ -5,7 +5,6 @@
 #include "GameEntity.h"
 #include "ResourceManager.h"
 #include "Movement.h"
-#include "Collider.h"
 
 class Grid : public IDrawable
 {
@@ -26,10 +25,9 @@ private:
 	DIR dir;
 	Movement movement;
 	e::XMFLOAT3 first;
-	Collider &collider;
 	void AddRow();
 public:
-	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount, Collider &collider);
+	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount);
 	void Render(const RenderParams &params);
 	void Loop(int frame);
 	void MoveTo(e::XMVECTOR pos);

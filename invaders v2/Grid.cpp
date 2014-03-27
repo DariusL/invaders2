@@ -2,8 +2,9 @@
 #include "Grid.h"
 #include "Direct3D.h"
 #include "GameEntity.h"
+#include "Observers.h"
 
-Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount, Collider &collider)
+Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
 :time(800), 
 downOff(1.2f), 
 worldWidth(worldWidth),
@@ -12,8 +13,7 @@ dir(RIGHT),
 columnCount(columnCount), 
 width(width),
 lastDrop(0),
-dropFreq(2000),
-collider(collider)
+dropFreq(2000)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -78,6 +78,6 @@ void Grid::AddRow()
 		auto currentPos = first + Utils::VectorSet(off * i);
 		auto enemy = e::make_shared<GameEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 10, 100, 10);
 		instancers[type]->Add(enemy);
-		collider.InsertSecond(enemy);
+		Observers::Notify(Observers::EVENT_ENEMY_CREATE, enemy);
 	}
 }

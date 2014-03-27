@@ -8,7 +8,7 @@ GameWorld::GameWorld(ID3D11Device *device, e::XMVECTOR pos)
 :player(make_shared<ColorDrawableEntity>(pos - e::XMVectorSet(0.0f, size.y / 2.0f, 0.0f, 0.0f), 500, 0.02f, 10, 100, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorShader>(), e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f))),
 playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f)),
 collider(),
-enemies(device, pos, 10.0f, size.x, 8, collider)
+enemies(device, pos, 10.0f, size.x, 8)
 {
 	XMStoreFloat3(&this->pos, pos);
 	collider.InsertFirst(player);
