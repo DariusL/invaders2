@@ -20,3 +20,16 @@ e::XMVECTOR Attribute::ValuePos(float valueWidth)
 {
 	return Utils::VectorSet(pos.x + (width - valueWidth) / 2.0f, pos.y, pos.z);
 }
+
+void Attribute::Select(bool selected)
+{
+	float scale = selected ? 1.2f : 1.0f;
+	name.SetScale(scale);
+	value.SetScale(scale);
+}
+
+void Attribute::Render(const RenderParams &params)
+{
+	value.Render(params);
+	name.Render(params);
+}
