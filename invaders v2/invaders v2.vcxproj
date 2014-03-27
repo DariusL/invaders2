@@ -109,6 +109,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
+    <ClCompile Include="Counter.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="GameEntityList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColorDrawableEntity.h" />
     <ClInclude Include="ComputeShader.h" />
+    <ClInclude Include="Counter.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
