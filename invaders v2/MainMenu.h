@@ -1,6 +1,8 @@
 #include "includes.h"
 #include "MenuScreen.h"
 #include "GameScreen.h"
+#include "Attribute.h"
+#include "StringPool.h"
 
 class MainMenu : public MenuScreen
 {

@@ -4,11 +4,11 @@
 #include "ResourceManager.h"
 #include "ColorShader.h"
 
-Attribute::Attribute(e::XMVECTOR pos, e::string text, float width, e::XMFLOAT4 color, ColorDrawableEntity &&value, float scale)
-:width(width), value(e::move(value)), pos(Utils::FromVector3(pos)), name(Utils::VectorSet(), StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), color, scale)
+Attribute::Attribute(e::XMVECTOR pos, e::string text, float width, ColorDrawableEntity &&value, float scale)
+:width(width), value(e::move(value)), pos(Utils::FromVector3(pos)), name(Utils::VectorSet(), StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale)
 {
 	name.MoveTo(NamePos(name.GetSize().x));
-	value.MoveTo(ValuePos(value.GetSize().x));
+	this->value.MoveTo(ValuePos(this->value.GetSize().x));
 }
 
 e::XMVECTOR Attribute::NamePos(float nameWidth)
@@ -32,4 +32,11 @@ void Attribute::Render(const RenderParams &params)
 {
 	value.Render(params);
 	name.Render(params);
+}
+
+void Attribute::MoveTo(e::XMVECTOR pos)
+{
+	XMStoreFloat3(&this->pos, pos);
+	name.MoveTo(NamePos(name.GetSize().x));
+	value.MoveTo(ValuePos(value.GetSize().x));
 }
