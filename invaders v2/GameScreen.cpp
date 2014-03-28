@@ -2,14 +2,21 @@
 #include "GameScreen.h"
 #include "PauseMenu.h"
 #include "Direct3D.h"
+#include "Observers.h"
 
 GameScreen::GameScreen(e::XMVECTOR pos)
-:Screen(pos), pause(KEYS_ESC), world(Direct3D::GetDevice(), pos)
-{}
+:Screen(pos), pause(KEYS_ESC), world(Direct3D::GetDevice(), pos),
+score(pos + Utils::VectorSet(25.0f, -10.0f), "SCORE", 15.0f),
+exp(pos + Utils::VectorSet(25.0f, -12.0f), "EXP", 15.0f)
+{
+	Observers::Register(Observers::EVENT_ENEMY_DEATH, e::bind(&GameScreen::UpdateCounters, this, e::placeholders::_1));
+}
 
 void GameScreen::RenderInternal(const RenderParams &params)
 {
 	world.Render(params);
+	score.Render(params);
+	exp.Render(params);
 }
 
 int GameScreen::LoopInternal(int input, int frame)
@@ -25,4 +32,10 @@ int GameScreen::LoopInternal(int input, int frame)
 void GameScreen::DelayInternal()
 {
 	pause.Reset();
+}
+
+void GameScreen::UpdateCounters(const e::shared_ptr<GameEntity> entity)
+{
+	score += 10;
+	exp += 1;
 }

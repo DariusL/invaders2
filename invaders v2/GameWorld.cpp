@@ -12,7 +12,6 @@ enemies(device, pos, 10.0f, size.x, 8)
 {
 	XMStoreFloat3(&this->pos, pos);
 	collider.InsertFirst(player);
-	Observers::Register(Observers::EVENT_ENEMY_DEATH, e::bind(&GameWorld::OnEnemyDeath, this, e::placeholders::_1));
 }
 
 void GameWorld::Loop(int frame)

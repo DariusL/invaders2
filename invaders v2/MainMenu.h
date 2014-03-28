@@ -12,7 +12,6 @@ public:
 	{
 		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "START GAME", [=]{ auto pos = XMLoadFloat3(&this->pos); this->child = make_unique<GameScreen>(pos); }));
 		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "QUIT", [=]{ this->quit = true; }));
-		Add(make_unique<Counter>(Utils::VectorSet(), "TEST ATTRIBUTE", 25.0f, 10));
 	}
 
 	int LoopInternal(int input, int frame)
