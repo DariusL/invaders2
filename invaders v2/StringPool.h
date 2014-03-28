@@ -1,17 +1,15 @@
 #pragma once
 #include "includes.h"
 #include "Model.h"
-using namespace Microsoft::WRL;
-using namespace std;
 class StringPool
 {
-	unordered_map<string, ColorModel> stringModels;
+	e::unordered_map<e::string, ColorModel> stringModels;
 	ID3D11Device *device;
 	static StringPool *handle;
 public:
 	StringPool(ID3D11Device *device);
 	~StringPool(){}
-	ColorModel &GetString(string text);
+	ColorModel &GetString(e::string text);
 	static StringPool &Get(){ return *handle; }
 };
 

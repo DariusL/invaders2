@@ -5,6 +5,7 @@
 #include "GameEntity.h"
 #include "ResourceManager.h"
 #include "Movement.h"
+#include "BulletList.h"
 
 class Grid : public IDrawable
 {
@@ -21,14 +22,18 @@ private:
 	float worldWidth;
 	float width;
 	const float downOff;
-	int columnCount;
+	uint columnCount;
 	DIR dir;
 	Movement movement;
 	e::XMFLOAT3 first;
 	void AddRow();
+	e::default_random_engine generator;
+	BulletList bullets;
 public:
-	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount);
+	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount);
 	void Render(const RenderParams &params);
 	void Loop(int frame);
 	void MoveTo(e::XMVECTOR pos);
+private:
+	void Fire(int frame);
 };

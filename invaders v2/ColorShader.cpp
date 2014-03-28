@@ -26,7 +26,6 @@ void ColorShader::InitializeShaderBuffers(ID3D11Device *device)
 	colorBuffer = Buffer<e::XMFLOAT4>(device, &tmp);
 }
 
-
 void ColorShader::SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world)
 {
 	IPositionShader::SetShaderParameters(params, world);

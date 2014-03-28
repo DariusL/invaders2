@@ -38,3 +38,22 @@ e::vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 
 	return ret;
 }
+
+void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params, e::XMFLOAT4 color)
+{
+	colorBuffer.SetData(params.context, color);
+	SetShaderParametersInstanced(params);
+}
+
+void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params)
+{
+	IInstanceShader::SetShaderParametersInstanced(params);
+	params.context->PSSetConstantBuffers(0, 1, colorBuffer.GetAddressOf());
+}
+
+void ColorInstancedShader::InitializeShaderBuffers(ID3D11Device *device)
+{
+	auto tmp = e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
+	colorBuffer = Buffer<e::XMFLOAT4>(device, &tmp);
+	IInstanceShader::InitializeShaderBuffers(device);
+}

@@ -4,7 +4,7 @@
 #include "GameEntity.h"
 #include "Observers.h"
 
-Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, int columnCount)
+Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount)
 :time(800), 
 downOff(1.2f), 
 worldWidth(worldWidth),
@@ -13,7 +13,8 @@ dir(RIGHT),
 columnCount(columnCount), 
 width(width),
 lastDrop(0),
-dropFreq(2000)
+dropFreq(2000),
+bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f))
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -26,6 +27,7 @@ void Grid::Render(const RenderParams &params)
 {
 	for (auto &i : instancers)
 		i.second->Render(params);
+	bullets.Render(params);
 }
 
 void Grid::Loop(int frame)
@@ -34,6 +36,7 @@ void Grid::Loop(int frame)
 		inst.second->Loop(frame);
 	lastDrop += frame;
 	movement.Loop(frame);
+	bullets.Loop(frame);
 	auto pos = movement.GetPos();
 	float drop = 0.0f;
 	if (movement.IsOver())
@@ -57,6 +60,7 @@ void Grid::Loop(int frame)
 	MoveTo(pos);
 	if (drop > 0.0f)
 		AddRow();
+	Fire(frame);
 }
 
 void Grid::MoveTo(e::XMVECTOR pos)
@@ -74,12 +78,39 @@ void Grid::AddRow()
 	//bad me
 	movement.MoveBy(Utils::VectorSet(0.0f, downOff));
 	auto first = e::XMLoadFloat3(&this->first);
-	for (int i = 0; i < columnCount; i++)
+	for (uint i = 0; i < columnCount; i++)
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<GameEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 10, 100, 10);
+		auto enemy = e::make_shared<GameEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 10, 100, 1500, 0.02f);
 		instancers[type]->Add(enemy);
 		Observers::Notify(Observers::EVENT_ENEMY_CREATE, enemy);
+	}
+}
+
+void Grid::Fire(int frame)
+{
+	double prob = (double)frame * 0.25;
+	e::bernoulli_distribution dist(prob < 1.0f ? prob : 1.0f);
+	auto fire = e::bind(dist, generator);
+	for (uint i = 0; i < columnCount; i++)
+	{
+		for (auto &instancer : instancers)
+		{
+			auto enemy = instancer.second->Get(i);
+			if (enemy != nullptr)
+			{
+				if (fire())
+				{
+					if (enemy->Fire())
+					{
+						auto pos = enemy->GetPos();
+						auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) - Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1, 10);
+						bullets.Add(bullet);
+						Observers::Notify(Observers::EVENT_ENEMY_CREATE, bullet);
+					}
+				}
+			}
+		}
 	}
 }

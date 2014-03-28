@@ -49,3 +49,25 @@ void GameEntityList::MoveBy(e::XMVECTOR pos)
 	for (auto &enemy : enemies)
 		enemy->MoveBy(pos);
 }
+
+e::shared_ptr<GameEntity> GameEntityList::Get(uint i)
+{
+	try
+	{
+		return enemies.at(i);
+	}
+	catch (e::out_of_range ex)
+	{
+		return nullptr;
+	}
+}
+
+void GameEntityList::Render(const RenderParams &params)
+{
+	if (!Update(params.context))
+		return;
+	model.Set(params.context);
+	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
+	shader.SetShaderParametersInstanced(params, e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
+}

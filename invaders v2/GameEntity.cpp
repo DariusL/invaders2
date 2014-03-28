@@ -36,6 +36,8 @@ void GameEntity::MoveTo(e::XMVECTOR pos)
 
 bool GameEntity::Fire()
 {
+	if (IsDead())
+		return false;
 	int now = clock();
 	if (lastFired + fireRate <= now)
 	{

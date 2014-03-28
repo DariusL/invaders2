@@ -10,7 +10,7 @@ StringPool::StringPool(ID3D11Device *device)
 	handle = this;
 }
 
-ColorModel &StringPool::GetString(string text)
+ColorModel &StringPool::GetString(e::string text)
 {
 	if (stringModels.find(text) == stringModels.end())
 	{

@@ -25,7 +25,7 @@ protected:
 	Model<vt> &model;
 	sh &shader;
 public:
-	void Render(const RenderParams& params);
+	virtual void Render(const RenderParams& params);
 
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
