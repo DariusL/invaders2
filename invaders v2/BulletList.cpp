@@ -4,6 +4,7 @@ using namespace e;
 
 void BulletList::Loop(int frame)
 {
+	GameEntityList::Loop(frame);
 	auto vec = e::XMLoadFloat2(&dir) * (speed * frame);
 	for (auto &enemy : enemies)
 		enemy->MoveBy(vec);

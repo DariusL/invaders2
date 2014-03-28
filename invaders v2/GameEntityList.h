@@ -11,14 +11,10 @@ protected:
 	e::vector<e::shared_ptr<GameEntity>> enemies;
 public:
 	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);
-	GameEntityList(GameEntityList &&other)
-		:BaseInstancer(e::move(other))
-	{
-		e::swap(enemies, other.enemies);
-	}
+	GameEntityList(GameEntityList &&other);
 
 	bool Update(ID3D11DeviceContext *context);
-
+	virtual void Loop(int frame);
 	void Add(e::shared_ptr<GameEntity> enemy);
 	void MoveBy(e::XMVECTOR pos);
 protected:

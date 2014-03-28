@@ -19,7 +19,7 @@ protected:
 	int fireRate;
 	int lastFired;
 public:
-	GameEntity(e::XMVECTOR pos, e::XMFLOAT2 size = ZeroVec2, int health = 0, int damage = 0, int fireRate = 0, float speed = 0.0f);
+	GameEntity(e::XMVECTOR pos, e::XMFLOAT2 size = ZeroVec2, int health = 1, int damage = 0, int fireRate = 0, float speed = 0.0f);
 	virtual ~GameEntity(){}
 
 	const e::XMFLOAT2 &GetSize() const { return size; }

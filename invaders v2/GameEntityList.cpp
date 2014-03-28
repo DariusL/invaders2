@@ -6,10 +6,25 @@ GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorIns
 {
 }
 
+GameEntityList::GameEntityList(GameEntityList &&other)
+:BaseInstancer(e::move(other))
+{
+	e::swap(enemies, other.enemies);
+}
+
 bool GameEntityList::Update(ID3D11DeviceContext *context)
 {
+	instanceCount = enemies.size();
+	instanceData.clear();
+	for (auto &enemy : enemies)
+		instanceData.push_back(enemy->GetPos());
+	return BaseInstancer::Update(context);
+}
+
+void GameEntityList::Loop(int frame)
+{
 	Utils::RemoveIf(enemies, [this](const e::shared_ptr<GameEntity> ent)
-	{ 
+	{
 		if (ent->IsDead())
 		{
 			OnRemove(ent);
@@ -20,11 +35,6 @@ bool GameEntityList::Update(ID3D11DeviceContext *context)
 			return false;
 		}
 	});
-	instanceCount = enemies.size();
-	instanceData.clear();
-	for (auto &enemy : enemies)
-		instanceData.push_back(enemy->GetPos());
-	return BaseInstancer::Update(context);
 }
 
 void GameEntityList::Add(e::shared_ptr<GameEntity> enemy)

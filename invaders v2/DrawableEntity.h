@@ -69,6 +69,8 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 template<class vt, class sh>
 bool DrawableEntity<vt, sh>::Update(ID3D11DeviceContext *context)
 {
+	if (IsDead())
+		return false;
 	using namespace e;
 	XMStoreFloat4x4(&moveMatrix, XMMatrixTranslation(pos.x, pos.y, pos.z));
 	XMStoreFloat4x4(&scaleMatrix, XMMatrixScaling(scale, scale, scale));

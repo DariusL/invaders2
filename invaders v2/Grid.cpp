@@ -30,6 +30,8 @@ void Grid::Render(const RenderParams &params)
 
 void Grid::Loop(int frame)
 {
+	for (auto &inst : instancers)
+		inst.second->Loop(frame);
 	lastDrop += frame;
 	movement.Loop(frame);
 	auto pos = movement.GetPos();
