@@ -1,6 +1,6 @@
 #pragma once
 #include "includes.h"
-#include "GameEntity.h"
+#include "Gun.h"
 #include "Globals.h"
 #include "Utils.h"
 
@@ -16,11 +16,9 @@ protected:
 	float speed;
 	e::XMFLOAT2 size;
 
-	//shooter
-	int fireRate;
-	int lastFired;
+	e::unique_ptr<Gun> gun;
 public:
-	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, int fireRate = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2);
+	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2, e::unique_ptr<Gun> gun = nullptr);
 	virtual ~GameEntity(){}
 
 	const e::XMFLOAT2 &GetSize() const { return size; }
@@ -32,11 +30,9 @@ public:
 	int GetDamage() const { return damage; }
 	void HitFor(int damange){ health -= damage; }
 
-	int GetFireRate() const { return fireRate; }
 	float GetSpeed() const { return speed; }
 
-	bool Fire();
-	int GetLastFired() const { return lastFired; }
+	void Fire();
 
 	e::XMFLOAT3 GetPos() const { return pos; }
 	void MoveBy(e::XMFLOAT3 step);

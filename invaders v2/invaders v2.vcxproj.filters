@@ -387,9 +387,6 @@
     <ClInclude Include="Grid.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Movement.h">
       <Filter>Objects</Filter>
     </ClInclude>

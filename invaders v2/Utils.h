@@ -23,6 +23,27 @@ namespace Utils{
 	e::XMVECTOR VectorSet(float x, float y);
 	e::XMVECTOR VectorSet(float x, float y, float z);
 
+
+	inline e::XMVECTOR LoadFloat(const float scalar)
+	{
+		return e::XMLoadFloat(&scalar);
+	}
+
+	inline e::XMVECTOR LoadFloat(const e::XMFLOAT2 &vec)
+	{
+		return e::XMLoadFloat2(&vec);
+	}
+
+	inline e::XMVECTOR LoadFloat(const e::XMFLOAT3 &vec)
+	{
+		return e::XMLoadFloat3(&vec);
+	}
+
+	inline e::XMVECTOR LoadFloat(const e::XMFLOAT4 &vec)
+	{
+		return e::XMLoadFloat4(&vec);
+	}
+
 	e::XMFLOAT3 FromVector3(e::XMVECTOR vec);
 
 	template<class T>

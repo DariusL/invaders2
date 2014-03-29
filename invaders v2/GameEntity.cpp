@@ -2,8 +2,8 @@
 #include "GameEntity.h"
 using namespace e;
 
-GameEntity::GameEntity(e::XMVECTOR pos, int health, int damage, int fireRate, float speed, e::XMFLOAT2 size)
-:health(health), maxHealth(health), damage(damage), fireRate(fireRate), speed(speed), lastFired(0), size(size)
+GameEntity::GameEntity(e::XMVECTOR pos, int health, int damage, float speed, e::XMFLOAT2 size, e::unique_ptr<Gun> gun)
+:health(health), maxHealth(health), damage(damage), speed(speed), size(size), gun(e::move(gun))
 {
 	e::XMStoreFloat3(&this->pos, pos);
 }
@@ -34,15 +34,8 @@ void GameEntity::MoveTo(e::XMVECTOR pos)
 	XMStoreFloat3(&this->pos, pos);
 }
 
-bool GameEntity::Fire()
+void GameEntity::Fire()
 {
-	if (IsDead())
-		return false;
-	int now = clock();
-	if (lastFired + fireRate <= now)
-	{
-		lastFired = now;
-		return true;
-	}
-	return false;
+	if (!IsDead())
+		gun->Fire(e::XMLoadFloat3(&this->pos));
 }

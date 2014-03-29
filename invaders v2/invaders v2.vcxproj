@@ -172,7 +172,6 @@
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyList.h" />
     <ClInclude Include="GameEntityList.h" />
     <ClInclude Include="GameEntity.h" />
