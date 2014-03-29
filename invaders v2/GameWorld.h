@@ -15,7 +15,6 @@ class GameWorld : public IDrawable
 	XMFLOAT3 pos;
 	Collider collider;
 	Grid enemies;
-	//Quadtree quadtree;
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(int frame);

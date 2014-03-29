@@ -13,4 +13,6 @@ class Gun
 public:
 	Gun(int spawnEvent, uint firePeriod, float off, ColorModel &model);
 	void Fire(e::XMVECTOR gunPos);
+	static e::unique_ptr<Gun> PlayerGun(uint firePeriod);
+	static e::unique_ptr<Gun> EnemyGun(uint firePeriod);
 };

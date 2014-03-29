@@ -7,24 +7,27 @@ public:
 	enum EVENT
 	{
 		EVENT_ENEMY_DEATH,
-		EVENT_PLAYER_CREATE,
-		EVENT_ENEMY_CREATE
+		EVENT_PLAYER_BULLET_CREATE,
+		EVENT_ENEMY_CREATE,
+		EVENT_ENEMY_BULLET_CREATE
 	};
 private:
-	static e::unordered_map<int, e::function<void(const e::shared_ptr<GameEntity>)>> observers;
+	static e::unordered_map<int, e::vector<e::function<void(const e::shared_ptr<GameEntity>)>>> observers;
 
 public:
 	template<typename Observer>
-	static void Register(EVENT ev, Observer &&observer)
+	static void Register(int ev, Observer &&observer)
 	{
-		observers.emplace(ev, e::forward<Observer>(observer));
+		observers[ev].push_back(e::forward<Observer>(observer));
 	}
 
 	static void Notify(int ev, const e::shared_ptr<GameEntity> entity)
 	{
 		try
 		{
-			observers.at(ev)(entity);
+			auto &obs = observers.at(ev);
+			for (auto &o : obs)
+				o(entity);
 		}
 		catch (...){}
 	}

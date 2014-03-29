@@ -14,7 +14,7 @@ columnCount(columnCount),
 width(width),
 lastDrop(0),
 dropFreq(2000),
-bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f))
+bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f), Observers::EVENT_ENEMY_BULLET_CREATE)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -82,7 +82,7 @@ void Grid::AddRow()
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel(type).GetSize(), e::make_unique<Gun>(Observers::EVENT_ENEMY_CREATE, 1500, -1.0f, RM::Get().GetModel(RM::MODEL_PLAYER)));
+		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel(type).GetSize(), Gun::EnemyGun(1500));
 		instancers[type]->Add(enemy);
 		Observers::Notify(Observers::EVENT_ENEMY_CREATE, enemy);
 	}

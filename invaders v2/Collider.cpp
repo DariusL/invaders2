@@ -5,8 +5,10 @@
 
 Collider::Collider()
 {
-	Observers::Register(Observers::EVENT_ENEMY_CREATE, e::bind(&Collider::InsertSecond, this, e::placeholders::_1));
-	Observers::Register(Observers::EVENT_PLAYER_CREATE, e::bind(&Collider::InsertFirst, this, e::placeholders::_1));
+	auto second = e::bind(&Collider::InsertSecond, this, e::placeholders::_1);
+	Observers::Register(Observers::EVENT_ENEMY_CREATE, second);
+	Observers::Register(Observers::EVENT_ENEMY_BULLET_CREATE, second);
+	Observers::Register(Observers::EVENT_PLAYER_BULLET_CREATE, e::bind(&Collider::InsertFirst, this, e::placeholders::_1));
 }
 
 void Collider::InsertFirst(e::shared_ptr<GameEntity> entity)
