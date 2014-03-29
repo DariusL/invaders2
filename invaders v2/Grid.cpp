@@ -82,7 +82,7 @@ void Grid::AddRow()
 	{
 		auto type = RM::MODEL_PLAYER;
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<GameEntity>(currentPos, RM::Get().GetModel(type).GetSize(), 10, 100, 1500, 0.02f);
+		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 1500, 0.02f, RM::Get().GetModel(type).GetSize());
 		instancers[type]->Add(enemy);
 		Observers::Notify(Observers::EVENT_ENEMY_CREATE, enemy);
 	}
@@ -105,7 +105,7 @@ void Grid::Fire(int frame)
 					if (enemy->Fire())
 					{
 						auto pos = enemy->GetPos();
-						auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) - Utils::VectorSet(0.0f, 1.0f), RM::Get().GetModel(RM::MODEL_PLAYER).GetSize(), 1, 10);
+						auto bullet = make_shared<GameEntity>(e::XMLoadFloat3(&pos) - Utils::VectorSet(0.0f, 1.0f), 1, 10, 0, 0.0f, RM::Get().GetModel(RM::MODEL_PLAYER).GetSize());
 						bullets.Add(bullet);
 						Observers::Notify(Observers::EVENT_ENEMY_CREATE, bullet);
 					}

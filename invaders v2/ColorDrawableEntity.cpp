@@ -2,15 +2,9 @@
 #include "ColorDrawableEntity.h"
 
 
-ColorDrawableEntity::ColorDrawableEntity(e::XMVECTOR pos, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
-:DrawableEntity(pos, model, shader, scale), color(color)
+ColorDrawableEntity::ColorDrawableEntity(ColorModel &model, ColorShader &shader, e::shared_ptr<GameEntity> entity, e::XMFLOAT4 color, float scale)
+:DrawableEntity(model, shader, entity, scale), color(color)
 {
-}
-
-ColorDrawableEntity::ColorDrawableEntity(e::XMVECTOR pos, int fireRate, float speed, int health, int damage, ColorModel &model, ColorShader &shader, e::XMFLOAT4 color, float scale)
-: DrawableEntity(pos, model, shader, fireRate, speed, health, damage, scale), color(color)
-{
-
 }
 
 void ColorDrawableEntity::Render(const RenderParams &params)

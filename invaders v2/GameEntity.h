@@ -2,6 +2,7 @@
 #include "includes.h"
 #include "GameEntity.h"
 #include "Globals.h"
+#include "Utils.h"
 
 class GameEntity
 {
@@ -19,10 +20,11 @@ protected:
 	int fireRate;
 	int lastFired;
 public:
-	GameEntity(e::XMVECTOR pos, e::XMFLOAT2 size = ZeroVec2, int health = 1, int damage = 0, int fireRate = 0, float speed = 0.0f);
+	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, int fireRate = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2);
 	virtual ~GameEntity(){}
 
 	const e::XMFLOAT2 &GetSize() const { return size; }
+	void SetSize(e::XMFLOAT2 size){ this->size = size; }
 	bool IsDead() const { return health <= 0; }
 	bool CollidesWith(const GameEntity &other);
 

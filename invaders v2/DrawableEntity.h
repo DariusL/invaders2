@@ -6,56 +6,51 @@
 #include "includes.h"
 #include "Utils.h"
 
-template<class vt, class sh>
-class DrawableEntity : public GameEntity, public IDrawableObject
+template<class vt, class sh, class en>
+class DrawableEntity : public IDrawableObject
 {
 protected:
 	Model<vt> &model;
 	e::XMFLOAT4X4 moveMatrix, scaleMatrix;
 	float scale;
 	sh &shader;
+	e::shared_ptr<en> entity;
 public:
-	DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, int fireRate, float speed, int health, int damage, float scale = 1.0f);
-	DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, float scale = 1.0f);
+	DrawableEntity(Model<vt> &model, sh &shader, e::shared_ptr<en> entity, float scale = 1.0f);
 	DrawableEntity(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
 	virtual void Render(const RenderParams &renderParams);
 	virtual void SetScale(float scale);
+	e::shared_ptr<en> &GetEntity(){ return entity; }
+	e::XMFLOAT2 GetSize() { return model.GetSize(); }
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
 };
 
-typedef DrawableEntity<VertexType, ColorShader> SimpleDrawableEntity;
+typedef DrawableEntity<VertexType, ColorShader, GameEntity> SimpleDrawableEntity;
 
-
-template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, int fireRate, float speed, int health, int damage, float scale)
-: GameEntity(pos, model.GetSize(), health, damage, fireRate, speed), model(model), shader(shader), scale(scale)
+template<class vt, class sh, class en>
+DrawableEntity<vt, sh, en>::DrawableEntity(Model<vt> &model, sh &shader, e::shared_ptr<en> entity, float scale)
+: model(model), shader(shader), scale(scale), entity(entity)
 {
 }
 
-template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(e::XMVECTOR pos, Model<vt> &model, sh &shader, float scale)
-: GameEntity(pos, model.GetSize()), model(model), shader(shader), scale(scale)
-{
-}
-
-template<class vt, class sh>
-DrawableEntity<vt, sh>::DrawableEntity(DrawableEntity &&other)
-: IDrawableObject(e::forward<DrawableEntity>(other)), GameEntity(e::forward<DrawableEntity>(other)),
+template<class vt, class sh, class en>
+DrawableEntity<vt, sh, en>::DrawableEntity(DrawableEntity &&other)
+: IDrawableObject(e::move(other)), entity(e::move(other.entity)),
 model(e::move(other.model)), shader(e::move(other.shader)),
 scale(other.scale)
 {
 }
 
-template<class vt, class sh>
-DrawableEntity<vt, sh>::~DrawableEntity(void)
+template<class vt, class sh, class en>
+DrawableEntity<vt, sh, en>::~DrawableEntity(void)
 {
 }
 
-template<class vt, class sh>
-void DrawableEntity<vt, sh>::Render(const RenderParams &params)
+template<class vt, class sh, class en>
+void DrawableEntity<vt, sh, en>::Render(const RenderParams &params)
 {
 	if (!Update(params.context))
 		return;
@@ -66,20 +61,21 @@ void DrawableEntity<vt, sh>::Render(const RenderParams &params)
 	shader.RenderShader(params.context, model.GetIndexCount());
 }
 
-template<class vt, class sh>
-bool DrawableEntity<vt, sh>::Update(ID3D11DeviceContext *context)
+template<class vt, class sh, class en>
+bool DrawableEntity<vt, sh, en>::Update(ID3D11DeviceContext *context)
 {
-	if (IsDead())
+	if (entity->IsDead())
 		return false;
 	using namespace e;
+	auto pos = entity->GetPos();
 	XMStoreFloat4x4(&moveMatrix, XMMatrixTranslation(pos.x, pos.y, pos.z));
 	XMStoreFloat4x4(&scaleMatrix, XMMatrixScaling(scale, scale, scale));
 
 	return true;
 }
 
-template<class vt, class sh>
-void DrawableEntity<vt, sh>::SetScale(float scale)
+template<class vt, class sh, class en>
+void DrawableEntity<vt, sh, en>::SetScale(float scale)
 {
 	this->scale = scale;
 }

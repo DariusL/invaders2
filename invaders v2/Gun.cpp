@@ -14,6 +14,6 @@ void Gun::Fire(e::XMVECTOR gunPos)
 	if (lastFired + firePeriod <= now)
 	{
 		lastFired = now;
-		Observers::Notify(spawnEvent, e::make_shared<GameEntity>(gunPos + Utils::VectorSet(0.0f, off), bulletSize, 1, 10));
+		Observers::Notify(spawnEvent, e::make_shared<GameEntity>(gunPos + Utils::VectorSet(0.0f, off), 1, 10, 0, 0.0f, bulletSize));
 	}
 }

@@ -6,9 +6,9 @@
 TestScene::TestScene()
 :Screen(e::XMLoadFloat3(&ZeroVec3))
 {
-	stuff.emplace_back(new SimpleDrawableEntity(e::XMLoadFloat3(&ZeroVec3), SP::Get().GetString("TEXT"), RM::Get().GetShader<ColorShader>()));
-	stuff.emplace_back(new SimpleDrawableEntity(e::XMVectorSet(0.0f, -2.0f, 0.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
-	stuff.emplace_back(new SimpleDrawableEntity(e::XMVectorSet(0.0f, -4.0f, 0.0f, 0.0f), SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>()));
+	stuff.emplace_back(new SimpleDrawableEntity(SP::Get().GetString("TEXT"), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(Utils::VectorSet())));
+	stuff.emplace_back(new SimpleDrawableEntity(SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(Utils::VectorSet(0.0f, -2.0f))));
+	stuff.emplace_back(new SimpleDrawableEntity(SP::Get().GetString("MORE TEXT"), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(Utils::VectorSet(0.0f, -4.0f))));
 }
 
 int TestScene::Loop(int input, int frameLength)

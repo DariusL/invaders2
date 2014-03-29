@@ -5,7 +5,7 @@
 #include "ColorShader.h"
 
 Attribute::Attribute(e::XMVECTOR pos, e::string text, float width, e::unique_ptr<ColorDrawableEntity> value, float scale)
-:width(width), value(e::move(value)), pos(Utils::FromVector3(pos)), name(Utils::VectorSet(), StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale)
+:width(width), value(e::move(value)), pos(Utils::FromVector3(pos)), name(StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale)
 {
 	Reposition();
 }
@@ -22,8 +22,8 @@ e::XMVECTOR Attribute::ValuePos(float valueWidth)
 
 void Attribute::Reposition()
 {
-	name.MoveTo(NamePos(name.GetSize().x));
-	value->MoveTo(ValuePos(value->GetSize().x));
+	name.GetEntity()->MoveTo(NamePos(name.GetSize().x));
+	value->GetEntity()->MoveTo(ValuePos(value->GetSize().x));
 }
 
 void Attribute::Select(bool selected)
