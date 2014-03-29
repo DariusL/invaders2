@@ -11,16 +11,16 @@ public:
 		EVENT_ENEMY_CREATE
 	};
 private:
-	static e::unordered_map<EVENT, e::function<void(const e::shared_ptr<GameEntity>)>> observers;
+	static e::unordered_map<int, e::function<void(const e::shared_ptr<GameEntity>)>> observers;
 
 public:
-		template<typename Observer>
+	template<typename Observer>
 	static void Register(EVENT ev, Observer &&observer)
 	{
 		observers.emplace(ev, e::forward<Observer>(observer));
 	}
 
-	static void Notify(EVENT ev, const e::shared_ptr<GameEntity> entity)
+	static void Notify(int ev, const e::shared_ptr<GameEntity> entity)
 	{
 		try
 		{

@@ -178,6 +178,9 @@
     <ClCompile Include="Counter.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="Counter.h">
       <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
