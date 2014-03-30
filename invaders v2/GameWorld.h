@@ -17,7 +17,7 @@ class GameWorld : public IDrawable
 	Grid enemies;
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
-	void Loop(int frame);
+	void Loop(InputType input, int frame);
 	void Render(const RenderParams &params);
 private:
 	void OnEnemyDeath(const e::shared_ptr<GameEntity> enemy);

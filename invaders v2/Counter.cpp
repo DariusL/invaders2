@@ -4,7 +4,7 @@
 #include "ResourceManager.h"
 
 Counter::Counter(e::XMVECTOR pos, e::string text, float width, int initial, float scale)
-:left(KEYS_LEFT), right(KEYS_RIGHT),
+:left(Input::ACTION_LEFT), right(Input::ACTION_RIGHT),
 count(initial), Attribute(pos, text, width, e::make_unique<ColorDrawableEntity>(StringPool::Get().GetString(e::to_string(initial)), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>()))	
 {
 }
@@ -15,13 +15,13 @@ void Counter::Delay()
 	right.Reset();
 }
 
-bool Counter::Loop()
+bool Counter::Loop(InputType input)
 {
-	if (left.Register())
+	if (left.Register(input))
 		operator--();
-	if (right.Register())
+	if (right.Register(input))
 		operator++();
-	return left.IsDown() || right.IsDown();
+	return left.IsDown(input) || right.IsDown(input);
 }
 
 Counter &Counter::operator+=(int off)

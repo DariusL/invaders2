@@ -20,7 +20,7 @@ void Screen::Render(const RenderParams &params)
 	}
 }
 
-int Screen::Loop(int input, int frame)
+int Screen::Loop(InputType input, int frame)
 {
 	if (child != nullptr)
 	{

@@ -12,7 +12,7 @@ protected:
 	e::unique_ptr<ColorDrawableEntity> value;
 public:
 	Attribute(e::XMVECTOR pos, e::string text, float width, e::unique_ptr<ColorDrawableEntity> value, float scale = 1.0f);
-	virtual bool Loop(){ return false; }
+	virtual bool Loop(InputType input){ return false; }
 	virtual void Delay(){}
 	virtual void Select(bool selected);
 	virtual void Render(const RenderParams &params);

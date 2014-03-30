@@ -14,7 +14,7 @@ public:
 		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "QUIT", [=]{ this->quit = true; }));
 	}
 
-	int LoopInternal(int input, int frame)
+	int LoopInternal(InputType input, int frame)
 	{
 		int res = MenuScreen::LoopInternal(input, frame);
 		if (res == RESULT_QUIT_TO_MAIN)

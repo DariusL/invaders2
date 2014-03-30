@@ -11,8 +11,8 @@ class MenuList : public MenuItem
 	uint selected;
 	HoldRegister next, prev;
 public:
-	MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextKey = KEYS_DOWN, int prevKey = KEYS_UP);
-	bool Loop();
+	MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, Input::ACTION nextKey = Input::ACTION_DOWN, Input::ACTION prevKey = Input::ACTION_UP);
+	bool Loop(InputType input);
 	void Delay();
 	void Render(const RenderParams &params);
 	e::XMVECTOR GetNextItemPos();

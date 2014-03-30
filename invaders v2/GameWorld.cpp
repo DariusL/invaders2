@@ -15,15 +15,15 @@ enemies(device, pos, 10.0f, size.x, 8)
 	collider.InsertFirst(player->GetEntity());
 }
 
-void GameWorld::Loop(int frame)
+void GameWorld::Loop(InputType input, int frame)
 {
 	auto off = e::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 	auto playerEntity = player->GetEntity();
-	if (Input::IsKeyDown(KEYS_LEFT) && playerEntity->GetPos().x > pos.x - size.x / 2.0f)
+	if (input[Input::ACTION_LEFT] && playerEntity->GetPos().x > pos.x - size.x / 2.0f)
 		off += e::XMVectorSet(playerEntity->GetSpeed() * -frame, 0.0f, 0.0f, 0.0f);
-	if (Input::IsKeyDown(KEYS_RIGHT) && playerEntity->GetPos().x < pos.x + size.x / 2.0f)
+	if (input[Input::ACTION_RIGHT] && playerEntity->GetPos().x < pos.x + size.x / 2.0f)
 		off += e::XMVectorSet(playerEntity->GetSpeed() * frame, 0.0f, 0.0f, 0.0f);
-	if (Input::IsKeyDown(KEYS_FIRE))
+	if (input[Input::ACTION_FIRE])
 		playerEntity->Fire();
 	collider.Update();
 	playerBullets.Loop(frame);

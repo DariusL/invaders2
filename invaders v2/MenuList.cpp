@@ -2,32 +2,32 @@
 #include "MenuList.h"
 using namespace e;
 
-MenuList::MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, int nextKey, int prevKey)
+MenuList::MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, Input::ACTION nextKey, Input::ACTION prevKey)
 :startPos(startPos), offset(offset), selected(0), next(nextKey), prev(prevKey)
 {
 }
 
-bool MenuList::Loop()
+bool MenuList::Loop(InputType input)
 {
 	bool handled = false;
 	try
 	{
-		if (items.at(this->selected)->Loop())
+		if (items.at(this->selected)->Loop(input))
 			handled = true;
 	}
 	catch (out_of_range o){}
-	if (selected > 0 && prev.IsDown() && !handled)
+	if (selected > 0 && prev.IsDown(input) && !handled)
 	{
 		handled = true;
-		if (prev.Register())
+		if (prev.Register(input))
 		{
 			SetSelection(selected - 1);
 		}
 	}
-	if (selected + 1< items.size() && next.IsDown() && !handled)
+	if (selected + 1 < items.size() && next.IsDown(input) && !handled)
 	{
 		handled = true;
-		if (next.Register())
+		if (next.Register(input))
 		{
 			SetSelection(selected + 1);
 		}

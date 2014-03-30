@@ -13,7 +13,7 @@ class GameScreen : public Screen
 public:
 	GameScreen(e::XMVECTOR pos);
 	void RenderInternal(const RenderParams &params);
-	int LoopInternal(int input, int frame);
+	int LoopInternal(InputType input, int frame);
 	void DelayInternal();
 private:
 	void UpdateCounters(const e::shared_ptr<GameEntity> entity);

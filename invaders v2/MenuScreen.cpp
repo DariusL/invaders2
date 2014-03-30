@@ -11,19 +11,19 @@ const e::XMFLOAT3 MenuScreen::FOOTER_POS = e::XMFLOAT3(0.0f, -20.0f, 0.0f);
 MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
 header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + e::XMLoadFloat3(&HEADER_POS))),
-backRegister(KEYS_ESC),
+backRegister(Input::ACTION_ESC),
 items(FIRST_ITEM_POS, ITEM_OFF)
 {
 }
 
-int MenuScreen::LoopInternal(int input, int frame)
+int MenuScreen::LoopInternal(InputType input, int frame)
 {
 	if (childResult == RESULT_QUIT_APP || childResult == RESULT_QUIT_TO_MAIN)
 		return childResult;
 	else
 		childResult = RESULT_CONTINUE;
-	items.Loop();
-	if (backRegister.Register())
+	items.Loop(input);
+	if (backRegister.Register(input))
 		return RESULT_CLOSE;
 	else
 		return RESULT_CONTINUE;

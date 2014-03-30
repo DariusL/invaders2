@@ -19,7 +19,7 @@ public:
 	MenuScreen(e::XMVECTOR pos, e::string header);
 protected:
 	virtual void RenderInternal(const RenderParams &params);
-	virtual int LoopInternal(int input, int frame);
+	virtual int LoopInternal(InputType input, int frame);
 	virtual void DelayInternal();
 
 	template<class T>

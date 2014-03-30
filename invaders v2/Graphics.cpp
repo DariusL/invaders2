@@ -27,7 +27,7 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 0.0f;
 }
 
-void Graphics::Render(Screen &world, int input)
+void Graphics::Render(Screen &world)
 {
 	auto context = d3D.GetDeviceContext();
 
@@ -55,7 +55,6 @@ void Graphics::Render(Screen &world, int input)
 	}
 
 	world.Render(params);
-	//Button(ZeroVec3, "BUTTON", [=]{}).Render(params);
 	if (post)
 	{
 		d3D.ClearRenderTarget();

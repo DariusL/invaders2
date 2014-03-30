@@ -4,14 +4,15 @@
 #include "Input.h"
 class HoldRegister
 {
-	int key, time, freq;
+	Input::ACTION key;
+	int time, freq;
 public:
-	HoldRegister(int key, int freq = 125) :key(key), time(clock()), freq(freq){}
+	HoldRegister(Input::ACTION key, int freq = 125) :key(key), time(clock()), freq(freq){}
 	inline void Reset(){ time = clock(); }
-	bool Register()
+	bool Register(InputType input)
 	{
 		int now = clock();
-		if (IsDown() && time + freq < now)
+		if (IsDown(input) && time + freq < now)
 		{
 			time = now;
 			return true;
@@ -22,8 +23,8 @@ public:
 		}
 	}
 
-	inline bool IsDown()
+	inline bool IsDown(InputType input)
 	{
-		return Input::IsKeyDown(key);
+		return input[key];
 	}
 };

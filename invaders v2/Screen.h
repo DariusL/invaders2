@@ -1,6 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "IDrawable.h"
+#include "Input.h"
 class Screen : public IDrawable
 {
 protected:
@@ -11,10 +12,10 @@ protected:
 public:
 	Screen(e::XMVECTOR pos);
 	void Render(const RenderParams &params);
-	int Loop(int input, int frame);
+	int Loop(InputType input, int frame);
 	Camera &GetCamera(){ return camera; }
 protected:
 	virtual void RenderInternal(const RenderParams &params) = 0;
-	virtual int LoopInternal(int input, int frame) = 0;
+	virtual int LoopInternal(InputType input, int frame) = 0;
 	virtual void DelayInternal() = 0;
 };

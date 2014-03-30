@@ -13,7 +13,7 @@ public:
 		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "QUIT TO DESKTOP", [=]{ this->result = RESULT_QUIT_APP; }));
 	}
 
-	int LoopInternal(int input, int frame)
+	int LoopInternal(InputType input, int frame)
 	{
 		if (result == RESULT_CONTINUE)
 			return MenuScreen::LoopInternal(input, frame);

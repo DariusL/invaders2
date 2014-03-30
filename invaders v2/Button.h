@@ -9,7 +9,7 @@ class Button : public MenuItem, public ColorDrawableEntity
 public:
 	typedef e::function<void()> PressFunction;
 	Button(e::XMVECTOR pos, e::string text, PressFunction &&callback);
-	bool Loop();
+	bool Loop(InputType input);
 	void Render(const RenderParams &params){ ColorDrawableEntity::Render(params); }
 	void Delay(){ clickRegister.Reset(); }
 	void Select(bool selected){ SetScale(selected ? 1.2f : 1.0f); }
