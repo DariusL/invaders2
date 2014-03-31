@@ -22,7 +22,8 @@ public:
 	enum MODEL
 	{
 		MODEL_PLANE,
-		MODEL_PLAYER
+		MODEL_PLAYER,
+		MODEL_PLAYER_AGAIN
 	};
 
 	enum ENEMY

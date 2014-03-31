@@ -39,7 +39,7 @@ e::vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 	return ret;
 }
 
-void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params, e::XMFLOAT4 color)
+void ColorInstancedShader::SetShaderParametersInstanced(const RenderParams &params, const e::XMFLOAT4 &color)
 {
 	colorBuffer.SetData(params.context, color);
 	SetShaderParametersInstanced(params);

@@ -7,10 +7,12 @@
 
 class GameEntityList : public BaseInstancer<VertexType, ColorInstancedShader, e::XMFLOAT3>
 {
+private:
+	e::XMFLOAT4 color;
 protected:
 	e::vector<e::shared_ptr<GameEntity>> enemies;
 public:
-	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);
+	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT4 color = e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 	GameEntityList(GameEntityList &&other);
 
 	bool Update(ID3D11DeviceContext *context);

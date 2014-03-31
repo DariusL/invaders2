@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "GameEntityList.h"
 
-GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount)
-:BaseInstancer(device, model, shader, maxObjectCount)
+GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT4 color)
+:BaseInstancer(device, model, shader, maxObjectCount), color(color)
 {
 }
 
@@ -52,14 +52,10 @@ void GameEntityList::MoveBy(e::XMVECTOR pos)
 
 e::shared_ptr<GameEntity> GameEntityList::Get(uint i)
 {
-	try
-	{
-		return enemies.at(i);
-	}
-	catch (e::out_of_range ex)
-	{
+	if (i < enemies.size())
+		return enemies[i];
+	else
 		return nullptr;
-	}
 }
 
 void GameEntityList::Render(const RenderParams &params)
@@ -68,6 +64,6 @@ void GameEntityList::Render(const RenderParams &params)
 		return;
 	model.Set(params.context);
 	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
-	shader.SetShaderParametersInstanced(params, e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+	shader.SetShaderParametersInstanced(params, color);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }

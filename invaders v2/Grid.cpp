@@ -18,7 +18,8 @@ bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorI
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
-	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50, e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f)));
+	instancers.emplace(RM::MODEL_PLAYER_AGAIN, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER_AGAIN), RM::Get().GetShader<ColorInstancedShader>(), 50, e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f)));
 	e::XMStoreFloat3(&this->first, first);
 	AddRow();
 }
@@ -80,7 +81,7 @@ void Grid::AddRow()
 	auto first = e::XMLoadFloat3(&this->first);
 	for (uint i = 0; i < columnCount; i++)
 	{
-		auto type = RM::MODEL_PLAYER;
+		auto type = i % 2 ? RM::MODEL_PLAYER : RM::MODEL_PLAYER_AGAIN;
 		auto currentPos = first + Utils::VectorSet(off * i);
 		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel(type).GetSize(), Gun::EnemyGun(1500));
 		instancers[type]->Add(enemy);
@@ -93,7 +94,7 @@ void Grid::Fire(int frame)
 	double prob = (double)frame * 0.25;
 	e::bernoulli_distribution dist(prob < 1.0f ? prob : 1.0f);
 	auto fire = e::bind(dist, generator);
-	for (uint i = 0; i < columnCount; i++)
+	for (uint i = 0; i < columnCount / instancers.size(); i++)
 	{
 		for (auto &instancer : instancers)
 		{

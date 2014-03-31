@@ -6,7 +6,8 @@
 class EnemyList : public GameEntityList
 {
 public:
-	EnemyList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount) :GameEntityList(device, model, shader, maxObjectCount){}
+	EnemyList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT4 color = e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f)) 
+		:GameEntityList(device, model, shader, maxObjectCount, color){}
 	EnemyList(GameEntityList &&other):GameEntityList(e::move(other)){}
 
 protected:

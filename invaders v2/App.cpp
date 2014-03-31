@@ -42,15 +42,16 @@ void App::Run()
 bool App::OnLoop()
 {
 	auto &actions = input.Loop();
-
-	int worldResult = world->Loop(actions, clock() - lastFrame);
+	auto frame = clock() - lastFrame;
+	OutputDebugString(e::to_wstring(frame).c_str());
+	int worldResult = world->Loop(actions, frame);
 	lastFrame = clock();
 	switch (worldResult)
 	{
 	case RESULT_CLOSE:
 		return false;
 	}
-	graphics.Render(*world);
+	graphics.Render(*world); 
 	return true;
 }
 
