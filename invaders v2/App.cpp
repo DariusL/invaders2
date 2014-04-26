@@ -9,7 +9,6 @@ App::App(uint width, uint height, bool fullscreen, wstring name)
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this)
 {
-	//world = make_unique<TestScene>();
 	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
 }
 
@@ -42,10 +41,11 @@ void App::Run()
 bool App::OnLoop()
 {
 	auto &actions = input.Loop();
-	auto frame = clock() - lastFrame;
-	OutputDebugString(e::to_wstring(frame).c_str());
+	int frame = (int)(clock() - lastFrame);
+	e::string str = e::to_string(frame) + "\n";
+	OutputDebugStringA(str.c_str());
 	int worldResult = world->Loop(actions, frame);
-	lastFrame = clock();
+	lastFrame += frame;
 	switch (worldResult)
 	{
 	case RESULT_CLOSE:

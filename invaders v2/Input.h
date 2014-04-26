@@ -21,10 +21,14 @@ public:
 	void KeyUp(int key);
 
 	const e::vector<bool> &Loop();
+	static Input &Get(){ return *instance;}
+	int GetLastKey(){ return lastKey; }
 private:
 	bool keys[256];
 	static const e::vector<e::pair<int, ACTION>> keyAction;
 	e::vector<bool> actions;
+	int lastKey;
+	static Input *instance;
 };
 
 using InputType = const e::vector<bool>&;

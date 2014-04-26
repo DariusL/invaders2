@@ -85,7 +85,7 @@ void Graphics::Render(Screen &world)
 			time += t;
 		time /= 20.0f;
 		wstring s = to_wstring(time) + L"\r\n";
-		OutputDebugString(s.c_str());
+		//OutputDebugString(s.c_str());
 		bench.clear();
 	}
 	d3D.Present();

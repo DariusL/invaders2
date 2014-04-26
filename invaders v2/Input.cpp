@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Globals.h"
 
+Input *Input::instance;
+
 const e::vector<e::pair<int, Input::ACTION>> Input::keyAction = 
 {
 	e::make_pair(VK_UP, Input::ACTION_UP),
@@ -17,6 +19,7 @@ Input::Input()
 :actions(LAST_ACTION_ENTRY, false)
 {
 	e::fill(keys, keys + 255, false);
+	instance = this;
 }
 
 Input::~Input()
@@ -37,5 +40,13 @@ const e::vector<bool> &Input::Loop()
 {
 	for (auto &p : keyAction)
 		actions[p.second] = keys[p.first];
+	for (int i = 0; i < 255; i++)
+	{
+		if (keys[i])
+		{
+			lastKey = i;
+			break;
+		}
+	}
 	return actions;
 }
