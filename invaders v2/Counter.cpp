@@ -5,7 +5,7 @@
 
 Counter::Counter(e::XMVECTOR pos, e::string text, float width, int initial, float scale)
 :left(Input::ACTION_LEFT), right(Input::ACTION_RIGHT),
-count(initial), Attribute(pos, text, width, e::make_unique<ColorDrawableEntity>(StringPool::Get().GetString(e::to_string(initial)), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>()))	
+count(initial), Attribute(pos, text, width, e::to_string(initial))
 {
 }
 
@@ -52,5 +52,5 @@ void Counter::SetCount(int count)
 {
 	this->count = count;
 	auto &str = StringPool::Get().GetString(e::to_string(count));
-	value = e::make_unique<ColorDrawableEntity>(str, RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(ValuePos(str.GetSize().x)));
+	value.SetModel(str);
 }

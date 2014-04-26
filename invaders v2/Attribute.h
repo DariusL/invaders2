@@ -8,10 +8,9 @@ class Attribute : public MenuItem
 	float width;
 	e::XMFLOAT3 pos;
 protected:
-	ColorDrawableEntity name;
-	e::unique_ptr<ColorDrawableEntity> value;
+	ColorDrawableEntity name, value;
 public:
-	Attribute(e::XMVECTOR pos, e::string text, float width, e::unique_ptr<ColorDrawableEntity> value, float scale = 1.0f);
+	Attribute(e::XMVECTOR pos, e::string text, float width, e::string value, float scale = 1.0f);
 	virtual bool Loop(InputType input){ return false; }
 	virtual void Delay(){}
 	virtual void Select(bool selected);

@@ -24,4 +24,5 @@ public:
 		}
 		return false;
 	}
+	inline bool Pressed(){ return pressed; }
 };

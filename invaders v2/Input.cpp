@@ -42,7 +42,7 @@ const e::vector<bool> &Input::Loop()
 		actions[p.second] = keys[p.first];
 	for (int i = 0; i < 255; i++)
 	{
-		if (keys[i])
+		if (keys[i] && i != VK_RETURN && i != VK_ESCAPE)
 		{
 			lastKey = i;
 			break;
