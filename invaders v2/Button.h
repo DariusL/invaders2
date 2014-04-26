@@ -13,6 +13,7 @@ public:
 	void Render(const RenderParams &params){ ColorDrawableEntity::Render(params); }
 	void Delay(){ clickRegister.Reset(); }
 	void Select(bool selected){ SetScale(selected ? 1.2f : 1.0f); }
+	void MoveTo(e::XMVECTOR pos){ GetEntity()->MoveTo(pos); }
 private:
 	PressFunction callback;
 	PressRegister clickRegister;

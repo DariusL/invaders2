@@ -1,10 +1,13 @@
 #include "includes.h"
 #include "MenuList.h"
+#include "Utils.h"
 using namespace e;
 
-MenuList::MenuList(e::XMFLOAT3 startPos, e::XMFLOAT3 offset, Input::ACTION nextKey, Input::ACTION prevKey)
-:startPos(startPos), offset(offset), selected(0), next(nextKey), prev(prevKey)
+MenuList::MenuList(e::XMVECTOR pos, e::XMFLOAT3 offset, uint show, Input::ACTION nextKey, Input::ACTION prevKey)
+	:offset(offset), selected(0), next(nextKey), prev(prevKey), show(show), first(0)
 {
+	e::XMStoreFloat3(&this->pos, pos);
+	Reposition();
 }
 
 bool MenuList::Loop(InputType input)
@@ -44,13 +47,8 @@ void MenuList::Delay()
 
 void MenuList::Render(const RenderParams &params)
 {
-	for (auto &item : items)
-		item->Render(params);
-}
-
-e::XMVECTOR MenuList::GetNextItemPos()
-{
-	return XMLoadFloat3(&this->startPos) + XMLoadFloat3(&this->offset) * (float)items.size();
+	for (uint i = first; i < first + show && i < items.size(); i++)
+		items[i]->Render(params);
 }
 
 void MenuList::SetSelection(int selected)
@@ -67,4 +65,23 @@ void MenuList::Select(bool selected)
 		items.at(this->selected)->Select(selected);
 	}
 	catch (out_of_range o){}
+}
+
+void MenuList::Reposition()
+{
+	uint count = show > items.size() ? items.size() : show;
+	auto off = e::XMLoadFloat3(&offset);
+	auto first = e::XMLoadFloat3(&pos);
+	first -= off * (float)count / 2.0f;
+	for (uint i = this->first; i < this->first + show && i < items.size(); i++)
+	{
+		items[i]->MoveTo(first);
+		first += off;
+	}
+}
+
+void MenuList::MoveTo(e::XMVECTOR pos)
+{
+	e::XMStoreFloat3(&this->pos, pos);
+	Reposition();
 }

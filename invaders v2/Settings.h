@@ -6,12 +6,12 @@ class Settings
 public:
 	enum KEY
 	{
-		KEY_FIRE_KEY,
-		KEY_LEFT_KEY,
-		KEY_RIGHT_KEY,
-		KEY_UP_KEY,
-		KEY_DOWN_KEY,
-		KEY_BACK_KEY
+		KEY_FIRE_KEY = 0,
+		KEY_LEFT_KEY = 1,
+		KEY_RIGHT_KEY = 2,
+		KEY_UP_KEY = 3,
+		KEY_DOWN_KEY = 4,
+		KEY_BACK_KEY = 5
 	};
 private:
 	e::unordered_map<KEY, int> settings;

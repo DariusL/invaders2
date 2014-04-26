@@ -12,7 +12,7 @@ MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
 header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + e::XMLoadFloat3(&HEADER_POS))),
 backRegister(Input::ACTION_BACK),
-items(FIRST_ITEM_POS, ITEM_OFF)
+items(pos, ITEM_OFF, 5)
 {
 }
 
