@@ -1,25 +1,25 @@
 #include "includes.h"
 #include "Input.h"
 #include "Globals.h"
+#include "Settings.h"
 
 Input *Input::instance;
-
-const e::vector<e::pair<int, Input::ACTION>> Input::keyAction = 
-{
-	e::make_pair(VK_UP, Input::ACTION_UP),
-	e::make_pair(VK_DOWN, Input::ACTION_DOWN),
-	e::make_pair(VK_LEFT, Input::ACTION_LEFT),
-	e::make_pair(VK_RIGHT, Input::ACTION_RIGHT),
-	e::make_pair(VK_SPACE, Input::ACTION_FIRE),
-	e::make_pair(VK_RETURN, Input::ACTION_ENTER),
-	e::make_pair(VK_ESCAPE, Input::ACTION_ESC)
-};
 
 Input::Input()
 :actions(LAST_ACTION_ENTRY, false)
 {
 	e::fill(keys, keys + 255, false);
 	instance = this;
+	auto &s = Settings::Get().GetSettings();
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_DOWN_KEY), ACTION_DOWN));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_BACK_KEY), ACTION_BACK));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_FIRE_KEY), ACTION_FIRE));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_UP_KEY), ACTION_UP));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_LEFT_KEY), ACTION_LEFT));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_RIGHT_KEY), ACTION_RIGHT));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_FIRE_KEY), ACTION_FIRE));
+	keyAction.push_back(e::make_pair(VK_ESCAPE, ACTION_BACK));
+	keyAction.push_back(e::make_pair(VK_RETURN, ACTION_ENTER));
 }
 
 Input::~Input()

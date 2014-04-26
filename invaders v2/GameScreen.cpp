@@ -5,7 +5,7 @@
 #include "Observers.h"
 
 GameScreen::GameScreen(e::XMVECTOR pos)
-:Screen(pos), pause(Input::ACTION_ESC), world(Direct3D::GetDevice(), pos),
+:Screen(pos), pause(Input::ACTION_BACK), world(Direct3D::GetDevice(), pos),
 score(pos + Utils::VectorSet(25.0f, -10.0f), "SCORE", 15.0f),
 exp(pos + Utils::VectorSet(25.0f, -12.0f), "EXP", 15.0f)
 {

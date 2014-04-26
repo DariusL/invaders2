@@ -11,16 +11,18 @@ public:
 		KEY_RIGHT_KEY,
 		KEY_UP_KEY,
 		KEY_DOWN_KEY,
-		KEY_FORWARD_KEY,
 		KEY_BACK_KEY
 	};
 private:
-	static e::unordered_map<KEY, int> settings;
+	e::unordered_map<KEY, int> settings;
 	e::wstring filename;
+	static Settings *instance;
 public:
 	Settings(e::wstring filename);
 	int GetValue(KEY key);
 	void SetValue(KEY key, int value);
 	void Store();
 	void Load();
+	static Settings &Get(){ return *instance; }
+	const e::unordered_map<KEY, int> &GetSettings(){ return settings; }
 };

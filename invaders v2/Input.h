@@ -9,7 +9,7 @@ public:
 		ACTION_FIRE,
 		ACTION_UP,
 		ACTION_DOWN,
-		ACTION_ESC,
+		ACTION_BACK,
 		ACTION_ENTER,
 
 		LAST_ACTION_ENTRY
@@ -25,7 +25,7 @@ public:
 	int GetLastKey(){ return lastKey; }
 private:
 	bool keys[256];
-	static const e::vector<e::pair<int, ACTION>> keyAction;
+	e::vector<e::pair<int, ACTION>> keyAction;
 	e::vector<bool> actions;
 	int lastKey;
 	static Input *instance;

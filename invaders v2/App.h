@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Window.h"
 #include "AppHandle.h"
+#include "Settings.h"
 
 class App
 {
@@ -15,6 +16,7 @@ class App
 	uint screenHeight;
 	uint screenWidth;
 
+	Settings settings;
 	Input input;
 	Window window;
 	Graphics graphics;
