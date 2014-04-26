@@ -144,6 +144,7 @@
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="StringPool.cpp" />
     <ClCompile Include="Observers.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="PressRegister.h" />
     <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="Geometry.h" />

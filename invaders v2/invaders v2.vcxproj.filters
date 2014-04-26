@@ -181,6 +181,9 @@
     <ClCompile Include="Gun.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -419,6 +422,9 @@
     </ClInclude>
     <ClInclude Include="Gun.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
