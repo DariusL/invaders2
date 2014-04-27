@@ -31,4 +31,9 @@ public:
 		}
 		catch (...){}
 	}
+
+	static void Cleanup()
+	{
+		observers.clear();
+	}
 };
