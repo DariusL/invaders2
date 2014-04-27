@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "Settings.h"
 #include "Utils.h"
-
+#include "Input.h"
 
 
 Settings *Settings::instance;
@@ -9,7 +9,6 @@ Settings *Settings::instance;
 Settings::Settings(e::wstring filename)
 	:filename(filename)
 {
-	Load();
 	instance = this;
 
 	settings = e::unordered_map<Settings::KEY, int>(
@@ -21,6 +20,7 @@ Settings::Settings(e::wstring filename)
 		e::make_pair(Settings::KEY_DOWN_KEY, VK_DOWN),
 		e::make_pair(Settings::KEY_BACK_KEY, VK_ESCAPE),
 	});
+	Load();
 }
 
 void Settings::SetValue(KEY key, int value)
@@ -37,8 +37,8 @@ void Settings::Store()
 		magic = entry.first;
 		magic = magic << 32 | entry.second;
 		file.write(reinterpret_cast<char*>(&magic), sizeof(long long));
-		file.seekp(8, e::ios::cur);
 	}
+	file.close();
 }
 
 void Settings::Load()
@@ -50,11 +50,13 @@ void Settings::Load()
 		while (!file.eof())
 		{
 			file.read(reinterpret_cast<char*>(&magic), sizeof(long long));
-			int key = *reinterpret_cast<int*>(&magic);
-			int value = *(reinterpret_cast<int*>(&magic) + 1);
+			int key = *(reinterpret_cast<int*>(&magic) + 1);
+			int value = *reinterpret_cast<int*>(&magic);
 			settings[(KEY)key] = value;
 		}
 	}
+	file.close();
+	Input::Get().LoadKeys();
 }
 
 int Settings::GetValue(KEY key)

@@ -15,12 +15,14 @@ class MenuScreen : public Screen
 	MenuList items;
 	ColorDrawableEntity header;
 	PressRegister backRegister;
+	bool close;
 public:
 	MenuScreen(e::XMVECTOR pos, e::string header);
 protected:
 	virtual void RenderInternal(const RenderParams &params);
 	virtual int LoopInternal(InputType input, int frame);
 	virtual void DelayInternal();
+	virtual void Close(){ close = true; }
 
 	template<class T>
 	void Add(e::unique_ptr<T> &&item)

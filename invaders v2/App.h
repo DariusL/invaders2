@@ -16,8 +16,8 @@ class App
 	uint screenHeight;
 	uint screenWidth;
 
-	Settings settings;
 	Input input;
+	Settings settings;
 	Window window;
 	Graphics graphics;
 

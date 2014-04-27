@@ -44,7 +44,7 @@ bool App::OnLoop()
 	auto &actions = input.Loop();
 	int frame = (int)(clock() - lastFrame);
 	e::string str = e::to_string(frame) + "\n";
-	OutputDebugStringA(str.c_str());
+	//OutputDebugStringA(str.c_str());
 	int worldResult = world->Loop(actions, frame);
 	lastFrame += frame;
 	switch (worldResult)

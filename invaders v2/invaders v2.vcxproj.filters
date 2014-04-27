@@ -187,6 +187,9 @@
     <ClCompile Include="SettingsAttribute.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsMenu.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -430,6 +433,9 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="SettingsAttribute.h">
+      <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsMenu.h">
       <Filter>Menu</Filter>
     </ClInclude>
   </ItemGroup>

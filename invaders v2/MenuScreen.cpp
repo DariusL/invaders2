@@ -12,7 +12,8 @@ MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
 header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + e::XMLoadFloat3(&HEADER_POS))),
 backRegister(Input::ACTION_BACK),
-items(pos, ITEM_OFF, 5)
+items(pos, ITEM_OFF, 5),
+close(false)
 {
 }
 
@@ -23,7 +24,7 @@ int MenuScreen::LoopInternal(InputType input, int frame)
 	else
 		childResult = RESULT_CONTINUE;
 	items.Loop(input);
-	if (backRegister.Register(input))
+	if (backRegister.Register(input) || close)
 		return RESULT_CLOSE;
 	else
 		return RESULT_CONTINUE;

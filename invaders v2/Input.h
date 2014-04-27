@@ -23,6 +23,8 @@ public:
 	const e::vector<bool> &Loop();
 	static Input &Get(){ return *instance;}
 	int GetLastKey(){ return lastKey; }
+	static e::string DecodeKey(int key);
+	void LoadKeys();
 private:
 	bool keys[256];
 	e::vector<e::pair<int, ACTION>> keyAction;

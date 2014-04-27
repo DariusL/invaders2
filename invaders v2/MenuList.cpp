@@ -72,7 +72,7 @@ void MenuList::Reposition()
 	uint count = show > items.size() ? items.size() : show;
 	auto off = e::XMLoadFloat3(&offset);
 	auto first = e::XMLoadFloat3(&pos);
-	first -= off * (float)count / 2.0f;
+	first -= off * float(count - 1) / 2.0f;
 	for (uint i = this->first; i < this->first + show && i < items.size(); i++)
 	{
 		items[i]->MoveTo(first);
