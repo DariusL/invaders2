@@ -79,6 +79,6 @@ e::string Input::DecodeKey(int key)
 	case VK_ESCAPE:
 		return "ESCAPE";
 	default:
-		return e::to_string((char)key);
+		return e::string(reinterpret_cast<char*>(&key), 1);
 	}
 }
