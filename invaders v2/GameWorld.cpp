@@ -5,9 +5,9 @@
 using namespace e;
 
 GameWorld::GameWorld(ID3D11Device *device, e::XMVECTOR pos)
-:playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f), Observers::EVENT_PLAYER_BULLET_CREATE),
-collider(),
-enemies(device, pos, 10.0f, size.x, 8)
+	:playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f), GameObservers::EVENT_PLAYER_BULLET_CREATE),
+	collider(),
+	enemies(device, pos, 10.0f, size.x, 8)
 {
 	auto &rm = RM::Get();
 	player = make_shared<ColorDrawableEntity>(rm.GetModel(RM::MODEL_PLAYER), rm.GetShader<ColorShader>(), e::make_shared<GameEntity>(pos - e::XMVectorSet(0.0f, size.y / 2.0f, 0.0f, 0.0f), 100, 100, 0.02f, rm.GetModel(RM::MODEL_PLAYER).GetSize(), Gun::PlayerGun(500)), e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f));

@@ -1,6 +1,7 @@
 #pragma once
 #include "includes.h"
 #include "GameEntity.h"
+template<typename... Args>
 class Observers
 {
 public:
@@ -12,7 +13,7 @@ public:
 		EVENT_ENEMY_BULLET_CREATE
 	};
 private:
-	static e::unordered_map<int, e::vector<e::function<void(const e::shared_ptr<GameEntity>)>>> observers;
+	static e::unordered_map<int, e::vector<e::function<void(Args...)>>> observers;
 
 public:
 	template<typename Observer>
@@ -21,13 +22,13 @@ public:
 		observers[ev].push_back(e::forward<Observer>(observer));
 	}
 
-	static void Notify(int ev, const e::shared_ptr<GameEntity> entity)
+	static void Notify(int ev, Args... args)
 	{
 		try
 		{
 			auto &obs = observers.at(ev);
 			for (auto &o : obs)
-				o(entity);
+				o(args...);
 		}
 		catch (...){}
 	}
@@ -37,3 +38,8 @@ public:
 		observers.clear();
 	}
 };
+
+template<typename... Args>
+e::unordered_map<int, e::vector<e::function<void(Args...)>>> Observers<Args...>::observers;
+
+using GameObservers = Observers < const e::shared_ptr<GameEntity> > ;

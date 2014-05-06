@@ -11,5 +11,5 @@ public:
 	EnemyList(GameEntityList &&other):GameEntityList(e::move(other)){}
 
 protected:
-	void OnRemove(const e::shared_ptr<GameEntity> entity){ Observers::Notify(Observers::EVENT_ENEMY_DEATH, entity); }
+	void OnRemove(const e::shared_ptr<GameEntity> entity){ GameObservers::Notify(GameObservers::EVENT_ENEMY_DEATH, entity); }
 };

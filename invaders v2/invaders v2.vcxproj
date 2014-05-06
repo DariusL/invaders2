@@ -148,7 +148,6 @@
     <ClCompile Include="SettingsAttribute.cpp" />
     <ClCompile Include="SettingsMenu.cpp" />
     <ClCompile Include="StringPool.cpp" />
-    <ClCompile Include="Observers.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureShader.cpp" />

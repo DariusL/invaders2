@@ -169,9 +169,6 @@
     <ClCompile Include="ColorDrawableEntity.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Observers.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Attribute.cpp">
       <Filter>Menu</Filter>
     </ClCompile>

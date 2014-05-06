@@ -14,17 +14,17 @@ void Gun::Fire(e::XMVECTOR gunPos)
 	if (lastFired + firePeriod <= now)
 	{
 		lastFired = now;
-		Observers::Notify(spawnEvent, e::make_shared<GameEntity>(gunPos + Utils::VectorSet(0.0f, off), 1, 10, 0.0f, bulletSize));
+		GameObservers::Notify(spawnEvent, e::make_shared<GameEntity>(gunPos + Utils::VectorSet(0.0f, off), 1, 10, 0.0f, bulletSize));
 	}
 }
 
 
 e::unique_ptr<Gun> Gun::PlayerGun(uint firePeriod)
 {
-	return make_unique<Gun>(Observers::EVENT_PLAYER_BULLET_CREATE, firePeriod, 1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
+	return make_unique<Gun>(GameObservers::EVENT_PLAYER_BULLET_CREATE, firePeriod, 1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
 }
 
 e::unique_ptr<Gun> Gun::EnemyGun(uint firePeriod)
 {
-	return make_unique<Gun>(Observers::EVENT_ENEMY_BULLET_CREATE, firePeriod, -1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
+	return make_unique<Gun>(GameObservers::EVENT_ENEMY_BULLET_CREATE, firePeriod, -1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
 }
