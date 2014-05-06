@@ -5,7 +5,7 @@
 using namespace e;
 
 GameWorld::GameWorld(ID3D11Device *device, e::XMVECTOR pos)
-	:playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f), GameObservers::EVENT_PLAYER_BULLET_CREATE),
+	:playerBullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, 1.0f), GAME_EVENT_PLAYER_BULLET_CREATE),
 	collider(),
 	enemies(device, pos, 10.0f, size.x, 8)
 {

@@ -4,14 +4,6 @@
 template<typename... Args>
 class Observers
 {
-public:
-	enum EVENT
-	{
-		EVENT_ENEMY_DEATH,
-		EVENT_PLAYER_BULLET_CREATE,
-		EVENT_ENEMY_CREATE,
-		EVENT_ENEMY_BULLET_CREATE
-	};
 private:
 	static e::unordered_map<int, e::vector<e::function<void(Args...)>>> observers;
 

@@ -21,10 +21,10 @@ void Gun::Fire(e::XMVECTOR gunPos)
 
 e::unique_ptr<Gun> Gun::PlayerGun(uint firePeriod)
 {
-	return make_unique<Gun>(GameObservers::EVENT_PLAYER_BULLET_CREATE, firePeriod, 1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
+	return make_unique<Gun>(GAME_EVENT_PLAYER_BULLET_CREATE, firePeriod, 1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
 }
 
 e::unique_ptr<Gun> Gun::EnemyGun(uint firePeriod)
 {
-	return make_unique<Gun>(GameObservers::EVENT_ENEMY_BULLET_CREATE, firePeriod, -1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
+	return make_unique<Gun>(GAME_EVENT_ENEMY_BULLET_CREATE, firePeriod, -1.0f, RM::Get().GetModel(RM::MODEL_PLAYER));
 }
