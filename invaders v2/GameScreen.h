@@ -7,12 +7,12 @@
 
 class GameScreen : public Screen
 {
+	GameObservers gameObservers;
 	PressRegister pause;
 	GameWorld world;
 	Counter score, exp;
 public:
 	GameScreen(e::XMVECTOR pos);
-	~GameScreen(){ GameObservers::Cleanup(); }
 	void RenderInternal(const RenderParams &params);
 	int LoopInternal(InputType input, int frame);
 	void DelayInternal();
