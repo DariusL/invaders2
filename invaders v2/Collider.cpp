@@ -6,9 +6,9 @@
 Collider::Collider()
 {
 	auto second = e::bind(&Collider::InsertSecond, this, e::placeholders::_1);
-	GameObservers::Register(GAME_EVENT_ENEMY_CREATE, second);
-	GameObservers::Register(GAME_EVENT_ENEMY_BULLET_CREATE, second);
-	GameObservers::Register(GAME_EVENT_PLAYER_BULLET_CREATE, e::bind(&Collider::InsertFirst, this, e::placeholders::_1));
+	or1 = GameObservers::Register(GAME_EVENT_ENEMY_CREATE, second);
+	or2 = GameObservers::Register(GAME_EVENT_ENEMY_BULLET_CREATE, second);
+	or3 = GameObservers::Register(GAME_EVENT_PLAYER_BULLET_CREATE, e::bind(&Collider::InsertFirst, this, e::placeholders::_1));
 }
 
 void Collider::InsertFirst(e::shared_ptr<GameEntity> entity)

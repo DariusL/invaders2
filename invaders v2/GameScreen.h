@@ -7,10 +7,10 @@
 
 class GameScreen : public Screen
 {
-	GameObservers gameObservers;
 	PressRegister pause;
 	GameWorld world;
 	Counter score, exp;
+	GameObservers::ObserverScopeRef or;
 public:
 	GameScreen(e::XMVECTOR pos);
 	void RenderInternal(const RenderParams &params);

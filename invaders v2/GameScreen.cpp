@@ -9,7 +9,7 @@ GameScreen::GameScreen(e::XMVECTOR pos)
 score(pos + Utils::VectorSet(25.0f, -10.0f), "SCORE", 15.0f),
 exp(pos + Utils::VectorSet(25.0f, -12.0f), "EXP", 15.0f)
 {
-	GameObservers::Register(GAME_EVENT_ENEMY_DEATH, e::bind(&GameScreen::UpdateCounters, this, e::placeholders::_1));
+	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, e::bind(&GameScreen::UpdateCounters, this, e::placeholders::_1));
 }
 
 void GameScreen::RenderInternal(const RenderParams &params)
