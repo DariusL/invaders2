@@ -27,6 +27,7 @@ void Input::LoadKeys()
 	keyAction.push_back(e::make_pair(s.at(Settings::KEY_LEFT_KEY), ACTION_LEFT));
 	keyAction.push_back(e::make_pair(s.at(Settings::KEY_RIGHT_KEY), ACTION_RIGHT));
 	keyAction.push_back(e::make_pair(s.at(Settings::KEY_FIRE_KEY), ACTION_FIRE));
+	keyAction.push_back(e::make_pair(s.at(Settings::KEY_UPGRADE_KEY), ACTION_UPGRADE));
 	keyAction.push_back(e::make_pair(VK_ESCAPE, ACTION_BACK));
 	keyAction.push_back(e::make_pair(VK_RETURN, ACTION_ENTER));
 }

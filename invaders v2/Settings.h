@@ -11,7 +11,8 @@ public:
 		KEY_RIGHT_KEY = 2,
 		KEY_UP_KEY = 3,
 		KEY_DOWN_KEY = 4,
-		KEY_BACK_KEY = 5
+		KEY_BACK_KEY = 5,
+		KEY_UPGRADE_KEY = 6
 	};
 private:
 	e::unordered_map<KEY, int> settings;

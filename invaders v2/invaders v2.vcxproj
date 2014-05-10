@@ -110,6 +110,7 @@
     <ClCompile Include="ColorDrawableEntity.cpp" />
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="Counter.cpp" />
+    <ClCompile Include="CounterButton.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="GameEntityList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
@@ -140,7 +141,6 @@
     <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="Movement.cpp" />
-    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -151,6 +151,7 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureShader.cpp" />
+    <ClCompile Include="UpgradeMenu.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VerticalBlurComputeShader.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="ColorDrawableEntity.h" />
     <ClInclude Include="ComputeShader.h" />
     <ClInclude Include="Counter.h" />
+    <ClInclude Include="CounterButton.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
@@ -189,7 +191,6 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PressRegister.h" />
-    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsAttribute.h" />
@@ -231,6 +232,7 @@
     <ClInclude Include="TexelSumComputeShader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureShader.h" />
+    <ClInclude Include="UpgradeMenu.h" />
     <ClInclude Include="UpSampleComputeShader.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Input.h" />

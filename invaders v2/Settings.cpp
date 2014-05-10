@@ -19,6 +19,7 @@ Settings::Settings(e::wstring filename)
 		e::make_pair(Settings::KEY_UP_KEY, VK_UP),
 		e::make_pair(Settings::KEY_DOWN_KEY, VK_DOWN),
 		e::make_pair(Settings::KEY_BACK_KEY, VK_ESCAPE),
+		e::make_pair(Settings::KEY_UPGRADE_KEY, int('U'))
 	});
 	Load();
 }

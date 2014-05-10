@@ -39,4 +39,10 @@ public:
 	void MoveBy(e::XMVECTOR step);
 	void MoveTo(e::XMFLOAT3 pos);
 	void MoveTo(e::XMVECTOR pos);
+
+	void SetHealth(int health){ this->health = health; }
+	void SetMaxHealth(int maxHealth){ this->maxHealth = health; }
+
+	int GetHealth(){ return health; }
+	int GetMaxHealth(){ return maxHealth; }
 };

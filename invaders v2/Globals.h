@@ -9,7 +9,8 @@
 template <typename T>
 using ComVector = e::vector<e::ComPtr<T>>;
 
-typedef unsigned int uint;
+using uint = unsigned int;
+using ulong = unsigned long long;
 
 extern const e::XMFLOAT3 ZeroVec3;
 extern const e::XMFLOAT4 ZeroVec4;
@@ -93,6 +94,16 @@ enum GAME_EVENT
 	GAME_EVENT_PLAYER_BULLET_CREATE,
 	GAME_EVENT_ENEMY_CREATE,
 	GAME_EVENT_ENEMY_BULLET_CREATE
+};
+
+enum UPGRADE_EVENT
+{
+	UPGRADE_EVENT_HEALTH_SET,
+	UPGRADE_EVENT_MAX_HEALTH_SET,
+	UPGRADE_EVENT_WEPON_PERIOD_SET,
+	UPGRADE_EVENT_WEPON_DMG_SET,
+	UPGRADE_EVENT_WEPON_COUNT_SET,
+	UPGRADE_EVENT_EXP_SET
 };
 
 __declspec(align(16)) struct RenderParams

@@ -2,7 +2,6 @@
 #include "MenuItem.h"
 #include "Grid.h"
 #include "BulletList.h"
-#include "Quadtree.h"
 #include "Collider.h"
 #include "ColorDrawableEntity.h"
 #include "Observers.h"
@@ -15,10 +14,13 @@ class GameWorld : public IDrawable
 	XMFLOAT3 pos;
 	Collider collider;
 	Grid enemies;
+	ulong difficulty;
+	e::vector<UpgradeObservers::ObserverScopeRef> or;
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(InputType input, int frame);
 	void Render(const RenderParams &params);
+	e::unordered_map<int, int> GetPlayerData();
 private:
 	void OnEnemyDeath(const e::shared_ptr<GameEntity> enemy);
 };

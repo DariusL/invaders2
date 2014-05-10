@@ -7,8 +7,10 @@ class Observers
 public:
 	using funcs = e::list<e::function<void(Args...)>>;
 	using it = typename funcs::const_iterator;
+
 private:
 	static e::unordered_map<int, funcs> observers;
+
 public:
 	class ObserverScopeRef;
 
@@ -34,19 +36,19 @@ public:
 	}
 
 private:
-
 	static void Remove(int key, it iterator)
 	{
 		observers[key].erase(iterator);
 	}
-public:
 
+public:
 	class ObserverScopeRef
 	{
 		it iterator;
 		int key;
 		bool init;
 		using Parent = Observers<Args...>;
+
 	public:
 		ObserverScopeRef(int key, it iterator) : key(key), iterator(iterator), init(true){}
 		ObserverScopeRef() : init(false){}
@@ -64,6 +66,8 @@ public:
 		ObserverScopeRef& operator=(ObserverScopeRef&) = delete;
 		ObserverScopeRef& operator=(ObserverScopeRef &&other)
 		{
+			if (init)
+				Parent::Remove(key, iterator);
 			if (this != &other)
 			{
 				init = other.init;
@@ -79,4 +83,5 @@ public:
 template<typename... Args>
 e::unordered_map<int, typename Observers<Args...>::funcs> Observers<Args...>::observers;
 
-using GameObservers = Observers < const e::shared_ptr<GameEntity> > ;
+using GameObservers = Observers<const e::shared_ptr<GameEntity>>;
+using UpgradeObservers = Observers<int>;

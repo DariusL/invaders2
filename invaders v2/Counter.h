@@ -11,6 +11,7 @@ public:
 	void SetCount(int count);
 	bool Loop(InputType input);
 	void Delay();
+	int GetValue(){ return count; }
 	Counter &operator+=(int off);
 	Counter &operator-=(int off);
 	Counter &operator++();

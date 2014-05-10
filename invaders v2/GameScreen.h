@@ -7,10 +7,11 @@
 
 class GameScreen : public Screen
 {
-	PressRegister pause;
+	PressRegister pause, upgrade;
 	GameWorld world;
 	Counter score, exp;
 	GameObservers::ObserverScopeRef or;
+	UpgradeObservers::ObserverScopeRef ur;
 public:
 	GameScreen(e::XMVECTOR pos);
 	void RenderInternal(const RenderParams &params);
@@ -18,4 +19,5 @@ public:
 	void DelayInternal();
 private:
 	void UpdateCounters(const e::shared_ptr<GameEntity> entity);
+	e::unordered_map<int, int> GetPlayerData();
 };
