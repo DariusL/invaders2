@@ -50,12 +50,12 @@ void Grid::Loop(int frame)
 		if (dir == LEFT)
 		{
 			dir = RIGHT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f - width, this->first.y - drop), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / 2.0f - width, this->first.y - drop, this->first.z), this->time);
 		}
 		else
 		{
 			dir = LEFT;
-			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->first.y - drop), this->time);
+			movement = Movement(pos, Utils::VectorSet(worldWidth / -2.0f, this->first.y - drop, this->first.z), this->time);
 		}
 	}
 	MoveTo(pos);
