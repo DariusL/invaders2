@@ -13,9 +13,11 @@ public:
 	Screen(e::XMVECTOR pos);
 	void Render(const RenderParams &params);
 	int Loop(InputType input, int frame);
-	Camera &GetCamera(){ return camera; }
+	Camera &GetCamera();
 protected:
 	virtual void RenderInternal(const RenderParams &params) = 0;
 	virtual int LoopInternal(InputType input, int frame) = 0;
 	virtual void DelayInternal() = 0;
+	virtual bool ShouldRenderParent();
+	e::XMVECTOR GetChildPos();
 };

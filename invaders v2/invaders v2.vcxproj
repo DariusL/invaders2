@@ -221,7 +221,6 @@
     <ClInclude Include="IPass.h" />
     <ClInclude Include="IPosShader.h" />
     <ClInclude Include="IShader.h" />
-    <ClInclude Include="IWorld.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="RenderTarget.h" />

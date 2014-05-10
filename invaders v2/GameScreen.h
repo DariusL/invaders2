@@ -17,6 +17,8 @@ public:
 	void RenderInternal(const RenderParams &params);
 	int LoopInternal(InputType input, int frame);
 	void DelayInternal();
+protected:
+	virtual bool ShouldRenderParent();
 private:
 	void UpdateCounters(const e::shared_ptr<GameEntity> entity);
 	e::unordered_map<int, int> GetPlayerData();

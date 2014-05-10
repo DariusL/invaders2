@@ -20,17 +20,20 @@ void UpgradeMenu::SetProperty(int key, int val)
 
 void UpgradeMenu::Upgrade(int key)
 {
-	switch (key)
+	if (values[UPGRADE_EVENT_EXP_SET] > 100)
 	{
-	case UPGRADE_EVENT_HEALTH_SET:
-		UpgradeObservers::Notify(UPGRADE_EVENT_HEALTH_SET, values[UPGRADE_EVENT_MAX_HEALTH_SET]);
-		UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
-		break;
-	case UPGRADE_EVENT_MAX_HEALTH_SET:
-		UpgradeObservers::Notify(UPGRADE_EVENT_MAX_HEALTH_SET, values[UPGRADE_EVENT_MAX_HEALTH_SET] + 20);
-		UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
-		break;
-	default:
-		break;
+		switch (key)
+		{
+		case UPGRADE_EVENT_HEALTH_SET:
+			UpgradeObservers::Notify(UPGRADE_EVENT_HEALTH_SET, values[UPGRADE_EVENT_MAX_HEALTH_SET]);
+			UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
+			break;
+		case UPGRADE_EVENT_MAX_HEALTH_SET:
+			UpgradeObservers::Notify(UPGRADE_EVENT_MAX_HEALTH_SET, values[UPGRADE_EVENT_MAX_HEALTH_SET] + 20);
+			UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
+			break;
+		default:
+			break;
+		}
 	}
 }

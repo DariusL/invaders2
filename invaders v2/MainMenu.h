@@ -11,8 +11,8 @@ class MainMenu : public MenuScreen
 public:
 	MainMenu(e::XMVECTOR pos) :MenuScreen(pos, "MAIN MENU"), quit(false)
 	{
-		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "START GAME", [=]{ auto pos = XMLoadFloat3(&this->pos); this->child = make_unique<GameScreen>(pos); }));
-		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "SETTINGS", [=]{ auto pos = XMLoadFloat3(&this->pos); this->child = make_unique<SettingsMenu>(pos); }));
+		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "START GAME", [=]{ this->child = make_unique<GameScreen>(this->GetChildPos()); }));
+		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "SETTINGS", [=]{ this->child = make_unique<SettingsMenu>(this->GetChildPos()); }));
 		Add(make_unique<Button>(XMLoadFloat3(&ZeroVec3), "QUIT", [=]{ this->quit = true; }));
 	}
 

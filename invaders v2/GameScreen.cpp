@@ -27,9 +27,9 @@ int GameScreen::LoopInternal(InputType input, int frame)
 	if (childResult == RESULT_QUIT_APP || childResult == RESULT_QUIT_TO_MAIN)
 		return childResult;
 	if (pause.Register(input))
-		child = e::make_unique<PauseMenu>(e::XMLoadFloat3(&pos));
+		child = e::make_unique<PauseMenu>(GetChildPos());
 	if (upgrade.Register(input))
-		child = e::make_unique<UpgradeMenu>(e::XMLoadFloat3(&pos), GetPlayerData());
+		child = e::make_unique<UpgradeMenu>(GetChildPos(), GetPlayerData());
 	world.Loop(input, frame);
 	return RESULT_CONTINUE;
 }
@@ -53,4 +53,9 @@ e::unordered_map<int, int> GameScreen::GetPlayerData()
 	auto moarRet = world.GetPlayerData();
 	ret.insert(moarRet.begin(), moarRet.end());
 	return ret;
+}
+
+bool GameScreen::ShouldRenderParent()
+{
+	return false;
 }

@@ -279,9 +279,6 @@
     <ClInclude Include="IInstance.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="IWorld.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Framework</Filter>
     </ClInclude>
