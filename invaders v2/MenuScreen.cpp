@@ -30,10 +30,12 @@ int MenuScreen::LoopInternal(InputType input, int frame)
 		return RESULT_CONTINUE;
 }
 
-void MenuScreen::RenderInternal(const RenderParams &params)
+void MenuScreen::RenderInternal(RenderParams &params)
 {
+	params.gray = child != nullptr;
 	header.Render(params);
 	items.Render(params);
+	params.gray = false;
 }
 
 void MenuScreen::DelayInternal()

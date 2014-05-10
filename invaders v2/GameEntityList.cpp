@@ -58,7 +58,7 @@ e::shared_ptr<GameEntity> GameEntityList::Get(uint i)
 		return nullptr;
 }
 
-void GameEntityList::Render(const RenderParams &params)
+void GameEntityList::Render(RenderParams &params)
 {
 	if (!Update(params.context))
 		return;

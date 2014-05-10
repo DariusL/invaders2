@@ -13,7 +13,7 @@ public:
 	virtual ~IShader(){}
 	virtual void Init(ID3D11Device *device);
 	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){context->DrawIndexed(indexCount, 0, 0);}
-	virtual void SetShader(const RenderParams &params);
+	virtual void SetShader(RenderParams &params);
 protected:
 	void InitializeShader(ID3D11Device *device, e::wstring vs, e::wstring ps, const e::vector<D3D11_INPUT_ELEMENT_DESC> &inputLayout);
 	virtual void InitializeShaderBuffers(ID3D11Device *device) = 0;

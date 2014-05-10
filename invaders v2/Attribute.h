@@ -14,7 +14,7 @@ public:
 	virtual bool Loop(InputType input){ return false; }
 	virtual void Delay(){}
 	virtual void Select(bool selected);
-	virtual void Render(const RenderParams &params);
+	virtual void Render(RenderParams &params);
 	void MoveTo(e::XMVECTOR pos);
 protected:
 	void Reposition();

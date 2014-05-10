@@ -7,7 +7,7 @@ ColorDrawableEntity::ColorDrawableEntity(ColorModel &model, ColorShader &shader,
 {
 }
 
-void ColorDrawableEntity::Render(const RenderParams &params)
+void ColorDrawableEntity::Render(RenderParams &params)
 {
 	using namespace e;
 	if (!Update(params.context))
@@ -15,6 +15,6 @@ void ColorDrawableEntity::Render(const RenderParams &params)
 	model->Set(params.context);
 	XMMATRIX scale = XMLoadFloat4x4(&scaleMatrix);
 	XMMATRIX world = XMLoadFloat4x4(&moveMatrix);
-	shader->SetShaderParameters(params, scale * world, color);
+	shader->SetShaderParameters(params, scale * world, params.gray ? Gray : color);
 	shader->RenderShader(params.context, model->GetIndexCount());
 }

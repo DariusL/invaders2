@@ -10,8 +10,8 @@ class ColorInstancedShader : public IInstanceShader
 public:
 	ColorInstancedShader(e::wstring vs, e::wstring ps) :IInstanceShader(vs, ps){}
 	virtual ~ColorInstancedShader(void){}
-	virtual void SetShaderParametersInstanced(const RenderParams &params, const e::XMFLOAT4 &color);
-	virtual void SetShaderParametersInstanced(const RenderParams &params);
+	virtual void SetShaderParametersInstanced(RenderParams &params, const e::XMFLOAT4 &color);
+	virtual void SetShaderParametersInstanced(RenderParams &params);
 	virtual void InitializeShaderBuffers(ID3D11Device *device);
 protected:
 	virtual e::vector<D3D11_INPUT_ELEMENT_DESC> GetInputLayout();

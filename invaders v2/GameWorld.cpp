@@ -35,7 +35,7 @@ void GameWorld::Loop(InputType input, int frame)
 	enemies.Loop(frame);
 }
 
-void GameWorld::Render(const RenderParams &params)
+void GameWorld::Render(RenderParams &params)
 {
 	player->Render(params);
 	enemies.Render(params);

@@ -15,11 +15,13 @@ upgrade(Input::ACTION_UPGRADE)
 	ur = UpgradeObservers::Register(UPGRADE_EVENT_EXP_SET, e::bind(&Counter::SetCount, &exp, e::placeholders::_1));
 }
 
-void GameScreen::RenderInternal(const RenderParams &params)
+void GameScreen::RenderInternal(RenderParams &params)
 {
+	params.gray = child != nullptr;
 	world.Render(params);
 	score.Render(params);
 	exp.Render(params);
+	params.gray = false;
 }
 
 int GameScreen::LoopInternal(InputType input, int frame)

@@ -9,7 +9,7 @@ Screen::Screen(e::XMVECTOR pos)
 	camera.Move(e::XMVectorAdd(pos, e::XMVectorSet(0.0f, 0.0f, 50.0f, 0.0f)));
 }
 
-void Screen::Render(const RenderParams &params)
+void Screen::Render(RenderParams &params)
 {
 	if (child != nullptr)
 	{

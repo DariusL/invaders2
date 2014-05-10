@@ -31,7 +31,7 @@ private:
 	BulletList bullets;
 public:
 	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 	void Loop(int frame);
 	void MoveTo(e::XMVECTOR pos);
 private:

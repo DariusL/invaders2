@@ -19,8 +19,8 @@ public:
 	DrawableTexturedEntity(DrawableTexturedEntity&) = delete;
 	DrawableTexturedEntity &operator=(DrawableTexturedEntity&) = delete;
 
-	virtual void Render(const RenderParams &renderParams);
-	virtual void Render(const RenderParams &renderParams, vector<ID3D11ShaderResourceView*> texture);
+	virtual void Render(RenderParams &renderParams);
+	virtual void Render(RenderParams &renderParams, vector<ID3D11ShaderResourceView*> texture);
 };
 
 typedef DrawableTexturedEntity<TextureVertexType, TextureShader> SimpleTexturedEntity;
@@ -41,7 +41,7 @@ DrawableTexturedEntity<vt, sh>::DrawableTexturedEntity(DrawableTexturedEntity &&
 }
 
 template<class vt, class sh>
-void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
+void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params)
 {
 	if (!Update(params.context))
 		return;
@@ -55,7 +55,7 @@ void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params)
 }
 
 template<class vt, class sh>
-void DrawableTexturedEntity<vt, sh>::Render(const RenderParams &params, vector<ID3D11ShaderResourceView*> texture)
+void DrawableTexturedEntity<vt, sh>::Render(RenderParams &params, vector<ID3D11ShaderResourceView*> texture)
 {
 	this->texture = texture;
 	Render(params);

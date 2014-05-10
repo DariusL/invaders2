@@ -21,7 +21,7 @@ public:
 	DrawableEntity &operator=(DrawableEntity &&other);
 	virtual ~DrawableEntity(void);
 
-	virtual void Render(const RenderParams &renderParams);
+	virtual void Render(RenderParams &renderParams);
 	virtual void SetScale(float scale);
 	e::shared_ptr<en> &GetEntity(){ return entity; }
 	e::XMFLOAT2 GetSize() { return model->GetSize(); }
@@ -67,7 +67,7 @@ DrawableEntity<vt, sh, en>::~DrawableEntity(void)
 }
 
 template<class vt, class sh, class en>
-void DrawableEntity<vt, sh, en>::Render(const RenderParams &params)
+void DrawableEntity<vt, sh, en>::Render(RenderParams &params)
 {
 	if (!Update(params.context))
 		return;

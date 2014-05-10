@@ -24,7 +24,7 @@ bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorI
 	AddRow();
 }
 
-void Grid::Render(const RenderParams &params)
+void Grid::Render(RenderParams &params)
 {
 	for (auto &i : instancers)
 		i.second->Render(params);

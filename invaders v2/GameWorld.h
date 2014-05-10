@@ -19,7 +19,7 @@ class GameWorld : public IDrawable
 public:
 	GameWorld(ID3D11Device *device, e::XMVECTOR pos);
 	void Loop(InputType input, int frame);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 	e::unordered_map<int, int> GetPlayerData();
 private:
 	void OnEnemyDeath(const e::shared_ptr<GameEntity> enemy);

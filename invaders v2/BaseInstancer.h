@@ -25,7 +25,7 @@ protected:
 	Model<vt> &model;
 	sh &shader;
 public:
-	virtual void Render(const RenderParams& params);
+	virtual void Render(RenderParams& params);
 
 protected:
 	virtual bool Update(ID3D11DeviceContext *context);
@@ -50,7 +50,7 @@ model(other.model), shader(other.shader)
 }
 
 template<class vt, class sh, class it>
-void BaseInstancer<vt, sh, it>::Render(const RenderParams &params)
+void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
 {
 	if(!Update(params.context))
 		return;

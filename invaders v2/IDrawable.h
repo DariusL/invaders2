@@ -10,5 +10,5 @@ public:
 
 	IDrawable(IDrawable&) = delete;
 
-	virtual void Render(const RenderParams&) = 0;
+	virtual void Render(RenderParams&) = 0;
 };

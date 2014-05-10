@@ -19,7 +19,7 @@ class MenuScreen : public Screen
 public:
 	MenuScreen(e::XMVECTOR pos, e::string header);
 protected:
-	virtual void RenderInternal(const RenderParams &params);
+	virtual void RenderInternal(RenderParams &params);
 	virtual int LoopInternal(InputType input, int frame);
 	virtual void DelayInternal();
 	virtual void Close(){ close = true; }

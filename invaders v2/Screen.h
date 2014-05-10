@@ -11,11 +11,11 @@ protected:
 	int childResult;
 public:
 	Screen(e::XMVECTOR pos);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 	int Loop(InputType input, int frame);
 	Camera &GetCamera();
 protected:
-	virtual void RenderInternal(const RenderParams &params) = 0;
+	virtual void RenderInternal(RenderParams &params) = 0;
 	virtual int LoopInternal(InputType input, int frame) = 0;
 	virtual void DelayInternal() = 0;
 	virtual bool ShouldRenderParent();

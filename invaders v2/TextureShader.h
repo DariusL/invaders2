@@ -7,8 +7,8 @@ public:
 	virtual ~TextureShader(void){}
 
 	virtual void Init(ID3D11Device *device);
-	virtual void SetShaderParametersTextured(const RenderParams &params, const e::XMMATRIX &world, const e::vector<ID3D11ShaderResourceView*> &textures);
-	void SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world){ using namespace e; AssertBool(false, L"SetShaderParameters called on a texture shader"); }
+	virtual void SetShaderParametersTextured(RenderParams &params, const e::XMMATRIX &world, const e::vector<ID3D11ShaderResourceView*> &textures);
+	void SetShaderParameters(RenderParams &params, const e::XMMATRIX &world){ using namespace e; AssertBool(false, L"SetShaderParameters called on a texture shader"); }
 	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount);
 
 protected:

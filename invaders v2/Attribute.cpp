@@ -35,7 +35,7 @@ void Attribute::Select(bool selected)
 	value.SetScale(scale);
 }
 
-void Attribute::Render(const RenderParams &params)
+void Attribute::Render(RenderParams &params)
 {
 	value.Render(params);
 	name.Render(params);

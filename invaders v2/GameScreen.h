@@ -14,7 +14,7 @@ class GameScreen : public Screen
 	UpgradeObservers::ObserverScopeRef ur;
 public:
 	GameScreen(e::XMVECTOR pos);
-	void RenderInternal(const RenderParams &params);
+	void RenderInternal(RenderParams &params);
 	int LoopInternal(InputType input, int frame);
 	void DelayInternal();
 protected:

@@ -55,7 +55,7 @@ int TestScene::Loop(int input, int frameLength)
 	return RESULT_CONTINUE;
 }
 
-void TestScene::Render(const RenderParams &params)
+void TestScene::Render(RenderParams &params)
 {
 	for (auto &o : stuff)
 		o->Render(params);

@@ -15,7 +15,7 @@ public:
 	MenuList(e::XMVECTOR pos, e::XMFLOAT3 offset, uint show, Input::ACTION nextKey = Input::ACTION_DOWN, Input::ACTION prevKey = Input::ACTION_UP);
 	bool Loop(InputType input);
 	void Delay();
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 	void SetSelection(int selected);
 	void Select(bool selected);
 	template<class T>

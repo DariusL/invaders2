@@ -22,9 +22,9 @@ public:
 
 	virtual void RenderShader(ID3D11DeviceContext *context, int indexCount){ using namespace e;  AssertBool(false, L"RenderShader called on an instanced shader"); }
 
-	void SetShaderParameters(const RenderParams &params, const e::XMMATRIX &posMatrix){ using namespace e; AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
+	void SetShaderParameters(RenderParams &params, const e::XMMATRIX &posMatrix){ using namespace e; AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
 
-	virtual void SetShaderParametersInstanced(const RenderParams &params)
+	virtual void SetShaderParametersInstanced(RenderParams &params)
 	{
 		InstancedMatrixType matrices;
 		e::XMStoreFloat4x4(&matrices.view, XMMatrixTranspose(params.view));

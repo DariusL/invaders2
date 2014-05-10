@@ -45,7 +45,7 @@ void MenuList::Delay()
 		item->Delay();
 }
 
-void MenuList::Render(const RenderParams &params)
+void MenuList::Render(RenderParams &params)
 {
 	for (uint i = first; i < first + show && i < items.size(); i++)
 		items[i]->Render(params);

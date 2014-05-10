@@ -20,7 +20,7 @@ public:
 	void Add(e::shared_ptr<GameEntity> enemy);
 	void MoveBy(e::XMVECTOR pos);
 	e::shared_ptr<GameEntity> Get(uint i);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 protected:
 	virtual void OnRemove(const e::shared_ptr<GameEntity> entity){}
 };

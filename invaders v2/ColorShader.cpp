@@ -26,13 +26,13 @@ void ColorShader::InitializeShaderBuffers(ID3D11Device *device)
 	colorBuffer = Buffer<e::XMFLOAT4>(device, &tmp);
 }
 
-void ColorShader::SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world)
+void ColorShader::SetShaderParameters(RenderParams &params, const e::XMMATRIX &world)
 {
 	IPositionShader::SetShaderParameters(params, world);
 	params.context->PSSetConstantBuffers(0, 1, colorBuffer.GetAddressOf());
 }
 
-void ColorShader::SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world, const e::XMFLOAT4 color)
+void ColorShader::SetShaderParameters(RenderParams &params, const e::XMMATRIX &world, const e::XMFLOAT4 color)
 {
 	colorBuffer.SetData(params.context, color);
 	SetShaderParameters(params, world);

@@ -15,7 +15,7 @@ public:
 	IPositionShader(e::wstring vs, e::wstring ps) :IShader(vs, ps){}
 	virtual ~IPositionShader(){}
 
-	virtual void SetShaderParameters(const RenderParams &params, const e::XMMATRIX &world)
+	virtual void SetShaderParameters(RenderParams &params, const e::XMMATRIX &world)
 	{
 		MatrixType vertexMatrices;
 		

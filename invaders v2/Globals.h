@@ -17,6 +17,8 @@ extern const e::XMFLOAT4 ZeroVec4;
 extern const e::XMFLOAT3 OneVec3;
 extern const e::XMFLOAT2 ZeroVec2;
 
+extern const e::XMFLOAT4 Gray;
+
 extern const e::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 extern const e::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;
 extern const e::ComPtr<ID3D11RenderTargetView> nullRenderTargetView;
@@ -115,6 +117,7 @@ __declspec(align(16)) struct RenderParams
 	e::XMFLOAT4 diffuseColor;
 	__declspec(align(16)) ID3D11DeviceContext *context;
 	__declspec(align(16)) Camera *camera;
+	__declspec(align(16)) bool gray;
 };
 
 struct BufferInfo

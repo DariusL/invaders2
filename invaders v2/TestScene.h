@@ -9,6 +9,6 @@ public:
 	TestScene();
 
 	int Loop(int input, int frameLength);
-	void Render(const RenderParams &params);
+	void Render(RenderParams &params);
 };
 
