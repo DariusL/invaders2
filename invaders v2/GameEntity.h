@@ -17,8 +17,9 @@ protected:
 	e::XMFLOAT2 size;
 
 	e::unique_ptr<Gun> gun;
+	e::XMFLOAT4 color;
 public:
-	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2, e::unique_ptr<Gun> gun = nullptr);
+	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2, e::unique_ptr<Gun> gun = nullptr, e::XMFLOAT4 color = Gray);
 	virtual ~GameEntity(){}
 
 	const e::XMFLOAT2 &GetSize() const { return size; }
@@ -45,4 +46,6 @@ public:
 
 	int GetHealth(){ return health; }
 	int GetMaxHealth(){ return maxHealth; }
+
+	const e::XMFLOAT4 &GetColor(){ return color; }
 };

@@ -5,17 +5,14 @@
 #include "ColorInstancedShader.h"
 #include "Model.h"
 
-class GameEntityList : public BaseInstancer<VertexType, ColorInstancedShader, e::XMFLOAT3>
+class GameEntityList : public BaseInstancer<VertexType, ColorInstancedShader, InstanceType>
 {
-private:
-	e::XMFLOAT4 color;
 protected:
 	e::vector<e::shared_ptr<GameEntity>> enemies;
 public:
-	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT4 color = e::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);
 	GameEntityList(GameEntityList &&other);
 
-	bool Update(ID3D11DeviceContext *context);
 	virtual void Loop(int frame);
 	void Add(e::shared_ptr<GameEntity> enemy);
 	void MoveBy(e::XMVECTOR pos);

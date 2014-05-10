@@ -2,8 +2,8 @@
 #include "GameEntity.h"
 using namespace e;
 
-GameEntity::GameEntity(e::XMVECTOR pos, int health, int damage, float speed, e::XMFLOAT2 size, e::unique_ptr<Gun> gun)
-:health(health), maxHealth(health), damage(damage), speed(speed), size(size), gun(e::move(gun))
+GameEntity::GameEntity(e::XMVECTOR pos, int health, int damage, float speed, e::XMFLOAT2 size, e::unique_ptr<Gun> gun, e::XMFLOAT4 color)
+	:health(health), maxHealth(health), damage(damage), speed(speed), size(size), gun(e::move(gun)), color(color)
 {
 	e::XMStoreFloat3(&this->pos, pos);
 }

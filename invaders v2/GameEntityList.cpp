@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "GameEntityList.h"
 
-GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT4 color)
-:BaseInstancer(device, model, shader, maxObjectCount), color(color)
+GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount)
+:BaseInstancer(device, model, shader, maxObjectCount)
 {
 }
 
@@ -10,15 +10,6 @@ GameEntityList::GameEntityList(GameEntityList &&other)
 :BaseInstancer(e::move(other))
 {
 	e::swap(enemies, other.enemies);
-}
-
-bool GameEntityList::Update(ID3D11DeviceContext *context)
-{
-	instanceCount = enemies.size();
-	instanceData.clear();
-	for (auto &enemy : enemies)
-		instanceData.push_back(enemy->GetPos());
-	return BaseInstancer::Update(context);
 }
 
 void GameEntityList::Loop(int frame)
@@ -60,10 +51,20 @@ e::shared_ptr<GameEntity> GameEntityList::Get(uint i)
 
 void GameEntityList::Render(RenderParams &params)
 {
+	InstanceType it;
+	instanceCount = enemies.size();
+	instanceData.clear();
+	for (auto &enemy : enemies)
+	{
+		it.color = params.gray ? Gray : enemy->GetColor();
+		it.position = enemy->GetPos();
+		instanceData.push_back(it);
+	}
+		
 	if (!Update(params.context))
 		return;
 	model.Set(params.context);
 	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
-	shader.SetShaderParametersInstanced(params, color);
+	shader.SetShaderParametersInstanced(params);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }

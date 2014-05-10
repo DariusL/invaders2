@@ -45,6 +45,8 @@ struct NormalVertexType
 struct InstanceType
 {
 	e::XMFLOAT3 position;
+	float padding;
+	e::XMFLOAT4 color;
 };
 
 struct ControlCodes

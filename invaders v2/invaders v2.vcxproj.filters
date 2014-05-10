@@ -500,5 +500,8 @@
     <FxCompile Include="TexelSumCompute.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="ColorInstancedPixel.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
