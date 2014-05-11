@@ -121,9 +121,3 @@ __declspec(align(16)) struct RenderParams
 	__declspec(align(16)) Camera *camera;
 	__declspec(align(16)) bool gray;
 };
-
-struct BufferInfo
-{
-	unsigned int offset;
-	unsigned int stride;
-};

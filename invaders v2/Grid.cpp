@@ -14,12 +14,15 @@ columnCount(columnCount),
 width(width),
 lastDrop(0),
 dropFreq(2000),
-bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE)
+bullets(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
+dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
-	instancers.emplace(RM::MODEL_PLAYER, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER), RM::Get().GetShader<ColorInstancedShader>(), 50));
-	instancers.emplace(RM::MODEL_PLAYER_AGAIN, e::make_unique<EnemyList>(device, RM::Get().GetModel(RM::MODEL_PLAYER_AGAIN), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	for (int i = RM::MODEL_ENEMY_1; i <= RM::MODEL_ENEMY_6; i++)
+	{
+		instancers.emplace(i, e::make_unique<EnemyList>(device, RM::Get().GetModel((RM::MODEL)i), RM::Get().GetShader<ColorInstancedShader>(), 50));
+	}
 	e::XMStoreFloat3(&this->first, first);
 	AddRow();
 }
@@ -81,9 +84,9 @@ void Grid::AddRow()
 	auto first = e::XMLoadFloat3(&this->first);
 	for (uint i = 0; i < columnCount; i++)
 	{
-		auto type = i % 2 ? RM::MODEL_PLAYER : RM::MODEL_PLAYER_AGAIN;
+		auto type = dist(generator);
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel(type).GetSize(), Gun::EnemyGun(1500), i % 2 ? e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) : e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel((RM::MODEL)type).GetSize(), Gun::EnemyGun(1500), i % 2 ? e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) : e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
 		instancers[type]->Add(enemy);
 		GameObservers::Notify(GAME_EVENT_ENEMY_CREATE, enemy);
 	}

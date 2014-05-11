@@ -35,7 +35,12 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 
 	models.emplace_back(device, plane);
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\player.obj"));
-	models.emplace_back(device, GetModelFromOBJ(L"Resources\\player.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy1.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy2.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy3.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy4.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy5.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy6.obj"));
 
 	Level *level = new Level();
 

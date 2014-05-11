@@ -28,6 +28,7 @@ private:
 	e::XMFLOAT3 first;
 	void AddRow();
 	e::default_random_engine generator;
+	e::uniform_int_distribution<int> dist;
 	BulletList bullets;
 public:
 	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount);
