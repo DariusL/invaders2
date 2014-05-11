@@ -10,9 +10,10 @@ class Gun
 	uint lastFired;
 	e::XMFLOAT2 bulletSize;
 	float off, bulletSpeed;
+	int damage;
 public:
-	Gun(int spawnEvent, uint firePeriod, float off, float bulletSpeed, ColorModel &model);
+	Gun(int spawnEvent, uint firePeriod, float off, int damage, ColorModel &model);
 	void Fire(e::XMVECTOR gunPos);
-	static e::unique_ptr<Gun> PlayerGun(uint firePeriod);
-	static e::unique_ptr<Gun> EnemyGun(uint firePeriod);
+	static e::unique_ptr<Gun> PlayerGun(uint firePeriod, int damage);
+	static e::unique_ptr<Gun> EnemyGun(uint firePeriod, int damage);
 };

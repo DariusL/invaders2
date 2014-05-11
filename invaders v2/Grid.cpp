@@ -5,17 +5,18 @@
 #include "Observers.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount)
-:time(800), 
-downOff(1.2f), 
-worldWidth(worldWidth),
-movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
-dir(RIGHT), 
-columnCount(columnCount), 
-width(width),
-lastDrop(0),
-dropFreq(2000),
-bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
-dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6)
+	:time(800),
+	downOff(1.2f),
+	worldWidth(worldWidth),
+	movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
+	dir(RIGHT),
+	columnCount(columnCount),
+	width(width),
+	lastDrop(0),
+	dropFreq(2000),
+	bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
+	dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6),
+	difficulty(0)
 {
 	float off = width / (columnCount - 1);
 	auto first = movement.GetPos();
@@ -24,6 +25,7 @@ dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6)
 		instancers.emplace(i, e::make_unique<EnemyList>(device, RM::Get().GetModel((RM::MODEL)i), RM::Get().GetShader<ColorInstancedShader>(), 50));
 	}
 	e::XMStoreFloat3(&this->first, first);
+	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, [=](const e::shared_ptr<GameEntity> en){this->difficulty += 200; });
 	AddRow();
 }
 
@@ -86,7 +88,7 @@ void Grid::AddRow()
 	{
 		auto type = dist(generator);
 		auto currentPos = first + Utils::VectorSet(off * i);
-		auto enemy = e::make_shared<GameEntity>(currentPos, 10, 100, 0.02f, RM::Get().GetModel((RM::MODEL)type).GetSize(), Gun::EnemyGun(1500), i % 2 ? e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) : e::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
+		auto enemy = GameEntity::MakeEnemy(currentPos, type, difficulty);
 		instancers[type]->Add(enemy);
 		GameObservers::Notify(GAME_EVENT_ENEMY_CREATE, enemy);
 	}

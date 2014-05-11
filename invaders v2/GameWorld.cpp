@@ -11,7 +11,7 @@ GameWorld::GameWorld(ID3D11Device *device, e::XMVECTOR pos)
 	difficulty(0)
 {
 	auto &rm = RM::Get();
-	player = make_shared<ColorDrawableEntity>(rm.GetModel(RM::MODEL_PLAYER), rm.GetShader<ColorShader>(), e::make_shared<GameEntity>(pos - e::XMVectorSet(0.0f, size.y / 2.0f, 0.0f, 0.0f), 100, 100, 0.02f, rm.GetModel(RM::MODEL_PLAYER).GetSize(), Gun::PlayerGun(500)), e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f));
+	player = make_shared<ColorDrawableEntity>(rm.GetModel(RM::MODEL_PLAYER), rm.GetShader<ColorShader>(), e::make_shared<GameEntity>(pos - e::XMVectorSet(0.0f, size.y / 2.0f, 0.0f, 0.0f), 100, 100, 0.02f, rm.GetModel(RM::MODEL_PLAYER).GetSize(), Gun::PlayerGun(500, 20)), e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f));
 	XMStoreFloat3(&this->pos, pos);
 	collider.InsertFirst(player->GetEntity());
 

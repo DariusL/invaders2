@@ -30,6 +30,8 @@ private:
 	e::default_random_engine generator;
 	e::uniform_int_distribution<int> dist;
 	BulletList bullets;
+	int difficulty;
+	GameObservers::ObserverScopeRef or;
 public:
 	Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount);
 	void Render(RenderParams &params);

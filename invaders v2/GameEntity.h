@@ -18,6 +18,7 @@ protected:
 
 	e::unique_ptr<Gun> gun;
 	e::XMFLOAT4 color;
+	static e::default_random_engine gen;
 public:
 	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2, e::unique_ptr<Gun> gun = nullptr, e::XMFLOAT4 color = Gray);
 	virtual ~GameEntity(){}
@@ -50,4 +51,6 @@ public:
 	const e::XMFLOAT4 &GetColor(){ return color; }
 	
 	float GetSpeed(){ return speed; }
+
+	static e::shared_ptr<GameEntity> MakeEnemy(e::XMVECTOR pos, int model, int difficulty);
 };
