@@ -14,7 +14,7 @@ columnCount(columnCount),
 width(width),
 lastDrop(0),
 dropFreq(2000),
-bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, 0.01f, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
+bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
 dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6)
 {
 	float off = width / (columnCount - 1);

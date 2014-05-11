@@ -48,4 +48,6 @@ public:
 	int GetMaxHealth(){ return maxHealth; }
 
 	const e::XMFLOAT4 &GetColor(){ return color; }
+	
+	float GetSpeed(){ return speed; }
 };
