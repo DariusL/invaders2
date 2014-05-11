@@ -41,6 +41,7 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy4.obj"));
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy5.obj"));
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy6.obj"));
+	models.emplace_back(device, GetModelFromOBJ(L"Resources\\bullet.obj"));
 
 	Level *level = new Level();
 
