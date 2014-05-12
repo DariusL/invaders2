@@ -82,6 +82,8 @@ namespace Utils{
 		auto end = e::remove_if(vec.begin(), vec.end(), e::forward<F>(cond));
 		vec.resize(end - vec.begin());
 	}
+
+	int HighestBitSet(int a);
 }
 
 #define WIDE2(x) L##x

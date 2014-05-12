@@ -4,6 +4,7 @@
 using namespace e;
 
 e::default_random_engine GameEntity::gen;
+e::uniform_int_distribution<int> GameEntity::dist;
 
 GameEntity::GameEntity(e::XMVECTOR pos, int health, int damage, float speed, e::XMFLOAT2 size, e::unique_ptr<Gun> gun, e::XMFLOAT4 color)
 	:health(health), maxHealth(health), damage(damage), speed(speed), size(size), gun(e::move(gun)), color(color)
@@ -45,20 +46,30 @@ void GameEntity::Fire()
 
 e::shared_ptr<GameEntity> GameEntity::MakeEnemy(e::XMVECTOR pos, int model, int difficulty)
 {
-	e::uniform_int_distribution<int> dist;
-	auto num = e::bind(dist, gen);
 	int initialMax = difficulty / 2;
 
 	auto mx = [=](int diff){return diff > initialMax ? initialMax : diff; };
 	auto maybeMod = [](int a, int b){if (b == 0) return 0; else return a % b; };
 
-	int health = 1 + maybeMod(num(), mx(difficulty));
+	int health = 1 + maybeMod(dist(gen), mx(difficulty));
 	difficulty -= health;
-	int damage = 10 + maybeMod(num(), mx(difficulty));
+	int damage = 10 + maybeMod(dist(gen), mx(difficulty));
 	difficulty -= damage;
-	int firePeriod = maybeMod(num(), mx(difficulty));
+	int firePeriod = maybeMod(dist(gen), mx(difficulty));
 	difficulty -= firePeriod;
 	firePeriod = 3000 - firePeriod * 10;
 
-	return make_shared<GameEntity>(pos, 1, damage, 0.0f, RM::Get().GetModel((RM::MODEL)model).GetSize(), Gun::EnemyGun(firePeriod, damage));
+	return make_shared<GameEntity>(pos, health, damage, 0.0f, RM::Get().GetModel((RM::MODEL)model).GetSize(), Gun::EnemyGun(firePeriod, damage));
+}
+
+e::XMFLOAT4 GameEntity::GetColor()
+{
+	int health = this->health + 100;
+	int mask = (1 << 16) - 1;
+	float b = float(health & mask) / 255.0f;
+	mask <<= 16;
+	float g = float(health & mask) / 255.0f;
+	mask <<= 16;
+	float r = float(health & mask) / 255.0f;
+	return e::XMFLOAT4(r, g, b, 1.0f);
 }

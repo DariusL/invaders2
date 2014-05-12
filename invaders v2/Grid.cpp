@@ -25,7 +25,7 @@ Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth,
 		instancers.emplace(i, e::make_unique<EnemyList>(device, RM::Get().GetModel((RM::MODEL)i), RM::Get().GetShader<ColorInstancedShader>(), 50));
 	}
 	e::XMStoreFloat3(&this->first, first);
-	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, [=](const e::shared_ptr<GameEntity> en){this->difficulty += 200; });
+	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, [=](const e::shared_ptr<GameEntity> en){this->difficulty += 50; });
 	AddRow();
 }
 

@@ -13,4 +13,5 @@ public:
 		:GameEntityList(e::move(other)){}
 
 	void Loop(int frame);
+	virtual void Render(RenderParams &params);
 };

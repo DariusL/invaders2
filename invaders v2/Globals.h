@@ -18,6 +18,7 @@ extern const e::XMFLOAT3 OneVec3;
 extern const e::XMFLOAT2 ZeroVec2;
 
 extern const e::XMFLOAT4 Gray;
+extern const e::XMFLOAT4 Red;
 
 extern const e::ComPtr<ID3D11ShaderResourceView> nullResourceView;
 extern const e::ComPtr<ID3D11UnorderedAccessView> nullUnorderedView;

@@ -19,3 +19,23 @@ void BulletList::Loop(int frame)
 		enemy->MoveBy(vec);
 	}
 }
+
+void BulletList::Render(RenderParams &params)
+{
+	InstanceType it;
+	instanceCount = enemies.size();
+	instanceData.clear();
+	for (auto &enemy : enemies)
+	{
+		it.color = params.gray ? Gray : Red;
+		it.position = enemy->GetPos();
+		instanceData.push_back(it);
+	}
+
+	if (!Update(params.context))
+		return;
+	model.Set(params.context);
+	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
+	shader.SetShaderParametersInstanced(params);
+	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
+}

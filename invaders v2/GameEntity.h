@@ -19,6 +19,7 @@ protected:
 	e::unique_ptr<Gun> gun;
 	e::XMFLOAT4 color;
 	static e::default_random_engine gen;
+	static e::uniform_int_distribution<int> dist;
 public:
 	GameEntity(e::XMVECTOR pos = Utils::VectorSet(), int health = 1, int damage = 0, float speed = 0.0f, e::XMFLOAT2 size = ZeroVec2, e::unique_ptr<Gun> gun = nullptr, e::XMFLOAT4 color = Gray);
 	virtual ~GameEntity(){}
@@ -48,7 +49,7 @@ public:
 	int GetHealth(){ return health; }
 	int GetMaxHealth(){ return maxHealth; }
 
-	const e::XMFLOAT4 &GetColor(){ return color; }
+	e::XMFLOAT4 GetColor();
 	
 	float GetSpeed(){ return speed; }
 

@@ -102,4 +102,16 @@ namespace Utils
 		e::XMStoreFloat3(&ret, vec);
 		return ret;
 	}
+
+	int HighestBitSet(int a)
+	{
+		int mask = 1 << 31;
+		int bit = 31;
+		while (!(a & mask) && bit > 0)
+		{
+			a <<= 1;
+			bit--;
+		}
+		return bit;
+	}
 }
