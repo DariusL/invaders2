@@ -111,6 +111,13 @@ enum UPGRADE_EVENT
 	UPGRADE_EVENT_EXP_SET
 };
 
+enum PASS
+{
+	PASS_BACK,
+	PASS_FRONT,
+	PASS_ALL
+};
+
 __declspec(align(16)) struct RenderParams
 {
 	e::XMMATRIX view;
@@ -118,7 +125,8 @@ __declspec(align(16)) struct RenderParams
 	e::XMFLOAT3 lightPos;
 	float brightness;
 	e::XMFLOAT4 diffuseColor;
-	__declspec(align(16)) ID3D11DeviceContext *context;
-	__declspec(align(16)) Camera *camera;
-	__declspec(align(16)) bool gray;
+	ID3D11DeviceContext *context;
+	Camera *camera;
+	bool gray;
+	PASS pass;
 };

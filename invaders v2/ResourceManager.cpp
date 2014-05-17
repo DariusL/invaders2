@@ -69,6 +69,7 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	computeShaders.push_back(make_unique<VerticalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
 	computeShaders.push_back(make_unique<FilterDownSampleShader>(L"Shaders\\FilterDownSampleCompute.cso"));
 	computeShaders.push_back(make_unique<TexelSumComputeShader>(L"Shaders\\TexelSumCompute.cso"));
+	computeShaders.push_back(make_unique<CopyComputeShader>(L"Shaders\\CopyCompute.cso"));
 
 	for (auto &shader : shaders)
 		shader->Init(device);

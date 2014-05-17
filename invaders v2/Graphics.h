@@ -26,13 +26,9 @@ class Graphics
 	StringPool strPool;
 
 	RenderTarget target;
-	CelPass celPass;
-	BlurPass blurPass;
-	BloomPass bloomPass;
 
-	vector<long long> bench;
-	chrono::time_point<chrono::high_resolution_clock> start, end;
-	POST_PROCESS post;
+	bool dof;
+	CopyPass copyPass;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}

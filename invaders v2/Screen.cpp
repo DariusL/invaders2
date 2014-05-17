@@ -13,13 +13,14 @@ void Screen::Render(RenderParams &params)
 {
 	if (child != nullptr)
 	{
-		if (child->ShouldRenderParent())
+		if (child->ShouldRenderParent() && (params.pass == PASS_ALL || params.pass == PASS_BACK))
 			RenderInternal(params);
 		child->Render(params);
 	}
 	else
 	{
-		RenderInternal(params);
+		if (params.pass == PASS_ALL || params.pass == PASS_FRONT)
+			RenderInternal(params);
 	}
 }
 

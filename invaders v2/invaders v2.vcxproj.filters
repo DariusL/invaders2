@@ -438,6 +438,9 @@
     <ClInclude Include="CounterButton.h">
       <Filter>Menu</Filter>
     </ClInclude>
+    <ClInclude Include="CopyComputeShader.h">
+      <Filter>Compute</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ColorPixel.hlsl">
@@ -501,6 +504,9 @@
       <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="ColorInstancedPixel.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="CopyCompute.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>

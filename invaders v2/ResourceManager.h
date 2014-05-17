@@ -15,6 +15,7 @@
 #include "VerticalBlurComputeShader.h"
 #include "FilterDownSampleShader.h"
 #include "TexelSumComputeShader.h"
+#include "CopyComputeShader.h"
 
 class ResourceManager
 {
@@ -61,7 +62,8 @@ public:
 		SHADER_COMPUTE_HORIZONTAL_BLUR,
 		SHADER_COMPUTE_VERTICAL_BLUR,
 		SHADER_COMPUTE_FILTER_DOWNSAMPLE,
-		SHADER_COMPUTE_TEXEL_SUM
+		SHADER_COMPUTE_TEXEL_SUM,
+		SHADER_COMPUTE_COPY
 	};
 
 	enum TEXTURE
@@ -142,6 +144,8 @@ public:
 	FilterDownSampleShader &GetShader<FilterDownSampleShader>(){ return static_cast<FilterDownSampleShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_FILTER_DOWNSAMPLE]); }
 	template<>
 	TexelSumComputeShader &GetShader<TexelSumComputeShader>(){ return static_cast<TexelSumComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_TEXEL_SUM]); }
+	template<>
+	CopyComputeShader &GetShader<CopyComputeShader>(){ return static_cast<CopyComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_COPY]); }
 };
 
 typedef ResourceManager RM;
