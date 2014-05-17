@@ -195,9 +195,6 @@ void Direct3D::Present()
 	if(vsync)
 		swapChain->Present(1, 0);
 	else
-
-
-
 		swapChain->Present(0, 0);
 }
 

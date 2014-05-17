@@ -3,7 +3,7 @@
 #include "Utils.h"
 
 RenderTarget::RenderTarget(ID3D11Device *device, int width, int height)
-:width(width), height(height), renderTarget(device, width, height, TEXTURE_VIEW_RENDER_TARGET | TEXTURE_VIEW_SHADER_RESOURCE)
+:width(width), height(height), renderTarget(device, width, height, TEXTURE_VIEW_RENDER_TARGET | TEXTURE_VIEW_SHADER_RESOURCE | TEXTURE_VIEW_UNORDERED_ACCESS)
 {
 
 	clear[0] = 0.0f;

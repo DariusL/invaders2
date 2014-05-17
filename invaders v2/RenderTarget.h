@@ -25,6 +25,7 @@ public:
 	void ClearTarget(ID3D11DeviceContext *context);
 
 	ID3D11ShaderResourceView *GetRenderedTexture(){return renderTarget.GetSRV();}
+	ID3D11UnorderedAccessView *GetUnorderedAccess(){ return renderTarget.GetUAV(); }
 private:
 	void Init(ID3D11Device *device);
 };

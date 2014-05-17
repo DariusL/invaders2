@@ -12,7 +12,8 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	strPool(d3D.GetDevice()),
 	dof(true),
 	copyPass(RM::Get().GetShader<CopyComputeShader>(), width, height),
-	blurPass(d3D.GetDevice(), width, height)
+	blurPass(d3D.GetDevice(), width, height),
+	bloomPass(d3D.GetDevice(), width, height)
 {
 	auto device = d3D.GetDevice();
 
@@ -52,12 +53,12 @@ void Graphics::Render(Screen &world)
 		world.Render(params);
 
 		d3D.UnsetRenderTarget();
-		d3D.ClearRenderTarget();
-		blurPass.Pass(context, target.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
-		d3D.ResetRenderTarget();
-
+		blurPass.Pass(context, target.GetRenderedTexture(), target.GetUnorderedAccess());
+		target.SetRenderTarget(context);
 		params.pass = PASS_FRONT;
 		world.Render(params);
+		d3D.UnsetRenderTarget();
+		bloomPass.Pass(context, target.GetRenderedTexture(), d3D.GetBackBufferUnorderedAccess());
 	}
 	else
 	{
