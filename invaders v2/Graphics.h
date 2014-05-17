@@ -29,6 +29,7 @@ class Graphics
 
 	bool dof;
 	CopyPass copyPass;
+	BlurPass blurPass;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}
