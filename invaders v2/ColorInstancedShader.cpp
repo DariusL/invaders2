@@ -38,8 +38,3 @@ e::vector<D3D11_INPUT_ELEMENT_DESC> ColorInstancedShader::GetInputLayout()
 
 	return ret;
 }
-
-void ColorInstancedShader::SetShaderParametersInstanced(RenderParams &params)
-{
-	IInstanceShader::SetShaderParametersInstanced(params);
-}

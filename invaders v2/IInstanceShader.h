@@ -8,6 +8,7 @@ class IInstanceShader : public IPositionShader
 	{
 		e::XMFLOAT4X4 view;
 		e::XMFLOAT4X4 projection;
+		e::XMFLOAT4X4 scale;
 	};
 
 	Buffer<InstancedMatrixType> matrixBuffer;
@@ -24,11 +25,12 @@ public:
 
 	void SetShaderParameters(RenderParams &params, const e::XMMATRIX &posMatrix){ using namespace e; AssertBool(false, L"SetShaderParameters called on an instanced shader"); }
 
-	virtual void SetShaderParametersInstanced(RenderParams &params)
+	virtual void SetShaderParametersInstanced(RenderParams &params, const e::XMFLOAT4X4 &scale)
 	{
 		InstancedMatrixType matrices;
 		e::XMStoreFloat4x4(&matrices.view, XMMatrixTranspose(params.view));
 		e::XMStoreFloat4x4(&matrices.projection, XMMatrixTranspose(params.projection));
+		matrices.scale = scale;
 		Utils::CopyToBuffer(matrixBuffer.Get(), matrices, params.context);
 
 		params.context->VSSetConstantBuffers(0, 1, matrixBuffer.GetAddressOf());

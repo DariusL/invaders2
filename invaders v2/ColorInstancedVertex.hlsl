@@ -2,6 +2,7 @@ cbuffer TransMatrix : register(b0)
 {
 	matrix view;
 	matrix projection;
+	matrix scale;
 };
 
 struct VertexInputType
@@ -21,7 +22,7 @@ PixelInputType ColorInstancedVertexShader(VertexInputType input)
 {
     PixelInputType output;
 
-	output.position = input.position + input.instancePos;
+	output.position = mul(scale, input.position) + input.instancePos;
 	output.position.w = 1.0f;
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);

@@ -7,8 +7,8 @@
 
 GameScreen::GameScreen(e::XMVECTOR pos)
 :Screen(pos), pause(Input::ACTION_BACK), world(Direct3D::GetDevice(), pos),
-score(pos + Utils::VectorSet(25.0f, -10.0f), "SCORE", 15.0f),
-exp(pos + Utils::VectorSet(25.0f, -12.0f), "EXP", 15.0f),
+score(pos + Utils::VectorSet(25.0f, -10.0f, 3.0f), "SCORE", 15.0f),
+exp(pos + Utils::VectorSet(25.0f, -12.0f, 3.0f), "EXP", 15.0f),
 upgrade(Input::ACTION_UPGRADE)
 {
 	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, e::bind(&GameScreen::UpdateCounters, this, e::placeholders::_1));
@@ -43,7 +43,7 @@ void GameScreen::DelayInternal()
 void GameScreen::UpdateCounters(const e::shared_ptr<GameEntity> entity)
 {
 	score += 10;
-	exp += 1;
+	exp += 100;
 }
 
 e::unordered_map<int, int> GameScreen::GetPlayerData()

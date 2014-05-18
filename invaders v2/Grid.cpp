@@ -5,16 +5,16 @@
 #include "Observers.h"
 
 Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth, uint columnCount)
-	:time(800),
-	downOff(1.2f),
+	:time(1000),
+	downOff(2.5f),
 	worldWidth(worldWidth),
 	movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
 	dir(RIGHT),
 	columnCount(columnCount),
 	width(width),
 	lastDrop(0),
-	dropFreq(2000),
-	bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE),
+	dropFreq(6000),
+	bullets(device, RM::Get().GetModel(RM::MODEL_BULLET), RM::Get().GetShader<ColorInstancedShader>(), 100, e::XMFLOAT2(0.0f, -1.0f), GAME_EVENT_ENEMY_BULLET_CREATE, 2.0f),
 	dist(RM::MODEL_ENEMY_1, RM::MODEL_ENEMY_6),
 	difficulty(0)
 {
@@ -22,7 +22,7 @@ Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth,
 	auto first = movement.GetPos();
 	for (int i = RM::MODEL_ENEMY_1; i <= RM::MODEL_ENEMY_6; i++)
 	{
-		instancers.emplace(i, e::make_unique<EnemyList>(device, RM::Get().GetModel((RM::MODEL)i), RM::Get().GetShader<ColorInstancedShader>(), 50));
+		instancers.emplace(i, e::make_unique<EnemyList>(device, RM::Get().GetModel((RM::MODEL)i), RM::Get().GetShader<ColorInstancedShader>(), 50, 2.0f));
 	}
 	e::XMStoreFloat3(&this->first, first);
 	or = GameObservers::Register(GAME_EVENT_ENEMY_DEATH, [=](const e::shared_ptr<GameEntity> en){this->difficulty += 50; });

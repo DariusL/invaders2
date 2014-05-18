@@ -10,7 +10,7 @@ template<class vt, class sh, class it>
 class BaseInstancer : public IDrawable
 {
 public:
-	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity);
+	BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity, float scale = 1.0f);
 	BaseInstancer(BaseInstancer&&);
 	virtual ~BaseInstancer(void){}
 
@@ -24,6 +24,7 @@ protected:
 
 	Model<vt> &model;
 	sh &shader;
+	e::XMFLOAT4X4 scale;
 public:
 	virtual void Render(RenderParams& params);
 
@@ -35,9 +36,10 @@ protected:
 typedef BaseInstancer<VertexType, ColorInstancedShader, InstanceType> SimpleBaseInstancer;
 
 template<class vt, class sh, class it>
-BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity)
+BaseInstancer<vt, sh, it>::BaseInstancer(ID3D11Device *device, Model<vt> &model, sh &shader, uint capacity, float scale)
 :model(model), shader(shader), capacity(capacity), instanceBuffer(device, nullptr, false, capacity)
 {
+	e::XMStoreFloat4x4(&this->scale, e::XMMatrixTranspose(e::XMMatrixScaling(scale, scale, scale)));
 }
 
 template<class vt, class sh, class it>
@@ -56,7 +58,7 @@ void BaseInstancer<vt, sh, it>::Render(RenderParams &params)
 		return;
 	model.Set(params.context);
 	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
-	shader.SetShaderParametersInstanced(params);
+	shader.SetShaderParametersInstanced(params, scale);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }
 

@@ -10,7 +10,7 @@ class GameEntityList : public BaseInstancer<VertexType, ColorInstancedShader, In
 protected:
 	e::vector<e::shared_ptr<GameEntity>> enemies;
 public:
-	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount);
+	GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, float scale = 1.0f);
 	GameEntityList(GameEntityList &&other);
 
 	virtual void Loop(int frame);

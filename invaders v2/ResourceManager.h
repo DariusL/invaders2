@@ -7,7 +7,6 @@
 #include "GlobalDiffuseShader.h"
 #include "GlobalSpecularShader.h"
 #include "TextureShader.h"
-#include "InstancedTextureShader.h"
 #include "CelComputeShader.h"
 #include "DownSampleComputeShader.h"
 #include "UpSampleComputeShader.h"
@@ -50,8 +49,7 @@ public:
 		SHADER_COLOR_INSTANCED,
 		SHADER_GLOBAL_DIFFUSE,
 		SHADER_GLOBAL_SPECULAR,
-		SHADER_TEXTURE,
-		SHADER_TEXTURE_INSTANCED,
+		SHADER_TEXTURE
 	};
 
 	enum SHADER_COMPUTE
@@ -127,8 +125,6 @@ public:
 	GlobalSpecularShader &GetShader<GlobalSpecularShader>(){ return static_cast<GlobalSpecularShader&>(*shaders[SHADER::SHADER_GLOBAL_SPECULAR]); }
 	template<>
 	TextureShader &GetShader<TextureShader>(){ return static_cast<TextureShader&>(*shaders[SHADER::SHADER_TEXTURE]); }
-	template<>
-	InstancedTextureShader &GetShader<InstancedTextureShader>(){ return static_cast<InstancedTextureShader&>(*shaders[SHADER::SHADER_TEXTURE_INSTANCED]); }
 
 	template<>
 	CelComputeShader &GetShader<CelComputeShader>(){ return static_cast<CelComputeShader&>(*computeShaders[SHADER_COMPUTE::SHADER_COMPUTE_CEL]); }

@@ -8,9 +8,13 @@ UpgradeMenu::UpgradeMenu(e::XMVECTOR pos, e::unordered_map<int, int> playerData)
 	or.push_back(UpgradeObservers::Register(UPGRADE_EVENT_HEALTH_SET, e::bind(&UpgradeMenu::SetProperty, this, UPGRADE_EVENT_HEALTH_SET, e::placeholders::_1)));
 	or.push_back(UpgradeObservers::Register(UPGRADE_EVENT_MAX_HEALTH_SET, e::bind(&UpgradeMenu::SetProperty, this, UPGRADE_EVENT_MAX_HEALTH_SET, e::placeholders::_1)));
 	or.push_back(UpgradeObservers::Register(UPGRADE_EVENT_EXP_SET, e::bind(&UpgradeMenu::SetProperty, this, UPGRADE_EVENT_EXP_SET, e::placeholders::_1)));
+	or.push_back(UpgradeObservers::Register(UPGRADE_EVENT_WEPON_DMG_SET, e::bind(&UpgradeMenu::SetProperty, this, UPGRADE_EVENT_WEPON_DMG_SET, e::placeholders::_1)));
+	or.push_back(UpgradeObservers::Register(UPGRADE_EVENT_WEPON_PERIOD_SET, e::bind(&UpgradeMenu::SetProperty, this, UPGRADE_EVENT_WEPON_PERIOD_SET, e::placeholders::_1)));
 
 	Add(e::make_unique<CounterButton>(Utils::VectorSet(), "RESTORE HEALTH", 40.0f, [=](){this->Upgrade(UPGRADE_EVENT_HEALTH_SET); }, 100));
 	Add(e::make_unique<CounterButton>(Utils::VectorSet(), "MORE HEALTH", 40.0f, [=](){this->Upgrade(UPGRADE_EVENT_MAX_HEALTH_SET); }, 100));
+	Add(e::make_unique<CounterButton>(Utils::VectorSet(), "MORE DAMAGE", 40.0f, [=](){this->Upgrade(UPGRADE_EVENT_WEPON_DMG_SET); }, 100));
+	Add(e::make_unique<CounterButton>(Utils::VectorSet(), "FASTER GUN", 40.0f, [=](){this->Upgrade(UPGRADE_EVENT_WEPON_PERIOD_SET); }, 100));
 }
 
 void UpgradeMenu::SetProperty(int key, int val)
@@ -30,6 +34,14 @@ void UpgradeMenu::Upgrade(int key)
 			break;
 		case UPGRADE_EVENT_MAX_HEALTH_SET:
 			UpgradeObservers::Notify(UPGRADE_EVENT_MAX_HEALTH_SET, values[UPGRADE_EVENT_MAX_HEALTH_SET] + 20);
+			UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
+			break;
+		case UPGRADE_EVENT_WEPON_DMG_SET:
+			UpgradeObservers::Notify(UPGRADE_EVENT_WEPON_DMG_SET, values[UPGRADE_EVENT_WEPON_DMG_SET] * 2);
+			UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
+			break;
+		case UPGRADE_EVENT_WEPON_PERIOD_SET:
+			UpgradeObservers::Notify(UPGRADE_EVENT_WEPON_PERIOD_SET, values[UPGRADE_EVENT_WEPON_PERIOD_SET] - 50);
 			UpgradeObservers::Notify(UPGRADE_EVENT_EXP_SET, values[UPGRADE_EVENT_EXP_SET] - 100);
 			break;
 		default:

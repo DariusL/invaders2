@@ -31,9 +31,6 @@
     <ClCompile Include="TextureShader.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="InstancedTextureShader.cpp">
-      <Filter>Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalSpecularShader.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
@@ -220,9 +217,6 @@
       <Filter>Shaders</Filter>
     </ClInclude>
     <ClInclude Include="GlobalSpecularShader.h">
-      <Filter>Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="InstancedTextureShader.h">
       <Filter>Shaders</Filter>
     </ClInclude>
     <ClInclude Include="TextureShader.h">

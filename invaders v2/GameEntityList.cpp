@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "GameEntityList.h"
 
-GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount)
-:BaseInstancer(device, model, shader, maxObjectCount)
+GameEntityList::GameEntityList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, float scale)
+:BaseInstancer(device, model, shader, maxObjectCount, scale)
 {
 }
 
@@ -65,6 +65,6 @@ void GameEntityList::Render(RenderParams &params)
 		return;
 	model.Set(params.context);
 	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
-	shader.SetShaderParametersInstanced(params);
+	shader.SetShaderParametersInstanced(params, scale);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }

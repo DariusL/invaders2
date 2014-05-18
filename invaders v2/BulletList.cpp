@@ -2,8 +2,8 @@
 #include "BulletList.h"
 #include "Observers.h"
 
-BulletList::BulletList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT2 dir, int spawnEvent)
-:GameEntityList(device, model, shader, maxObjectCount), dir(dir)
+BulletList::BulletList(ID3D11Device *device, ColorModel &model, ColorInstancedShader &shader, int maxObjectCount, e::XMFLOAT2 dir, int spawnEvent, float scale)
+:GameEntityList(device, model, shader, maxObjectCount, scale), dir(dir)
 {
 	or = GameObservers::Register(spawnEvent, e::bind(&BulletList::Add, this, e::placeholders::_1));
 }
@@ -36,6 +36,6 @@ void BulletList::Render(RenderParams &params)
 		return;
 	model.Set(params.context);
 	params.context->IASetVertexBuffers(1, 1, instanceBuffer.GetAddressOf(), instanceBuffer.GetStride(), instanceBuffer.GetOffset());
-	shader.SetShaderParametersInstanced(params);
+	shader.SetShaderParametersInstanced(params, scale);
 	shader.RenderShaderInstanced(params.context, model.GetIndexCount(), instanceCount);
 }

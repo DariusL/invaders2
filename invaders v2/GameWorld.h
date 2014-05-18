@@ -8,7 +8,7 @@
 
 class GameWorld : public IDrawable
 {
-	const e::XMFLOAT2 size = e::XMFLOAT2(20.0f, 30.0f);
+	const e::XMFLOAT2 size = e::XMFLOAT2(40.0f, 34.0f);
 	e::shared_ptr<ColorDrawableEntity> player;
 	BulletList playerBullets;
 	XMFLOAT3 pos;

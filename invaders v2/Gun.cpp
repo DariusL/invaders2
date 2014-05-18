@@ -4,7 +4,7 @@
 #include "ResourceManager.h"
 
 Gun::Gun(int spawnEvent, uint firePeriod, float off, int damage, ColorModel &model)
-	:spawnEvent(spawnEvent), firePeriod(firePeriod), lastFired(0), bulletSize(model.GetSize()), off(off), bulletSpeed(1.0f / firePeriod * 50.0f), damage(damage)
+	:spawnEvent(spawnEvent), firePeriod(firePeriod), lastFired(0), bulletSize(model.GetSize()), off(off), bulletSpeed(1.0f / firePeriod * 40.0f), damage(damage)
 {
 }
 

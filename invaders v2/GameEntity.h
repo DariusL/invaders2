@@ -49,6 +49,8 @@ public:
 	int GetHealth(){ return health; }
 	int GetMaxHealth(){ return maxHealth; }
 
+	Gun &GetGun(){ return *gun; }
+
 	e::XMFLOAT4 GetColor();
 	
 	float GetSpeed(){ return speed; }
