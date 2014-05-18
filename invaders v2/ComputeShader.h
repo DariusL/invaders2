@@ -6,6 +6,7 @@ class ComputeShader
 {
 private:
 	e::wstring cs;
+	Buffer<e::XMUINT4> dimmBuffer;
 protected:
 	e::ComPtr<ID3D11ComputeShader> shader;
 public:

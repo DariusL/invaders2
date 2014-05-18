@@ -20,6 +20,8 @@ void ComputeShader::InitializeShader(ID3D11Device *device, e::wstring cs)
 	AssertBool(Utils::ReadFileToArray(cs, buffer, size), L"Could not read " + cs);
 
 	Assert(device->CreateComputeShader(buffer.get(), size, NULL, &shader));
+
+	dimmBuffer = Buffer<e::XMUINT4>(device);
 }
 
 void ComputeShader::SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output)
@@ -38,6 +40,9 @@ void ComputeShader::Start(ID3D11DeviceContext *context, uint width, uint height)
 	uint sizeY = height / groupY;
 	if (height % groupY != 0)
 		sizeY++;
+
+	dimmBuffer.SetData(context, e::XMUINT4(width, height, 0, 0));
+	context->CSSetConstantBuffers(0, 1, dimmBuffer.GetAddressOf());
 
 	context->Dispatch(sizeX, sizeY, 1);
 

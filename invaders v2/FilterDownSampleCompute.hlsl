@@ -1,7 +1,7 @@
 Texture2D<float4> inputTexture : register(t0);
 RWTexture2D<float4> outputTexture : register(u0);
 
-cbuffer FilterBuffer : register(b0)
+cbuffer FilterBuffer : register(b1)
 {
 	float luminance;
 	float middleGray;

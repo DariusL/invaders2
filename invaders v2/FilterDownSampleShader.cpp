@@ -29,5 +29,5 @@ void FilterDownSampleShader::SetShaderParameters(ID3D11DeviceContext *context, I
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 
-	context->CSSetConstantBuffers(0, 1, filterBuffer.GetAddressOf());
+	context->CSSetConstantBuffers(1, 1, filterBuffer.GetAddressOf());
 }

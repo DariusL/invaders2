@@ -1,13 +1,13 @@
 Texture2D<float4> inputTexture : register(t0);
 RWTexture2D<float4> outputTexture : register(u0);
 
-cbuffer KernelBuffer : register(b0)
+cbuffer KernelBuffer : register(b1)
 {
 	float4x4 kernelx;
 	float4x4 kernely;
 };
 
-cbuffer OffsetBuffer : register(b1)
+cbuffer OffsetBuffer : register(b2)
 {
 	float offset;
 	float3 padding;

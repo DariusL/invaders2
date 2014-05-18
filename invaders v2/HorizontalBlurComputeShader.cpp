@@ -42,5 +42,5 @@ void HorizontalBlurComputeShader::SetShaderParameters(ID3D11DeviceContext*contex
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 
-	context->CSSetConstantBuffers(0, 1, blurBuffer.GetAddressOf());
+	context->CSSetConstantBuffers(1, 1, blurBuffer.GetAddressOf());
 }
