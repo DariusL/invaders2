@@ -3,7 +3,7 @@
 class DownSampleComputeShader : public ComputeShader
 {
 public:
-	DownSampleComputeShader(e::wstring cs) :ComputeShader(cs){}
+	DownSampleComputeShader(wstring cs) :ComputeShader(cs){}
 	virtual ~DownSampleComputeShader(){}
 };
 

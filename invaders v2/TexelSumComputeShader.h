@@ -3,7 +3,7 @@
 class TexelSumComputeShader : public DoubleInputComputeShader
 {
 public:
-	TexelSumComputeShader(e::wstring cs) : DoubleInputComputeShader(cs){}
+	TexelSumComputeShader(wstring cs) : DoubleInputComputeShader(cs){}
 	virtual ~TexelSumComputeShader(){}
 };
 

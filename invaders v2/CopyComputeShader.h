@@ -4,6 +4,6 @@
 class CopyComputeShader : public ComputeShader
 {
 public:
-	CopyComputeShader(e::wstring cs) : ComputeShader(cs){}
+	CopyComputeShader(wstring cs) : ComputeShader(cs){}
 	virtual ~CopyComputeShader(){}
 };

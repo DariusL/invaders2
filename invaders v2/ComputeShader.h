@@ -1,15 +1,17 @@
 #pragma once
 #include "includes.h"
 #include "Globals.h"
-#include "Buffer.h"
+using namespace std;
+using namespace Microsoft::WRL;
+using namespace DirectX;
 class ComputeShader
 {
 private:
-	e::wstring cs;
+	wstring cs;
 protected:
-	e::ComPtr<ID3D11ComputeShader> shader;
+	ComPtr<ID3D11ComputeShader> shader;
 public:
-	ComputeShader(e::wstring cs):cs(cs){}
+	ComputeShader(wstring cs):cs(cs){}
 	ComputeShader(ComputeShader&) = delete;
 	ComputeShader &operator=(ComputeShader&) = delete;
 	virtual ~ComputeShader(){}
@@ -18,7 +20,7 @@ public:
 	virtual void Start(ID3D11DeviceContext *context, uint width, uint height);
 	virtual void SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 protected:
-	void InitializeShader(ID3D11Device *device, e::wstring cs);
+	void InitializeShader(ID3D11Device *device, wstring cs);
 	virtual void InitializeShaderBuffers(ID3D11Device *device){}
 public:
 	static const uint groupX;

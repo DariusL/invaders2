@@ -3,7 +3,7 @@
 class DoubleInputComputeShader : public ComputeShader
 {
 public:
-	DoubleInputComputeShader(e::wstring cs) : ComputeShader(cs){}
+	DoubleInputComputeShader(wstring cs) : ComputeShader(cs){}
 	virtual ~DoubleInputComputeShader(){}
 
 	virtual void SetShaderParameters(ID3D11DeviceContext *context, 

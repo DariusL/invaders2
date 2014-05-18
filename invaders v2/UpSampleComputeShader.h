@@ -3,6 +3,6 @@
 class UpSampleComputeShader : public ComputeShader
 {
 public:
-	UpSampleComputeShader(e::wstring cs) :ComputeShader(cs){}
+	UpSampleComputeShader(wstring cs) :ComputeShader(cs){}
 	virtual ~UpSampleComputeShader(){}
 };
