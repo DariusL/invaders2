@@ -43,7 +43,6 @@ void Graphics::Render(Screen &world)
 	params.brightness = brightness;
 	params.context = context;
 	params.camera = &camera;
-	params.gray = false;
 
 	if (dof)
 	{

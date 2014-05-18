@@ -127,6 +127,5 @@ __declspec(align(16)) struct RenderParams
 	e::XMFLOAT4 diffuseColor;
 	ID3D11DeviceContext *context;
 	Camera *camera;
-	bool gray;
 	PASS pass;
 };

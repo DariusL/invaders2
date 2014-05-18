@@ -17,11 +17,9 @@ upgrade(Input::ACTION_UPGRADE)
 
 void GameScreen::RenderInternal(RenderParams &params)
 {
-	params.gray = child != nullptr;
 	world.Render(params);
 	score.Render(params);
 	exp.Render(params);
-	params.gray = false;
 }
 
 int GameScreen::LoopInternal(InputType input, int frame)

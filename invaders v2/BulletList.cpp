@@ -27,7 +27,7 @@ void BulletList::Render(RenderParams &params)
 	instanceData.clear();
 	for (auto &enemy : enemies)
 	{
-		it.color = params.gray ? Gray : Red;
+		it.color = Red;
 		it.position = enemy->GetPos();
 		instanceData.push_back(it);
 	}
