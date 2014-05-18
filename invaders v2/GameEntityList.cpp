@@ -56,7 +56,7 @@ void GameEntityList::Render(RenderParams &params)
 	instanceData.clear();
 	for (auto &enemy : enemies)
 	{
-		it.color = params.gray ? Gray : enemy->GetColor();
+		it.color = enemy->GetColor();
 		it.position = enemy->GetPos();
 		instanceData.push_back(it);
 	}

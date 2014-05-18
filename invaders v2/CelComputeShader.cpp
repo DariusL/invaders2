@@ -45,6 +45,6 @@ void CelComputeShader::SetShaderParameters(ID3D11DeviceContext *context, ID3D11S
 {
 	ComputeShader::SetShaderParameters(context, input, output);
 
-	context->CSSetConstantBuffers(0, 1, kernelBuffer.GetAddressOf());
-	context->CSSetConstantBuffers(1, 1, offsetBuffer.GetAddressOf());
+	context->CSSetConstantBuffers(1, 1, kernelBuffer.GetAddressOf());
+	context->CSSetConstantBuffers(2, 1, offsetBuffer.GetAddressOf());
 }

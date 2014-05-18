@@ -7,11 +7,11 @@ using namespace DirectX;
 class ComputeShader
 {
 private:
-	wstring cs;
+	e::wstring cs;
 protected:
 	ComPtr<ID3D11ComputeShader> shader;
 public:
-	ComputeShader(wstring cs):cs(cs){}
+	ComputeShader(e::wstring cs) :cs(cs){}
 	ComputeShader(ComputeShader&) = delete;
 	ComputeShader &operator=(ComputeShader&) = delete;
 	virtual ~ComputeShader(){}
