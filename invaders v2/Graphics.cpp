@@ -11,7 +11,7 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	target(d3D.GetDevice(), width, height),
 	strPool(d3D.GetDevice()),
 	dof(true),
-	copyPass(width, height),
+	copyPass(RM::Get().GetShader<CopyComputeShader>(), width, height),
 	blurPass(d3D.GetDevice(), width, height),
 	bloomPass(d3D.GetDevice(), width, height)
 {
