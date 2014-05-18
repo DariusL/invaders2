@@ -12,13 +12,13 @@ template<class vt>
 class String : public AppendableGeometry<vt>
 {
 public:
-	String(string text, float gap = 0.1f);
+	String(e::string text, float gap = 0.1f);
 	String(String &&other);
 	virtual ~String(){}
 };
 
 template<class vt>
-String<vt>::String(string text, float gap)
+String<vt>::String(e::string text, float gap)
 :AppendableGeometry(gap)
 {
 	ResourceManager &rm = RM::Get();

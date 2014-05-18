@@ -43,18 +43,6 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\enemy6.obj"));
 	models.emplace_back(device, GetModelFromOBJ(L"Resources\\bullet.obj"));
 
-	Level *level = new Level();
-
-	level->gridWidth = 11;
-	level->gridHeight = 5;
-
-	for (int i = 0; i < level->gridHeight * level->gridWidth; i++)
-	{
-		level->enemies.push_back(MODEL::MODEL_PLAYER);
-	}
-
-	levels.push_back(shared_ptr<Level>(level));
-
 	shaders.push_back(make_unique<ColorShader>(L"Shaders\\ColorVertex.cso", L"Shaders\\ColorPixel.cso"));
 	shaders.push_back(make_unique<ColorInstancedShader>(L"Shaders\\ColorInstancedVertex.cso", L"Shaders\\ColorInstancedPixel.cso"));
 	shaders.push_back(make_unique<GlobalDiffuseShader>(L"Shaders\\GlobalDiffuseVertex.cso", L"Shaders\\GlobalDiffusePixel.cso"));

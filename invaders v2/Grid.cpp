@@ -8,7 +8,7 @@ Grid::Grid(ID3D11Device *device, e::XMVECTOR pos, float width, float worldWidth,
 	:time(800),
 	downOff(1.2f),
 	worldWidth(worldWidth),
-	movement(pos - Utils::VectorSet(width / 2.0f), pos + Utils::VectorSet(worldWidth / 2.0f - width), time / 2),
+	movement(e::XMVectorSubtract(pos, Utils::VectorSet(width / 2.0f)), e::XMVectorAdd(pos, Utils::VectorSet(worldWidth / 2.0f - width)), time / 2),
 	dir(RIGHT),
 	columnCount(columnCount),
 	width(width),
@@ -71,6 +71,7 @@ void Grid::Loop(int frame)
 
 void Grid::MoveTo(e::XMVECTOR pos)
 {
+	using namespace e;
 	auto off = pos - e::XMLoadFloat3(&this->first);
 	for (auto &instancer : instancers)
 		instancer.second->MoveBy(off);
@@ -79,6 +80,7 @@ void Grid::MoveTo(e::XMVECTOR pos)
 
 void Grid::AddRow()
 {
+	using namespace e;
 	float off = width / (columnCount - 1);
 	this->first.y += downOff;
 	//bad me

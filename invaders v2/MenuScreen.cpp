@@ -10,7 +10,7 @@ const e::XMFLOAT3 MenuScreen::FOOTER_POS = e::XMFLOAT3(0.0f, -20.0f, 0.0f);
 
 MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
-header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + e::XMLoadFloat3(&HEADER_POS))),
+header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(e::XMVectorAdd(pos, e::XMLoadFloat3(&HEADER_POS)))),
 backRegister(Input::ACTION_BACK),
 items(pos, ITEM_OFF, 5),
 close(false)

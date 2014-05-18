@@ -6,8 +6,8 @@
 
 Attribute::Attribute(e::XMVECTOR pos, e::string text, float width, e::string value, float scale)
 :width(width), pos(Utils::FromVector3(pos)), 
-name(StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale),
-value(StringPool::Get().GetString(value), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale)
+name(StringPool::Get().GetString(text), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(), e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale),
+value(StringPool::Get().GetString(value), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(), e::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), scale)
 {
 	Reposition();
 }

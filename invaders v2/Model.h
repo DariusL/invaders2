@@ -35,7 +35,7 @@ typedef Model<NormalVertexType> NormalModel;
 
 template<class T>
 Model<T>::Model(Model &&other)
-:vertexBuffer(move(other.vertexBuffer)), indexBuffer(move(other.indexBuffer)),
+	:vertexBuffer(e::move(other.vertexBuffer)), indexBuffer(e::move(other.indexBuffer)),
 indexCount(other.indexCount), size(other.size)
 {
 }

@@ -11,9 +11,10 @@ void ComputeShader::Init(ID3D11Device *device)
 	InitializeShaderBuffers(device);
 }
 
-void ComputeShader::InitializeShader(ID3D11Device *device, wstring cs)
+void ComputeShader::InitializeShader(ID3D11Device *device, e::wstring cs)
 {
-	unique_ptr<char> buffer;
+	using namespace e;
+	e::unique_ptr<char> buffer;
 	UINT size;
 
 	AssertBool(Utils::ReadFileToArray(cs, buffer, size), L"Could not read " + cs);

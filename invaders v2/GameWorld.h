@@ -11,7 +11,7 @@ class GameWorld : public IDrawable
 	const e::XMFLOAT2 size = e::XMFLOAT2(20.0f, 30.0f);
 	e::shared_ptr<ColorDrawableEntity> player;
 	BulletList playerBullets;
-	XMFLOAT3 pos;
+	e::XMFLOAT3 pos;
 	Collider collider;
 	Grid enemies;
 	ulong difficulty;

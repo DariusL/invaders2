@@ -3,13 +3,13 @@
 class HorizontalBlurComputeShader : public ComputeShader
 {
 public:
-	HorizontalBlurComputeShader(wstring cs) : ComputeShader(cs){}
+	HorizontalBlurComputeShader(e::wstring cs) : ComputeShader(cs){}
 	virtual ~HorizontalBlurComputeShader(){}
 	virtual void SetShaderParameters(ID3D11DeviceContext *context, ID3D11ShaderResourceView *input, ID3D11UnorderedAccessView *output);
 protected:
 	virtual void InitializeShaderBuffers(ID3D11Device *device);
 
-	ComPtr<ID3D11Buffer> blurBuffer;
+	e::ComPtr<ID3D11Buffer> blurBuffer;
 
 	struct BlurBuffer
 	{
