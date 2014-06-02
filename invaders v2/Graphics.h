@@ -27,10 +27,10 @@ class Graphics
 
 	RenderTarget target;
 
-	bool dof;
-	CopyPass copyPass;
-	BlurPass blurPass;
-	BloomPass bloomPass;
+	bool post;
+	e::unique_ptr<CopyPass> copyPass;
+	e::unique_ptr<BlurPass> blurPass;
+	e::unique_ptr<BloomPass> bloomPass;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}

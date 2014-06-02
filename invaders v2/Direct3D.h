@@ -25,6 +25,8 @@ public:
 	void ResetRenderTarget();
 	void UnsetRenderTarget();
 	void DoingDepthCheck(bool check);
+
+	bool ComputeSupport(){ return compute; }
 private:
 	bool vsync;
 	int videoMem;
@@ -47,5 +49,7 @@ private:
 
 	static ID3D11Device *staticDevice;
 	static ID3D11DeviceContext *staticContext;
+
+	bool compute;
 };
 

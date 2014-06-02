@@ -5,7 +5,7 @@ using namespace e;
 
 ResourceManager *ResourceManager::handle;
 
-ResourceManager::ResourceManager(ID3D11Device *device)
+ResourceManager::ResourceManager(ID3D11Device *device, bool loadCompute)
 :letters(GetModelsFromOBJ(L"Resources\\text.obj"))
 {
 	handle = this;
@@ -61,14 +61,17 @@ ResourceManager::ResourceManager(ID3D11Device *device)
 	shaders.push_back(make_unique<GlobalSpecularShader>(L"Shaders\\GlobalSpecularVertex.cso", L"Shaders\\GlobalSpecularPixel.cso"));
 	shaders.push_back(make_unique<TextureShader>(L"Shaders\\TextureVertex.cso", L"Shaders\\TexturePixel.cso"));
 
-	computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
-	computeShaders.push_back(make_unique<UpSampleComputeShader>(L"Shaders\\UpSampleCompute.cso"));
-	computeShaders.push_back(make_unique<DownSampleComputeShader>(L"Shaders\\DownSampleCompute.cso"));
-	computeShaders.push_back(make_unique<HorizontalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
-	computeShaders.push_back(make_unique<VerticalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
-	computeShaders.push_back(make_unique<FilterDownSampleShader>(L"Shaders\\FilterDownSampleCompute.cso"));
-	computeShaders.push_back(make_unique<TexelSumComputeShader>(L"Shaders\\TexelSumCompute.cso"));
-	computeShaders.push_back(make_unique<CopyComputeShader>(L"Shaders\\CopyCompute.cso"));
+	if (loadCompute)
+	{
+		computeShaders.push_back(make_unique<CelComputeShader>(L"Shaders\\CelCompute.cso"));
+		computeShaders.push_back(make_unique<UpSampleComputeShader>(L"Shaders\\UpSampleCompute.cso"));
+		computeShaders.push_back(make_unique<DownSampleComputeShader>(L"Shaders\\DownSampleCompute.cso"));
+		computeShaders.push_back(make_unique<HorizontalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
+		computeShaders.push_back(make_unique<VerticalBlurComputeShader>(L"Shaders\\BlurCompute.cso"));
+		computeShaders.push_back(make_unique<FilterDownSampleShader>(L"Shaders\\FilterDownSampleCompute.cso"));
+		computeShaders.push_back(make_unique<TexelSumComputeShader>(L"Shaders\\TexelSumCompute.cso"));
+		computeShaders.push_back(make_unique<CopyComputeShader>(L"Shaders\\CopyCompute.cso"));
+	}
 
 	for (auto &shader : shaders)
 		shader->Init(device);

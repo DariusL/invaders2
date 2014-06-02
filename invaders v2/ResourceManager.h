@@ -99,7 +99,7 @@ private:
 
 	static ResourceManager *handle;
 public:
-	ResourceManager(ID3D11Device *device);
+	ResourceManager(ID3D11Device *device, bool loadCompute);
 	~ResourceManager(void){}
 
 	ResourceManager(const ResourceManager&) = delete;

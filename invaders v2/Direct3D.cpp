@@ -13,7 +13,6 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	e::unique_ptr<DXGI_MODE_DESC[]> displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
-	D3D_FEATURE_LEVEL featureLevel;
 	e::ComPtr<ID3D11Texture2D> backBufferPtr;
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
@@ -34,12 +33,12 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	displayModeList = e::unique_ptr<DXGI_MODE_DESC[]>(new DXGI_MODE_DESC[numModes]);
 	Assert(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList.get()));
 	for (unsigned int i = 0; i < numModes; i++)
-	if (displayModeList[i].Height == height && displayModeList[i].Width == width)
-	{
-		numerator = displayModeList[i].RefreshRate.Numerator;
-		denominator = displayModeList[i].RefreshRate.Denominator;
-		break;
-	}
+		if (displayModeList[i].Height == height && displayModeList[i].Width == width)
+		{
+			numerator = displayModeList[i].RefreshRate.Numerator;
+			denominator = displayModeList[i].RefreshRate.Denominator;
+			break;
+		}
 	Assert(adapter->GetDesc(&adapterDesc));
 	videoMem = (int)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 	wcstombs_s(&stringLength, videoDesc, 128, adapterDesc.Description, 128);
@@ -68,19 +67,31 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	swapChainDesc.Flags = 0;
-	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	int debug = 0;
+	D3D_FEATURE_LEVEL *featureLevel = new D3D_FEATURE_LEVEL[6]
+	{
+		D3D_FEATURE_LEVEL_11_0,
+		D3D_FEATURE_LEVEL_10_1,
+		D3D_FEATURE_LEVEL_10_0,
+		D3D_FEATURE_LEVEL_9_3,
+		D3D_FEATURE_LEVEL_9_2,
+		D3D_FEATURE_LEVEL_9_1,
+	};
+
+	int debug = D3D11_CREATE_DEVICE_SINGLETHREADED;
 
 #ifdef _DEBUG
 	debug = D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, debug, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc,
+	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, debug, featureLevel, 6, D3D11_SDK_VERSION, &swapChainDesc,
 		&swapChain, &device, NULL, &deviceContext));
+	delete [] featureLevel;
 	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
 	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
 	Assert(device->CreateUnorderedAccessView(backBufferPtr.Get(), nullptr, &backBufferAccess));
+
+	compute = device->GetFeatureLevel() == D3D_FEATURE_LEVEL_11_0;
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;
