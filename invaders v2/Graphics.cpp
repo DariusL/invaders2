@@ -2,6 +2,8 @@
 #include "Graphics.h"
 #include "App.h"
 #include "Button.h"
+#include "Observers.h"
+#include "Settings.h"
 
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	:hwnd(handle), width(width), height(height), fullScreen(fullscreen), brightness(0.1f),
@@ -9,8 +11,7 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	d3D(width, height, vsync, handle, fullScreen, screenDepth, screenNear),
 	rm(d3D.GetDevice(), d3D.ComputeSupport()),
 	target(d3D.GetDevice(), width, height),
-	strPool(d3D.GetDevice()),
-	post(d3D.ComputeSupport())
+	strPool(d3D.GetDevice())
 {
 	auto device = d3D.GetDevice();
 
@@ -18,6 +19,8 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	copyPass = make_unique<CopyPass>(RM::Get().GetShader<CopyComputeShader>(), width, height);
 	blurPass = make_unique<BlurPass>(d3D.GetDevice(), width, height);
 	bloomPass = make_unique<BloomPass>(d3D.GetDevice(), width, height);
+	SettingsObservers::Register(Settings::KEY_POST, e::bind(&Graphics::SetPost, this, e::placeholders::_1));
+	post = Settings::Get().GetValue(Settings::KEY_POST) != 0;
 }
 
 void Graphics::ChangeBrightness(float offset)
@@ -27,6 +30,11 @@ void Graphics::ChangeBrightness(float offset)
 		brightness = 1.0f;
 	else if(brightness < 0.0f)
 		brightness = 0.0f;
+}
+
+void Graphics::SetPost(int post)
+{
+	this->post = post != 0;
 }
 
 void Graphics::Render(Screen &world)

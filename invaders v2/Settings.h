@@ -12,7 +12,8 @@ public:
 		KEY_UP_KEY = 3,
 		KEY_DOWN_KEY = 4,
 		KEY_BACK_KEY = 5,
-		KEY_UPGRADE_KEY = 6
+		KEY_UPGRADE_KEY = 6,
+		KEY_POST = 7
 	};
 private:
 	e::unordered_map<KEY, int> settings;
@@ -26,4 +27,5 @@ public:
 	void Load();
 	static Settings &Get(){ return *instance; }
 	const e::unordered_map<KEY, int> &GetSettings(){ return settings; }
+	e::string Decode(KEY key);
 };

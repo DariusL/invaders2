@@ -3,7 +3,7 @@
 #include "StringPool.h"
 
 SettingsAttribute::SettingsAttribute(e::XMVECTOR pos, e::string text, float width, Settings::KEY settingsKey, float scale)
-	:Attribute(pos, text, width, Input::DecodeKey(Settings::Get().GetValue(settingsKey))),
+	:Attribute(pos, text, width, Settings::Get().Decode(settingsKey)),
 	settingsKey(settingsKey),
 	pressRegister(Input::ACTION_ENTER),
 	listening(false)

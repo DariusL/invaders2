@@ -85,3 +85,4 @@ e::unordered_map<int, typename Observers<Args...>::funcs> Observers<Args...>::ob
 
 using GameObservers = Observers<const e::shared_ptr<GameEntity>>;
 using UpgradeObservers = Observers<int>;
+using SettingsObservers = UpgradeObservers;

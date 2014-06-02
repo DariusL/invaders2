@@ -2,7 +2,7 @@
 #include "Settings.h"
 #include "Utils.h"
 #include "Input.h"
-
+#include "Observers.h"
 
 Settings *Settings::instance;
 
@@ -19,7 +19,8 @@ Settings::Settings(e::wstring filename)
 		e::make_pair(Settings::KEY_UP_KEY, VK_UP),
 		e::make_pair(Settings::KEY_DOWN_KEY, VK_DOWN),
 		e::make_pair(Settings::KEY_BACK_KEY, VK_ESCAPE),
-		e::make_pair(Settings::KEY_UPGRADE_KEY, int('U'))
+		e::make_pair(Settings::KEY_UPGRADE_KEY, int('U')),
+		e::make_pair(Settings::KEY_POST, 1)
 	});
 	Load();
 }
@@ -27,6 +28,7 @@ Settings::Settings(e::wstring filename)
 void Settings::SetValue(KEY key, int value)
 {
 	settings[key] = value;
+	SettingsObservers::Notify(key, value);
 }
 
 void Settings::Store()
@@ -72,5 +74,25 @@ int Settings::GetValue(KEY key)
 	else
 	{
 		return f->second;
+	}
+}
+
+e::string Settings::Decode(KEY key)
+{
+	int val = GetValue(key);
+	switch (key)
+	{
+	case Settings::KEY_FIRE_KEY:
+	case Settings::KEY_LEFT_KEY:
+	case Settings::KEY_RIGHT_KEY:
+	case Settings::KEY_UP_KEY:
+	case Settings::KEY_DOWN_KEY:
+	case Settings::KEY_BACK_KEY:
+	case Settings::KEY_UPGRADE_KEY:
+		return Input::DecodeKey(val);
+	case Settings::KEY_POST:
+		return val ? "ON" : "OFF";
+	default:
+		return "";
 	}
 }

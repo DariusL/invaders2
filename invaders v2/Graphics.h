@@ -42,5 +42,6 @@ public:
 	bool IsFullscreen(){return fullScreen;}
 
 	ID3D11Device *GetDevice(){ return d3D.GetDevice(); }
+	void SetPost(int post);
 };
 
