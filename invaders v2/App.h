@@ -27,9 +27,10 @@ class App
 	HINSTANCE hInstance;
 	
 	long lastFrame;
+	int tick;
 	bool running;
 public:
-	App(uint width = 1280, uint height = 720, bool fullscreen = false, wstring name = L"Invaders v2");
+	App(uint width = 1280, uint height = 720, bool fullscreen = false, wstring name = L"Invaders v2", int tick = 500);
 	~App(void);
 
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
@@ -40,6 +41,7 @@ public:
 	void GetScreenDims(int &width, int &heigth){width = screenWidth; heigth = screenHeight;}
 
 	HWND GetWindowHandle(){return wHandle;}
+	bool Tick(){ return (lastFrame % tick) < (tick / 2); }
 private:
 	bool OnLoop();
 };

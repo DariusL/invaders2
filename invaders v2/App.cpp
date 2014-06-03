@@ -4,11 +4,12 @@
 #include "TestScene.h"
 #include "MainMenu.h"
 
-App::App(uint width, uint height, bool fullscreen, wstring name)
+App::App(uint width, uint height, bool fullscreen, wstring name, int tick)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
 window(width, height, fullscreen, name), wHandle(window.GetWindowHandle()),
 graphics(width, height, window.GetWindowHandle(), fullscreen), handle(this),
-settings(L"settings")
+settings(L"settings"),
+tick(tick)
 {
 	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
 }

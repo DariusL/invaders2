@@ -1,6 +1,8 @@
 #include "includes.h"
 #include "SettingsKey.h"
 #include "StringPool.h"
+#include "App.h"
+#include "AppHandle.h"
 
 SettingsKey::SettingsKey(e::XMVECTOR pos, e::string text, float width, Settings::KEY settingsKey, float scale)
 	:Attribute(pos, text, width, Settings::Get().Decode(settingsKey)),
@@ -31,4 +33,10 @@ bool SettingsKey::Loop(InputType input)
 		}
 		return false;
 	}
+}
+
+void SettingsKey::Render(RenderParams &params)
+{
+	if (AppHandle::Get().Tick() || !listening)
+		Attribute::Render(params);
 }
