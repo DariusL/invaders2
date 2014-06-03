@@ -1,5 +1,6 @@
 #include "includes.h"
 #include "Direct3D.h"
+#include "Settings.h"
 
 ID3D11Device *Direct3D::staticDevice = nullptr;
 ID3D11DeviceContext *Direct3D::staticContext = nullptr;
@@ -58,8 +59,8 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
 	}
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_UNORDERED_ACCESS;
 	swapChainDesc.OutputWindow = whandle;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = !fullscreen;
@@ -83,15 +84,24 @@ Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscr
 #ifdef _DEBUG
 	debug = D3D11_CREATE_DEVICE_DEBUG;
 #endif
-
-	Assert(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, debug, featureLevel, 6, D3D11_SDK_VERSION, &swapChainDesc,
-		&swapChain, &device, NULL, &deviceContext));
-	delete [] featureLevel;
-	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
-	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
-	Assert(device->CreateUnorderedAccessView(backBufferPtr.Get(), nullptr, &backBufferAccess));
+	Assert(D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, debug, featureLevel, 6, D3D11_SDK_VERSION, &device, nullptr, &deviceContext));
 
 	compute = device->GetFeatureLevel() == D3D_FEATURE_LEVEL_11_0;
+
+	if (compute)
+		swapChainDesc.BufferUsage |= DXGI_USAGE_UNORDERED_ACCESS;
+
+	if (!compute)
+		Settings::Get().SetValue(Settings::KEY_POST, 0);
+
+	Assert(factory->CreateSwapChain(device.Get(), &swapChainDesc, &swapChain));
+
+	delete[] featureLevel;
+
+	Assert(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBufferPtr));
+	Assert(device->CreateRenderTargetView(backBufferPtr.Get(), NULL, &renderTargetView));
+	if (compute)
+		Assert(device->CreateUnorderedAccessView(backBufferPtr.Get(), nullptr, &backBufferAccess));
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 	depthBufferDesc.Width = width;

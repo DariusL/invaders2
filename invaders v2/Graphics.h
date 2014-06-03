@@ -26,7 +26,7 @@ class Graphics
 
 	StringPool strPool;
 
-	RenderTarget target;
+	e::unique_ptr<RenderTarget> target;
 
 	bool post;
 	e::unique_ptr<CopyPass> copyPass;
