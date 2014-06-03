@@ -12,13 +12,13 @@ class MenuScreen : public Screen
 	static const e::XMFLOAT3 ITEM_OFF;
 	static const e::XMFLOAT3 FOOTER_POS;
 
-	MenuList items;
 	ColorDrawableEntity header;
 	PressRegister backRegister;
 	bool close;
 public:
 	MenuScreen(e::XMVECTOR pos, e::string header);
 protected:
+	MenuList items;
 	virtual void RenderInternal(RenderParams &params);
 	virtual int LoopInternal(InputType input, int frame);
 	virtual void DelayInternal();

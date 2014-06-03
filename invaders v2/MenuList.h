@@ -21,6 +21,7 @@ public:
 	template<class T>
 	void Add(e::unique_ptr<T> &&item);
 	void MoveTo(e::XMVECTOR pos);
+	e::unique_ptr<MenuItem> &operator[](int pos){ return items[pos]; }
 protected:
 	void Reposition();
 };

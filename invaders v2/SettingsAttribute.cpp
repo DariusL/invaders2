@@ -12,16 +12,20 @@ SettingsAttribute::SettingsAttribute(e::XMVECTOR pos, e::string text, float widt
 	this->min = min;
 	this->max = max;
 	this->set = Settings::Get().GetValue(settingsKey);
+	this->color = name.GetColor();
 }
 
 bool SettingsAttribute::Loop(InputType input)
 {
-	if (pressRegister.Register(input))
-		Next();
-	else if (right.Register(input))
-		Next();
-	else if (left.Register(input))
-		Prev();
+	if (enabled)
+	{
+		if (pressRegister.Register(input))
+			Next();
+		else if (right.Register(input))
+			Next();
+		else if (left.Register(input))
+			Prev();
+	}
 	return pressRegister.IsDown(input) || right.IsDown(input) || left.IsDown(input);
 }
 
@@ -49,4 +53,11 @@ void SettingsAttribute::Invalidate()
 	auto &s = Settings::Get();
 	s.SetValue(settingsKey, set);
 	value.SetModel(StringPool::Get().GetString(s.Decode(settingsKey)));
+}
+
+void SettingsAttribute::Enable(bool enabled)
+{
+	this->enabled = enabled;
+	name.SetColor(enabled ? color : Gray);
+	value.SetColor(enabled ? color : Gray);
 }

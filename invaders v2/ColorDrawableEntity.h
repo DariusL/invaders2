@@ -10,4 +10,6 @@ public:
 	ColorDrawableEntity(ColorDrawableEntity&& other) :DrawableEntity(e::move(other)), color(other.color){}
 	virtual ~ColorDrawableEntity(){}
 	virtual void Render(RenderParams &params);
+	void SetColor(e::XMFLOAT4 color){ this->color = color; }
+	e::XMFLOAT4 GetColor(){ return color; }
 };
