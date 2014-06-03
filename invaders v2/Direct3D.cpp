@@ -4,6 +4,7 @@
 
 ID3D11Device *Direct3D::staticDevice = nullptr;
 ID3D11DeviceContext *Direct3D::staticContext = nullptr;
+bool Direct3D::compute;
 
 Direct3D::Direct3D(int width, int height, bool vsync, HWND whandle, bool fullscreen, float screendepth, float screennear)
 {
