@@ -8,6 +8,7 @@
 #include "String.h"
 #include "StringPool.h"
 #include "Screen.h"
+#include "Observers.h"
 
 class Graphics
 {
@@ -31,6 +32,8 @@ class Graphics
 	e::unique_ptr<CopyPass> copyPass;
 	e::unique_ptr<BlurPass> blurPass;
 	e::unique_ptr<BloomPass> bloomPass;
+
+	SettingsObservers::ObserverScopeRef or;
 public:
 	Graphics(int width, int height, HWND handle, bool fullscreen);
 	~Graphics(){}

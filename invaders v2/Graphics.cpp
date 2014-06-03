@@ -2,7 +2,6 @@
 #include "Graphics.h"
 #include "App.h"
 #include "Button.h"
-#include "Observers.h"
 #include "Settings.h"
 
 Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
@@ -19,7 +18,7 @@ Graphics::Graphics(int width, int height, HWND handle, bool fullscreen)
 	copyPass = make_unique<CopyPass>(RM::Get().GetShader<CopyComputeShader>(), width, height);
 	blurPass = make_unique<BlurPass>(d3D.GetDevice(), width, height);
 	bloomPass = make_unique<BloomPass>(d3D.GetDevice(), width, height);
-	SettingsObservers::Register(Settings::KEY_POST, e::bind(&Graphics::SetPost, this, e::placeholders::_1));
+	or = SettingsObservers::Register(Settings::KEY_POST, e::bind(&Graphics::SetPost, this, e::placeholders::_1));
 	post = Settings::Get().GetValue(Settings::KEY_POST) != 0;
 }
 

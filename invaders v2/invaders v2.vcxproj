@@ -145,6 +145,7 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsAttribute.cpp" />
+    <ClCompile Include="SettingsKey.cpp" />
     <ClCompile Include="SettingsMenu.cpp" />
     <ClCompile Include="StringPool.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsAttribute.h" />
+    <ClInclude Include="SettingsKey.h" />
     <ClInclude Include="SettingsMenu.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
