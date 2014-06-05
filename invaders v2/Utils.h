@@ -86,6 +86,7 @@ namespace Utils{
 	}
 
 	int HighestBitSet(int a);
+	bool EndsWith(const e::wstring &str, const e::wstring &suffix);
 }
 
 #define WIDE2(x) L##x

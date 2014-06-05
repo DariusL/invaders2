@@ -112,6 +112,8 @@ public:
 	e::shared_ptr<Level> GetLevel(int type){ return levels[type]; }
 	static ResourceManager &Get(){ return *handle; }
 
+	static e::vector<e::wstring> ListFiles(e::wstring dir);
+
 	//because why not
 	template<class sh>
 	sh &GetShader(){}

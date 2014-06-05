@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "AppHandle.h"
 #include "Settings.h"
+#include "AudioManager.h"
 
 class App
 {
@@ -19,6 +20,7 @@ class App
 	Input input;
 	Settings settings;
 	Window window;
+	AudioManager audio;
 	Graphics graphics;
 
 	unique_ptr<Screen> world;

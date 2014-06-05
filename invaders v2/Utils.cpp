@@ -135,4 +135,10 @@ namespace Utils
 		}
 		return bit;
 	}
+
+	bool EndsWith(const e::wstring &str, const e::wstring &suffix)
+	{
+		return str.size() >= suffix.size() &&
+			str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+	}
 }

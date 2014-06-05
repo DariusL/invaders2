@@ -273,3 +273,22 @@ ComPtr<ID3D11ShaderResourceView> ResourceManager::GetTextureFromFile(wstring fil
 	Assert(CreateDDSTextureFromFile(device, filename.c_str(), NULL, &ret));
 	return ret;
 }
+
+e::vector<e::wstring> ResourceManager::ListFiles(e::wstring dir)
+{
+	using namespace e;
+	e::vector<e::wstring> ret;
+	WIN32_FIND_DATA ffd;
+	auto handle = FindFirstFile((dir + wstring(L"*")).c_str(), &ffd);
+	if (handle == INVALID_HANDLE_VALUE)
+		return ret;
+	do
+	{
+		wstring name = ffd.cFileName;
+		if (Utils::EndsWith(name, L".wav"))
+			ret.push_back(dir + ffd.cFileName);
+	} 
+	while (FindNextFile(handle, &ffd));
+	FindClose(handle);
+	return ret;
+}

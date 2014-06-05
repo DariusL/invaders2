@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "TestScene.h"
 #include "MainMenu.h"
+#include "AudioManager.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name, int tick)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
@@ -12,6 +13,7 @@ settings(L"settings"),
 tick(tick)
 {
 	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
+	AudioManager::PlayNextSong();
 }
 
 App::~App()

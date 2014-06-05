@@ -4,8 +4,9 @@
 #include "Sound.h"
 #include "Utils.h"
 
-Sound::Sound(const e::wstring& waveFilePath, bool loopForever) :
-m_SoundCallbacks(this)
+Sound::Sound(const e::wstring& waveFilePath, bool music) :
+m_SoundCallbacks(this),
+music(music)
 {
 	using namespace e;
 	auto waveFile = RiffFile::Create(waveFilePath);
@@ -24,7 +25,7 @@ m_SoundCallbacks(this)
 	m_AudioBuffer.AudioBytes = dataChunk.GetSize();
 	m_AudioBuffer.pAudioData = (byte*)m_SoundDataBuffer.get();
 	m_AudioBuffer.Flags = XAUDIO2_END_OF_STREAM;
-	m_AudioBuffer.LoopCount = loopForever ? XAUDIO2_LOOP_INFINITE : 0;
+	m_AudioBuffer.LoopCount = 0;
 }
 
 Sound::Sound(Sound&& other) :
@@ -32,7 +33,8 @@ m_SoundDataBuffer(std::move(other.m_SoundDataBuffer)),
 m_AudioBuffer(other.m_AudioBuffer),
 m_WaveFormat(other.m_WaveFormat),
 m_Voices(std::move(other.m_Voices)),
-m_SoundCallbacks(this)
+m_SoundCallbacks(this),
+music(other.music)
 {
 	other.m_AudioBuffer.pAudioData = nullptr;
 	other.m_AudioBuffer.pContext = nullptr;
@@ -96,4 +98,11 @@ void Sound::Play(float vol)
 	auto &voice = GetVoiceForPlayback();
 	voice.sourceVoice->SetVolume(vol);
 	PlayImpl(voice);
+}
+
+void Sound::Done(size_t index)
+{
+	m_Voices[index].isPlaying = false;
+	if (music)
+		AudioManager::PlayNextSong();
 }

@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "MenuList.h"
 #include "Utils.h"
+#include "Observers.h"
 using namespace e;
 
 MenuList::MenuList(e::XMVECTOR pos, e::XMFLOAT3 offset, uint show, Input::ACTION nextKey, Input::ACTION prevKey)
@@ -25,6 +26,7 @@ bool MenuList::Loop(InputType input)
 		if (prev.Register(input))
 		{
 			SetSelection(selected - 1);
+			MenuObservers::Notify(0);
 		}
 	}
 	if (selected + 1 < items.size() && next.IsDown(input) && !handled)
@@ -33,6 +35,7 @@ bool MenuList::Loop(InputType input)
 		if (next.Register(input))
 		{
 			SetSelection(selected + 1);
+			MenuObservers::Notify(0);
 		}
 	}
 

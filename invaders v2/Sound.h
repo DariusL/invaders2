@@ -38,7 +38,7 @@ private:
 		virtual void __stdcall OnBufferEnd(void* pBufferContext)
 		{
 			auto index = reinterpret_cast<size_t>(pBufferContext);
-			m_Sound->m_Voices[index].isPlaying = false;
+			m_Sound->Done(index);
 		}
 
 		virtual void __stdcall OnLoopEnd(void* pBufferContext) { }
@@ -55,17 +55,18 @@ private:
 
 	e::vector<Voice> m_Voices;
 	SoundCallbacks m_SoundCallbacks;
+	bool music;
 
 	size_t GetNotPlayingVoiceIndex();
 	size_t CreateVoice();
 	Voice& GetVoiceForPlayback();
 	void PlayImpl(Voice& voiceToPlay);
+	void Done(size_t index);
 
-	friend class SoundCallbacks;
 	Sound(const Sound& other);
 
 public:
-	Sound(const e::wstring& waveFilePath, bool loopForever);
+	Sound(const e::wstring& waveFilePath, bool music);
 	Sound(Sound&& other);
 	~Sound();
 

@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "SettingsAttribute.h"
 #include "StringPool.h"
+#include "Observers.h"
 
 SettingsAttribute::SettingsAttribute(e::XMVECTOR pos, e::string text, float width, Settings::KEY settingsKey, int min, int max, float scale)
 	:Attribute(pos, text, width, Settings::Get().Decode(settingsKey)),
@@ -32,6 +33,7 @@ bool SettingsAttribute::Loop(InputType input)
 
 void SettingsAttribute::Prev()
 {
+	MenuObservers::Notify(0);
 	if (set == min)
 		set = max;
 	else
@@ -41,6 +43,7 @@ void SettingsAttribute::Prev()
 
 void SettingsAttribute::Next()
 {
+	MenuObservers::Notify(0);
 	if (set == max)
 		set = min;
 	else
