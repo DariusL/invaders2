@@ -28,6 +28,9 @@
 #include <functional>
 #include <chrono>
 #include <unordered_map>
+#include <D:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\XAudio2.h> 
+#include <D:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\XAudio2fx.h>
+#include <D:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\X3DAudio.h>
 
 namespace e
 {

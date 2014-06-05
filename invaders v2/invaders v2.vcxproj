@@ -42,10 +42,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IncludePath>$(IncludePath);D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <IncludePath>$(IncludePath);D:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,6 +102,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AppHandle.cpp" />
     <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BloomPass.cpp" />
     <ClCompile Include="BlurPass.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
@@ -142,11 +145,14 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="RiffChunk.cpp" />
+    <ClCompile Include="RiffFIle.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="SettingsAttribute.cpp" />
     <ClCompile Include="SettingsKey.cpp" />
     <ClCompile Include="SettingsMenu.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StringPool.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -161,6 +167,7 @@
     <ClInclude Include="AppHandle.h" />
     <ClInclude Include="ArrayBuffer.h" />
     <ClInclude Include="Attribute.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BloomPass.h" />
     <ClInclude Include="BlurPass.h" />
     <ClInclude Include="BoundingBox.h" />
@@ -178,6 +185,7 @@
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
     <ClInclude Include="EnemyList.h" />
+    <ClInclude Include="FourCCWrapper.h" />
     <ClInclude Include="GameEntityList.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameScreen.h" />
@@ -192,11 +200,15 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="PressRegister.h" />
+    <ClInclude Include="RiffChunk.h" />
+    <ClInclude Include="RiffFile.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="SettingsAttribute.h" />
     <ClInclude Include="SettingsKey.h" />
     <ClInclude Include="SettingsMenu.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundCacheKey.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="FilterDownSampleShader.h" />
     <ClInclude Include="Geometry.h" />

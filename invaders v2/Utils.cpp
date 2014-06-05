@@ -17,6 +17,27 @@ namespace Utils
 		return true;
 	}
 
+	e::vector<char> ReadFileToVector(std::wstring file)
+	{
+		using namespace e;
+		std::ifstream stream = std::ifstream(file, std::ios::binary);
+		AssertBool(stream.is_open(), L"file not found");
+		stream.seekg(0, stream.end);
+		auto size = (uint)stream.tellg();
+		stream.seekg(0, stream.beg);
+		vector<char> ret(size);
+		stream.read(ret.data(), size);
+		stream.close();
+		return ret;
+	}
+
+	uint ReadUint(const e::vector<char> &data, uint &pos)
+	{
+		auto value = *reinterpret_cast<const unsigned int*>(&data[pos]);
+		pos += 4;
+		return value;
+	}
+
 	float Trunc(float x, float &trunced)
 	{
 		bool neg = x < 0;

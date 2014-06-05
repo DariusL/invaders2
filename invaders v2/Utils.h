@@ -8,6 +8,7 @@ typedef unsigned int UINT;
 namespace Utils{
 	//returns a new array with the contents of the file
 	bool ReadFileToArray(std::wstring file, std::unique_ptr<char> &arr, UINT &size);
+	e::vector<char> ReadFileToVector(std::wstring file);
 	//return fractional part, ret + trunced = x
 	float Trunc(float x, float &trunced);
 	void ShowMessageBox(std::wstring text, std::wstring title);
@@ -23,6 +24,7 @@ namespace Utils{
 	e::XMVECTOR VectorSet(float x, float y);
 	e::XMVECTOR VectorSet(float x, float y, float z);
 
+	uint ReadUint(const e::vector<char> &data, uint &pos);
 
 	inline e::XMVECTOR LoadFloat(const float scalar)
 	{

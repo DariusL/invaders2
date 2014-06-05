@@ -23,6 +23,9 @@
     <Filter Include="Menu">
       <UniqueIdentifier>{7a4cefd7-6b39-44fe-8850-8ff3c113addf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{9677cf8c-d015-4f0e-aef0-4c5329651ebb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IShader.cpp">
@@ -189,6 +192,18 @@
     </ClCompile>
     <ClCompile Include="SettingsKey.cpp">
       <Filter>Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="RiffChunk.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="RiffFIle.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +455,24 @@
     </ClInclude>
     <ClInclude Include="SettingsKey.h">
       <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="FourCCWrapper.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="RiffChunk.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="RiffFile.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundCacheKey.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
