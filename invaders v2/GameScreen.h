@@ -12,6 +12,9 @@ class GameScreen : public Screen
 	Counter score, exp;
 	GameObservers::ObserverScopeRef or;
 	UpgradeObservers::ObserverScopeRef ur;
+	SimpleDrawableEntity reminder;
+	bool upgraded;
+	int time;
 public:
 	GameScreen(e::XMVECTOR pos);
 	void RenderInternal(RenderParams &params);

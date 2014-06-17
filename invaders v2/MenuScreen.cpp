@@ -3,7 +3,7 @@
 #include "StringPool.h"
 #include "ResourceManager.h"
 
-const e::XMFLOAT3 MenuScreen::HEADER_POS = e::XMFLOAT3(0.0f, 5.0f, 0.0f);
+const e::XMFLOAT3 MenuScreen::HEADER_POS = e::XMFLOAT3(0.0f, 7.0f, 0.0f);
 const e::XMFLOAT3 MenuScreen::FIRST_ITEM_POS = e::XMFLOAT3(0.0f, 3.0f, 0.0f);
 const e::XMFLOAT3 MenuScreen::ITEM_OFF = e::XMFLOAT3(0.0f, -2.0f, 0.0f);
 const e::XMFLOAT3 MenuScreen::FOOTER_POS = e::XMFLOAT3(0.0f, -20.0f, 0.0f);
@@ -12,7 +12,7 @@ MenuScreen::MenuScreen(e::XMVECTOR pos, e::string header)
 :Screen(pos), 
 header(SP::Get().GetString(header), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + e::XMLoadFloat3(&HEADER_POS))),
 backRegister(Input::ACTION_BACK),
-items(pos, ITEM_OFF, 5),
+items(pos, ITEM_OFF, 6),
 close(false)
 {
 }

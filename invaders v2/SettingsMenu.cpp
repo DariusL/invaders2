@@ -11,6 +11,7 @@ SettingsMenu::SettingsMenu(e::XMVECTOR pos) : MenuScreen(pos, "SETTINGS")
 	Add(e::make_unique<SettingsKey>(Utils::VectorSet(), "FIRE", 40.0f, Settings::KEY_FIRE_KEY));
 	Add(e::make_unique<SettingsKey>(Utils::VectorSet(), "MOVE LEFT", 40.0f, Settings::KEY_LEFT_KEY));
 	Add(e::make_unique<SettingsKey>(Utils::VectorSet(), "MOVE RIGHT", 40.0f, Settings::KEY_RIGHT_KEY));
+	Add(e::make_unique<SettingsKey>(Utils::VectorSet(), "UPGRADE", 40.0f, Settings::KEY_UPGRADE_KEY));
 	Add(e::make_unique<Button>(Utils::VectorSet(), "SAVE", e::bind(&SettingsMenu::Ok, this)));
 	static_cast<SettingsAttribute&>(*items[0]).Enable(Direct3D::ComputeSupport());
 }

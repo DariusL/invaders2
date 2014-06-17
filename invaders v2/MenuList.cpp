@@ -59,6 +59,7 @@ void MenuList::SetSelection(int selected)
 	items[this->selected]->Select(false);
 	items[selected]->Select(true);
 	this->selected = selected;
+	Reposition();
 }
 
 void MenuList::Select(bool selected)

@@ -44,6 +44,7 @@ public:
 
 	HWND GetWindowHandle(){return wHandle;}
 	bool Tick(){ return (lastFrame % tick) < (tick / 2); }
+	static long Time(){ return AppHandle::Get().lastFrame; }
 private:
 	bool OnLoop();
 };
