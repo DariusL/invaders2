@@ -22,6 +22,7 @@ public:
 	void Add(e::unique_ptr<T> &&item);
 	void MoveTo(e::XMVECTOR pos);
 	e::unique_ptr<MenuItem> &operator[](int pos){ return items[pos]; }
+	int Count(){ return (int)items.size(); }
 protected:
 	void Reposition();
 };
