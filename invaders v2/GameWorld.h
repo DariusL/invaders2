@@ -21,6 +21,7 @@ public:
 	void Loop(InputType input, int frame);
 	void Render(RenderParams &params);
 	e::unordered_map<int, int> GetPlayerData();
+	e::shared_ptr<ColorDrawableEntity> GetPlayer(){ return player; }
 private:
 	void OnEnemyDeath(const e::shared_ptr<GameEntity> enemy);
 };

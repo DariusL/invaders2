@@ -12,7 +12,7 @@ class GameScreen : public Screen
 	Counter score, exp;
 	GameObservers::ObserverScopeRef or;
 	UpgradeObservers::ObserverScopeRef ur;
-	SimpleDrawableEntity reminder;
+	ColorDrawableEntity reminder;
 	bool upgraded;
 	int time;
 public:

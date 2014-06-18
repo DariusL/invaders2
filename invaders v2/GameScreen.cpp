@@ -7,13 +7,14 @@
 #include "StringPool.h"
 #include "Settings.h"
 #include "App.h"
+#include "GameOverScreen.h"
 
 GameScreen::GameScreen(e::XMVECTOR pos)
 :Screen(pos), pause(Input::ACTION_BACK), world(Direct3D::GetDevice(), pos),
 score(pos + Utils::VectorSet(25.0f, -10.0f, 3.0f), "SCORE", 15.0f),
 exp(pos + Utils::VectorSet(25.0f, -12.0f, 3.0f), "EXP", 15.0f),
 upgrade(Input::ACTION_UPGRADE),
-reminder(StringPool::Get().GetString("UPGRADES " + Settings::Get().Decode(Settings::KEY_UPGRADE_KEY)), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + Utils::VectorSet(-25.0f, -12.0f, 3.0f))),
+reminder(StringPool::Get().GetString("UPGRADES " + Settings::Get().Decode(Settings::KEY_UPGRADE_KEY)), RM::Get().GetShader<ColorShader>(), e::make_shared<GameEntity>(pos + Utils::VectorSet(-25.0f, -12.0f, 3.0f)), e::XMFLOAT4(0.0f, 1.0f, 0.3f, 1.0f)),
 upgraded(false),
 time(0)
 {
@@ -43,6 +44,8 @@ int GameScreen::LoopInternal(InputType input, int frame)
 		upgraded = true;
 	}
 	world.Loop(input, frame);
+	if (world.GetPlayer()->GetEntity()->IsDead())
+		child = make_unique<GameOverScreen>(GetChildPos(), score.GetValue());
 	return RESULT_CONTINUE;
 }
 

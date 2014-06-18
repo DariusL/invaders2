@@ -118,6 +118,7 @@
     <ClCompile Include="GameEntityList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
     <ClCompile Include="GameEntity.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="FourCCWrapper.h" />
     <ClInclude Include="GameEntityList.h" />
     <ClInclude Include="GameEntity.h" />
+    <ClInclude Include="GameOverScreen.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Grid.h" />

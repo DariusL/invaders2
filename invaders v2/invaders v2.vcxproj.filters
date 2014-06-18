@@ -205,6 +205,9 @@
     <ClCompile Include="AudioManager.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverScreen.cpp">
+      <Filter>Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -473,6 +476,9 @@
     </ClInclude>
     <ClInclude Include="AudioManager.h">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScreen.h">
+      <Filter>Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
