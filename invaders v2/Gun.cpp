@@ -28,3 +28,12 @@ e::unique_ptr<Gun> Gun::EnemyGun(uint firePeriod, int damage)
 {
 	return make_unique<Gun>(GAME_EVENT_ENEMY_BULLET_CREATE, firePeriod, -1.0f, damage, RM::Get().GetModel(RM::MODEL_PLAYER));
 }
+
+void Gun::SetFirePeriod(uint firePeriod)
+{ 
+	this->firePeriod = firePeriod; 
+	this->bulletSpeed = 1.0f / firePeriod * 40.0f;
+	if (this->bulletSpeed > 0.2f)
+		this->bulletSpeed = 0.2f;
+	lastFired = 0; 
+}

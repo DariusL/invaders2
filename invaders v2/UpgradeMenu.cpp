@@ -66,4 +66,7 @@ void UpgradeMenu::EnableUpgrades()
 	{
 		static_cast<CounterButton&>(*items[i]).Enable(values[UPGRADE_EVENT_EXP_SET] >= 100);
 	}
+	
+	if(static_cast<CounterButton&>(*items[3]).IsEnabled())
+		static_cast<CounterButton&>(*items[3]).Enable(values[UPGRADE_EVENT_WEPON_PERIOD_SET] > 50);
 }

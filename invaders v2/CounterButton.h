@@ -15,4 +15,5 @@ public:
 	virtual bool Loop(InputType input);
 	virtual void Delay(){ click.Reset(); }
 	void Enable(bool enabled);
+	bool IsEnabled(){ return enabled; }
 };
