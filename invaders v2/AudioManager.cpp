@@ -52,6 +52,7 @@ AudioManager::AudioManager() :song(-1)
 	songs = RM::ListFiles(L"Resources\\Music\\");
 	e = GameObservers::Register(GAME_EVENT_ENEMY_BULLET_CREATE, e::bind(&AudioManager::PlayEnemyFire, this, e::placeholders::_1));
 	p = GameObservers::Register(GAME_EVENT_PLAYER_BULLET_CREATE, e::bind(&AudioManager::PlayPlayerFire, this, e::placeholders::_1));
+	h = GameObservers::Register(GAME_EVENT_HIT, e::bind(&AudioManager::PlayHit, this, e::placeholders::_1));
 	bl = MenuObservers::Register(0, e::bind(&AudioManager::PlayBlip, this));
 }
 
@@ -112,4 +113,9 @@ void AudioManager::PlayEnemyFire(e::shared_ptr<GameEntity>)
 void AudioManager::PlayBlip()
 {
 	GetCachedSound(L"Resources\\Sounds\\blip.wav", false).Play(1.0f);
+}
+
+void AudioManager::PlayHit(e::shared_ptr<GameEntity>)
+{
+	GetCachedSound(L"Resources\\Sounds\\hit.wav", false).Play(1.0f);
 }

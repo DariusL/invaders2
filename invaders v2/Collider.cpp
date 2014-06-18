@@ -44,5 +44,6 @@ void Collider::Collide(GameEntity *first, GameEntity *second)
 	{
 		first->HitFor(second->GetDamage());
 		second->HitFor(first->GetDamage());
+		GameObservers::Notify(GAME_EVENT_HIT, nullptr);
 	}
 }

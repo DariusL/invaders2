@@ -21,13 +21,14 @@ private:
 
 	void PlayPlayerFire(e::shared_ptr<GameEntity>);
 	void PlayEnemyFire(e::shared_ptr<GameEntity>);
+	void PlayHit(e::shared_ptr<GameEntity>);
 	void PlayBlip();
 
 	e::vector<e::wstring> songs;
 	int song;
 	e::wstring playerFire;
 	e::wstring enemyFire;
-	GameObservers::ObserverScopeRef e, p;
+	GameObservers::ObserverScopeRef e, p, h;
 	MenuObservers::ObserverScopeRef bl;
 public:
 	AudioManager();
