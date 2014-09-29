@@ -18,12 +18,12 @@ tick(tick)
 {
 	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
 	AudioManager::PlayNextSong();
-	Log<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>("App created");
+	LoggerHelper<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>::Log("App created");
 }
 
 App::~App()
 {
-	Log<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>("App destroyed");
+	LoggerHelper<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>::Log("App destroyed");
 }
 
 void App::Run()
