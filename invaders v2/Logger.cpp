@@ -1,24 +1,18 @@
 #include "includes.h"
 #include "Logger.h"
 
-const char *Logger::FILE = "Log.txt";
-
-Logger::Logger(void)
+Logger::Logger(e::string file)
+	:output(file, e::ios::app)
 {
 }
 
-Logger::~Logger(void)
+Logger::Logger(Logger &&other)
+	: output(e::move(other.output))
 {
-	output.close();
 }
 
-bool Logger::Init()
-{
-	output.open(FILE, ios::out);
-	return output.is_open();
-}
 
-void Logger::Log(string line)
+void Logger::Log(e::string line)
 {
-	output << line << endl;
+	output << line << e::endl;
 }

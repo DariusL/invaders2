@@ -26,6 +26,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{9677cf8c-d015-4f0e-aef0-4c5329651ebb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{35b75966-4258-4e4e-8e93-a1c32fb52fc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IShader.cpp">
@@ -74,9 +77,6 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -208,6 +208,15 @@
     <ClCompile Include="GameOverScreen.cpp">
       <Filter>Menu</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugLogger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="KennyLoggins.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseInstancer.h">
@@ -304,9 +313,6 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -479,6 +485,27 @@
     </ClInclude>
     <ClInclude Include="GameOverScreen.h">
       <Filter>Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="KennyLoggins.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerFactory.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLoggerFactory.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="KennyLogginsFactory.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerManager.h">
+      <Filter>Logger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

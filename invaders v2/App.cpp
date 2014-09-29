@@ -4,6 +4,10 @@
 #include "TestScene.h"
 #include "MainMenu.h"
 #include "AudioManager.h"
+#include "LoggerManager.h"
+#include "DebugLoggerFactory.h"
+#include "LoggerFactory.h"
+#include "KennyLogginsFactory.h"
 
 App::App(uint width, uint height, bool fullscreen, wstring name, int tick)
 :screenHeight(height), screenWidth(width), fullscreen(fullscreen), appName(name),
@@ -14,10 +18,12 @@ tick(tick)
 {
 	world = make_unique<MainMenu>(e::XMLoadFloat3(&ZeroVec3));
 	AudioManager::PlayNextSong();
+	Log<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>("App created");
 }
 
 App::~App()
 {
+	Log<DebugLoggerFactory, LoggerFactory, KennyLogginsFactory>("App destroyed");
 }
 
 void App::Run()

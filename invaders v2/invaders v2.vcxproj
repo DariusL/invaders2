@@ -114,6 +114,7 @@
     <ClCompile Include="ComputeShader.cpp" />
     <ClCompile Include="Counter.cpp" />
     <ClCompile Include="CounterButton.cpp" />
+    <ClCompile Include="DebugLogger.cpp" />
     <ClCompile Include="DoubleInputComputeShader.cpp" />
     <ClCompile Include="GameEntityList.cpp" />
     <ClCompile Include="FilterDownSampleShader.cpp" />
@@ -139,6 +140,7 @@
     </ClCompile>
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="IShader.cpp" />
+    <ClCompile Include="KennyLoggins.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuList.cpp" />
@@ -182,6 +184,8 @@
     <ClInclude Include="CopyComputeShader.h" />
     <ClInclude Include="Counter.h" />
     <ClInclude Include="CounterButton.h" />
+    <ClInclude Include="DebugLogger.h" />
+    <ClInclude Include="DebugLoggerFactory.h" />
     <ClInclude Include="DoubleInputComputeShader.h" />
     <ClInclude Include="DoubleInputPass.h" />
     <ClInclude Include="DownSampleComputeShader.h" />
@@ -195,6 +199,10 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HoldRegister.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="KennyLoggins.h" />
+    <ClInclude Include="KennyLogginsFactory.h" />
+    <ClInclude Include="LoggerFactory.h" />
+    <ClInclude Include="LoggerManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MenuList.h" />

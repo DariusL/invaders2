@@ -1,15 +1,12 @@
 #pragma once
 #include "includes.h"
-using namespace std;
 class Logger
 {
-	static const char *FILE;
-	ofstream output;
+	e::ofstream output;
 public:
-	Logger(void);
-	~Logger(void);
+	Logger(e::string file);
+	Logger(Logger&) = delete;
+	Logger(Logger&&);
 
-	bool Init();
-	void Log(string line);
+	void Log(e::string line);
 };
-
